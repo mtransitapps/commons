@@ -41,8 +41,10 @@ function contains() {
 		echo "> contains() > Illegal number of parameters!";
 		exit -1;
 	fi
-	LIST=$1;
-	ITEM=$1;
+	LIST=("$@");
+	ITEM_IDX=0;
+	ITEM=${LIST[ITEM_IDX]};
+	unset LIST[ITEM_IDX];
 	for e in "${LIST[@]}"; do
 		if [ "$e" = "$ITEM" ] ; then
 			return 0; # CONTAINS
