@@ -1,9 +1,8 @@
 #!/bin/bash
 echo "================================================================================";
 echo "> LOADING COMMONS...";
-echo "--------------------------------------------------------------------------------";
-BEFORE_DATE=$(date +%D-%X);
-BEFORE_DATE_SEC=$(date +%s);
+COMMONS_BEFORE_DATE=$(date +%D-%X);
+COMMONS_BEFORE_DATE_SEC=$(date +%s);
 
 # set current working directory to the directory of the script
 function setCurrentDirectory() {
@@ -11,7 +10,7 @@ function setCurrentDirectory() {
 		echo "> setCurrentDirectory() > Illegal number of parameters!";
 		exit -1;
 	fi
-	CURRENT_DIRECTORY=$0;
+	local CURRENT_DIRECTORY=$0;
 	cd "$(dirname "$CURRENT_DIRECTORY")";
 	echo "> Current directory set to $CURRENT_DIRECTORY.";
 }
@@ -21,8 +20,8 @@ function checkResult() {
 		echo "> checkResult() > Illegal number of parameters!";
 		exit -1;
 	fi
-	RESULT=$1;
-	CONFIRM=false; # OFF by default
+	local RESULT=$1;
+	local CONFIRM=false; # OFF by default
 	if [ "$#" -ge 2 ]; then
 		CONFIRM=$2;
 	fi
@@ -41,9 +40,9 @@ function contains() {
 		echo "> contains() > Illegal number of parameters!";
 		exit -1;
 	fi
-	LIST=("$@");
-	ITEM_IDX=0;
-	ITEM=${LIST[ITEM_IDX]};
+	local LIST=("$@");
+	local ITEM_IDX=0;
+	local ITEM=${LIST[ITEM_IDX]};
 	unset LIST[ITEM_IDX];
 	for e in "${LIST[@]}"; do
 		if [ "$e" = "$ITEM" ] ; then
@@ -53,9 +52,8 @@ function contains() {
 	return -1; # NOT CONTAINS
 }
 
-AFTER_DATE=$(date +%D-%X);
-AFTER_DATE_SEC=$(date +%s);
-DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
-echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> LOADING COMMONS... DONE";
+COMMONS_AFTER_DATE=$(date +%D-%X);
+COMMONS_AFTER_DATE_SEC=$(date +%s);
+COMMONS_DURATION_SEC=$(($COMMONS_AFTER_DATE_SEC-$COMMONS_BEFORE_DATE_SEC));
+echo "> LOADING COMMONS... DONE ($COMMONS_DURATION_SEC secs FROM $COMMONS_BEFORE_DATE TO $COMMONS_AFTER_DATE)";
 echo "================================================================================";
