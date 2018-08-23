@@ -52,6 +52,38 @@ function contains() {
 	return -1; # NOT CONTAINS
 }
 
+function download() {
+	if [ "$#" -lt 2 ]; then
+		echo "> download() > Illegal number of parameters!";
+		exit -1;
+	fi
+	local URL=$1;
+	local NEW_FILE=$(basename "$URL");
+	local LAST_FILE=$2;
+	if [ -e $LAST_FILE ]; then
+		cp $LAST_FILE "${NEW_FILE}";
+		wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -N "$URL";
+	else
+		wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -S "$URL";
+	fi;
+	if [ -e "${NEW_FILE}" ]; then
+		if [ -e $LAST_FILE ]; then
+			diff "${NEW_FILE}" $LAST_FILE >/dev/null;
+			if [ $? -eq 0 ]; then
+				rm "${NEW_FILE}"; # same file
+			else
+				mv "${NEW_FILE}" $LAST_FILE; # different file
+			fi
+		else
+			mv "${NEW_FILE}" $LAST_FILE; # new file
+		fi
+	else
+		echo "> download() > failed to download file from '$URL'!";
+		return -1; # DID NOT DOWNLOAD
+	fi;
+	return 0; # DOWNLOADED SUCCESSFULLY
+}
+
 COMMONS_AFTER_DATE=$(date +%D-%X);
 COMMONS_AFTER_DATE_SEC=$(date +%s);
 COMMONS_DURATION_SEC=$(($COMMONS_AFTER_DATE_SEC-$COMMONS_BEFORE_DATE_SEC));
