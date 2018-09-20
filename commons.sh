@@ -25,9 +25,9 @@ function checkResult() {
 	if [ "$#" -ge 2 ]; then
 		CONFIRM=$2;
 	fi
-	if [ $RESULT != 0 ]; then
+	if [ ${RESULT} != 0 ]; then
 		echo "> FAILED, AGAIN AND AGAIN, FAILED, AGAIN AND AGAIN, FAILED, AGAIN AND AGAIN";
-		exit $RESULT;
+		exit ${RESULT};
 	else
 		if [ "$CONFIRM" == true ]; then
 			read  -n 1 -p "Continue?" mainmenuinput;
@@ -60,22 +60,22 @@ function download() {
 	local URL=$1;
 	local NEW_FILE=$(basename "$URL");
 	local LAST_FILE=$2;
-	if [ -e $LAST_FILE ]; then
-		cp $LAST_FILE "${NEW_FILE}";
+	if [ -e ${LAST_FILE} ]; then
+		cp ${LAST_FILE} "${NEW_FILE}";
 		wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -N "$URL";
 	else
 		wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -S "$URL";
 	fi;
 	if [ -e "${NEW_FILE}" ]; then
-		if [ -e $LAST_FILE ]; then
-			diff "${NEW_FILE}" $LAST_FILE >/dev/null;
+		if [ -e ${LAST_FILE} ]; then
+			diff "${NEW_FILE}" ${LAST_FILE} >/dev/null;
 			if [ $? -eq 0 ]; then
 				rm "${NEW_FILE}"; # same file
 			else
-				mv "${NEW_FILE}" $LAST_FILE; # different file
+				mv "${NEW_FILE}" ${LAST_FILE}; # different file
 			fi
 		else
-			mv "${NEW_FILE}" $LAST_FILE; # new file
+			mv "${NEW_FILE}" ${LAST_FILE}; # new file
 		fi
 	else
 		echo "> download() > failed to download file from '$URL'!";
