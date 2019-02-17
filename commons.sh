@@ -43,7 +43,7 @@ function contains() {
 	local LIST=("$@");
 	local ITEM_IDX=0;
 	local ITEM=${LIST[ITEM_IDX]};
-	unset LIST[ITEM_IDX];
+	unset 'LIST[ITEM_IDX]';
 	for e in "${LIST[@]}"; do
 		if [ "$e" = "$ITEM" ] ; then
 			return 0; # CONTAINS
