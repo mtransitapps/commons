@@ -8,7 +8,7 @@ COMMONS_BEFORE_DATE_SEC=$(date +%s);
 function setCurrentDirectory() {
 	if [ "$#" -lt 1 ]; then
 		echo "> setCurrentDirectory() > Illegal number of parameters!";
-		exit -1;
+		exit 1;
 	fi
 	local CURRENT_DIRECTORY=$0;
 	cd "$(dirname "$CURRENT_DIRECTORY")";
@@ -18,7 +18,7 @@ function setCurrentDirectory() {
 function checkResult() {
 	if [ "$#" -lt 1 ]; then
 		echo "> checkResult() > Illegal number of parameters!";
-		exit -1;
+		exit 1;
 	fi
 	local RESULT=$1;
 	local CONFIRM=false; # OFF by default
@@ -38,7 +38,7 @@ function checkResult() {
 function contains() {
 	if [ "$#" -lt 2 ]; then
 		echo "> contains() > Illegal number of parameters!";
-		exit -1;
+		exit 1;
 	fi
 	local LIST=("$@");
 	local ITEM_IDX=0;
@@ -55,7 +55,7 @@ function contains() {
 function download() {
 	if [ "$#" -lt 2 ]; then
 		echo "> download() > Illegal number of parameters!";
-		exit -1;
+		exit 1;
 	fi
 	local URL=$1;
 	local NEW_FILE=$(basename "$URL");
