@@ -49,7 +49,7 @@ function contains() {
 			return 0; # CONTAINS
 		fi
 	done
-	return -1; # NOT CONTAINS
+	return 1; # NOT CONTAINS
 }
 
 function download() {
@@ -79,7 +79,7 @@ function download() {
 		fi
 	else
 		echo "> download() > failed to download file from '$URL'!";
-		return -1; # DID NOT DOWNLOAD
+		return 1; # DID NOT DOWNLOAD
 	fi;
 	return 0; # DOWNLOADED SUCCESSFULLY
 }
