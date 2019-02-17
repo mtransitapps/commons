@@ -30,7 +30,7 @@ function checkResult() {
 		exit ${RESULT};
 	else
 		if [ "$CONFIRM" == true ]; then
-			read  -n 1 -p "Continue?" mainmenuinput;
+			read -r -n 1 -p "Continue?";
 		fi
 	fi
 }
