@@ -11,7 +11,7 @@ function setCurrentDirectory() {
 		exit 1;
 	fi
 	local CURRENT_DIRECTORY=$0;
-	cd "$(dirname "$CURRENT_DIRECTORY")";
+	cd "$(dirname "$CURRENT_DIRECTORY")" || exit;
 	echo "> Current directory set to $CURRENT_DIRECTORY.";
 }
 
