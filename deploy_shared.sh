@@ -19,19 +19,20 @@ for f in commons/shared/* ; do
 			mkdir $FILE;
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
-				echo "Error while creating directory $FILE in $CURRENT_DIRECTORY!";
+				echo "Error while creating directory '$FILE' in target directory!";
 				exit ${RESULT};
 			fi
 		fi
 		for ff in commons/shared/${FILE}/* ; do
+			echo "--------------------------------------------------------------------------------";
 			FFILE=$(basename ${ff});
 			if [[ -f "${FILE}/${FFILE}" ]]; then
-				echo "> File \"$FFILE\" ($ff) exist in target directory!";
+				echo "> File '$FFILE' ($ff) exists in target directory!";
 				ls -l ${FILE}/${FFILE};
 				exit 1;
 			fi
 			if [[ -d "${FILE}/${FFILE}" ]]; then
-				echo "> Directory \"$FFILE\" ($ff) exist in target directory!";
+				echo "> Directory '$FFILE' ($ff) exists in target directory!";
 				ls -l ${FILE}/${FFILE};
 				exit 1;
 			fi
@@ -40,13 +41,15 @@ for f in commons/shared/* ; do
 			RESULT=$?;
 			echo "> Deploying '$ff' in '$FILE'... DONE";
 			if [[ ${RESULT} -ne 0 ]]; then
-				echo "Error while deploying $ff to $FFILE!";
+				echo "Error while deploying '$ff' to '$FFILE'!";
 				exit ${RESULT};
 			fi
+			echo "--------------------------------------------------------------------------------";
 		done
 	else
+		echo "--------------------------------------------------------------------------------";
 		if [[ -f "$FILE" ]]; then
-			echo "> File \"$FILE\" ($f) exist in target directory!";
+			echo "> File '$FILE' ($f) exists in target directory!";
 			ls -l $FILE;
 			exit 1;
 		fi
@@ -55,9 +58,10 @@ for f in commons/shared/* ; do
 		RESULT=$?;
 		echo "> Deploying '$f' in '$FILE'... DONE";
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "Error while deploying $f to $FILE!";
+			echo "Error while deploying '$f' to '$FILE'!";
 			exit ${RESULT};
 		fi
+		echo "--------------------------------------------------------------------------------";
 	fi
 done 
 
