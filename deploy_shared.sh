@@ -12,56 +12,66 @@ CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 
 echo "Current directory: $CURRENT_DIRECTORY";
 
-for f in commons/shared/* ; do
-	FILE=$(basename ${f});
-	if [[ -d "$f" ]]; then
-		if ! [[ -d "$FILE" ]]; then
-			mkdir $FILE;
+for SRC_FILE_PATH in commons/shared/* ; do
+	FILENAME=$(basename ${SRC_FILE_PATH});
+	if [[ -f $SRC_FILE_PATH ]]; then
+		DEST_PATH=".";
+		DEST_FILE_PATH="$DEST_PATH/$FILENAME"
+		echo "--------------------------------------------------------------------------------";
+		if [[ -f "$DEST_FILE_PATH" ]]; then
+			echo "> File '$DEST_FILE_PATH' ($SRC_FILE_PATH) exists in target directory!";
+			ls -l $DEST_FILE_PATH;
+			exit 1;
+		fi
+		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'...";
+		cp -n $SRC_FILE_PATH $DEST_FILE_PATH;
+		RESULT=$?;
+		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'... DONE";
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "Error while deploying '$SRC_FILE_PATH' to '$DEST_PATH'!";
+			exit ${RESULT};
+		fi
+		echo "--------------------------------------------------------------------------------";
+	elif [[ -d "$SRC_FILE_PATH" ]]; then
+		DEST_PATH=".";
+		DEST_FILE_PATH="$DEST_PATH/$FILENAME"
+		if ! [[ -d "$DEST_FILE_PATH" ]]; then
+			mkdir $DEST_FILE_PATH;
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
-				echo "Error while creating directory '$FILE' in target directory!";
+				echo "Error while creating directory '$DEST_FILE_PATH' in target directory!";
 				exit ${RESULT};
 			fi
 		fi
-		for ff in commons/shared/${FILE}/* ; do
+		for S_SRC_FILE_PATH in commons/shared/${FILENAME}/* ; do
 			echo "--------------------------------------------------------------------------------";
-			FFILE=$(basename ${ff});
-			if [[ -f "${FILE}/${FFILE}" ]]; then
-				echo "> File '$FFILE' ($ff) exists in target directory!";
-				ls -l ${FILE}/${FFILE};
+			S_FILENAME=$(basename ${S_SRC_FILE_PATH});
+			S_DEST_PATH="${FILENAME}";
+			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
+			if [[ -f "$S_DEST_FILE_PATH" ]]; then
+				echo "> File '$S_DEST_FILE_PATH' ($S_SRC_FILE_PATH) exists in target directory!";
+				ls -l $S_DEST_FILE_PATH;
 				exit 1;
 			fi
-			if [[ -d "${FILE}/${FFILE}" ]]; then
-				echo "> Directory '$FFILE' ($ff) exists in target directory!";
-				ls -l ${FILE}/${FFILE};
+			if [[ -d "$S_DEST_FILE_PATH" ]]; then
+				echo "> Directory '$S_DEST_FILE_PATH' ($S_SRC_FILE_PATH) exists in target directory!";
+				ls -l $S_DEST_FILE_PATH;
 				exit 1;
 			fi
-			echo "> Deploying '$ff' in '$FILE'...";
-			cp -nR $ff $FILE/;
+			echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'...";
+			cp -nR $S_SRC_FILE_PATH $S_DEST_FILE_PATH/;
 			RESULT=$?;
-			echo "> Deploying '$ff' in '$FILE'... DONE";
+			echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'... DONE";
 			if [[ ${RESULT} -ne 0 ]]; then
-				echo "Error while deploying '$ff' to '$FFILE'!";
+				echo "Error while deploying '$S_SRC_FILE_PATH' to '$S_FILENAME'!";
 				exit ${RESULT};
 			fi
 			echo "--------------------------------------------------------------------------------";
 		done
-	else
-		echo "--------------------------------------------------------------------------------";
-		if [[ -f "$FILE" ]]; then
-			echo "> File '$FILE' ($f) exists in target directory!";
-			ls -l $FILE;
-			exit 1;
-		fi
-		echo "> Deploying '$f' in '$FILE'...";
-		cp -n $f $FILE;
-		RESULT=$?;
-		echo "> Deploying '$f' in '$FILE'... DONE";
-		if [[ ${RESULT} -ne 0 ]]; then
-			echo "Error while deploying '$f' to '$FILE'!";
-			exit ${RESULT};
-		fi
-		echo "--------------------------------------------------------------------------------";
+	else #WTF
+		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
+		ls -l $FILENAME;
+		exit 1;
 	fi
 done 
 
