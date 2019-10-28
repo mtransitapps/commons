@@ -52,7 +52,9 @@ for FILE in "${FILES[@]}" ; do
 	git diff --name-status --exit-code ${FILE};
 	RESULT=$?;
 	if [[ ${RESULT} -eq 0 ]]; then
-		echo "Decrypted file '$FILE' NOT different than clear file!";
+		echo "Decrypted file '$FILE' NOT different than clear file! (error:${RESULT})";
+		ls -al ${FILE}; #DEBUG
+		ls -al ${FILE_ENC}; #DEBUG
 		exit ${RESULT};
 	fi
 
