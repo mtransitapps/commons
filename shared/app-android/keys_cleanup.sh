@@ -19,7 +19,7 @@ for FILE in "${FILES[@]}" ; do
 	echo "--------------------------------------------------------------------------------";
 	echo "> Cleaning '$FILE'...";
 
-	git ls-files --error-unmatch ${FILE};
+	git ls-files --error-unmatch ${FILE} &> /dev/null;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then #file is NOT tracked by git
 		if ! [[ -d $CLEAR ]]; then
@@ -60,6 +60,8 @@ if [[ -d $CLEAR ]]; then
 		echo "Error while deleting '$CLEAR' directory!";
 		ls -al $CLEAR;
 		exit ${RESULT};
+	else
+		echo "Directory '$CLEAR' deleted.";
 	fi
 fi
 
