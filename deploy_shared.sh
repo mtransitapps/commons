@@ -59,7 +59,7 @@ for SRC_FILE_PATH in commons/shared/* ; do
 				exit 1;
 			fi
 			echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'...";
-			cp -nR $S_SRC_FILE_PATH $S_DEST_FILE_PATH/;
+			cp -nR $S_SRC_FILE_PATH $S_DEST_PATH/;
 			RESULT=$?;
 			echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'... DONE";
 			if [[ ${RESULT} -ne 0 ]]; then

@@ -33,10 +33,28 @@ for FILE in "${FILES[@]}" ; do
 	fi
 done
 
+CLEAR="clr"
+
 for FILE in "${FILES[@]}" ; do
 	if [[ -z "${FILE}" ]]; then
 		echo "Ignoring empty '$FILE'.";
 		continue;
+	fi
+	echo "--------------------------------------------------------------------------------";
+	echo "> Decrypting '$FILE'...";
+
+	git ls-files --error-unmatch ${FILE};
+	RESULT=$?;
+	if [[ ${RESULT} -ne 0 ]]; then #file is NOT tracked by git
+		if ! [[ -d $CLEAR ]]; then
+			mkdir $CLEAR;
+			RESULT=$?;
+			if [[ ${RESULT} -ne 0 ]]; then
+				echo "Error while creating '$CLEAR' directory!";
+				exit ${RESULT};
+			fi
+		fi
+		cp ${FILE} $CLEAR/${FILE};
 	fi
 
 	FILE_ENC="enc/${FILE}";
@@ -49,16 +67,29 @@ for FILE in "${FILES[@]}" ; do
 		exit ${RESULT};
 	fi
 
-	git diff --name-status --exit-code ${FILE};
+	git ls-files --error-unmatch ${FILE};
 	RESULT=$?;
-	if [[ ${RESULT} -eq 0 ]]; then
-		echo "Decrypted file '$FILE' NOT different than clear file! (error:${RESULT})";
-		ls -al ${FILE}; #DEBUG
-		ls -al ${FILE_ENC}; #DEBUG
-		exit ${RESULT};
+	if [[ ${RESULT} -ne 0 ]]; then #file is NOT tracked by git
+		diff -q ${FILE} $CLEAR/${FILE};
+		RESULT=$?;
+		if [[ ${RESULT} -eq 0 ]]; then
+			echo "Decrypted file '$FILE' NOT different than clear file!";
+			exit ${RESULT};
+		fi
+		# rm ${FILE}.clear;
+	else  #file is tracked by git
+		git diff --name-status --exit-code ${FILE};
+		RESULT=$?;
+		if [[ ${RESULT} -eq 0 ]]; then
+			echo "Decrypted file '$FILE' NOT different than clear file!";
+			ls -al ${FILE}; #DEBUG
+			ls -al ${FILE_ENC}; #DEBUG
+			exit ${RESULT};
+		fi
 	fi
 
-	echo "File '$FILE' decrypted successfully."
+	echo "> Decrypting '$FILE'... DONE";
+	echo "--------------------------------------------------------------------------------";
 done
 
 echo ">> Setup-ing keys... DONE";

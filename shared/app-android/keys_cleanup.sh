@@ -9,31 +9,59 @@ if [[ ${#FILES[@]} -lt 1 ]]; then
 	exit 1;
 fi
 
+CLEAR="clr"
+
 for FILE in "${FILES[@]}" ; do
 	if [[ -z "${FILE}" ]]; then
 		echo "Ignoring empty '$FILE'.";
 		continue;
 	fi
+	echo "--------------------------------------------------------------------------------";
+	echo "> Cleaning '$FILE'...";
 
-	FILE_ENC="enc/${FILE}";
-
-	git checkout -- ${FILE};
+	git ls-files --error-unmatch ${FILE};
 	RESULT=$?;
-	if [[ ${RESULT} -ne 0 ]]; then
-		echo "Resetting decrypted file '$FILE' using 'git checkout' did NOT work!";
-		rm ${FILE}; # deleting file
-		exit ${RESULT};
+	if [[ ${RESULT} -ne 0 ]]; then #file is NOT tracked by git
+		if ! [[ -d $CLEAR ]]; then
+			echo "Missing '$CLEAR' directory!";
+			exit 1;
+		fi
+		mv $CLEAR/${FILE} ${FILE};
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "Resetting decrypted file '$FILE' using 'mv $CLEAR/${FILE} ${FILE}' did NOT work!";
+			rm ${FILE}; # deleting file
+			exit ${RESULT};
+		fi
+	else #file is tracked by git
+		git checkout -- ${FILE};
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "Resetting decrypted file '$FILE' using 'git checkout' did NOT work!";
+			rm ${FILE}; # deleting file
+			exit ${RESULT};
+		fi
+		git diff --name-status --exit-code ${FILE};
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "File '$FILE' NOT the same as clear file!";
+			exit ${RESULT};
+		fi
 	fi
 
-	git diff --name-status --exit-code ${FILE};
-	RESULT=$?;
-	if [[ ${RESULT} -ne 0 ]]; then
-		echo "File '$FILE' NOT the same as clear file!";
-		exit ${RESULT};
-	fi
-
-	echo "File '$FILE' cleaned successfully."
+	echo "> Cleaning '$FILE'... DONE";
+	echo "--------------------------------------------------------------------------------";
 done
+
+if [[ -d $CLEAR ]]; then
+	rm -r $CLEAR;
+	RESULT=$?;
+	if [[ ${RESULT} -ne 0 ]]; then
+		echo "Error while deleting '$CLEAR' directory!";
+		ls -al $CLEAR;
+		exit ${RESULT};
+	fi
+fi
 
 echo ">> Cleaning keys... DONE";
 
