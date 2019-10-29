@@ -1,6 +1,6 @@
 #!/bin/bash
 source ../commons/commons.sh
-echo ">> Decrupting-ing file $@...";
+echo ">> Decrypting-ing file $@...";
 
 if [[ -z "${MT_ENCRYPT_KEY}" ]]; then
 	echo "MT_ENCRYPT_KEY environment variable is NOT defined!";
@@ -38,4 +38,4 @@ if [[ ${RESULT} -ne 0 ]]; then
 	exit ${RESULT};
 fi
 
-echo ">> Decrupting-ing file $@... DONE";
+echo ">> Decrypting-ing file $@... DONE";
