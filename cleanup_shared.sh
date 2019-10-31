@@ -79,7 +79,7 @@ for SRC_FILE_PATH in commons/shared/* ; do
 				if [[ ${RESULT} -ne 0 ]]; then
 					echo "Deployed shared directory $S_DEST_FILE_PATH changed (source: '$S_SRC_FILE_PATH')!";
 					exit ${RESULT};
-				fi	
+				fi
 				echo "> Cleaning-up '$S_DEST_FILE_PATH' in '$S_DEST_PATH'...";
 				rm -r $S_DEST_FILE_PATH;
 				RESULT=$?;
@@ -101,7 +101,6 @@ for SRC_FILE_PATH in commons/shared/* ; do
 		exit 1;
 	fi
 done 
-
 
 echo "--------------------------------------------------------------------------------";
 AFTER_DATE=$(date +%D-%X);
