@@ -116,7 +116,9 @@ for S in "${!SUBMODULES[@]}"; do
 	fi
 	cd $CURRENT_PATH/$SUBMODULE || exit; # >>
 	echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
+	git remote -v; #DEBUG
 	git remote set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
+	git remote -v; #DEBUG
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";

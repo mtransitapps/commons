@@ -78,9 +78,11 @@ for d in ${PWD}/* ; do
 			echo "> GIT repo up-to-date in '$DIRECTORY' (local:$GIT_REV_PARSE_HEAD|origin/$GIT_BRANCH:$GIT_REV_PARSE_REMOTE_BRANCH).";
 		fi
 
+		git remote -v; #DEBUG
 		git checkout ${GIT_BRANCH};
 		checkResult $? ${CONFIRM};
 
+		git remote -v; #DEBUG
 		git pull;
 		checkResult $? ${CONFIRM};
 		echo "> GIT cleaning in '$DIRECTORY'... DONE";
