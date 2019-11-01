@@ -2,7 +2,7 @@
 #NO DEPENDENCY <= EXECUTED BEFORE GIT SUBMODULE
 
 echo "================================================================================";
-echo "> DEPLOY SHARED...";
+echo "> SYNC...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
@@ -10,16 +10,97 @@ BEFORE_DATE_SEC=$(date +%s);
 CURRENT_PATH=$(pwd);
 CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 
-echo "Current directory: $CURRENT_DIRECTORY";
+echo "Current directory: '$CURRENT_DIRECTORY'";
 
-# SHARED
+# GIT SUBMODULEs
+INIT_SUBMODULE=false;
+if [[ -f "$CURRENT_PATH/.gitmodules" ]]; then
+	INIT_SUBMODULE=false;
+else
+	INIT_SUBMODULE=true;
+fi
+GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
+declare -a SUBMODULES=(
+	"commons"
+	"commons-android"
+	"app-android"
+);
+PROJECT_NAME="${CURRENT_DIRECTORY:0:$((${#CURRENT_DIRECTORY} - 7))}"
+declare -a SUBMODULES_REPO=(
+	"commons"
+	"commons-android"
+);
+if [[ $PROJECT_NAME == *android ]]; then
+	SUBMODULES_REPO+=($PROJECT_NAME);
+else
+	SUBMODULES_REPO+=("$PROJECT_NAME-android");
+fi
+if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
+	echo "> Main android app: '$PROJECT_NAME' > parser NOT required";
+elif [[ $PROJECT_NAME == *bike ]]; then
+	echo "> Bike android app: '$PROJECT_NAME' > parser NOT required";
+else
+	echo "> Bus/Train/... android app: '$PROJECT_NAME' > parser required";
+	SUBMODULES+=('parser');
+	SUBMODULES_REPO+=('parser');
+	SUBMODULES+=('agency-parser');
+	SUBMODULES_REPO+=("${PROJECT_NAME}-parser");
+fi
+echo "> Submodules:";
+printf '> - "%s"\n' "${SUBMODULES[@]}";
+for S in "${!SUBMODULES[@]}"; do
+	SUBMODULE=${SUBMODULES[$S]}
+	SUBMODULE_REPO=${SUBMODULES_REPO[$S]}
+	echo "--------------------------------------------------------------------------------";
+	if [[ -z "${SUBMODULE_REPO}" ]]; then
+		echo "SUBMODULE_REPO empty!";
+		exit 1;
+	fi
+	if [[ "$INIT_SUBMODULE" == true ]]; then # ADDNING GIT SUBMODULE
+		if [[ -d "$CURRENT_PATH/$SUBMODULE" ]]; then
+			echo "> Cannot override '$CURRENT_PATH/$SUBMODULE'!";
+			exit 1;
+		fi
+		echo "> Adding submodule '$SUBMODULE_REPO' in '$SUBMODULE'...";
+		git submodule add git://github.com/mtransitapps/$SUBMODULE_REPO.git $SUBMODULE;
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "> Error while cloning '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+			exit ${RESULT};
+		fi
+		echo "> Adding submodule '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
+	fi
+	if ! [[ -d "$CURRENT_PATH/$SUBMODULE" ]]; then
+		echo "> Submodule directory '$CURRENT_PATH/$SUBMODULE' does NOT exist!";
+		exit 1;
+	fi
+	cd $CURRENT_PATH/$SUBMODULE || exit; # >>
+	echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
+	git remote set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
+	RESULT=$?;
+	if [[ ${RESULT} -ne 0 ]]; then
+		echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+		exit ${RESULT};
+	fi
+	git checkout $GIT_BRANCH;
+	RESULT=$?;
+	if [[ ${RESULT} -ne 0 ]]; then
+		echo "> Error while checkint out $GIT_BRANCH in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+		exit ${RESULT};
+	fi
+	echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
+	cd $CURRENT_PATH || exit; # <<
+	echo "--------------------------------------------------------------------------------";
+done
 
 DEST_PATH=".";
+
+echo "--------------------------------------------------------------------------------";
+echo "> Deploying shared files...";
 SRC_DIR_PATH="commons/shared";
 for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
 	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
-		echo "> Skip '$FILENAME'.";
 		continue;
 	fi
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
@@ -52,7 +133,6 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		for S_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/) ; do
 			S_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/$S_FILENAME;
 			if [[ $S_FILENAME == "." ]] || [[ $S_FILENAME == ".." ]]; then
-				echo "> Skip '$S_FILENAME'.";
 				continue;
 			fi
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
@@ -66,7 +146,6 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 				for SS_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/) ; do
 					SS_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/$SS_FILENAME;
 					if [[ $SS_FILENAME == "." ]] || [[ $SS_FILENAME == ".." ]]; then
-						echo "> Skip '$SS_FILENAME'.";
 						continue;
 					fi
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
@@ -110,15 +189,15 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
+echo "> Deploying shared files... DONE";
+echo "--------------------------------------------------------------------------------";
 
-# SHARED-OPT-DIR
-
-DEST_PATH=".";
+echo "--------------------------------------------------------------------------------";
+echo "> Deploying optional shared files...";
 SRC_DIR_PATH="commons/shared-opt-dir";
 for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
 	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
-		echo "> Skip '$FILENAME'.";
 		continue;
 	fi
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
@@ -147,7 +226,6 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		for S_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/) ; do
 			S_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/$S_FILENAME;
 			if [[ $S_FILENAME == "." ]] || [[ $S_FILENAME == ".." ]]; then
-				echo "> Skip '$S_FILENAME'.";
 				continue;
 			fi
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
@@ -161,7 +239,6 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 				for SS_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/) ; do
 					SS_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/$SS_FILENAME;
 					if [[ $SS_FILENAME == "." ]] || [[ $SS_FILENAME == ".." ]]; then
-						echo "> Skip '$SS_FILENAME'.";
 						continue;
 					fi
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
@@ -205,22 +282,22 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
+echo "> Deploying optional shared files... DONE";
+echo "--------------------------------------------------------------------------------";
 
-# SHARED-OVERWRITE
-
-DEST_PATH=".";
+echo "--------------------------------------------------------------------------------";
+echo "> Deploying overwriten shared files...";
 SRC_DIR_PATH="commons/shared-overwrite";
 for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
 	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
-		echo "> Skip '$FILENAME'.";
 		continue;
 	fi
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f $SRC_FILE_PATH ]]; then
 		echo "--------------------------------------------------------------------------------";
 		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'...";
-		cp -n $SRC_FILE_PATH $DEST_FILE_PATH;
+		cp $SRC_FILE_PATH $DEST_FILE_PATH;
 		RESULT=$?;
 		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'... DONE";
 		if [[ ${RESULT} -ne 0 ]]; then
@@ -241,7 +318,6 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		for S_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/) ; do
 			S_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/$S_FILENAME;
 			if [[ $S_FILENAME == "." ]] || [[ $S_FILENAME == ".." ]]; then
-				echo "> Skip '$S_FILENAME'.";
 				continue;
 			fi
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
@@ -250,13 +326,12 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 				for SS_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/) ; do
 					SS_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/$SS_FILENAME;
 					if [[ $SS_FILENAME == "." ]] || [[ $SS_FILENAME == ".." ]]; then
-						echo "> Skip '$SS_FILENAME'.";
 						continue;
 					fi
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
 					echo "--------------------------------------------------------------------------------";
 					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'...";
-					cp -nR $SS_SRC_FILE_PATH $SS_DEST_PATH/;
+					cp -R $SS_SRC_FILE_PATH $SS_DEST_PATH/;
 					RESULT=$?;
 					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'... DONE";
 					if [[ ${RESULT} -ne 0 ]]; then
@@ -268,7 +343,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 			else
 				echo "--------------------------------------------------------------------------------";
 				echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'...";
-				cp -nR $S_SRC_FILE_PATH $S_DEST_PATH/;
+				cp -R $S_SRC_FILE_PATH $S_DEST_PATH/;
 				RESULT=$?;
 				echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'... DONE";
 				if [[ ${RESULT} -ne 0 ]]; then
@@ -284,11 +359,13 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
+echo "> Deploying overwriten shared files... DONE";
+echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> DEPLOY SHARED... DONE";
+echo "> DEPLOY SYNC... DONE";
 echo "================================================================================";

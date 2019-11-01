@@ -13,7 +13,9 @@ CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 echo "Current directory: $CURRENT_DIRECTORY";
 
 DEST_PATH=".";
-for SRC_FILE_PATH in commons/shared/* ; do
+
+SRC_DIR_PATH="commons/shared";
+for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 	FILENAME=$(basename ${SRC_FILE_PATH});
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f $SRC_FILE_PATH ]]; then
@@ -27,7 +29,7 @@ for SRC_FILE_PATH in commons/shared/* ; do
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Deployed shared file $DEST_FILE_PATH changed (source: '$SRC_FILE_PATH')!";
 			exit ${RESULT};
-		fi		
+		fi
 		echo "> Cleaning-up file '$DEST_FILE_PATH' in '$DEST_PATH'...";
 		rm $DEST_FILE_PATH;
 		RESULT=$?;
@@ -43,7 +45,7 @@ for SRC_FILE_PATH in commons/shared/* ; do
 			exit 1;
 		fi
 		S_DEST_PATH="$DEST_PATH/${FILENAME}";
-		for S_SRC_FILE_PATH in commons/shared/${FILENAME}/* ; do
+		for S_SRC_FILE_PATH in ${SRC_DIR_PATH}/${FILENAME}/* ; do
 			echo "--------------------------------------------------------------------------------";
 			S_FILENAME=$(basename ${S_SRC_FILE_PATH});
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
@@ -57,7 +59,7 @@ for SRC_FILE_PATH in commons/shared/* ; do
 				if [[ ${RESULT} -ne 0 ]]; then
 					echo "> Deployed shared file $S_DEST_FILE_PATH changed (source: '$S_SRC_FILE_PATH')!";
 					exit ${RESULT};
-				fi		
+				fi
 				echo "> Cleaning-up file '$S_DEST_FILE_PATH' in '$S_DEST_PATH'...";
 				rm $S_DEST_FILE_PATH;
 				RESULT=$?;
@@ -73,7 +75,7 @@ for SRC_FILE_PATH in commons/shared/* ; do
 					exit 1;
 				fi
 				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
-				for SS_SRC_FILE_PATH in commons/shared/${FILENAME}/${S_FILENAME}/* ; do
+				for SS_SRC_FILE_PATH in ${SRC_DIR_PATH}/${FILENAME}/${S_FILENAME}/* ; do
 					echo "--------------------------------------------------------------------------------";
 					SS_FILENAME=$(basename ${SS_SRC_FILE_PATH});
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
@@ -154,7 +156,7 @@ for SRC_FILE_PATH in commons/shared/* ; do
 		ls -l $FILENAME;
 		exit 1;
 	fi
-done 
+done
 
 echo "--------------------------------------------------------------------------------";
 AFTER_DATE=$(date +%D-%X);
