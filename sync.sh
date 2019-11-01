@@ -13,19 +13,58 @@ CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 echo "Current directory: '$CURRENT_DIRECTORY'";
 
 # GIT SUBMODULEs
+
+GIT_URL=$(git config --get remote.origin.url); # remote get-url origin
+echo "> Git URL: '$GIT_URL'.";
+GIT_PROJECT_NAME=$(basename -- ${GIT_URL});
+GIT_PROJECT_NAME="${GIT_PROJECT_NAME%.*}"
+echo "> Git project name: '$GIT_PROJECT_NAME'.";
+if [[ -z "${GIT_PROJECT_NAME}" ]]; then
+	echo "GIT_PROJECT_NAME not found!";
+	exit 1;
+fi
+
+GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
+if [[ "$GIT_BRANCH" = "HEAD" ]]; then
+	GIT_BRANCH="";
+fi
+if [[ -z "${GIT_BRANCH}" ]]; then
+	GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}; #TravicCI
+	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
+		GIT_BRANCH="";
+	fi
+fi
+if [[ -z "${GIT_BRANCH}" ]]; then
+	GIT_BRANCH=${TRAVIS_BRANCH}; #TravicCI
+	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
+		GIT_BRANCH="";
+	fi
+fi
+if [[ -z "${GIT_BRANCH}" ]]; then
+	GIT_BRANCH=${CI_COMMIT_REF_NAME}; #GitLab
+	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
+		GIT_BRANCH="";
+	fi
+fi
+if [[ -z "${GIT_BRANCH}" ]]; then
+	echo "GIT_BRANCH not found!";
+	exit 1;
+fi
+echo "GIT_BRANCH: $GIT_BRANCH.";
+
 INIT_SUBMODULE=false;
 if [[ -f "$CURRENT_PATH/.gitmodules" ]]; then
 	INIT_SUBMODULE=false;
 else
 	INIT_SUBMODULE=true;
 fi
-GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
+
 declare -a SUBMODULES=(
 	"commons"
 	"commons-android"
 	"app-android"
 );
-PROJECT_NAME="${CURRENT_DIRECTORY:0:$((${#CURRENT_DIRECTORY} - 7))}"
+PROJECT_NAME="${GIT_PROJECT_NAME:0:$((${#GIT_PROJECT_NAME} - 7))}";
 declare -a SUBMODULES_REPO=(
 	"commons"
 	"commons-android"
@@ -48,6 +87,7 @@ else
 fi
 echo "> Submodules:";
 printf '> - "%s"\n' "${SUBMODULES[@]}";
+
 for S in "${!SUBMODULES[@]}"; do
 	SUBMODULE=${SUBMODULES[$S]}
 	SUBMODULE_REPO=${SUBMODULES_REPO[$S]}
