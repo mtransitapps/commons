@@ -59,14 +59,15 @@ fi
 echo "/build.sh > IS_CI:'${IS_CI}'";
 
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
-echo "IS_SHALLOW: $IS_SHALLOW";
 if [[ "$IS_SHALLOW" == true ]]; then
+	echo "> Fetching unshallow GIT repo...";
 	git fetch --unshallow;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while fetching unshallow GIT repository!";
 		exit ${RESULT};
 	fi
+	echo "> Fetching unshallow GIT repo... DONE";
 fi;
 
 INIT_SUBMODULE=false;
