@@ -52,6 +52,12 @@ if [[ -z "${GIT_BRANCH}" ]]; then
 fi
 echo "GIT_BRANCH: $GIT_BRANCH.";
 
+IS_CI=false;
+if [[ ! -z "${CI}" ]]; then
+	IS_CI=true;
+fi
+echo "/build.sh > IS_CI:'${IS_CI}'";
+
 INIT_SUBMODULE=false;
 if [[ -f "$CURRENT_PATH/.gitmodules" ]]; then
 	INIT_SUBMODULE=false;
@@ -115,22 +121,24 @@ for S in "${!SUBMODULES[@]}"; do
 		exit 1;
 	fi
 	cd $CURRENT_PATH/$SUBMODULE || exit; # >>
-	echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
-	git remote -v; #DEBUG
-	git remote set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
-	git remote -v; #DEBUG
-	RESULT=$?;
-	if [[ ${RESULT} -ne 0 ]]; then
-		echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
-		exit ${RESULT};
+	if [[ ${IS_CI} = false ]]; then
+		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
+		git remote set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+			exit ${RESULT};
+		fi
+		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
 	fi
+	echo "> Setting submodule branch '$GIT_BRANCH' in '$SUBMODULE'...";
 	git checkout $GIT_BRANCH;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while checkint out $GIT_BRANCH in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
 		exit ${RESULT};
 	fi
-	echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
+	echo "> Setting submodule branch '$GIT_BRANCH' in '$SUBMODULE'... DONE";
 	cd $CURRENT_PATH || exit; # <<
 	echo "--------------------------------------------------------------------------------";
 done
