@@ -90,21 +90,43 @@ for d in ${PWD}/* ; do
 done
 
 if [[ -d "agency-parser" ]]; then
-	echo "> CLEANING FOR '$AGENCY_ID'... (GRADLE BUILD)";
-	./gradlew :parser:clean :parser:build ${GRADLE_ARGS};
+	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
+
+	./gradlew :parser:clean ${GRADLE_ARGS};
 	checkResult $? ${CONFIRM};
 
-	./gradlew :agency-parser:clean :agency-parser:build ${GRADLE_ARGS};
+	./gradlew :agency-parser:clean ${GRADLE_ARGS};
 	checkResult $? ${CONFIRM};
-	echo "> CLEANING FOR '$AGENCY_ID'... DONE";
+	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 
-	echo "> PARSING DATA FOR '$AGENCY_ID'...";
-	cd agency-parser || exit;
+	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'...";
+	cd agency-parser || exit; # >>
 
     chmod +x download.sh;
     checkResult $? ${CONFIRM};
 	./download.sh;
 	checkResult $? ${CONFIRM};
+
+	if [[ -f "parse_pre.sh" ]]; then
+		chmod +x parse_pre.sh;
+		checkResult $? ${CONFIRM};
+		./parse_pre.sh;
+		checkResult $? ${CONFIRM};
+	fi
+
+	cd ..; # <<
+	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
+
+	echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... ";
+	./gradlew :parser:build ${GRADLE_ARGS};
+	checkResult $? ${CONFIRM};
+
+	./gradlew :agency-parser:build ${GRADLE_ARGS};
+	checkResult $? ${CONFIRM};
+	echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
+
+	echo "> PARSING DATA FOR '$AGENCY_ID'...";
+	cd agency-parser || exit; # >>
 
     chmod +x parse_current.sh;
     checkResult $? ${CONFIRM};
@@ -121,7 +143,7 @@ if [[ -d "agency-parser" ]]; then
 	./list_change.sh;
 	checkResult $? ${CONFIRM};
 
-	cd ..;
+	cd ..; # <<
 	echo "> PARSING DATA FOR '$AGENCY_ID'... DONE";
 else
 	echo "> SKIP PARSING FOR '$AGENCY_ID'.";

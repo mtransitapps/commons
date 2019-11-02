@@ -27,7 +27,7 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 		diff -q $DEST_FILE_PATH $SRC_FILE_PATH;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Deployed shared file $DEST_FILE_PATH changed (source: '$SRC_FILE_PATH')!";
+			echo "> Deployed shared file $DEST_FILE_PATH CHANGED (source: '$SRC_FILE_PATH')!";
 			exit ${RESULT};
 		fi
 		echo "> Cleaning-up file '$DEST_FILE_PATH' in '$DEST_PATH'...";
@@ -57,7 +57,7 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 				diff -q $S_DEST_FILE_PATH $S_SRC_FILE_PATH;
 				RESULT=$?;
 				if [[ ${RESULT} -ne 0 ]]; then
-					echo "> Deployed shared file $S_DEST_FILE_PATH changed (source: '$S_SRC_FILE_PATH')!";
+					echo "> Deployed shared file $S_DEST_FILE_PATH CHANGED (source: '$S_SRC_FILE_PATH')!";
 					exit ${RESULT};
 				fi
 				echo "> Cleaning-up file '$S_DEST_FILE_PATH' in '$S_DEST_PATH'...";
@@ -87,7 +87,7 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 						diff -q $SS_DEST_FILE_PATH $SS_SRC_FILE_PATH;
 						RESULT=$?;
 						if [[ ${RESULT} -ne 0 ]]; then
-							echo "> Deployed shared file $SS_DEST_FILE_PATH changed (source: '$SS_SRC_FILE_PATH')!";
+							echo "> Deployed shared file $SS_DEST_FILE_PATH CHANGED (source: '$SS_SRC_FILE_PATH')!";
 							exit ${RESULT};
 						fi
 						echo "> Cleaning-up file '$SS_DEST_FILE_PATH' in '$SS_DEST_PATH'...";
@@ -107,7 +107,7 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 						diff -q -r $SS_DEST_FILE_PATH $SS_SRC_FILE_PATH;
 						RESULT=$?;
 						if [[ ${RESULT} -ne 0 ]]; then
-							echo "> Deployed shared directory $SS_DEST_FILE_PATH changed (source: '$SS_SRC_FILE_PATH')!";
+							echo "> Deployed shared directory $SS_DEST_FILE_PATH CHANGED (source: '$SS_SRC_FILE_PATH')!";
 							exit ${RESULT};
 						fi
 						echo "> Cleaning-up directory '$SS_DEST_FILE_PATH' in '$SS_DEST_PATH'...";
@@ -171,7 +171,7 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 		diff -q $DEST_FILE_PATH $SRC_FILE_PATH;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Deployed shared file $DEST_FILE_PATH changed (source: '$SRC_FILE_PATH')!";
+			echo "> Deployed shared file $DEST_FILE_PATH CHANGED (source: '$SRC_FILE_PATH')!";
 			exit ${RESULT};
 		fi
 		echo "> Cleaning-up file '$DEST_FILE_PATH' in '$DEST_PATH'...";
@@ -201,7 +201,7 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 				diff -q $S_DEST_FILE_PATH $S_SRC_FILE_PATH;
 				RESULT=$?;
 				if [[ ${RESULT} -ne 0 ]]; then
-					echo "> Deployed shared file $S_DEST_FILE_PATH changed (source: '$S_SRC_FILE_PATH')!";
+					echo "> Deployed shared file $S_DEST_FILE_PATH CHANGED (source: '$S_SRC_FILE_PATH')!";
 					exit ${RESULT};
 				fi
 				echo "> Cleaning-up file '$S_DEST_FILE_PATH' in '$S_DEST_PATH'...";
@@ -231,7 +231,7 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 						diff -q $SS_DEST_FILE_PATH $SS_SRC_FILE_PATH;
 						RESULT=$?;
 						if [[ ${RESULT} -ne 0 ]]; then
-							echo "> Deployed shared file $SS_DEST_FILE_PATH changed (source: '$SS_SRC_FILE_PATH')!";
+							echo "> Deployed shared file $SS_DEST_FILE_PATH CHANGED (source: '$SS_SRC_FILE_PATH')!";
 							exit ${RESULT};
 						fi
 						echo "> Cleaning-up file '$SS_DEST_FILE_PATH' in '$SS_DEST_PATH'...";
@@ -251,7 +251,7 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 						diff -q -r $SS_DEST_FILE_PATH $SS_SRC_FILE_PATH;
 						RESULT=$?;
 						if [[ ${RESULT} -ne 0 ]]; then
-							echo "> Deployed shared directory $SS_DEST_FILE_PATH changed (source: '$SS_SRC_FILE_PATH')!";
+							echo "> Deployed shared directory $SS_DEST_FILE_PATH CHANGED (source: '$SS_SRC_FILE_PATH')!";
 							exit ${RESULT};
 						fi
 						echo "> Cleaning-up directory '$SS_DEST_FILE_PATH' in '$SS_DEST_PATH'...";
