@@ -130,11 +130,6 @@ fi
 echo "> BUILDING ANDROID APP FOR '$AGENCY_ID'...";
 cd app-android || exit;
 
-chmod +x bump_version.sh;
-checkResult $? ${CONFIRM};
-./bump_version.sh
-checkResult $? ${CONFIRM};
-
 chmod +x build.sh;
 checkResult $? ${CONFIRM};
 ./build.sh
