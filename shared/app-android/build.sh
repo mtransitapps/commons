@@ -110,24 +110,16 @@ RESULT=$?;
 checkResult ${RESULT};
 echo ">> Running bundle release... DONE";
 
-CUSTOM_LOCAL_PROPERTIES="../custom_local.properties";
-if [ -f "$CUSTOM_LOCAL_PROPERTIES" ]; then
-	echo ">> Copying release bundles to output dir...";
-	while IFS='=' read -r key value; do
-		key=$(echo $key | tr '.' '_')
-		eval ${key}=\${value}
-	done < "$CUSTOM_LOCAL_PROPERTIES"
-	if [[ ! -z "${output_dir}" ]]; then
-		cp build/outputs/bundle/release/*.aab ${output_dir};
-		RESULT=$?;
-		checkResult ${RESULT};
+if [[ ! -z "${MT_OUTPUT_DIR}" ]]; then
+	echo ">> Copying release bundles to output dir '${MT_OUTPUT_DIR}'...";
+	if ! [[ -d "${MT_OUTPUT_DIR}" ]]; then
+		echo ">> Output release '${MT_OUTPUT_DIR}' not found!";
+		exit 1;
 	fi
-	if [[ ! -z "${output_cloud_dir}" ]]; then
-		cp build/outputs/bundle/release/*.aab ${output_cloud_dir};
-		RESULT=$?;
-		checkResult ${RESULT};
-	fi
-	echo ">> Copying release bundles to output dir... DONE";
+	cp build/outputs/bundle/release/*.aab ${MT_OUTPUT_DIR};
+	RESULT=$?;
+	checkResult ${RESULT};
+	echo ">> Copying release bundles to output dir '${MT_OUTPUT_DIR}'... DONE";
 fi
 
 echo ">> Cleaning keys...";
