@@ -68,7 +68,9 @@ if [[ "$IS_SHALLOW" == true ]]; then
 		exit ${RESULT};
 	fi
 	echo "> Fetching unshallow GIT repo... DONE";
-fi;
+else
+	echo "> Not a shallow GIT repo.";
+fi
 
 INIT_SUBMODULE=false;
 if [[ -f "$CURRENT_PATH/.gitmodules" ]]; then
