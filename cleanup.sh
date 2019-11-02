@@ -165,8 +165,8 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 	if [[ -f $SRC_FILE_PATH ]]; then
 		echo "--------------------------------------------------------------------------------";
 		if ! [[ -f "$DEST_FILE_PATH" ]]; then
-			echo "> File to cleanup '$DEST_FILE_PATH' ($SRC_FILE_PATH) does NOT exist in target directory!";
-			exit 1;
+			echo "> File to cleanup '$DEST_FILE_PATH' ($SRC_FILE_PATH) does NOT exist in target directory.";
+			continue;
 		fi
 		diff -q $DEST_FILE_PATH $SRC_FILE_PATH;
 		RESULT=$?;
@@ -185,8 +185,8 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 		echo "--------------------------------------------------------------------------------";
 	elif [[ -d "$SRC_FILE_PATH" ]]; then
 		if ! [[ -d "$DEST_FILE_PATH" ]]; then
-			echo "> Directory to cleanup '$DEST_FILE_PATH' not found in target directory!";
-			exit 1;
+			echo "> Directory to cleanup '$DEST_FILE_PATH' does NOT exist in target in target directory.";
+			continue;
 		fi
 		S_DEST_PATH="$DEST_PATH/${FILENAME}";
 		for S_SRC_FILE_PATH in ${SRC_DIR_PATH}/${FILENAME}/* ; do
@@ -195,8 +195,8 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
 			if [[ -f "$S_SRC_FILE_PATH" ]]; then
 				if ! [[ -f "$S_DEST_FILE_PATH" ]]; then
-					echo "> File to cleanup '$S_DEST_FILE_PATH' ($S_SRC_FILE_PATH) does NOT exist in target directory!";
-					exit 1;
+					echo "> File to cleanup '$S_DEST_FILE_PATH' ($S_SRC_FILE_PATH) does NOT exist in target directory.";
+					continue;
 				fi
 				diff -q $S_DEST_FILE_PATH $S_SRC_FILE_PATH;
 				RESULT=$?;
@@ -215,8 +215,8 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 				echo "--------------------------------------------------------------------------------";
 			elif [[ -d "$S_SRC_FILE_PATH" ]]; then
 				if ! [[ -d "$S_DEST_FILE_PATH" ]]; then
-					echo "> Direcotory to cleanup '$S_DEST_FILE_PATH' ($S_SRC_FILE_PATH) does NOT exist in target directory!";
-					exit 1;
+					echo "> Direcotory to cleanup '$S_DEST_FILE_PATH' ($S_SRC_FILE_PATH) does NOT exist in target directory.";
+					continue;
 				fi
 				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
 				for SS_SRC_FILE_PATH in ${SRC_DIR_PATH}/${FILENAME}/${S_FILENAME}/* ; do
@@ -225,8 +225,8 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
 					if [[ -f "$SS_SRC_FILE_PATH" ]]; then
 						if ! [[ -f "$SS_DEST_FILE_PATH" ]]; then
-							echo "> File to cleanup '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) does NOT exist in target directory!";
-							exit 1;
+							echo "> File to cleanup '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) does NOT exist in target directory.";
+							continue;
 						fi
 						diff -q $SS_DEST_FILE_PATH $SS_SRC_FILE_PATH;
 						RESULT=$?;
@@ -245,8 +245,8 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 						echo "--------------------------------------------------------------------------------";
 					elif [[ -d "$S_SRC_FILE_PATH" ]]; then
 						if ! [[ -d "$SS_DEST_FILE_PATH" ]]; then
-							echo "> Direcotory to cleanup '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) does NOT exist in target directory!";
-							exit 1;
+							echo "> Direcotory to cleanup '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) does NOT exist in target directory.";
+							continue;
 						fi
 						diff -q -r $SS_DEST_FILE_PATH $SS_SRC_FILE_PATH;
 						RESULT=$?;
