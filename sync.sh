@@ -58,6 +58,17 @@ if [[ ! -z "${CI}" ]]; then
 fi
 echo "/build.sh > IS_CI:'${IS_CI}'";
 
+IS_SHALLOW=$(git rev-parse --is-shallow-repository);
+echo "IS_SHALLOW: $IS_SHALLOW";
+if [[ "$IS_SHALLOW" == true ]]; then
+	git fetch --unshallow;
+	RESULT=$?;
+	if [[ ${RESULT} -ne 0 ]]; then
+		echo "> Error while fetching unshallow GIT repository!";
+		exit ${RESULT};
+	fi
+fi;
+
 INIT_SUBMODULE=false;
 if [[ -f "$CURRENT_PATH/.gitmodules" ]]; then
 	INIT_SUBMODULE=false;
