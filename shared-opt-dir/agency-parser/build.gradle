@@ -13,5 +13,5 @@ sourceSets {
 }
 
 dependencies {
-    compile project(':parser')
+    implementation project(':parser')
 }
