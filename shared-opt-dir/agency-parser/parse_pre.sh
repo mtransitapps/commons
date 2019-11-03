@@ -63,7 +63,7 @@ done
 echo "				}" >> ${JAVA_STOPS_FILE};
 echo "			}" >> ${JAVA_STOPS_FILE};
 echo "		}" >> ${JAVA_STOPS_FILE};
-echo "		return null;" >> ${JAVA_STOPS_FILE};
+echo "		return ALL_STOPS;" >> ${JAVA_STOPS_FILE};
 echo "	}" >> ${JAVA_STOPS_FILE};
 
 i=0;
