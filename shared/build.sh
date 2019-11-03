@@ -107,12 +107,15 @@ if [[ -d "agency-parser" ]]; then
 	./download.sh;
 	checkResult $? ${CONFIRM};
 
-	if [[ -f "parse_pre.sh" ]]; then
-		chmod +x parse_pre.sh;
-		checkResult $? ${CONFIRM};
-		./parse_pre.sh;
-		checkResult $? ${CONFIRM};
-	fi
+	chmod +x unzip_gtfs.sh;
+	checkResult $? ${CONFIRM};
+	./unzip_gtfs.sh;
+	checkResult $? ${CONFIRM};
+
+	chmod +x parse_pre.sh;
+	checkResult $? ${CONFIRM};
+	./parse_pre.sh;
+	checkResult $? ${CONFIRM};
 
 	cd ..; # <<
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
