@@ -34,7 +34,7 @@ fi
 openssl aes-256-cbc -md sha256 -d -in $1 -out $2 -k ${MT_ENCRYPT_KEY};
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
-	echo "Error while decrypting '$FILE_ENC'!";
+	echo "Error while decrypting '$1' to '$2'!";
 	exit ${RESULT};
 fi
 
