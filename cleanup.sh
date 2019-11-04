@@ -15,8 +15,11 @@ echo "Current directory: $CURRENT_DIRECTORY";
 DEST_PATH=".";
 
 SRC_DIR_PATH="commons/shared";
-for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
-	FILENAME=$(basename ${SRC_FILE_PATH});
+for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
+	SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
+	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
+		continue;
+	fi
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f ${SRC_FILE_PATH} ]]; then
 		echo "--------------------------------------------------------------------------------";
@@ -45,9 +48,12 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 			exit 1;
 		fi
 		S_DEST_PATH="$DEST_PATH/${FILENAME}";
-		for S_SRC_FILE_PATH in ${SRC_DIR_PATH}/${FILENAME}/* ; do
+		for S_FILENAME in $(ls -a ${SRC_DIR_PATH}/${FILENAME}/) ; do
+			S_SRC_FILE_PATH=${SRC_DIR_PATH}/${FILENAME}/$S_FILENAME;
+			if [[ $S_FILENAME == "." ]] || [[ $S_FILENAME == ".." ]]; then
+				continue;
+			fi
 			echo "--------------------------------------------------------------------------------";
-			S_FILENAME=$(basename ${S_SRC_FILE_PATH});
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
 			if [[ -f "$S_SRC_FILE_PATH" ]]; then
 				if ! [[ -f "$S_DEST_FILE_PATH" ]]; then
@@ -75,9 +81,12 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 					exit 1;
 				fi
 				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
-				for SS_SRC_FILE_PATH in ${SRC_DIR_PATH}/${FILENAME}/${S_FILENAME}/* ; do
+				for SS_FILENAME in $(ls -a ${SRC_DIR_PATH}/${FILENAME}/${S_FILENAME}/) ; do
+					SS_SRC_FILE_PATH=${SRC_DIR_PATH}/${FILENAME}/${S_FILENAME}/$SS_FILENAME;
+					if [[ $SS_FILENAME == "." ]] || [[ $SS_FILENAME == ".." ]]; then
+						continue;
+					fi
 					echo "--------------------------------------------------------------------------------";
-					SS_FILENAME=$(basename ${SS_SRC_FILE_PATH});
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
 					if [[ -f "$SS_SRC_FILE_PATH" ]]; then
 						if ! [[ -f "$SS_DEST_FILE_PATH" ]]; then
@@ -159,8 +168,11 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 done
 
 SRC_DIR_PATH="commons/shared-opt-dir";
-for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
-	FILENAME=$(basename ${SRC_FILE_PATH});
+for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
+	SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
+	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
+		continue;
+	fi
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f ${SRC_FILE_PATH} ]]; then
 		echo "--------------------------------------------------------------------------------";
@@ -189,9 +201,12 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 			continue;
 		fi
 		S_DEST_PATH="$DEST_PATH/${FILENAME}";
-		for S_SRC_FILE_PATH in ${SRC_DIR_PATH}/${FILENAME}/* ; do
+		for S_FILENAME in $(ls -a ${SRC_DIR_PATH}/${FILENAME}/) ; do
+			S_SRC_FILE_PATH=${SRC_DIR_PATH}/${FILENAME}/$S_FILENAME;
+			if [[ $S_FILENAME == "." ]] || [[ $S_FILENAME == ".." ]]; then
+				continue;
+			fi
 			echo "--------------------------------------------------------------------------------";
-			S_FILENAME=$(basename ${S_SRC_FILE_PATH});
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
 			if [[ -f "$S_SRC_FILE_PATH" ]]; then
 				if ! [[ -f "$S_DEST_FILE_PATH" ]]; then
@@ -219,9 +234,12 @@ for SRC_FILE_PATH in ${SRC_DIR_PATH}/* ; do
 					continue;
 				fi
 				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
-				for SS_SRC_FILE_PATH in ${SRC_DIR_PATH}/${FILENAME}/${S_FILENAME}/* ; do
+				for SS_FILENAME in $(ls -a ${SRC_DIR_PATH}/${FILENAME}/${S_FILENAME}/) ; do
+					SS_SRC_FILE_PATH=${SRC_DIR_PATH}/${FILENAME}/${S_FILENAME}/$SS_FILENAME;
+					if [[ $SS_FILENAME == "." ]] || [[ $SS_FILENAME == ".." ]]; then
+						continue;
+					fi
 					echo "--------------------------------------------------------------------------------";
-					SS_FILENAME=$(basename ${SS_SRC_FILE_PATH});
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
 					if [[ -f "$SS_SRC_FILE_PATH" ]]; then
 						if ! [[ -f "$SS_DEST_FILE_PATH" ]]; then
