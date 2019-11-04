@@ -9,7 +9,7 @@ echo "/build.sh > IS_CI:'${IS_CI}'";
 
 GRADLE_ARGS="";
 if [[ ${IS_CI} = true ]]; then
-	GRADLE_ARGS=" --no-daemon --console=plain";
+	GRADLE_ARGS=" --console=plain";
 fi
 
 GTFS_ZIP="input/gtfs_next.zip";
