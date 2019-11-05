@@ -1,8 +1,8 @@
 #!/bin/bash
-echo "================================================================================";
-echo "> LOADING COMMONS...";
-COMMONS_BEFORE_DATE=$(date +%D-%X);
-COMMONS_BEFORE_DATE_SEC=$(date +%s);
+# echo "================================================================================";
+# echo "> LOADING COMMONS...";
+# COMMONS_BEFORE_DATE=$(date +%D-%X);
+# COMMONS_BEFORE_DATE_SEC=$(date +%s);
 
 # set current working directory to the directory of the script
 function setCurrentDirectory() {
@@ -84,8 +84,8 @@ function download() {
 	return 0; # DOWNLOADED SUCCESSFULLY
 }
 
-COMMONS_AFTER_DATE=$(date +%D-%X);
-COMMONS_AFTER_DATE_SEC=$(date +%s);
-COMMONS_DURATION_SEC=$(($COMMONS_AFTER_DATE_SEC-$COMMONS_BEFORE_DATE_SEC));
-echo "> LOADING COMMONS... DONE ($COMMONS_DURATION_SEC secs FROM $COMMONS_BEFORE_DATE TO $COMMONS_AFTER_DATE)";
-echo "================================================================================";
+# COMMONS_AFTER_DATE=$(date +%D-%X);
+# COMMONS_AFTER_DATE_SEC=$(date +%s);
+# COMMONS_DURATION_SEC=$(($COMMONS_AFTER_DATE_SEC-$COMMONS_BEFORE_DATE_SEC));
+# echo "> LOADING COMMONS... DONE ($COMMONS_DURATION_SEC secs FROM $COMMONS_BEFORE_DATE TO $COMMONS_AFTER_DATE)";
+# echo "================================================================================";

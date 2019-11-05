@@ -25,13 +25,13 @@ for i in "${!COLUMNS_ARRAY[@]}"; do
 done
 
 if [[ ${STOP_CODE_IDX} -lt 0 ]]; then
-	echo " >> Cannot find stop code!";
-	exit 1;
+	echo ">> Cannot find [optional] stop code > using stop ID.";
+	STOP_CODE_IDX=$STOP_ID_IDX;
 elif [[ ${STOP_ID_IDX} -lt 0 ]]; then
-	echo " >> Cannot find stop id!";
+	echo ">> Cannot find stop id!";
 	exit 1;
 elif [[ ${STOP_NAME_IDX} -lt 0 ]]; then
-	echo " >> Cannot find stop name!";
+	echo ">> Cannot find stop name!";
 	exit 1;
 fi
 
