@@ -12,25 +12,28 @@ STOP_CODE_IDX=-1;
 STOP_ID_IDX=-1;
 STOP_NAME_IDX=-1;
 for i in "${!COLUMNS_ARRAY[@]}"; do
-	if [[ "${COLUMNS_ARRAY[$i]}" = "stop_code" ]]; then
-		STOP_CODE_IDX=$(($i+1));
-		echo ">> Stop code column found at index: $STOP_CODE_IDX.";
-	elif [[ "${COLUMNS_ARRAY[$i]}" = "stop_id" ]]; then
+	COLUMN=${COLUMNS_ARRAY[$i]};
+	if [[ $COLUMN == *stop_id* ]]; then
 		STOP_ID_IDX=$(($i+1));
 		echo ">> Stop ID column found at index: $STOP_ID_IDX.";
-	elif [[ "${COLUMNS_ARRAY[$i]}" = "stop_name" ]]; then
+	elif [[ $COLUMN == *stop_code* ]]; then
+		STOP_CODE_IDX=$(($i+1));
+		echo ">> Stop code column found at index: $STOP_CODE_IDX.";
+	elif [[ $COLUMN == *stop_name* ]]; then
 		STOP_NAME_IDX=$(($i+1));
 		echo ">> Stop name column found at index: $STOP_NAME_IDX.";
 	fi
 done
 
-if [[ ${STOP_CODE_IDX} -lt 0 ]]; then
-	echo ">> Cannot find [optional] stop code > using stop ID.";
-	STOP_CODE_IDX=$STOP_ID_IDX;
-elif [[ ${STOP_ID_IDX} -lt 0 ]]; then
+if [[ ${STOP_ID_IDX} -lt 0 ]]; then
 	echo ">> Cannot find stop id!";
 	exit 1;
-elif [[ ${STOP_NAME_IDX} -lt 0 ]]; then
+fi
+if [[ ${STOP_CODE_IDX} -lt 0 ]]; then
+	echo ">> Cannot find [optional] stop code > using stop ID '$STOP_ID_IDX'.";
+	STOP_CODE_IDX=$STOP_ID_IDX;
+fi
+if [[ ${STOP_NAME_IDX} -lt 0 ]]; then
 	echo ">> Cannot find stop name!";
 	exit 1;
 fi
