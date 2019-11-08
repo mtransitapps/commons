@@ -60,25 +60,36 @@ function download() {
 	local URL=$1;
 	local NEW_FILE=$(basename "$URL");
 	local LAST_FILE=$2;
+	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
-		cp ${LAST_FILE} "${NEW_FILE}";
-		wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -N "$URL";
+		cp "${LAST_FILE}" "${NEW_FILE}";
+		# TODO --no-if-modified-since ??
+		# wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -N "$URL";
+		curl -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
 	else
-		wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -S "$URL";
+		# wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -S "$URL";
+		curl -L -o "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
 	fi;
 	if [[ -e "${NEW_FILE}" ]]; then
 		if [[ -e ${LAST_FILE} ]]; then
 			diff "${NEW_FILE}" ${LAST_FILE} >/dev/null;
 			if [[ $? -eq 0 ]]; then
+				echo "> download() > Ignoring same downloaded file.";
+				ls -l "${LAST_FILE}";
+				ls -l "${NEW_FILE}";
 				rm "${NEW_FILE}"; # same file
 			else
-				mv "${NEW_FILE}" ${LAST_FILE}; # different file
+				echo "> download() > Replacing old file with NEW downloaded file.";
+				ls -l "${LAST_FILE}";
+				ls -l "${NEW_FILE}";
+				mv "${NEW_FILE}" "${LAST_FILE}"; # different file
 			fi
 		else
-			mv "${NEW_FILE}" ${LAST_FILE}; # new file
+			echo "> download() > Using NEW downloaded file.";
+			mv "${NEW_FILE}" "${LAST_FILE}"; # new file
 		fi
 	else
-		echo "> download() > failed to download file from '$URL'!";
+		echo "> download() > Failed to download file from '$URL'!";
 		return 1; # DID NOT DOWNLOAD
 	fi;
 	return 0; # DOWNLOADED SUCCESSFULLY
