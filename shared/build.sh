@@ -155,8 +155,6 @@ fi
 echo "> BUILDING ANDROID APP FOR '$AGENCY_ID'...";
 cd app-android || exit;
 
-chmod +x build.sh;
-checkResult $? ${CONFIRM};
 ./build.sh
 checkResult $? ${CONFIRM};
 

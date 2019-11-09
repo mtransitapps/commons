@@ -44,9 +44,6 @@ jobs:
           name: Download Dependencies
           command: ./gradlew androidDependencies --console=plain
       - run:
-          name: build.sh permissions
-          command: sudo chmod +x build.sh
-      - run:
           name: Build
           command: ./build.sh
       - save_cache:
