@@ -9,8 +9,8 @@ declare -a FILES=(
 	"google-play-upload-keys.properties"
 );
 
-if [[ -f "res/values/keys.xml" ]]; then
-	FILES+=("res/values/keys.xml");
+if [[ -f "src/main/res/values/keys.xml" ]]; then
+	FILES+=("src/main/res/values/keys.xml");
 fi
 
 if [[ -f "google-services.json" ]]; then
