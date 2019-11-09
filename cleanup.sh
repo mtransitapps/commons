@@ -59,14 +59,13 @@ function cleanupDirectory() {
 	local DEST_FILE_PATH=$2;
 	local FILE_NAME=$(basename ${SRC_FILE_PATH});
 	if [[ -d "$DEST_FILE_PATH" ]]; then
-		local S_DEST_PATH="$DEST_FILE_PATH";
 		local S_FILE_NAME;
 		for S_FILE_NAME in $(ls -a ${SRC_FILE_PATH}/) ; do
 			local S_SRC_FILE_PATH=${SRC_FILE_PATH}/$S_FILE_NAME;
 			if [[ $S_FILE_NAME == "." ]] || [[ $S_FILE_NAME == ".." ]]; then
 				continue;
 			fi
-			local S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILE_NAME";
+			local S_DEST_FILE_PATH="$DEST_FILE_PATH/$S_FILE_NAME";
 			if [[ -f "$S_SRC_FILE_PATH" ]]; then
 				cleanupFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
 				checkResult $?;

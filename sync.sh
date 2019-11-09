@@ -193,6 +193,36 @@ function canOverwriteFile() {
 	fi
 }
 
+function deployFile() {
+	if [[ "$#" -lt 2 ]]; then
+		echo "> deployFile() > Illegal number of parameters!";
+		exit 1;
+	fi
+	local SRC_FILE_PATH=$1;
+	local DEST_FILE_PATH=$2;
+	local OVER_WRITE=false; # do not over-write by default
+	if [[ "$#" -ge 3 ]]; then
+		OVER_WRITE=$3;
+	fi
+	echo "--------------------------------------------------------------------------------";
+	if [[ "$OVER_WRITE" == true ]]; then
+		rm ${DEST_FILE_PATH};
+		checkResult $?;
+	else
+		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+		checkResult $?;
+	fi
+	echo "> Deploying file '$SRC_FILE_PATH'...";
+	cp -n $SRC_FILE_PATH $DEST_FILE_PATH;
+	local RESULT=$?;
+	if [[ ${RESULT} -ne 0 ]]; then
+		echo "> Error while deploying file '$SRC_FILE_PATH'!";
+		exit ${RESULT};
+	fi
+	echo "> Deploying file '$SRC_FILE_PATH'... DONE";
+	echo "--------------------------------------------------------------------------------";
+}
+
 function canOverwriteDirectory() {
 	if [[ "$#" -ne 2 ]]; then
 		echo "> canOverwriteDirectory() > Illegal number of parameters!";
@@ -214,6 +244,59 @@ function canOverwriteDirectory() {
 	fi
 }
 
+function deployDirectory() {
+	if [[ "$#" -lt 2 ]]; then
+		echo "> deployDirectory() > Illegal number of parameters!";
+		exit 1;
+	fi
+	local SRC_FILE_PATH=$1;
+	local DEST_FILE_PATH=$2;
+	local OVER_WRITE=false; # do not over-write by default
+	if [[ "$#" -ge 3 ]]; then
+		OVER_WRITE=$3;
+	fi
+	local OPT_DIR=false; # do create directory by default
+	if [[ "$#" -ge 4 ]]; then
+		OPT_DIR=$4;
+	fi
+	echo "--------------------------------------------------------------------------------";
+	echo "> Deploying directory '${SRC_FILE_PATH}'...";
+	if ! [[ -d "$DEST_FILE_PATH" ]]; then
+		if [[ "$OPT_DIR" == true ]]; then
+			echo "> Skip optional directory '$DEST_FILE_PATH' in target directory.";
+			return;
+		fi
+		mkdir $DEST_FILE_PATH;
+		local RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "> Error while creating directory '$DEST_FILE_PATH' in target directory!";
+			exit ${RESULT};
+		fi
+	fi
+	local S_FILE_NAME;
+	for S_FILE_NAME in $(ls -a ${SRC_FILE_PATH}/) ; do
+		local S_SRC_FILE_PATH=${SRC_FILE_PATH}/$S_FILE_NAME;
+		if [[ $S_FILE_NAME == "." ]] || [[ $S_FILE_NAME == ".." ]]; then
+			continue;
+		fi
+		local S_DEST_FILE_PATH="$DEST_FILE_PATH/$S_FILE_NAME";
+		if [[ -f $S_SRC_FILE_PATH ]]; then
+			deployFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH} ${OVER_WRITE};
+			checkResult $?;
+		elif [[ -d "$S_SRC_FILE_PATH" ]]; then
+			deployDirectory ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH} ${OVER_WRITE}; # ${OPT_DIR} only for 1st level
+			checkResult $?;
+		else #WTF
+			echo "--------------------------------------------------------------------------------";
+			echo "> File to deploy '$S_FILE_NAME' ($S_SRC_FILE_PATH) is neither a directory or a file!";
+			ls -l ${S_FILE_NAME};
+			exit 1;
+		fi
+	done
+	echo "> Deploying directory '${SRC_FILE_PATH}'... DONE";
+	echo "--------------------------------------------------------------------------------";
+}
+
 echo "--------------------------------------------------------------------------------";
 echo "> Deploying shared files...";
 SRC_DIR_PATH="commons/shared";
@@ -224,72 +307,11 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	fi
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f $SRC_FILE_PATH ]]; then
-		echo "--------------------------------------------------------------------------------";
-		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
-		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'...";
-		cp -n $SRC_FILE_PATH $DEST_FILE_PATH;
-		RESULT=$?;
-		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'... DONE";
-		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while deploying '$SRC_FILE_PATH' to '$DEST_PATH'!";
-			exit ${RESULT};
-		fi
-		echo "--------------------------------------------------------------------------------";
 	elif [[ -d "$SRC_FILE_PATH" ]]; then
-		if ! [[ -d "$DEST_FILE_PATH" ]]; then
-			mkdir $DEST_FILE_PATH;
-			RESULT=$?;
-			if [[ ${RESULT} -ne 0 ]]; then
-				echo "> Error while creating directory '$DEST_FILE_PATH' in target directory!";
-				exit ${RESULT};
-			fi
-		fi
-		S_DEST_PATH="${DEST_PATH}/${FILENAME}";
-		for S_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/) ; do
-			S_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/$S_FILENAME;
-			if [[ $S_FILENAME == "." ]] || [[ $S_FILENAME == ".." ]]; then
-				continue;
-			fi
-			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
-			canOverwriteFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
-			checkResult $?;
-			if [[ -d "$S_DEST_FILE_PATH" ]]; then
-				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
-				for SS_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/) ; do
-					SS_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/$SS_FILENAME;
-					if [[ $SS_FILENAME == "." ]] || [[ $SS_FILENAME == ".." ]]; then
-						continue;
-					fi
-					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
-					canOverwriteFile ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
-					checkResult $?;
-					canOverwriteDirectory ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
-					checkResult $?;
-					echo "--------------------------------------------------------------------------------";
-					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'...";
-					cp -nR $SS_SRC_FILE_PATH $SS_DEST_PATH/;
-					RESULT=$?;
-					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'... DONE";
-					if [[ ${RESULT} -ne 0 ]]; then
-						echo "Error while deploying '$SS_SRC_FILE_PATH' to '$SS_FILENAME'!";
-						exit ${RESULT};
-					fi
-					echo "--------------------------------------------------------------------------------";
-				done
-			else
-				echo "--------------------------------------------------------------------------------";
-				echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'...";
-				cp -nR $S_SRC_FILE_PATH $S_DEST_PATH/;
-				RESULT=$?;
-				echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'... DONE";
-				if [[ ${RESULT} -ne 0 ]]; then
-					echo "> Error while deploying '$S_SRC_FILE_PATH' to '$S_FILENAME'!";
-					exit ${RESULT};
-				fi
-				echo "--------------------------------------------------------------------------------";
-			fi
-		done
+		deployDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
 		ls -l $FILENAME;
@@ -309,68 +331,11 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	fi
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f $SRC_FILE_PATH ]]; then
-		echo "--------------------------------------------------------------------------------";
-		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
-		echo "> Deploying file '$SRC_FILE_PATH' in '$DEST_PATH'...";
-		cp -n $SRC_FILE_PATH $DEST_FILE_PATH;
-		RESULT=$?;
-		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while deploying file '$SRC_FILE_PATH' to '$DEST_PATH'!";
-			exit ${RESULT};
-		fi
-		echo "> Deploying file '$SRC_FILE_PATH' in '$DEST_PATH'... DONE";
-		echo "--------------------------------------------------------------------------------";
 	elif [[ -d "$SRC_FILE_PATH" ]]; then
-		if ! [[ -d "$DEST_FILE_PATH" ]]; then
-			echo "> Skip optional directory '$DEST_FILE_PATH' in target directory.";
-			continue;
-		fi
-		S_DEST_PATH="${DEST_PATH}/${FILENAME}";
-		for S_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/) ; do
-			S_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/$S_FILENAME;
-			if [[ $S_FILENAME == "." ]] || [[ $S_FILENAME == ".." ]]; then
-				continue;
-			fi
-			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
-			canOverwriteFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
-			checkResult $?;
-			if [[ -d "$S_DEST_FILE_PATH" ]]; then
-				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
-				for SS_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/) ; do
-					SS_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/$SS_FILENAME;
-					if [[ $SS_FILENAME == "." ]] || [[ $SS_FILENAME == ".." ]]; then
-						continue;
-					fi
-					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
-					canOverwriteFile ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
-					checkResult $?;
-					canOverwriteDirectory ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
-					checkResult $?;
-					echo "--------------------------------------------------------------------------------";
-					echo "> Deploying directory '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'...";
-					cp -nR $SS_SRC_FILE_PATH $SS_DEST_PATH/;
-					RESULT=$?;
-					if [[ ${RESULT} -ne 0 ]]; then
-						echo "Error while deploying directory '$SS_SRC_FILE_PATH' to '$SS_DEST_PATH'!";
-						exit ${RESULT};
-					fi
-					echo "> Deploying directory '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'... DONE";
-					echo "--------------------------------------------------------------------------------";
-				done
-			else
-				echo "--------------------------------------------------------------------------------";
-				echo "> Deploying new directory '$S_SRC_FILE_PATH' in '$S_DEST_PATH'...";
-				cp -nR $S_SRC_FILE_PATH $S_DEST_PATH/;
-				RESULT=$?;
-				if [[ ${RESULT} -ne 0 ]]; then
-					echo "> Error while deploying new directory '$S_SRC_FILE_PATH' to '$S_DEST_PATH'!";
-					exit ${RESULT};
-				fi
-				echo "> Deploying new directory '$S_SRC_FILE_PATH' in '$S_DEST_PATH'... DONE";
-				echo "--------------------------------------------------------------------------------";
-			fi
-		done
+		deployDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH} false true; #do-not-over-write #opt-dir
+		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
 		ls -l $FILENAME;
@@ -390,64 +355,11 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	fi
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f $SRC_FILE_PATH ]]; then
-		echo "--------------------------------------------------------------------------------";
-		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'...";
-		cp $SRC_FILE_PATH $DEST_FILE_PATH;
-		RESULT=$?;
-		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'... DONE";
-		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while deploying '$SRC_FILE_PATH' to '$DEST_PATH'!";
-			exit ${RESULT};
-		fi
-		echo "--------------------------------------------------------------------------------";
+		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH} true; #over-write
+		checkResult $?;
 	elif [[ -d "$SRC_FILE_PATH" ]]; then
-		if ! [[ -d "$DEST_FILE_PATH" ]]; then
-			mkdir $DEST_FILE_PATH;
-			RESULT=$?;
-			if [[ ${RESULT} -ne 0 ]]; then
-				echo "> Error while creating directory '$DEST_FILE_PATH' in target directory!";
-				exit ${RESULT};
-			fi
-		fi
-		S_DEST_PATH="${DEST_PATH}/${FILENAME}";
-		for S_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/) ; do
-			S_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/$S_FILENAME;
-			if [[ $S_FILENAME == "." ]] || [[ $S_FILENAME == ".." ]]; then
-				continue;
-			fi
-			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
-			if [[ -d "$S_DEST_FILE_PATH" ]]; then
-				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
-				for SS_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/) ; do
-					SS_SRC_FILE_PATH=$SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/$SS_FILENAME;
-					if [[ $SS_FILENAME == "." ]] || [[ $SS_FILENAME == ".." ]]; then
-						continue;
-					fi
-					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
-					echo "--------------------------------------------------------------------------------";
-					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'...";
-					cp -R $SS_SRC_FILE_PATH $SS_DEST_PATH/;
-					RESULT=$?;
-					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'... DONE";
-					if [[ ${RESULT} -ne 0 ]]; then
-						echo "Error while deploying '$SS_SRC_FILE_PATH' to '$SS_FILENAME'!";
-						exit ${RESULT};
-					fi
-					echo "--------------------------------------------------------------------------------";
-				done
-			else
-				echo "--------------------------------------------------------------------------------";
-				echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'...";
-				cp -R $S_SRC_FILE_PATH $S_DEST_PATH/;
-				RESULT=$?;
-				echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'... DONE";
-				if [[ ${RESULT} -ne 0 ]]; then
-					echo "> Error while deploying '$S_SRC_FILE_PATH' to '$S_FILENAME'!";
-					exit ${RESULT};
-				fi
-				echo "--------------------------------------------------------------------------------";
-			fi
-		done
+		deployDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH} true; #DO over-write
+		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
 		ls -l $FILENAME;
