@@ -45,6 +45,8 @@ function cleanupFile() {
 		fi
 		echo "> Cleaning-up file '$DEST_FILE_PATH'... DONE";
 		echo "--------------------------------------------------------------------------------";
+	else
+		echo "> Ignoring missing file '$DEST_FILE_PATH'...";
 	fi
 }
 
@@ -90,6 +92,8 @@ function cleanupDirectory() {
 			echo "> Deleting empty directory '$DEST_FILE_PATH'... DONE";
 			echo "--------------------------------------------------------------------------------";
 		fi
+	else
+		echo "> Ignoring missing directory '$DEST_FILE_PATH'...";
 	fi
 }
 
