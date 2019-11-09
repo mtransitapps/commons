@@ -110,16 +110,23 @@ RESULT=$?;
 checkResult ${RESULT};
 echo ">> Running bundle release... DONE";
 
+echo ">> Running assemble release...";
+../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
+RESULT=$?;
+checkResult ${RESULT};
+echo ">> Running assemble release... DONE";
+
 if [[ ! -z "${MT_OUTPUT_DIR}" ]]; then
-	echo ">> Copying release bundles to output dir '${MT_OUTPUT_DIR}'...";
+	echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'...";
 	if ! [[ -d "${MT_OUTPUT_DIR}" ]]; then
 		echo ">> Output release '${MT_OUTPUT_DIR}' not found!";
 		exit 1;
 	fi
 	cp build/outputs/bundle/release/*.aab ${MT_OUTPUT_DIR};
-	RESULT=$?;
-	checkResult ${RESULT};
-	echo ">> Copying release bundles to output dir '${MT_OUTPUT_DIR}'... DONE";
+	checkResult $?;
+	cp build/outputs/apk/release/*.apk ${MT_OUTPUT_DIR};
+	checkResult $?;
+	echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'... DONE";
 fi
 
 echo ">> Cleaning keys...";

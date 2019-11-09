@@ -74,6 +74,9 @@ android {
     println "App version code: " + theVersionCode
 
     def useGooglePlayUploadKeysProperties = true
+	if (project.hasProperty("useGooglePlayUploadKeysProperties")) {
+		useGooglePlayUploadKeysProperties = project.getProperty("useGooglePlayUploadKeysProperties").toBoolean();
+	}
     println "Using Google Play Upload keys: " + useGooglePlayUploadKeysProperties
 
     Properties appSigningKeysProperties = new Properties()
