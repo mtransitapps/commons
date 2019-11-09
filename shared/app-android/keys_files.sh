@@ -7,6 +7,7 @@ declare -a FILES=(
 	"google-play-upload-certificate.pem"
 	"google-play-upload-keystore.keystore"
 	"google-play-upload-keys.properties"
+	"src/main/play/contact-email.txt"
 );
 
 if [[ -f "src/main/res/values/keys.xml" ]]; then
