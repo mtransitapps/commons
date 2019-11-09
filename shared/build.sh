@@ -102,18 +102,12 @@ if [[ -d "agency-parser" ]]; then
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'...";
 	cd agency-parser || exit; # >>
 
-    chmod +x download.sh;
-    checkResult $? ${CONFIRM};
 	./download.sh;
 	checkResult $? ${CONFIRM};
 
-	chmod +x unzip_gtfs.sh;
-	checkResult $? ${CONFIRM};
 	./unzip_gtfs.sh;
 	checkResult $? ${CONFIRM};
 
-	chmod +x parse_pre.sh;
-	checkResult $? ${CONFIRM};
 	./parse_pre.sh;
 	checkResult $? ${CONFIRM};
 
@@ -131,18 +125,12 @@ if [[ -d "agency-parser" ]]; then
 	echo "> PARSING DATA FOR '$AGENCY_ID'...";
 	cd agency-parser || exit; # >>
 
-    chmod +x parse_current.sh;
-    checkResult $? ${CONFIRM};
 	./parse_current.sh;
 	checkResult $? ${CONFIRM};
 
-    chmod +x parse_next.sh;
-    checkResult $? ${CONFIRM};
 	./parse_next.sh;
 	checkResult $? ${CONFIRM};
 
-    chmod +x list_change.sh;
-    checkResult $? ${CONFIRM};
 	./list_change.sh;
 	checkResult $? ${CONFIRM};
 
