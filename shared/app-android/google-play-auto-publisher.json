@@ -1,0 +1,12 @@
+{
+  "type": "ENTER_TYPE",
+  "project_id": "ENTER_PROJECT_ID",
+  "private_key_id": "ENTER_PRIVATE_KEY_ID",
+  "private_key": "ENTER_PRIVATE_KEY",
+  "client_email": "ENTER_CLIENT_EMAIL",
+  "client_id": "ENTER_CLIENT_ID",
+  "auth_uri": "ENTER_AUTH_URL",
+  "token_uri": "ENTER_TOKEN_URL",
+  "auth_provider_x509_cert_url": "ENTER_AUTH_PROVIDER_X509_CERT_URL",
+  "client_x509_cert_url": "ENTER_CLIENT_X509_CERT_URL"
+}

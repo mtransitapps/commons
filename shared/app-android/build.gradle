@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
 
 Properties projectNameProperties = new Properties()
 projectNameProperties.load(new FileInputStream(file("project_name.properties")))
@@ -63,8 +64,6 @@ android {
     def theVersionName=versionProperties['version.name']
     println "App version name: " + theVersionName
 
-    def commitCountLocal = "git rev-list HEAD --count".execute().text.trim().toInteger()
-
     def commitCountS = "git -C ../ rev-list HEAD --count".execute().text.trim()
     if(commitCountS.empty) {
         commitCountS = "1"
@@ -75,7 +74,7 @@ android {
 
     def useGooglePlayUploadKeysProperties = true
 	if (project.hasProperty("useGooglePlayUploadKeysProperties")) {
-		useGooglePlayUploadKeysProperties = project.getProperty("useGooglePlayUploadKeysProperties").toBoolean();
+		useGooglePlayUploadKeysProperties = project.getProperty("useGooglePlayUploadKeysProperties").toBoolean()
 	}
     println "Using Google Play Upload keys: " + useGooglePlayUploadKeysProperties
 
@@ -211,34 +210,12 @@ android {
 
     sourceSets {
         main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
             if (projectName == "MT") {
                 // NOTHING
             } else {
-                res.srcDirs += 'res-current'
-                res.srcDirs += 'res-next'
+                res.srcDirs += 'src/main/res-current'
+                res.srcDirs += 'src/main/res-next'
             }
-            assets.srcDirs = ['assets']
-        }
-        if (projectName == "MT") {
-            debug {
-                java.srcDirs = ['srcDebug']
-                resources.srcDirs = ['srcDebug']
-                res.srcDirs = ['resDebug']
-            }
-        }
-        test {
-            java.srcDirs = ['srcTest']
-            resources.srcDirs = ['srcTest']
-        }
-        androidTest {
-            java.srcDirs = ['srcAndroidTest']
-            resources.srcDirs = ['srcAndroidTest']
         }
     }
 
@@ -254,6 +231,11 @@ android {
             }
         }
     }
+}
+
+play {
+    serviceAccountCredentials = file("google-play-auto-publisher.json")
+    defaultToAppBundles = true
 }
 
 if (projectName == "MT") {
