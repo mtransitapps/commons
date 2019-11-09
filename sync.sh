@@ -1,7 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 source $SCRIPT_DIR/commons.sh;
-#NO DEPENDENCY <= EXECUTED BEFORE GIT SUBMODULE
 
 echo "================================================================================";
 echo "> SYNC...";
@@ -190,6 +189,27 @@ function canOverwriteFile() {
 	fi
 }
 
+function canOverwriteDirectory() {
+	if [[ "$#" -ne 2 ]]; then
+		echo "> canOverwriteDirectory() > Illegal number of parameters!";
+		exit 1;
+	fi
+	local SRC_FILE_PATH=$1;
+	local DEST_FILE_PATH=$2;
+	local DIR_NAME=$(basename ${SRC_FILE_PATH});
+	if [[ -d "$DEST_FILE_PATH" ]]; then
+		diff -q -r ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+		local RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then # DIR CHANGED
+			echo "> Directory '$DEST_FILE_PATH' exists & was changed from '$SRC_FILE_PATH'!";
+			ls -l $DEST_FILE_PATH;
+			ls -l $SRC_FILE_PATH;
+			diff -r ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+			exit ${RESULT};
+		fi
+	fi
+}
+
 echo "--------------------------------------------------------------------------------";
 echo "> Deploying shared files...";
 SRC_DIR_PATH="commons/shared";
@@ -240,11 +260,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
 					canOverwriteFile ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
 					checkResult $?;
-					if [[ -d "$SS_DEST_FILE_PATH" ]]; then
-						echo "> Directory '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) exists in target directory!";
-						ls -l $SS_DEST_FILE_PATH;
-						exit 1;
-					fi
+					canOverwriteDirectory ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
+					checkResult $?;
 					echo "--------------------------------------------------------------------------------";
 					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'...";
 					cp -nR $SS_SRC_FILE_PATH $SS_DEST_PATH/;
@@ -324,11 +341,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
 					canOverwriteFile ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
 					checkResult $?;
-					if [[ -d "$SS_DEST_FILE_PATH" ]]; then
-						echo "> Directory '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) exists in target directory!";
-						ls -l $SS_DEST_FILE_PATH;
-						exit 1;
-					fi
+					canOverwriteDirectory ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
+					checkResult $?;
 					echo "--------------------------------------------------------------------------------";
 					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'...";
 					cp -nR $SS_SRC_FILE_PATH $SS_DEST_PATH/;
