@@ -1,4 +1,6 @@
 #!/bin/bash
+SCRIPT_DIR="$(dirname "$0")";
+source $SCRIPT_DIR/commons.sh;
 #NO DEPENDENCY <= EXECUTED BEFORE GIT SUBMODULE
 
 echo "================================================================================";
@@ -149,7 +151,13 @@ for S in "${!SUBMODULES[@]}"; do
 	git checkout $GIT_BRANCH;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
-		echo "> Error while checkint out $GIT_BRANCH in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+		echo "> Error while checkint out '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+		exit ${RESULT};
+	fi
+	git pull;
+	RESULT=$?;
+	if [[ ${RESULT} -ne 0 ]]; then
+		echo "> Error while pulling latest changes from '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
 		exit ${RESULT};
 	fi
 	echo "> Setting submodule branch '$GIT_BRANCH' in '$SUBMODULE'... DONE";
@@ -158,6 +166,29 @@ for S in "${!SUBMODULES[@]}"; do
 done
 
 DEST_PATH=".";
+
+function canOverwriteFile() {
+	if [[ "$#" -ne 2 ]]; then
+		echo "> canOverwriteFile() > Illegal number of parameters!";
+		exit 1;
+	fi
+	local SRC_FILE_PATH=$1;
+	local DEST_FILE_PATH=$2;
+	local FILE_NAME=$(basename ${SRC_FILE_PATH});
+	if [[ -f "$DEST_FILE_PATH" ]]; then
+		diff -q ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+		local RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then # FILE CHANGED
+			if [[ $FILE_NAME != ".gitignore" ]]; then
+				echo "> File '$DEST_FILE_PATH' exists & was changed from '$SRC_FILE_PATH'!";
+				ls -l $DEST_FILE_PATH;
+				ls -l $SRC_FILE_PATH;
+				diff ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+				exit ${RESULT};
+			fi
+		fi
+	fi
+}
 
 echo "--------------------------------------------------------------------------------";
 echo "> Deploying shared files...";
@@ -170,11 +201,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f $SRC_FILE_PATH ]]; then
 		echo "--------------------------------------------------------------------------------";
-		if [[ -f "$DEST_FILE_PATH" ]]; then
-			echo "> File '$DEST_FILE_PATH' ($SRC_FILE_PATH) exists in target directory!";
-			ls -l $DEST_FILE_PATH;
-			exit 1;
-		fi
+		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+		checkResult $?;
 		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'...";
 		cp -n $SRC_FILE_PATH $DEST_FILE_PATH;
 		RESULT=$?;
@@ -200,11 +228,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 				continue;
 			fi
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
-			if [[ -f "$S_DEST_FILE_PATH" ]]; then
-				echo "> File '$S_DEST_FILE_PATH' ($S_SRC_FILE_PATH) exists in target directory!";
-				ls -l $S_DEST_FILE_PATH;
-				exit 1;
-			fi
+			canOverwriteFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
+			checkResult $?;
 			if [[ -d "$S_DEST_FILE_PATH" ]]; then
 				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
 				for SS_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/) ; do
@@ -213,11 +238,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 						continue;
 					fi
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
-					if [[ -f "$SS_DEST_FILE_PATH" ]]; then
-						echo "> File '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) exists in target directory!";
-						ls -l $SS_DEST_FILE_PATH;
-						exit 1;
-					fi
+					canOverwriteFile ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
+					checkResult $?;
 					if [[ -d "$SS_DEST_FILE_PATH" ]]; then
 						echo "> Directory '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) exists in target directory!";
 						ls -l $SS_DEST_FILE_PATH;
@@ -267,11 +289,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
 	if [[ -f $SRC_FILE_PATH ]]; then
 		echo "--------------------------------------------------------------------------------";
-		if [[ -f "$DEST_FILE_PATH" ]]; then
-			echo "> File '$DEST_FILE_PATH' ($SRC_FILE_PATH) exists in target directory!";
-			ls -l $DEST_FILE_PATH;
-			exit 1;
-		fi
+		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+		checkResult $?;
 		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'...";
 		cp -n $SRC_FILE_PATH $DEST_FILE_PATH;
 		RESULT=$?;
@@ -293,11 +312,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 				continue;
 			fi
 			S_DEST_FILE_PATH="$S_DEST_PATH/$S_FILENAME"
-			if [[ -f "$S_DEST_FILE_PATH" ]]; then
-				echo "> File '$S_DEST_FILE_PATH' ($S_SRC_FILE_PATH) exists in target directory!";
-				ls -l $S_DEST_FILE_PATH;
-				exit 1;
-			fi
+			canOverwriteFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
+			checkResult $?;
 			if [[ -d "$S_DEST_FILE_PATH" ]]; then
 				SS_DEST_PATH="${S_DEST_PATH}/${S_FILENAME}";
 				for SS_FILENAME in $(ls -a $SRC_DIR_PATH/${FILENAME}/${S_FILENAME}/) ; do
@@ -306,11 +322,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 						continue;
 					fi
 					SS_DEST_FILE_PATH="$SS_DEST_PATH/$SS_FILENAME"
-					if [[ -f "$SS_DEST_FILE_PATH" ]]; then
-						echo "> File '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) exists in target directory!";
-						ls -l $SS_DEST_FILE_PATH;
-						exit 1;
-					fi
+					canOverwriteFile ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
+					checkResult $?;
 					if [[ -d "$SS_DEST_FILE_PATH" ]]; then
 						echo "> Directory '$SS_DEST_FILE_PATH' ($SS_SRC_FILE_PATH) exists in target directory!";
 						ls -l $SS_DEST_FILE_PATH;
