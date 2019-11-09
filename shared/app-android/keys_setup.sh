@@ -20,12 +20,12 @@ for FILE in "${FILES[@]}" ; do
 		continue;
 	fi
 
-	FILE_ENC="enc/${FILE}";
-
 	if [[ ! -f ${FILE} ]]; then
 		echo "File '$FILE' does NOT exist!";
 		exit 1;
 	fi
+
+	FILE_ENC="enc/${FILE}";
 
 	if [[ ! -f ${FILE_ENC} ]]; then
 		echo "File '$FILE_ENC' does NOT exist!";
@@ -56,7 +56,19 @@ for FILE in "${FILES[@]}" ; do
 				echo "Directory '$CLEAR' created.";
 			fi
 		fi
+		CLEAR_DIR=$(dirname "$CLEAR/${FILE}");
+		mkdir -p $CLEAR_DIR;
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "Error while creating clear directory '$CLEAR_DIR'!";
+			exit ${RESULT};
+		fi
 		cp ${FILE} $CLEAR/${FILE};
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "Error while copying '${FILE}' to '$CLEAR/${FILE}'!";
+			exit ${RESULT};
+		fi
 	fi
 
 	FILE_ENC="enc/${FILE}";
