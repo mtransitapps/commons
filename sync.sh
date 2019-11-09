@@ -178,7 +178,11 @@ function canOverwriteFile() {
 		diff -q ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then # FILE CHANGED
-			if [[ $FILE_NAME != ".gitignore" ]]; then
+			if [[ $FILE_NAME == ".gitignore" ]]; then
+				echo "> Changed '$FILE_NAME' removed ('$SRC_FILE_PATH'=>'$DEST_FILE_PATH')!";
+				rm ${DEST_FILE_PATH};
+				checkResult $?;
+			else
 				echo "> File '$DEST_FILE_PATH' exists & was changed from '$SRC_FILE_PATH'!";
 				ls -l $DEST_FILE_PATH;
 				ls -l $SRC_FILE_PATH;
@@ -308,14 +312,14 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		echo "--------------------------------------------------------------------------------";
 		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
-		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'...";
+		echo "> Deploying file '$SRC_FILE_PATH' in '$DEST_PATH'...";
 		cp -n $SRC_FILE_PATH $DEST_FILE_PATH;
 		RESULT=$?;
-		echo "> Deploying '$SRC_FILE_PATH' in '$DEST_PATH'... DONE";
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while deploying '$SRC_FILE_PATH' to '$DEST_PATH'!";
+			echo "> Error while deploying file '$SRC_FILE_PATH' to '$DEST_PATH'!";
 			exit ${RESULT};
 		fi
+		echo "> Deploying file '$SRC_FILE_PATH' in '$DEST_PATH'... DONE";
 		echo "--------------------------------------------------------------------------------";
 	elif [[ -d "$SRC_FILE_PATH" ]]; then
 		if ! [[ -d "$DEST_FILE_PATH" ]]; then
@@ -344,26 +348,26 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 					canOverwriteDirectory ${SS_SRC_FILE_PATH} ${SS_DEST_FILE_PATH};
 					checkResult $?;
 					echo "--------------------------------------------------------------------------------";
-					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'...";
+					echo "> Deploying directory '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'...";
 					cp -nR $SS_SRC_FILE_PATH $SS_DEST_PATH/;
 					RESULT=$?;
-					echo "> Deploying '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'... DONE";
 					if [[ ${RESULT} -ne 0 ]]; then
-						echo "Error while deploying '$SS_SRC_FILE_PATH' to '$SS_FILENAME'!";
+						echo "Error while deploying directory '$SS_SRC_FILE_PATH' to '$SS_DEST_PATH'!";
 						exit ${RESULT};
 					fi
+					echo "> Deploying directory '$SS_SRC_FILE_PATH' in '$SS_DEST_PATH'... DONE";
 					echo "--------------------------------------------------------------------------------";
 				done
 			else
 				echo "--------------------------------------------------------------------------------";
-				echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'...";
+				echo "> Deploying new directory '$S_SRC_FILE_PATH' in '$S_DEST_PATH'...";
 				cp -nR $S_SRC_FILE_PATH $S_DEST_PATH/;
 				RESULT=$?;
-				echo "> Deploying '$S_SRC_FILE_PATH' in '$S_DEST_PATH'... DONE";
 				if [[ ${RESULT} -ne 0 ]]; then
-					echo "> Error while deploying '$S_SRC_FILE_PATH' to '$S_FILENAME'!";
+					echo "> Error while deploying new directory '$S_SRC_FILE_PATH' to '$S_DEST_PATH'!";
 					exit ${RESULT};
 				fi
+				echo "> Deploying new directory '$S_SRC_FILE_PATH' in '$S_DEST_PATH'... DONE";
 				echo "--------------------------------------------------------------------------------";
 			fi
 		done
