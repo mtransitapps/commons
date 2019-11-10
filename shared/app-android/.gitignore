@@ -35,6 +35,7 @@ proguard/
 /app-signing-release-keystore.keystore
 /build.gradle
 /build.sh
+/clr
 /decrypt_file.sh
 /enc/app-signing-release-keys.properties
 /enc/app-signing-release-keystore-encrypted.keystore
