@@ -65,11 +65,11 @@ android {
     println "App version name: " + theVersionName
 
     def commitCountS = "git -C ../ rev-list HEAD --count".execute().text.trim()
-    if(commitCountS.empty) {
-        commitCountS = "1"
+    def theVersionCode=1
+    if (!commitCountS.empty) {
+        def commitCount=commitCountS.toInteger()
+        theVersionCode=1000+commitCount
     }
-    def commitCount = commitCountS.toInteger()
-    def theVersionCode=1000+commitCount
     println "App version code: " + theVersionCode
 
     def useGooglePlayUploadKeysProperties = true
@@ -236,7 +236,11 @@ android {
 play {
     serviceAccountCredentials = file("google-play-auto-publisher.json")
     defaultToAppBundles = true
-    track = "internal" // internal/alpha/Beta (Private)/beta/production
+    // Available tracks: internal, alpha, Beta (Private), beta, production
+    // "Beta (Private)" is default because it's hard to use with -Pparam parameter
+    track = "Beta (Private)"
+    fromTrack = "Beta (Private)"
+    promoteTrack = "Beta (Private)"
     releaseStatus = "draft"// completed/draft/inProgress/halted
     userFraction = 0.01 // 0.00 - 0.10 - 0.33 - 0.50 - 1.00 WHEN releaseStatus=[inProgress/halted]
 }
