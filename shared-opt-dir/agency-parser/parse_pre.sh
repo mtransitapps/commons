@@ -13,13 +13,13 @@ STOP_ID_IDX=-1;
 STOP_NAME_IDX=-1;
 for i in "${!COLUMNS_ARRAY[@]}"; do
 	COLUMN=${COLUMNS_ARRAY[$i]};
-	if [[ $COLUMN == *stop_id* ]]; then
+	if [[ ${COLUMN} == *stop_id* ]]; then
 		STOP_ID_IDX=$(($i+1));
 		echo ">> Stop ID column found at index: $STOP_ID_IDX.";
-	elif [[ $COLUMN == *stop_code* ]]; then
+	elif [[ ${COLUMN} == *stop_code* ]]; then
 		STOP_CODE_IDX=$(($i+1));
 		echo ">> Stop code column found at index: $STOP_CODE_IDX.";
-	elif [[ $COLUMN == *stop_name* ]]; then
+	elif [[ ${COLUMN} == *stop_name* ]]; then
 		STOP_NAME_IDX=$(($i+1));
 		echo ">> Stop name column found at index: $STOP_NAME_IDX.";
 	fi
@@ -31,7 +31,7 @@ if [[ ${STOP_ID_IDX} -lt 0 ]]; then
 fi
 if [[ ${STOP_CODE_IDX} -lt 0 ]]; then
 	echo ">> Cannot find [optional] stop code > using stop ID '$STOP_ID_IDX'.";
-	STOP_CODE_IDX=$STOP_ID_IDX;
+	STOP_CODE_IDX=${STOP_ID_IDX};
 fi
 if [[ ${STOP_NAME_IDX} -lt 0 ]]; then
 	echo ">> Cannot find stop name!";
