@@ -15,7 +15,7 @@ hs_err_pid*
 /input/
 /output/
 
-src/org/mtransit/parser/*/Stops.java
+src/main/java/org/mtransit/parser/*/Stops.java
 
 # Shared files
 /build.gradle

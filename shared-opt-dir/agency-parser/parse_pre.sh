@@ -1,7 +1,7 @@
 #!/bin/bash
 source ../commons/commons.sh
 echo ">> Pre Parsing...";
-COMMON_DIR="src/org/mtransit/parser";
+COMMON_DIR="src/main/java/org/mtransit/parser";
 DIR_NAME=$(ls ${COMMON_DIR});
 JAVA_FILES_DIR="$COMMON_DIR/$DIR_NAME";
 JAVA_STOPS_FILE="$JAVA_FILES_DIR/Stops.java";
