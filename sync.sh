@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-source $SCRIPT_DIR/commons.sh;
+source ${SCRIPT_DIR}/commons.sh;
 
 echo "================================================================================";
 echo "> SYNC...";
@@ -53,11 +53,8 @@ if [[ -z "${GIT_BRANCH}" ]]; then
 fi
 echo "GIT_BRANCH: $GIT_BRANCH.";
 
-IS_CI=false;
-if [[ ! -z "${CI}" ]]; then
-	IS_CI=true;
-fi
-echo "/build.sh > IS_CI:'${IS_CI}'";
+setIsCI;
+echo "IS_CI: $IS_CI";
 
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
 if [[ "$IS_SHALLOW" == true ]]; then

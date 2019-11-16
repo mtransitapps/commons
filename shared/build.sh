@@ -40,16 +40,9 @@ echo "GIT_BRANCH: $GIT_BRANCH.";
 
 CONFIRM=false;
 
-IS_CI=false;
-if [[ ! -z "${CI}" ]]; then
-	IS_CI=true;
-fi
-echo "/build.sh > IS_CI:'${IS_CI}'";
+setIsCI;
 
-GRADLE_ARGS="";
-if [[ ${IS_CI} = true ]]; then
-	GRADLE_ARGS=" --console=plain";
-fi
+setGradleArgs;
 
 declare -a EXCLUDE=(".git" "test" "build" "gen" "gradle");
 

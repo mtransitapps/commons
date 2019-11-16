@@ -4,6 +4,22 @@
 # COMMONS_BEFORE_DATE=$(date +%D-%X);
 # COMMONS_BEFORE_DATE_SEC=$(date +%s);
 
+function setIsCI() {
+	IS_CI=false;
+    if [[ ! -z "${CI}" ]]; then
+        IS_CI=true;
+    fi
+}
+
+function setGradleArgs() {
+	setIsCI;
+
+    GRADLE_ARGS="";
+    if [[ ${IS_CI} = true ]]; then
+        GRADLE_ARGS=" --console=plain -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2";
+    fi
+}
+
 # set current working directory to the directory of the script
 function setCurrentDirectory() {
 	if [[ "$#" -lt 1 ]]; then

@@ -15,16 +15,9 @@ if [[ -z "${GIT_PROJECT_NAME}" ]]; then
 	exit 1;
 fi
 
-IS_CI=false;
-if [[ ! -z "${CI}" ]]; then
-	IS_CI=true;
-fi
-echo "$DIRECTORY/build.sh > IS_CI:'${IS_CI}'";
+setIsCI;
 
-GRADLE_ARGS="";
-if [[ ${IS_CI} = true ]]; then
-	GRADLE_ARGS=" --console=plain";
-fi
+setGradleArgs;
 
 SETTINGS_FILE_ARGS="";
 if [[ -f ${CUSTOM_SETTINGS_GRADLE_FILE} ]]; then

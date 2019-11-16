@@ -21,16 +21,7 @@ if [[ $# -eq 0 ]]; then
 	exit 1;
 fi
 
-IS_CI=false;
-if [[ ! -z "${CI}" ]]; then
-	IS_CI=true;
-fi
-echo "$0 > IS_CI:'${IS_CI}'";
-
-GRADLE_ARGS="";
-if [[ ${IS_CI} = true ]]; then
-	GRADLE_ARGS=" --console=plain";
-fi
+setGradleArgs;
 
 ../gradlew publishReleaseBundle ${GRADLE_ARGS} ${@};
 checkResult $?;
