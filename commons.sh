@@ -17,7 +17,7 @@ function setGradleArgs() {
 
     GRADLE_ARGS="";
     if [[ ${IS_CI} = true ]]; then
-        GRADLE_ARGS=" --console=plain"
+        GRADLE_ARGS=" --no-daemon --no-parallel --no-configure-on-demand --max-workers=2 --console=plain";
     fi
     echo "$0 > GRADLE_ARGS:'${GRADLE_ARGS}'";
 }
