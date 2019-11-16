@@ -82,6 +82,9 @@ for d in ${PWD}/* ; do
 	fi
 done
 
+echo "GRADLE VERSION:";
+./gradlew --version;
+
 if [[ -d "agency-parser" ]]; then
 	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
 
