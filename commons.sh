@@ -16,7 +16,7 @@ function setGradleArgs() {
 
     GRADLE_ARGS="";
     if [[ ${IS_CI} = true ]]; then
-        GRADLE_ARGS=" --console=plain -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2";
+        GRADLE_ARGS="-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 --console=plain";
     fi
 }
 
