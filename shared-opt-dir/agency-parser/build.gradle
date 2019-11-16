@@ -3,15 +3,6 @@ apply plugin: 'application'
 mainClassName = file('parser_class').text
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src'
-        }
-        java.outputDir = file('bin')
-    }
-}
-
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
