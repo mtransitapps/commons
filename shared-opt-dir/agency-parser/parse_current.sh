@@ -4,6 +4,10 @@ echo ">> Parsing Current...";
 
 setGradleArgs;
 
+free -t -m;
+
+egrep --color 'Mem|Cache|Swap' /proc/meminfo;
+
 GTFS_ZIP="input/gtfs.zip";
 CHANGE_DIRECTORY=$(cat "change_directory");
 RES_DIR="res-current"
