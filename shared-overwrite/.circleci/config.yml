@@ -7,7 +7,6 @@ jobs:
       - image: circleci/android:api-29
     environment:
       JVM_OPTS: -Xmx3200m
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xms256m -Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
       TERM: dumb
     steps:
       - run:
