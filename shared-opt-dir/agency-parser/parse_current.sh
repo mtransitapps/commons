@@ -4,6 +4,8 @@ echo ">> Parsing Current...";
 
 setGradleArgs;
 
+../gradlew --stop;
+
 free -t -m;
 
 egrep --color 'Mem|Cache|Swap' /proc/meminfo;
