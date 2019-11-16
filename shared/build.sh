@@ -86,7 +86,7 @@ echo "GRADLE VERSION:";
 ./gradlew --version ${GRADLE_ARGS};
 
 echo "JAVA VERSION:";
-java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|PermSize|ThreadStackSize';
+java -version;
 
 if [[ -d "agency-parser" ]]; then
 	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";

@@ -5,7 +5,7 @@ Properties projectNameProperties = new Properties()
 projectNameProperties.load(new FileInputStream(file("project_name.properties")))
 
 def projectName = projectNameProperties["project.name"]
-println "App project name: " + projectName
+println "> App project name: " + projectName
 
 if (projectName == "MT") {
     apply plugin: 'io.fabric'
@@ -62,7 +62,7 @@ android {
     Properties versionProperties = new Properties()
     versionProperties.load(new FileInputStream(file("../commons-android/version.properties")))
     def theVersionName=versionProperties['version.name']
-    println "App version name: " + theVersionName
+    println "> App version name: " + theVersionName
 
     def commitCountS = "git -C ../ rev-list HEAD --count".execute().text.trim()
     def theVersionCode=1
@@ -70,13 +70,13 @@ android {
         def commitCount=commitCountS.toInteger()
         theVersionCode=1000+commitCount
     }
-    println "App version code: " + theVersionCode
+    println "> App version code: " + theVersionCode
 
     def useGooglePlayUploadKeysProperties = true
 	if (project.hasProperty("useGooglePlayUploadKeysProperties")) {
 		useGooglePlayUploadKeysProperties = project.getProperty("useGooglePlayUploadKeysProperties").toBoolean()
 	}
-    println "Using Google Play Upload keys: " + useGooglePlayUploadKeysProperties
+    println "> Using Google Play Upload keys: " + useGooglePlayUploadKeysProperties
 
     Properties appSigningKeysProperties = new Properties()
     def appSigningKeysPropertiesFile = file("app-signing-release-keys.properties")
