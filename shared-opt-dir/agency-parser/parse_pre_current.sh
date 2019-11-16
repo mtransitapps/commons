@@ -40,7 +40,7 @@ if [[ ${STOP_NAME_IDX} -lt 0 ]]; then
 	exit 1;
 fi
 
-rm ${GTFS_DIR}/stops.txt.*;
+rm -f ${GTFS_DIR}/stops.txt.*;
 checkResult $? false;
 
 split -d -l 5000 ${GTFS_DIR}/stops.txt ${GTFS_DIR}/stops.txt.;
