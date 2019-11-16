@@ -83,7 +83,10 @@ for d in ${PWD}/* ; do
 done
 
 echo "GRADLE VERSION:";
-./gradlew --version;
+./gradlew --version ${GRADLE_ARGS};
+
+echo "JAVA VERSION:";
+java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|PermSize|ThreadStackSize';
 
 if [[ -d "agency-parser" ]]; then
 	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
