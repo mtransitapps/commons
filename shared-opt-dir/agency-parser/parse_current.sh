@@ -1,9 +1,8 @@
 #!/bin/bash
-source commons/commons.sh;
+source ../commons/commons.sh
 echo ">> Parsing Current...";
 
 setGradleArgs;
-echo "GRADLE_ARGS: $GRADLE_ARGS";
 
 GTFS_ZIP="input/gtfs.zip";
 CHANGE_DIRECTORY=$(cat "change_directory");

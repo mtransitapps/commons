@@ -9,6 +9,7 @@ function setIsCI() {
     if [[ ! -z "${CI}" ]]; then
         IS_CI=true;
     fi
+    echo "$0 > IS_CI:'${IS_CI}'";
 }
 
 function setGradleArgs() {
@@ -16,8 +17,9 @@ function setGradleArgs() {
 
     GRADLE_ARGS="";
     if [[ ${IS_CI} = true ]]; then
-        GRADLE_ARGS="-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 --console=plain";
+        GRADLE_ARGS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=false -Dorg.gradle.workers.max=2 --console=plain";
     fi
+    echo "$0 > GRADLE_ARGS:'${GRADLE_ARGS}'";
 }
 
 # set current working directory to the directory of the script

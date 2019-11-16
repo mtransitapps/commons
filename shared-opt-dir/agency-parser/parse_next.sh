@@ -1,5 +1,5 @@
 #!/bin/bash
-source commons/commons.sh;
+source ../commons/commons.sh
 echo ">> Parsing Next...";
 
 setGradleArgs;
