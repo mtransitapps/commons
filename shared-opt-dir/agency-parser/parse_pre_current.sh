@@ -6,7 +6,9 @@ DIR_NAME=$(ls ${COMMON_DIR});
 JAVA_FILES_DIR="$COMMON_DIR/$DIR_NAME";
 JAVA_STOPS_FILE="$JAVA_FILES_DIR/Stops.java";
 
-COLUMNS=$(head -n1 input/gtfs/stops.txt);
+GTFS_DIR="input/gtfs";
+
+COLUMNS=$(head -n1 ${GTFS_DIR}/stops.txt);
 COLUMNS_ARRAY=($(echo $COLUMNS | tr "," "\n"))
 STOP_CODE_IDX=-1;
 STOP_ID_IDX=-1;
@@ -38,7 +40,10 @@ if [[ ${STOP_NAME_IDX} -lt 0 ]]; then
 	exit 1;
 fi
 
-split -d -l 5000 input/gtfs/stops.txt input/stops.txt.;
+rm ${GTFS_DIR}/stops.txt.*;
+checkResult $? false;
+
+split -d -l 5000 ${GTFS_DIR}/stops.txt ${GTFS_DIR}/stops.txt.;
 checkResult $? false;
 
 echo ">> Pre Parsing > Set Java stops file...";
@@ -58,7 +63,7 @@ echo "				if (ALL_STOPS == null) {" >> ${JAVA_STOPS_FILE};
 echo "					ALL_STOPS = new HashMap<String, String>();" >> ${JAVA_STOPS_FILE};
 
 i=0;
-for STOP_FILE in input/stops.txt* ; do
+for STOP_FILE in ${GTFS_DIR}/stops.txt* ; do
     i=$(($i+1));
     echo "					ALL_STOPS = init$i(ALL_STOPS);" >> ${JAVA_STOPS_FILE};
 done
@@ -70,7 +75,7 @@ echo "		return ALL_STOPS;" >> ${JAVA_STOPS_FILE};
 echo "	}" >> ${JAVA_STOPS_FILE};
 
 i=0;
-for STOP_FILE in input/stops.txt* ; do
+for STOP_FILE in ${GTFS_DIR}/stops.txt* ; do
     i=$(($i+1));
     echo "" >> ${JAVA_STOPS_FILE};
     echo "	private static HashMap<String, String> init$i(HashMap<String, String> allStops) {" >> ${JAVA_STOPS_FILE};

@@ -24,14 +24,14 @@ if ! [[ -f $1 ]]; then
 fi
 
 if [[ -f $2 ]]; then
-	echo "Cannot override existing '$2' file!";
+	echo ">> Cannot override existing '$2' file!";
 	exit 1;
 fi
 
 openssl aes-256-cbc -md sha256 -salt -in $1 -out $2 -k $MT_ENCRYPT_KEY
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
-	echo "Error while encrypting '$1' to '$2'!";
+	echo ">> Error while encrypting '$1' to '$2'!";
 	exit ${RESULT};
 fi
 

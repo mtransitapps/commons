@@ -108,24 +108,29 @@ if [[ -d "agency-parser" ]]; then
 	./unzip_gtfs.sh;
 	checkResult $? ${CONFIRM};
 
-	./parse_pre.sh;
-	checkResult $? ${CONFIRM};
-
-	cd ..; # <<
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
 
 	echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... ";
-	./gradlew :parser:build ${GRADLE_ARGS};
+	../gradlew :parser:build ${GRADLE_ARGS};
 	checkResult $? ${CONFIRM};
 
-	./gradlew :agency-parser:build ${GRADLE_ARGS};
-	checkResult $? ${CONFIRM};
 	echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 
 	echo "> PARSING DATA FOR '$AGENCY_ID'...";
-	cd agency-parser || exit; # >>
+
+	./parse_pre_current.sh;
+	checkResult $? ${CONFIRM};
+
+	../gradlew :agency-parser:build ${GRADLE_ARGS};
+	checkResult $? ${CONFIRM};
 
 	./parse_current.sh;
+	checkResult $? ${CONFIRM};
+
+	./parse_pre_next.sh;
+	checkResult $? ${CONFIRM};
+
+	../gradlew :agency-parser:build ${GRADLE_ARGS};
 	checkResult $? ${CONFIRM};
 
 	./parse_next.sh;
