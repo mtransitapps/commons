@@ -88,6 +88,9 @@ echo "GRADLE VERSION:";
 echo "JAVA VERSION:";
 java -version;
 
+echo "CURL VERSION:";
+curl --version;
+
 if [[ -d "agency-parser" ]]; then
 	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
 
