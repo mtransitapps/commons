@@ -82,9 +82,17 @@ function download() {
 		# TODO --no-if-modified-since ??
 		# wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -N "$URL";
 		curl -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
+		local RESULT=$?;
+		if [[ ${RESULT} != 0 ]]; then
+			curl --insecure -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
+		fi
 	else
 		# wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -S "$URL";
 		curl -L -o "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
+		local RESULT=$?;
+		if [[ ${RESULT} != 0 ]]; then
+			curl --insecure -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
+		fi
 	fi;
 	if [[ -e "${NEW_FILE}" ]]; then
 		if [[ -e ${LAST_FILE} ]]; then
