@@ -13,8 +13,10 @@ CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 
 echo "Current directory: $CURRENT_DIRECTORY";
 
-if [[ -f "../gradlew" ]]; then
-	../gradlew clean;
+setGradleArgs;
+
+if [[ -f "./gradlew" ]]; then
+	./gradlew clean ${GRADLE_ARGS};
 	checkResult $?;
 fi
 
