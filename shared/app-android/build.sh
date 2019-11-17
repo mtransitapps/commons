@@ -25,11 +25,8 @@ if [[ -f ${CUSTOM_SETTINGS_GRADLE_FILE} ]]; then
 fi
 
 echo ">> Setup-ing keys...";
-chmod +x keys_setup.sh;
-checkResult $?;
 ./keys_setup.sh;
-RESULT=$?;
-checkResult ${RESULT};
+checkResult $?;
 echo ">> Setup-ing keys... DONE";
 
 echo ">> Gradle cleaning...";
@@ -123,11 +120,8 @@ if [[ ! -z "${MT_OUTPUT_DIR}" ]]; then
 fi
 
 echo ">> Cleaning keys...";
-chmod +x keys_cleanup.sh;
-checkResult $?;
 ./keys_cleanup.sh;
-RESULT=$?;
-checkResult ${RESULT};
+checkResult $?;
 echo ">> Cleaning keys... DONE";
 
 echo ">> Building... DONE";

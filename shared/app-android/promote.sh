@@ -20,9 +20,19 @@ if [[ $# -eq 0 ]]; then
 	exit 1;
 fi
 
+echo ">> Setup-ing keys...";
+./keys_setup.sh;
+checkResult $?;
+echo ">> Setup-ing keys... DONE";
+
 setGradleArgs;
 
 ../gradlew promoteReleaseArtifact ${GRADLE_ARGS} ${@};
 checkResult $?;
+
+echo ">> Cleaning keys...";
+./keys_cleanup.sh;
+checkResult $?;
+echo ">> Cleaning keys... DONE";
 
 echo ">> Promote '${@}'... DONE";
