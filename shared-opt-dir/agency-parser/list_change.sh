@@ -26,9 +26,16 @@ if [[ "$RESULT" -gt 0 ]]; then
 fi
 if [[ -d ${TARGET}/res-next ]]; then
 	git -C ${TARGET} status | grep "res-next" | head -n 1;
-	if [[ -d ${TARGET}/res-next/values/next_gtfs_rts_values_gen.xml ]]; then
+	if [[ -f ${TARGET}/res-next/values/next_gtfs_rts_values_gen.xml ]]; then
 		git -C ${TARGET} diff res-next/values/next_gtfs_rts_values_gen.xml;
 		checkResult $?;
+		git -C ${TARGET} ls-files --error-unmatch res-next/values/next_gtfs_rts_values_gen.xml &> /dev/null;
+		RESULT=$?;
+		if [[ "$RESULT" -gt 0 ]]; then
+			echo "> SCHEDULE CHANGED > MANUAL FIX!";
+			cat ${TARGET}/res-next/values/next_gtfs_rts_values_gen.xml;
+			exit -1;
+		fi
 	fi
 	if [[ -d ${TARGET}/res-next/raw ]]; then
 		RESULT=$(git -C ${TARGET} diff-index --name-only HEAD -- "res-next/raw" | wc -l);
