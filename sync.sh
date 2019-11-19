@@ -203,8 +203,10 @@ function deployFile() {
 	fi
 	echo "--------------------------------------------------------------------------------";
 	if [[ "$OVER_WRITE" == true ]]; then
-		rm ${DEST_FILE_PATH};
-		checkResult $?;
+		if [[ -f "${DEST_FILE_PATH}" ]]; then
+			rm ${DEST_FILE_PATH};
+			checkResult $?;
+		fi
 	else
 		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
