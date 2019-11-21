@@ -46,4 +46,6 @@ if [[ -d ${TARGET}/res-next ]]; then
 		fi
 	fi
 fi
+git -C ${TARGET} diff res/values/gtfs_rts_values.xml;
+checkResult $?;
 echo "> Listing change... DONE";
