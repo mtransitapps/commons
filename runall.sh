@@ -2,6 +2,11 @@
 SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/commons.sh;
 
+# RECIPES:
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d parser ] && git add parser || git sb";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && git add agency-parser || git sb";
+# - ./mtransit-for-android-gradle/commons/runall.sh "git commit -m \"Update git submodules\";";
+
 echo "================================================================================";
 echo "> RUN ALL...";
 echo "--------------------------------------------------------------------------------";
@@ -28,7 +33,7 @@ for FILE_NAME in $(ls -a) ; do
 	echo "> Running '$@' in '$FILE_NAME'...";
 	cd ${FILE_NAME} || exit;
 	
-	$@;
+	eval $@;
 	checkResult $?;
 	
 	cd ..;
