@@ -29,11 +29,13 @@ echo ">> Setup-ing keys... DONE";
 setGradleArgs;
 
 ../gradlew publishReleaseBundle ${GRADLE_ARGS} ${@};
-checkResult $?;
+COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
 checkResult $?;
 echo ">> Cleaning keys... DONE";
+
+checkResult $COMMAND_RESULT; # check command result after keys cleanup
 
 echo ">> Publishing '${@}'... DONE";

@@ -87,7 +87,7 @@ for FILE in "${FILES[@]}" ; do
 		RESULT=$?;
 		if [[ ${RESULT} -eq 0 ]]; then
 			echo "Decrypted file '$FILE' NOT different than clear file!";
-			exit ${RESULT};
+			exit 1;
 		fi
 		# rm ${FILE}.clear;
 	else  #file is tracked by git
@@ -97,7 +97,7 @@ for FILE in "${FILES[@]}" ; do
 			echo "Decrypted file '$FILE' NOT different than clear file!";
 			ls -al ${FILE}; #DEBUG
 			ls -al ${FILE_ENC}; #DEBUG
-			exit ${RESULT};
+			exit 1;
 		fi
 	fi
 
