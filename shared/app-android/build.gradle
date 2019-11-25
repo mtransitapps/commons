@@ -100,7 +100,8 @@ android {
         }
     }
 
-    def resValueFr = file("res/values-fr")
+    def resValueFr = file("src/main/res/values-fr")
+    println "> Including French language: " + resValueFr.exists()
 
     defaultConfig {
         versionCode theVersionCode
