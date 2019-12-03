@@ -6,6 +6,9 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d parser ] && git add parser || git sb";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && git add agency-parser || git sb";
 # - ./mtransit-for-android-gradle/commons/runall.sh "git commit -m \"Update git submodules\";";
+# CLEANUP:
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \"agency-parser/input\" ] && rm -r agency-parser/input/* || echo \"NO AGENCY-PARSER INPUT DIR\""
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \".gradle\" ] && rm -r .gradle || echo \"NO GRADLE DIR\""
 
 echo "================================================================================";
 echo "> RUN ALL...";
