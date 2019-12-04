@@ -36,11 +36,6 @@ dependencies {
         implementation rootProject.ext.fbLibs.audienceNetworkMediation
         // DEBUG
         debugImplementation rootProject.ext.squareLibs.leakcanary
-        debugImplementation rootProject.ext.squareLibs.leakcanary_support_fragment
-        // RELEASE
-        releaseImplementation rootProject.ext.squareLibs.leakcanary_no_op
-        // TEST
-        testImplementation rootProject.ext.squareLibs.leakcanary_no_op
         // DEBUG
         debugImplementation 'androidx.multidex:multidex:2.0.1'
 
