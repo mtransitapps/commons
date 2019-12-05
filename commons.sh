@@ -84,6 +84,8 @@ function download() {
 		curl -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
 		local RESULT=$?;
 		if [[ ${RESULT} != 0 ]]; then
+			echo "> download() > Downloading from '$URL'... FAILED";
+			echo "> download() > Downloading from '$URL' (unsecure)...";
 			curl --insecure -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
 		fi
 	else
@@ -91,7 +93,9 @@ function download() {
 		curl -L -o "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
 		local RESULT=$?;
 		if [[ ${RESULT} != 0 ]]; then
-			curl --insecure -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
+			echo "> download() > Downloading from '$URL'... FAILED";
+			echo "> download() > Downloading from '$URL' (unsecure)...";
+			curl --insecure -L -o "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
 		fi
 	fi;
 	if [[ -e "${NEW_FILE}" ]]; then

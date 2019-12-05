@@ -91,6 +91,9 @@ java -version;
 echo "CURL VERSION:";
 curl --version;
 
+echo "OPENSSL VERSION:";
+openssl version;
+
 if [[ -d "agency-parser" ]]; then
 	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
 
