@@ -87,6 +87,12 @@ function download() {
 			echo "> download() > Downloading from '$URL'... FAILED";
 			echo "> download() > Downloading from '$URL' (unsecure)...";
 			curl --insecure -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
+			local RESULT=$?;
+			if [[ ${RESULT} != 0 ]]; then
+				echo "> download() > Downloading from '$URL' (unsecure)...FAILED";
+				echo "> download() > Downloading from '$URL' with WGET...";
+				wget -O "${NEW_FILE}" --header="User-Agent: MonTransit" --timeout=60 --tries=3 -N "$URL";
+			fi
 		fi
 	else
 		# wget --header="User-Agent: MonTransit" --timeout=60 --tries=6 -S "$URL";
@@ -96,6 +102,12 @@ function download() {
 			echo "> download() > Downloading from '$URL'... FAILED";
 			echo "> download() > Downloading from '$URL' (unsecure)...";
 			curl --insecure -L -o "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
+			local RESULT=$?;
+			if [[ ${RESULT} != 0 ]]; then
+				echo "> download() > Downloading from '$URL' (unsecure)...FAILED";
+				echo "> download() > Downloading from '$URL' with WGET...";
+				wget -O "${NEW_FILE}" --header="User-Agent: MonTransit" --timeout=60 --tries=3 -N "$URL";
+			fi
 		fi
 	fi;
 	if [[ -e "${NEW_FILE}" ]]; then
