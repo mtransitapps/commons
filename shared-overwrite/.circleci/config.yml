@@ -13,6 +13,15 @@ jobs:
       TERM: xterm-256color
     steps:
       - run:
+          name: Update packages
+          command: sudo apt-get update
+      - run:
+          name: Install openssl
+          command: sudo apt-get install openssl
+      - run:
+          name: Install curl
+          command: sudo apt-get install curl
+      - run:
           name: Update SDK
           command: echo y | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;29.0.2" "platform-tools" "platforms;android-29"
       - checkout
