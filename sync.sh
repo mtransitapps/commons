@@ -147,7 +147,7 @@ for S in "${!SUBMODULES[@]}"; do
 	git checkout $GIT_BRANCH;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
-		echo "> Error while checkint out '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+		echo "> Error while checking out '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
 		exit ${RESULT};
 	fi
 	git pull;
