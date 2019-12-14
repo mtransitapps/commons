@@ -86,7 +86,7 @@ for STOP_FILE in ${GTFS_DIR}/$STOPS_FILE_SPLIT_BASE.* ; do
         -v stopCode=${STOP_CODE_IDX} \
         -v stopId=${STOP_ID_IDX} \
         -v stopName=${STOP_NAME_IDX} \
-        'BEGIN{RS="\r\n"}{print "		allStops.put(\"" $stopCode "\", \"" $stopId"\"); // " $stopName}' \
+        'BEGIN{RS="\r\n|\n|\r"}{print "		allStops.put(\"" $stopCode "\", \"" $stopId"\"); // " $stopName}' \
         ${STOP_FILE} >> ${JAVA_STOPS_FILE};
         checkResult $? false;
     echo "		return allStops;" >> ${JAVA_STOPS_FILE};
