@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="UnusedResources">
+        <ignore path="res/raw" />
+        <ignore path="res-current/raw" />
+        <ignore path="res-next/raw" />
+        <ignore path="src/main/res-current/raw/" />
+        <ignore path="src/main/res-current-next/raw" />
+    </issue>
+</lint>
