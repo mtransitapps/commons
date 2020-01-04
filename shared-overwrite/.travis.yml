@@ -1,8 +1,9 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
+os: linux
+dist: bionic # Ubuntu 18.04
 language: android
 jdk: openjdk8
 
-sudo: false
 install: true
 
 before_cache:
