@@ -48,7 +48,7 @@ STOPS_FILE_SPLIT_BASE="stops_split.txt";
 rm -f ${GTFS_DIR}/$STOPS_FILE_SPLIT_BASE.*;
 checkResult $? false;
 
-split -d -l 5000 ${GTFS_DIR}/stops.txt ${GTFS_DIR}/$STOPS_FILE_SPLIT_BASE.;
+split -d -e -l 5000 ${GTFS_DIR}/stops.txt ${GTFS_DIR}/$STOPS_FILE_SPLIT_BASE.;
 checkResult $? false;
 
 echo ">> Pre Parsing > Set Java stops file...";
@@ -89,9 +89,9 @@ for STOP_FILE in ${GTFS_DIR}/$STOPS_FILE_SPLIT_BASE.* ; do
         -v stopCode=${STOP_CODE_IDX} \
         -v stopId=${STOP_ID_IDX} \
         -v stopName=${STOP_NAME_IDX} \
-        'BEGIN{RS="\r\n"}{print "		allStops.put(\"" $stopCode "\", \"" $stopId"\"); // " $stopName}' \
+        -f parse_pre.awk \
         ${STOP_FILE} >> ${JAVA_STOPS_FILE};
-        checkResult $? false;
+    checkResult $? false;
     echo "		return allStops;" >> ${JAVA_STOPS_FILE};
     echo "	}" >> ${JAVA_STOPS_FILE};
 done
