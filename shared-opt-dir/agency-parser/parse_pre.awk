@@ -1,8 +1,8 @@
 BEGIN {
-	FPAT = "([^,]*)|(\"[^\"]+\")"
+	FPAT = "([^\",]+)"
 	RS = "\r\n|\n|\r"
 }
 
 NF {
-	print("		allStops.put(" $stopCode ", " $stopId"); // " $stopName)
+	print("		allStops.put(\"" $stopCode "\", \"" $stopId"\"); // " $stopName)
 }
