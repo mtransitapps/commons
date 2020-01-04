@@ -14,7 +14,7 @@ jobs:
     steps:
       - run:
           name: Install GAWK
-          command: apt install -y gawk
+          command: sudo apt install -y gawk
       - run:
           name: Update SDK
           command: echo y | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;29.0.2" "platform-tools" "platforms;android-29"
