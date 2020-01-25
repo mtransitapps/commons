@@ -32,6 +32,7 @@ dependencies {
         implementation(rootProject.ext.gpsLibs.firebase_crashlytics_aar) {
             transitive = true
         }
+        // implementation rootProject.ext.gpsLibs.mediation_test_suite
         implementation rootProject.ext.fbLibs.audienceNetwork
         implementation rootProject.ext.fbLibs.audienceNetworkMediation
         // DEBUG

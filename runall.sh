@@ -5,7 +5,11 @@ source ${SCRIPT_DIR}/commons.sh;
 # RECIPES:
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d parser ] && git add parser || git sb";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && git add agency-parser || git sb";
-# - ./mtransit-for-android-gradle/commons/runall.sh "git commit -m \"Update git submodules\";";
+# - ./mtransit-for-android-gradle/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"NOTHING TO COMMIT\" ; "
+# - ./mtransit-for-android-gradle/commons/runall.sh "git commit --allow-empty -m \"Trigger build\"; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -f app-android/.gitignore ] && git -C app-android add .gitignore || git sb";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -f agency-parser/.gitignore ] && git -C agency-parser add .gitignore || git sb";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -f agency-parser/.gitignore ] && git -C agency-parser commit -m \"Update git submodules\" || git sb";
 # CLEANUP:
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \"agency-parser/input\" ] && rm -r agency-parser/input/* || echo \"NO AGENCY-PARSER INPUT DIR\""
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \".gradle\" ] && rm -r .gradle || echo \"NO GRADLE DIR\""
