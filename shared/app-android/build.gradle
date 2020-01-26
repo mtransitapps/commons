@@ -24,6 +24,7 @@ dependencies {
         implementation rootProject.ext.supportLibs.customTabs
         implementation rootProject.ext.supportLibs.design
         implementation rootProject.ext.supportLibs.swiperefreshlayout
+        implementation rootProject.ext.supportLibs.vectordrawable
         implementation rootProject.ext.gpsLibs.basement // from commons-android
         implementation rootProject.ext.gpsLibs.location
         implementation rootProject.ext.gpsLibs.maps
@@ -117,6 +118,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         // minSdkVersion 21 // DEBUG avoid using legacy multidex
         targetSdkVersion rootProject.ext.targetSdkVersion
+        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
