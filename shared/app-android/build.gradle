@@ -23,6 +23,7 @@ dependencies {
         implementation rootProject.ext.supportLibs.fragment
         implementation rootProject.ext.supportLibs.customTabs
         implementation rootProject.ext.supportLibs.design
+        implementation rootProject.ext.supportLibs.swiperefreshlayout
         implementation rootProject.ext.gpsLibs.basement // from commons-android
         implementation rootProject.ext.gpsLibs.location
         implementation rootProject.ext.gpsLibs.maps
