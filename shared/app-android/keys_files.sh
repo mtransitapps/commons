@@ -16,6 +16,9 @@ fi
 
 if [[ -f "google-services.json" ]]; then
 	FILES+=("google-services.json");
+	if [[ -f "src/debug/google-services.json" ]]; then
+        FILES+=("src/debug/google-services.json");
+    fi
 fi
 
 echo "Files:";
