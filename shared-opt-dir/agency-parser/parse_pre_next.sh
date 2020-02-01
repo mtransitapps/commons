@@ -85,7 +85,6 @@ for STOP_FILE in ${GTFS_DIR}/$STOPS_FILE_SPLIT_BASE.* ; do
     echo "" >> ${JAVA_STOPS_FILE};
     echo "	private static HashMap<String, String> init$i(HashMap<String, String> allStops) {" >> ${JAVA_STOPS_FILE};
     awk \
-        -F "\"*,\"*" \
         -v stopCode=${STOP_CODE_IDX} \
         -v stopId=${STOP_ID_IDX} \
         -v stopName=${STOP_NAME_IDX} \
