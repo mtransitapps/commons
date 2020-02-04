@@ -115,6 +115,7 @@ android {
         } else {
             resConfigs "en"
         }
+        // resConfigs "en", "xxxhdpi" // DEBUG xxxhdpi = Pixel 2 XL
         minSdkVersion rootProject.ext.minSdkVersion
         // minSdkVersion 21 // DEBUG avoid using legacy multidex
         targetSdkVersion rootProject.ext.targetSdkVersion
