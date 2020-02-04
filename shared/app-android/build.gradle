@@ -60,21 +60,21 @@ android {
 
     Properties versionProperties = new Properties()
     versionProperties.load(new FileInputStream(file("../commons-android/version.properties")))
-    def theVersionName=versionProperties['version.name']
+    def theVersionName = versionProperties['version.name']
     println "> App version name: " + theVersionName
 
     def commitCountS = "git -C ../ rev-list HEAD --count".execute().text.trim()
-    def theVersionCode=1
+    def theVersionCode = 1
     if (!commitCountS.empty) {
-        def commitCount=commitCountS.toInteger()
-        theVersionCode=1000+commitCount
+        def commitCount = commitCountS.toInteger()
+        theVersionCode = 1000 + commitCount
     }
     println "> App version code: " + theVersionCode
 
     def useGooglePlayUploadKeysProperties = true
-	if (project.hasProperty("useGooglePlayUploadKeysProperties")) {
-		useGooglePlayUploadKeysProperties = project.getProperty("useGooglePlayUploadKeysProperties").toBoolean()
-	}
+    if (project.hasProperty("useGooglePlayUploadKeysProperties")) {
+        useGooglePlayUploadKeysProperties = project.getProperty("useGooglePlayUploadKeysProperties").toBoolean()
+    }
     println "> Using Google Play Upload keys: " + useGooglePlayUploadKeysProperties
 
     Properties appSigningKeysProperties = new Properties()
@@ -104,7 +104,7 @@ android {
 
     defaultConfig {
         versionCode theVersionCode
-        versionName theVersionName+"r"+theVersionCode
+        versionName theVersionName + "r" + theVersionCode
         if (useGooglePlayUploadKeysProperties) {
             setProperty("archivesBaseName", "${projectName}_v${theVersionName}_r${theVersionCode}_upload")
         } else {
@@ -190,8 +190,8 @@ android {
                 proguardFiles getDefaultProguardFile('proguard-android.txt'),
                         'proguard-rules.pro'
             } else {
-                 shrinkResources false
-                    minifyEnabled false
+                shrinkResources false
+                minifyEnabled false
             }
         }
     }
