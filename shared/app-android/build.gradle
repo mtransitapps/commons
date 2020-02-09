@@ -37,6 +37,10 @@ dependencies {
         // implementation rootProject.ext.gpsLibs.mediation_test_suite
         implementation rootProject.ext.fbLibs.audienceNetwork
         implementation rootProject.ext.fbLibs.audienceNetworkMediation
+        implementation(rootProject.ext.moPubLibs.moPubAdsBanner) {
+            transitive = true
+        }
+        implementation rootProject.ext.moPubLibs.moPubAdsMediation
         // DEBUG
         debugImplementation rootProject.ext.squareLibs.leakcanary
         // DEBUG
