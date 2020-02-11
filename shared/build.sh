@@ -73,9 +73,6 @@ for d in ${PWD}/* ; do
 
 		git checkout ${GIT_BRANCH};
 		checkResult $? ${CONFIRM};
-
-		git pull;
-		checkResult $? ${CONFIRM};
 		echo "> GIT cleaning in '$DIRECTORY'... DONE";
 		cd ..;
 		echo "--------------------------------------------------------------------------------";
