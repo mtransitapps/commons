@@ -192,7 +192,8 @@ android {
             if (projectName == "MT") {
                 shrinkResources true
                 minifyEnabled true
-                proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                proguardFiles getDefaultProguardFile(
+                        'proguard-android-optimize.txt'), // 'proguard-android.txt'),
                         'proguard-rules.pro'
             } else {
                 shrinkResources false
