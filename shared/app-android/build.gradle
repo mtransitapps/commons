@@ -35,16 +35,15 @@ dependencies {
             transitive = true
         }
         // implementation rootProject.ext.gpsLibs.mediation_test_suite
-        implementation rootProject.ext.fbLibs.audienceNetwork
-        implementation rootProject.ext.fbLibs.audienceNetworkMediation
+        implementation rootProject.ext.fbLibs.values()
         implementation(rootProject.ext.moPubLibs.moPubAdsBanner) {
             transitive = true
         }
         implementation rootProject.ext.moPubLibs.moPubAdsMediation
         // DEBUG
-        debugImplementation rootProject.ext.squareLibs.leakcanary
+        debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
         // DEBUG
-        debugImplementation 'androidx.multidex:multidex:2.0.1'
+        debugImplementation rootProject.ext.supportLibs.multidex
 
         testImplementation rootProject.ext.jUnitLibs.jUnit
         testImplementation rootProject.ext.mockitoLibs.mockitoCore

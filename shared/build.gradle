@@ -1,4 +1,4 @@
-apply from: "$project.rootDir/commons-android/commons-android.gradle"
+apply from: "$project.rootDir/commons-android/dependencies.gradle"
 
 buildscript {
     repositories {

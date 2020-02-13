@@ -16,7 +16,7 @@ MT_CACHE_KEY="gradle-cache";
 echo "gradle-cache" >> ${RESULT_FILE}
 checksum_file build.gradle >> ${RESULT_FILE}
 checksum_file commons-android/build.gradle >> ${RESULT_FILE}
-checksum_file commons-android/commons-android.gradle >> ${RESULT_FILE}
+checksum_file commons-android/dependencies.gradle >> ${RESULT_FILE}
 checksum_file app-android/build.gradle >> ${RESULT_FILE}
 
 if [[ -d "parser" ]]; then
