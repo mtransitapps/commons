@@ -14,36 +14,23 @@ if (projectName == "MT") {
 
 dependencies {
     if (projectName == "MT") {
-        // ALL
         implementation(project(':commons-android')) {
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
         }
-        implementation rootProject.ext.supportLibs.appCompat
-        implementation rootProject.ext.supportLibs.activity
-        implementation rootProject.ext.supportLibs.fragment
-        implementation rootProject.ext.supportLibs.customTabs
-        implementation rootProject.ext.supportLibs.design
-        implementation rootProject.ext.supportLibs.swiperefreshlayout
-        implementation rootProject.ext.supportLibs.vectordrawable
-        implementation rootProject.ext.gpsLibs.basement // from commons-android
-        implementation rootProject.ext.gpsLibs.location
-        implementation rootProject.ext.gpsLibs.maps
-        implementation rootProject.ext.gpsLibs.firebase_ads
-        implementation rootProject.ext.gpsLibs.firebase_analytics
-        implementation rootProject.ext.gpsLibs.firebase_core
-        implementation(rootProject.ext.gpsLibs.firebase_crashlytics_aar) {
-            transitive = true
-        }
+        implementation rootProject.ext.supportLibs.values()
         // implementation rootProject.ext.gpsLibs.mediation_test_suite
-        implementation rootProject.ext.fbLibs.values()
-        implementation(rootProject.ext.moPubLibs.moPubAdsBanner) {
+        implementation rootProject.ext.gpsLibs.values()
+        implementation(rootProject.ext.gpsLibsAar.firebase_crashlytics) {
             transitive = true
         }
-        implementation rootProject.ext.moPubLibs.moPubAdsMediation
-        // DEBUG
+        implementation rootProject.ext.fbLibs.values()
+        implementation rootProject.ext.moPubLibs.values()
+        implementation(rootProject.ext.moPubLibsAar.moPubAdsBanner) {
+            transitive = true
+        }
+
         debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
-        // DEBUG
-        debugImplementation rootProject.ext.supportLibs.multidex
+        debugImplementation rootProject.ext.multidexLibs.multidex
 
         testImplementation rootProject.ext.jUnitLibs.jUnit
         testImplementation rootProject.ext.mockitoLibs.mockitoCore
