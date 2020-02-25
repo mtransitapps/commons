@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.triplet.play'
 
 Properties projectNameProperties = new Properties()
@@ -12,13 +14,18 @@ if (projectName == "MT") {
     apply plugin: "org.sonarqube"
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     if (projectName == "MT") {
         implementation(project(':commons-android')) {
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
         }
+        implementation rootProject.ext.jetbrainLibs.values()
         implementation rootProject.ext.supportLibs.values()
-        // implementation rootProject.ext.gpsLibs.mediation_test_suite
+        // implementation rootProject.ext.gpsLibs.mediation_test_suite // DEBUG
         implementation rootProject.ext.gpsLibs.values()
         implementation(rootProject.ext.gpsLibsAar.firebase_crashlytics) {
             transitive = true
@@ -36,6 +43,8 @@ dependencies {
         testImplementation rootProject.ext.mockitoLibs.mockitoCore
     } else {
         implementation project(':commons-android')
+        implementation rootProject.ext.jetbrainLibs.values()
+        implementation rootProject.ext.supportLibs.coreKtx
     }
 }
 
@@ -46,6 +55,9 @@ android {
     compileOptions {
         sourceCompatibility rootProject.javaVersion
         targetCompatibility rootProject.javaVersion
+    }
+    kotlinOptions {
+        jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
     }
 
     Properties versionProperties = new Properties()
