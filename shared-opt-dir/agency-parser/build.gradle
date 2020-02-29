@@ -1,4 +1,5 @@
 apply plugin: 'application'
+apply plugin: 'kotlin'
 
 mainClassName = file('parser_class').text
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
@@ -7,7 +8,19 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
+    }
+}
 
 dependencies {
+    implementation rootProject.ext.jetbrainLibs.values()
+
     implementation project(':parser')
 }
