@@ -6,6 +6,7 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d parser ] && git add parser || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && git add agency-parser || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"> SKIP\"; "
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -f gradlew ] && rm gradlew || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "./commons/cleanup.sh; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "./commons/sync.sh; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "git status -sb; ";
