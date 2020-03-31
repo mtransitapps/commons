@@ -8,6 +8,9 @@ NF {
 		len = length($stopCode)
 		$stopCode = substr($stopCode, 2, len - 2) # get text within the 2 "
 	}
+	if ($stopCode == "\\") {
+		$stopCode = "\\\\"
+	}
 	if (substr($stopId, 1, 1) == "\"") {
 		len = length($stopId)
 		$stopId = substr($stopId, 2, len - 2)  # get text within the 2 "
