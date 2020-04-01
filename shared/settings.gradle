@@ -1,3 +1,7 @@
+Properties projectNameProperties = new Properties()
+projectNameProperties.load(new FileInputStream(file("app-android/project_name.properties")))
+rootProject.name = projectNameProperties["project.name"]
+
 include ':commons' // common code shared by all
 
 if (file("agency-parser").exists()) {
