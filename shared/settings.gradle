@@ -1,6 +1,4 @@
-Properties projectNameProperties = new Properties()
-projectNameProperties.load(new FileInputStream(file("app-android/project_name.properties")))
-rootProject.name = projectNameProperties["project.name"]
+rootProject.name = "MT" // same Jetbrain IntelliJ files
 
 include ':commons' // common code shared by all
 
