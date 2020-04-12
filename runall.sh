@@ -10,6 +10,7 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android-gradle/commons/runall.sh "./commons/cleanup.sh; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "./commons/sync.sh; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "git status -sb; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "git commit --allow-empty -m \"Update git submodules\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "git commit --allow-empty -m \"Trigger build\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -f app-android/.gitignore ] && git -C app-android add .gitignore || echo \"> SKIP\"; ";
@@ -18,6 +19,7 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -f agency-parser/.gitignore ] && git -C agency-parser push || echo \"> SKIP\"; ";
 # CLEANUP:
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \"agency-parser/input\" ] && rm -r agency-parser/input/* || echo \"> SKIP\"; "
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -f \"agency-parser/input/gtfs.zip\" ] && rm -r agency-parser/input/gtfs.zip || echo \"> SKIP\"; "
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \".gradle\" ] && rm -r .gradle || echo \"> SKIP\"; "
 
 echo "================================================================================";
