@@ -68,7 +68,9 @@ if [[ ${IS_CI} = true ]]; then
                     GIT_BRANCH="";
                 fi
             fi
+            echo ">> Git branch: '$GIT_BRANCH'.";
             PR_NUMBER=${CIRCLE_PULL_REQUEST##*/};
+            echo ">> Git PR number: '$PR_NUMBER'.";
             echo ">> Running sonar...";
             ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:sonarqube \
                 -Dsonar.organization=mtransitapps-github \
