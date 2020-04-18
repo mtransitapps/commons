@@ -57,7 +57,9 @@ if [[ ${IS_CI} = true ]]; then
 			echo "MT_SONAR_LOGIN environment variable is NOT defined!";
 			exit 1;
 		fi
-		if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
+		echo ">> CIRCLECI: '$CIRCLECI'."; #DEBUG
+		echo ">> CIRCLE_PULL_REQUEST: '$CIRCLE_PULL_REQUEST'."; #DEBUG
+		if [[ ! -z "${CIRCLECI}" ]]; then
             GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
             if [[ "$GIT_BRANCH" = "HEAD" ]]; then
                 GIT_BRANCH="";
@@ -69,21 +71,25 @@ if [[ ${IS_CI} = true ]]; then
                 fi
             fi
             echo ">> Git branch: '$GIT_BRANCH'.";
-            # https://docs.sonarqube.org/latest/analysis/pull-request/
-            TARGET_BRANCH="mmathieum"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
-            PR_NUMBER=${CIRCLE_PULL_REQUEST##*/};
-            echo ">> Git PR number: '$PR_NUMBER'.";
             echo ">> GIT_PROJECT_NAME: '$GIT_PROJECT_NAME'."; #DEBUG
             SONAR_ARGS="";
             SONAR_ARGS+=" -Dsonar.organization=mtransitapps-github";
             SONAR_ARGS+=" -Dsonar.projectKey=${GIT_PROJECT_NAME}";
             SONAR_ARGS+=" -Dsonar.projectName=${GIT_PROJECT_NAME}";
+            SONAR_ARGS+=" -Dsonar.branch.name=${GIT_BRANCH}";
             SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
             echo ">> SONAR_ARGS: '$SONAR_ARGS'."; #DEBUG
             SONAR_PR_ARGS="";
-            SONAR_PR_ARGS+=" -Dsonar.pullrequest.base=${TARGET_BRANCH}";
-            SONAR_PR_ARGS+=" -Dsonar.pullrequest.branch=${GIT_BRANCH}";
-            SONAR_PR_ARGS+=" -Dsonar.pullrequest.key=${PR_NUMBER}";
+			if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
+                # https://docs.sonarqube.org/latest/analysis/pull-request/
+                TARGET_BRANCH="mmathieum"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
+                # TODO IF hotfix/... -> master ELSE feature/... -> develop
+                PR_NUMBER=${CIRCLE_PULL_REQUEST##*/};
+                echo ">> Git PR number: '$PR_NUMBER'.";
+                SONAR_PR_ARGS+=" -Dsonar.pullrequest.base=${TARGET_BRANCH}";
+                SONAR_PR_ARGS+=" -Dsonar.pullrequest.branch=${GIT_BRANCH}";
+                SONAR_PR_ARGS+=" -Dsonar.pullrequest.key=${PR_NUMBER}";
+			fi
             echo ">> SONAR_PR_ARGS: '$SONAR_PR_ARGS'."; #DEBUG
             echo ">> Running sonar...";
             ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:sonarqube \
