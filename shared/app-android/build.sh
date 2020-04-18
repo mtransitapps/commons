@@ -57,8 +57,6 @@ if [[ ${IS_CI} = true ]]; then
 			echo "MT_SONAR_LOGIN environment variable is NOT defined!";
 			exit 1;
 		fi
-		echo ">> CIRCLECI: '$CIRCLECI'."; #DEBUG
-		echo ">> CIRCLE_PULL_REQUEST: '$CIRCLE_PULL_REQUEST'."; #DEBUG
 		if [[ ! -z "${CIRCLECI}" ]]; then
             GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
             if [[ "$GIT_BRANCH" = "HEAD" ]]; then
@@ -70,16 +68,14 @@ if [[ ${IS_CI} = true ]]; then
                     GIT_BRANCH="";
                 fi
             fi
-            echo ">> Git branch: '$GIT_BRANCH'.";
-            echo ">> GIT_PROJECT_NAME: '$GIT_PROJECT_NAME'."; #DEBUG
             SONAR_ARGS="";
             SONAR_ARGS+=" -Dsonar.organization=mtransitapps-github";
             SONAR_ARGS+=" -Dsonar.projectKey=mt:${GIT_PROJECT_NAME}";
             SONAR_ARGS+=" -Dsonar.projectName=MT:${GIT_PROJECT_NAME}";
             SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
-            echo ">> SONAR_ARGS: '$SONAR_ARGS'."; #DEBUG
+            echo ">> Sonar args: '$SONAR_ARGS'.";
             SONAR_PR_ARGS="";
-			if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
+            if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
                 # https://docs.sonarqube.org/latest/analysis/pull-request/
                 TARGET_BRANCH="mmathieum"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
                 # TODO IF hotfix/... || develop -> master ELSE feature/... -> develop
@@ -88,8 +84,8 @@ if [[ ${IS_CI} = true ]]; then
                 SONAR_PR_ARGS+=" -Dsonar.pullrequest.base=${TARGET_BRANCH}";
                 SONAR_PR_ARGS+=" -Dsonar.pullrequest.branch=${GIT_BRANCH}";
                 SONAR_PR_ARGS+=" -Dsonar.pullrequest.key=${PR_NUMBER}";
-			fi
-            echo ">> SONAR_PR_ARGS: '$SONAR_PR_ARGS'."; #DEBUG
+            fi
+            echo ">> Sonar PR args: '$SONAR_PR_ARGS'.";
             echo ">> Running sonar...";
             ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:sonarqube \
                 $SONAR_ARGS \
