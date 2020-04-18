@@ -79,7 +79,6 @@ if [[ ${IS_CI} = true ]]; then
             SONAR_ARGS+=" -Dsonar.projectKey=${GIT_PROJECT_NAME}";
             SONAR_ARGS+=" -Dsonar.projectName=${GIT_PROJECT_NAME}";
             SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
-            SONAR_ARGS+=" -Dsonar.verbose=true"; #DEBUG
             echo ">> SONAR_ARGS: '$SONAR_ARGS'."; #DEBUG
             SONAR_PR_ARGS="";
             SONAR_PR_ARGS+=" -Dsonar.pullrequest.base=${TARGET_BRANCH}";
