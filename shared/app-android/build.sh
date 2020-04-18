@@ -69,17 +69,28 @@ if [[ ${IS_CI} = true ]]; then
                 fi
             fi
             echo ">> Git branch: '$GIT_BRANCH'.";
+            # https://docs.sonarqube.org/latest/analysis/pull-request/
+            TARGET_BRANCH="mmathieum"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
             PR_NUMBER=${CIRCLE_PULL_REQUEST##*/};
             echo ">> Git PR number: '$PR_NUMBER'.";
+            echo ">> GIT_PROJECT_NAME: '$GIT_PROJECT_NAME'."; #DEBUG
+            SONAR_ARGS="";
+            SONAR_ARGS+=" -Dsonar.organization=mtransitapps-github";
+            SONAR_ARGS+=" -Dsonar.projectName=${GIT_PROJECT_NAME}";
+            SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
+            SONAR_ARGS+=" -Dsonar.sourceEncoding=UTF-8";
+            SONAR_ARGS+=" -Dsonar.verbose=true"; #DEBUG
+            echo ">> SONAR_ARGS: '$SONAR_ARGS'."; #DEBUG
+            SONAR_PR_ARGS="";
+            SONAR_PR_ARGS+=" -Dsonar.pullrequest.base=${TARGET_BRANCH}";
+            SONAR_PR_ARGS+=" -Dsonar.pullrequest.branch=${GIT_BRANCH}";
+            SONAR_PR_ARGS+=" -Dsonar.pullrequest.key=${PR_NUMBER}";
+            echo ">> SONAR_PR_ARGS: '$SONAR_PR_ARGS'."; #DEBUG
             echo ">> Running sonar...";
             ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:sonarqube \
-                -Dsonar.organization=mtransitapps-github \
-                -Dsonar.projectName=${GIT_PROJECT_NAME} \
-                -Dsonar.host.url=https://sonarcloud.io \
+                $SONAR_ARGS \
                 -Dsonar.login=${MT_SONAR_LOGIN} \
-                -Dsonar.pullrequest.base=mmathieum \
-                -Dsonar.pullrequest.branch=${GIT_BRANCH} \
-                -Dsonar.pullrequest.key=${PR_NUMBER} \
+                $SONAR_PR_ARGS \
                 ${GRADLE_ARGS}
             RESULT=$?;
             checkResult ${RESULT};
