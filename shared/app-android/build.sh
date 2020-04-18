@@ -74,8 +74,8 @@ if [[ ${IS_CI} = true ]]; then
             echo ">> GIT_PROJECT_NAME: '$GIT_PROJECT_NAME'."; #DEBUG
             SONAR_ARGS="";
             SONAR_ARGS+=" -Dsonar.organization=mtransitapps-github";
-            SONAR_ARGS+=" -Dsonar.projectName=${GIT_PROJECT_NAME}";
-            SONAR_ARGS+=" -Dsonar.branch.name=${GIT_BRANCH}";
+            SONAR_ARGS+=" -Dsonar.projectKey=mt:${GIT_PROJECT_NAME}";
+            SONAR_ARGS+=" -Dsonar.projectName=MT:${GIT_PROJECT_NAME}";
             SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
             echo ">> SONAR_ARGS: '$SONAR_ARGS'."; #DEBUG
             SONAR_PR_ARGS="";
