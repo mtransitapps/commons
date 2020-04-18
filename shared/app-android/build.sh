@@ -74,7 +74,6 @@ if [[ ${IS_CI} = true ]]; then
             echo ">> GIT_PROJECT_NAME: '$GIT_PROJECT_NAME'."; #DEBUG
             SONAR_ARGS="";
             SONAR_ARGS+=" -Dsonar.organization=mtransitapps-github";
-            SONAR_ARGS+=" -Dsonar.projectKey=${GIT_PROJECT_NAME}";
             SONAR_ARGS+=" -Dsonar.projectName=${GIT_PROJECT_NAME}";
             SONAR_ARGS+=" -Dsonar.branch.name=${GIT_BRANCH}";
             SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
@@ -83,7 +82,7 @@ if [[ ${IS_CI} = true ]]; then
 			if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
                 # https://docs.sonarqube.org/latest/analysis/pull-request/
                 TARGET_BRANCH="mmathieum"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
-                # TODO IF hotfix/... -> master ELSE feature/... -> develop
+                # TODO IF hotfix/... || develop -> master ELSE feature/... -> develop
                 PR_NUMBER=${CIRCLE_PULL_REQUEST##*/};
                 echo ">> Git PR number: '$PR_NUMBER'.";
                 SONAR_PR_ARGS+=" -Dsonar.pullrequest.base=${TARGET_BRANCH}";
