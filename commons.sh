@@ -6,18 +6,19 @@
 
 function setIsCI() {
 	IS_CI=false;
-    if [[ ! -z "${CI}" ]]; then
-        IS_CI=true;
-    fi
+	if [[ ! -z "${CI}" ]]; then
+		IS_CI=true;
+	fi
+	# IS_CI=true; # DEBUG
 }
 
 function setGradleArgs() {
 	setIsCI;
 
-    GRADLE_ARGS="";
-    if [[ ${IS_CI} = true ]]; then
-        GRADLE_ARGS=" --no-daemon --no-parallel --no-configure-on-demand --max-workers=2 --console=plain";
-    fi
+	GRADLE_ARGS="";
+	if [[ ${IS_CI} = true ]]; then
+		GRADLE_ARGS+=" --no-daemon --no-parallel --no-configure-on-demand --max-workers=2 --console=plain";
+	fi
 }
 
 # set current working directory to the directory of the script
