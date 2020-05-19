@@ -10,7 +10,7 @@ def projectName = projectNameProperties["project.name"]
 println "> App project name: " + projectName
 
 if (projectName == "MT") {
-    apply plugin: 'io.fabric'
+    apply plugin: 'com.google.firebase.crashlytics'
     apply plugin: "org.sonarqube"
 }
 
@@ -27,9 +27,6 @@ dependencies {
         implementation rootProject.ext.supportLibs.values()
         // implementation rootProject.ext.gpsLibs.mediation_test_suite // DEBUG
         implementation rootProject.ext.gpsLibs.values()
-        implementation(rootProject.ext.gpsLibsAar.firebase_crashlytics) {
-            transitive = true
-        }
         implementation rootProject.ext.fbLibs.values()
         implementation rootProject.ext.moPubLibs.values()
         implementation(rootProject.ext.moPubLibsAar.moPubAdsBanner) {
@@ -166,10 +163,10 @@ android {
                 proguardFiles getDefaultProguardFile('proguard-android.txt'),
                         'proguard-rules.pro'
                 multiDexEnabled true
-                // Disable fabric build ID generation for debug builds
-                ext.enableCrashlytics = false
-                // https://docs.fabric.io/android/crashlytics/build-tools.html
-                ext.alwaysUpdatedBuildId = false
+                firebaseCrashlytics {
+                    // https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?platform=android#keep_obfuscated_build_variants
+                    mappingFileUploadEnabled false
+                }
             } else {
                 minifyEnabled false
             }
