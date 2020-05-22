@@ -21,6 +21,9 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \"agency-parser/input\" ] && rm -r agency-parser/input/* || echo \"> SKIP\"; "
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -f \"agency-parser/input/gtfs.zip\" ] && rm -r agency-parser/input/gtfs.zip || echo \"> SKIP\"; "
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \".gradle\" ] && rm -r .gradle || echo \"> SKIP\"; "
+# PUSH TO MASTER
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && git -C agency-parser push origin mmathieum:master || echo \"> SKIP\"; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d app-android ] && git -C app-android push origin mmathieum:master || echo \"> SKIP\"; ";
 
 echo "================================================================================";
 echo "> RUN ALL...";
