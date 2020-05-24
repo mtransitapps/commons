@@ -119,7 +119,7 @@ echo "SPLIT VERSION:";
 split --version;
 echo "--------------------------------------------------------------------------------";
 
-if [[ -d "agency-parser" ]]; then
+if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "mmathieum" ]]; then
 	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
 
 	./gradlew :parser:clean ${GRADLE_ARGS};
