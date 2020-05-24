@@ -172,7 +172,7 @@ if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "mmathieum" ]]; then
 	cd ..; # <<
 	echo "> PARSING DATA FOR '$AGENCY_ID'... DONE";
 else
-	echo "> SKIP PARSING FOR '$AGENCY_ID'.";
+	echo "> SKIP PARSING FOR '$AGENCY_ID' (branch:$GIT_BRANCH).";
 fi
 
 echo "> BUILDING ANDROID APP FOR '$AGENCY_ID'...";
