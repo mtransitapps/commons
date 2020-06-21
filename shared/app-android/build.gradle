@@ -51,6 +51,22 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    buildFeatures {
+        buildConfig = true
+        if (projectName == "MT") {
+            viewBinding = true
+            dataBinding = false
+            aidl = true // Google Play Billing TODO migrate to v3
+        } else {
+            viewBinding = false
+            dataBinding = false
+            aidl = false
+        }
+        renderScript = false
+        resValues = true
+        shaders = true
+    }
+
     compileOptions {
         sourceCompatibility rootProject.javaVersion
         targetCompatibility rootProject.javaVersion
