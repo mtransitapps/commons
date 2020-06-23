@@ -63,8 +63,8 @@ android {
             aidl = false
         }
         renderScript = false
-        resValues = true
-        shaders = true
+        resValues = false
+        shaders = false
     }
 
     compileOptions {
@@ -182,6 +182,7 @@ android {
                         'proguard-rules.pro'
                 multiDexEnabled true
                 firebaseCrashlytics {
+                    println "> Firebase Crashlytics mapping file NOT uploaded"
                     // https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?platform=android#keep_obfuscated_build_variants
                     mappingFileUploadEnabled false
                 }
