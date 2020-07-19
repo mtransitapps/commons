@@ -33,7 +33,6 @@ dependencies {
             transitive = true
         }
         implementation rootProject.ext.imgLibs.values()
-        annotationProcessor rootProject.ext.imgLibsCompiler.values()
 
         debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
         debugImplementation rootProject.ext.multidexLibs.multidex
@@ -136,8 +135,11 @@ android {
         // resConfigs "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
         minSdkVersion rootProject.ext.minSdkVersion
         // minSdkVersion 21 // DEBUG avoid using legacy multidex
+        buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdkVersion rootProject.ext.targetSdkVersion
-        vectorDrawables.useSupportLibrary = true
+        if (minSdkVersion.apiLevel < 21) {
+            vectorDrawables.useSupportLibrary = true
+        }
 
         manifestPlaceholders = [
                 permission_provider_read     : "org.mtransit.android.provider.permission.READ_PROVIDER",
@@ -177,7 +179,7 @@ android {
             // testCoverageEnabled false // DEBUG skip coverage report
             shrinkResources false
             if (projectName == "MT") {
-                minifyEnabled true
+                minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'),
                         'proguard-rules.pro'
                 multiDexEnabled true
