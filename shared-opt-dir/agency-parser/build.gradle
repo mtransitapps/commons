@@ -20,7 +20,7 @@ compileTestKotlin {
 }
 
 dependencies {
-    implementation rootProject.ext.jetbrainLibs.values()
+    implementation rootProject.ext.kotlinLibs.values()
 
     implementation project(':parser')
 }
