@@ -23,7 +23,8 @@ dependencies {
         implementation(project(':commons-android')) {
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
         }
-        implementation rootProject.ext.jetbrainLibs.values()
+        implementation rootProject.ext.kotlinLibs.values()
+        implementation rootProject.ext.kotlinAndroidLibs.values()
         implementation rootProject.ext.supportLibs.values()
         // implementation rootProject.ext.gpsLibs.mediation_test_suite // DEBUG
         implementation rootProject.ext.gpsLibs.values()
@@ -40,8 +41,9 @@ dependencies {
         testImplementation rootProject.ext.mockitoLibs.mockitoCore
     } else {
         implementation project(':commons-android')
-        implementation rootProject.ext.jetbrainLibs.values()
-        implementation rootProject.ext.supportLibs.coreKtx
+        implementation rootProject.ext.kotlinLibs.values()
+        implementation rootProject.ext.kotlinAndroidLibs.values()
+        implementation rootProject.ext.supportLibs.core
     }
 }
 
@@ -118,8 +120,11 @@ android {
         // resConfigs "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
         minSdkVersion rootProject.ext.minSdkVersion
         // minSdkVersion 21 // DEBUG avoid using legacy multidex
+        buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdkVersion rootProject.ext.targetSdkVersion
-        vectorDrawables.useSupportLibrary = true
+        if (minSdkVersion.apiLevel < 21) {
+            vectorDrawables.useSupportLibrary = true
+        }
 
         manifestPlaceholders = [
                 permission_provider_read     : "org.mtransit.android.provider.permission.READ_PROVIDER",
@@ -159,7 +164,7 @@ android {
             // testCoverageEnabled false // DEBUG skip coverage report
             shrinkResources false
             if (projectName == "MT") {
-                minifyEnabled true
+                minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'),
                         'proguard-rules.pro'
                 multiDexEnabled true
