@@ -33,6 +33,9 @@ dependencies {
         implementation(rootProject.ext.moPubLibsAar.moPubAdsBanner) {
             transitive = true
         }
+        implementation(rootProject.ext.moPubLibsAar.moPubAdsRewarded) {
+            transitive = true
+        }
 
         debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
         debugImplementation rootProject.ext.multidexLibs.multidex
