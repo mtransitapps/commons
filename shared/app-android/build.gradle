@@ -28,12 +28,15 @@ dependencies {
         implementation rootProject.ext.supportLibs.values()
         implementation rootProject.ext.gpsLibs.values()
         // implementation rootProject.ext.gpsLibs.mediation_test_suite // DEBUG
+        implementation rootProject.ext.imgLibs.values()
         implementation rootProject.ext.fbLibs.values()
         implementation rootProject.ext.moPubLibs.values()
         implementation(rootProject.ext.moPubLibsAar.moPubAdsBanner) {
             transitive = true
         }
-        implementation rootProject.ext.imgLibs.values()
+        implementation(rootProject.ext.moPubLibsAar.moPubAdsRewarded) {
+            transitive = true
+        }
 
         debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
         debugImplementation rootProject.ext.multidexLibs.multidex
@@ -44,7 +47,7 @@ dependencies {
         implementation project(':commons-android')
         implementation rootProject.ext.kotlinLibs.values()
         implementation rootProject.ext.kotlinAndroidLibs.values()
-        implementation rootProject.ext.supportLibs.coreKtx
+        implementation rootProject.ext.supportLibs.core
     }
 }
 
