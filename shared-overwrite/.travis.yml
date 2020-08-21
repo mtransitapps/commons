@@ -24,16 +24,6 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=29.0.3
     - TZ=America/Toronto
 
-android:
-  components:
-    - tools # to get the new `repository-11.xml`
-    - platform-tools
-    - tools # to install Android SDK tools
-# android:
-#   components:
-#     - tools # to get the new `repository-11.xml`
-#     - platform-tools
-#     - tools # to install Android SDK tools
 
 branches:
   only:
@@ -47,16 +37,11 @@ git:
   submodules: false
 
 before_install:
+  - echo y | sdkmanager "build-tools;29.0.3" "platform-tools" "platforms;android-29"
   - chmod +x checkout_submodules.sh
   - ./checkout_submodules.sh
   - chmod +x commons/sync.sh
   - ./commons/sync.sh
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" >> "$ANDROID_HOME/licenses/android-sdk-license"
-  - touch ~/.android/repositories.cfg
-  - sdkmanager tools
-  - echo y | sdkmanager "build-tools;29.0.3" "platform-tools" "platforms;android-29"
 
 script:
   - ./build.sh
