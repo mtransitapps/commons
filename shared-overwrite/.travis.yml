@@ -29,6 +29,11 @@ android:
     - tools # to get the new `repository-11.xml`
     - platform-tools
     - tools # to install Android SDK tools
+# android:
+#   components:
+#     - tools # to get the new `repository-11.xml`
+#     - platform-tools
+#     - tools # to install Android SDK tools
 
 branches:
   only:
