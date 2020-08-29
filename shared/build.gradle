@@ -1,7 +1,7 @@
 apply from: "$project.rootDir/commons-android/dependencies.gradle"
 
 buildscript {
-    ext.kotlin_version = '1.3.72'
+    ext.kotlin_version = '1.4.0'
     repositories {
         google()
         jcenter()
@@ -16,7 +16,7 @@ buildscript {
         if (appAndroidGoogleServicesJSON.exists()) {
             println "> Using Google Services, Fabric & SonarQube gradle plugin."
             classpath 'com.google.gms:google-services:4.3.3'
-            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
+            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.1'
             classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8'
         } else {
             println "> Not using Google Services, Fabric & SonarQube gradle plugin."
