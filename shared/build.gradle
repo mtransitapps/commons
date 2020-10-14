@@ -8,10 +8,9 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        //noinspection GradleDependency // TODO update to 2.7+ after Gradle 6.2+
-        classpath 'com.github.triplet.gradle:play-publisher:2.6.2'
+        classpath 'com.github.triplet.gradle:play-publisher:3.0.0'
         def appAndroidGoogleServicesJSON = file("app-android/google-services.json")
         if (appAndroidGoogleServicesJSON.exists()) {
             println "> Using Google Services, Fabric & SonarQube gradle plugin."

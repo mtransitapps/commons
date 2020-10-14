@@ -12,7 +12,7 @@ CURRENT_DIRECTORY_PATH="$(realpath "$PWD")";
 SCRIPT_DIRECTORY_PATH="$(realpath $(dirname "$0"))";
 
 if [[ "${CURRENT_DIRECTORY_PATH}" != "${SCRIPT_DIRECTORY_PATH}" ]]; then
-	echo ">> Script needs to be exectured from '$SCRIPT_DIRECTORY_PATH' instead of '${CURRENT_DIRECTORY_PATH}'!";
+	echo ">> Script needs to be executed from '$SCRIPT_DIRECTORY_PATH' instead of '${CURRENT_DIRECTORY_PATH}'!";
 	exit 1;
 fi
 

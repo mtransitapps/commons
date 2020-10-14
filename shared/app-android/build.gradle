@@ -255,15 +255,15 @@ android {
 }
 
 play {
-    serviceAccountCredentials = file("google-play-auto-publisher.json")
-    defaultToAppBundles = true
+    serviceAccountCredentials.set(file("google-play-auto-publisher.json"))
+    defaultToAppBundles.set(true)
     // Available tracks: internal, alpha, Beta (Private), beta, production
     // "Beta (Private)" is default because it's hard to use with -Pparam parameter
-    track = "Beta (Private)"
-    fromTrack = "Beta (Private)"
-    promoteTrack = "Beta (Private)"
-    releaseStatus = "draft"// completed/draft/inProgress/halted
-    userFraction = 0.01 // 0.00 - 0.10 - 0.33 - 0.50 - 1.00 WHEN releaseStatus=[inProgress/halted]
+    track.set("Beta (Private)")
+    fromTrack.set("Beta (Private)")
+    promoteTrack.set("Beta (Private)")
+    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT) // ReleaseStatus.[COMPLETED/DRAFT/HALTED/IN_PROGRESS]
+    userFraction.set(0.01d) // 0.00 - 0.10 - 0.33 - 0.50 - 1.00 WHEN releaseStatus=[inProgress/halted]
 }
 
 if (projectName == "MT") {
