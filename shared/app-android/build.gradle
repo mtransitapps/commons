@@ -28,6 +28,7 @@ dependencies {
         implementation rootProject.ext.supportLibs.values()
         // implementation rootProject.ext.gpsLibs.mediation_test_suite // DEBUG
         implementation rootProject.ext.gpsLibs.values()
+        implementation rootProject.ext.billingClientLibs.values()
         implementation rootProject.ext.fbLibs.values()
         implementation rootProject.ext.moPubLibs.values()
         implementation(rootProject.ext.moPubLibsAar.moPubAdsBanner) {
