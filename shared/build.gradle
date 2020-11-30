@@ -1,7 +1,7 @@
 apply from: "$project.rootDir/commons-android/dependencies.gradle"
 
 buildscript {
-    ext.kotlin_version = '1.4.10'
+    ext.kotlin_version = '1.4.20'
     repositories {
         google()
         jcenter()
@@ -16,7 +16,7 @@ buildscript {
             println "> Using Google Services, Fabric & SonarQube gradle plugin."
             // TODO 4.3.4+ when bug fixed https://github.com/google/play-services-plugins/issues/163
             classpath 'com.google.gms:google-services:4.3.3'
-            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
+            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
             classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0'
         } else {
             println "> Not using Google Services, Fabric & SonarQube gradle plugin."
