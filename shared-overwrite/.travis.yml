@@ -35,8 +35,8 @@ android:
 
 branches:
   only:
-    - master
-    - mmathieum #TBB
+    - master #TBR main|prod
+    - mmathieum #TBR dev|ready|pull
     - /^hotfix/.*$/
     - develop
     - /^feature/.*$/
@@ -49,8 +49,6 @@ before_install:
   - ./checkout_submodules.sh
   - chmod +x commons/sync.sh
   - ./commons/sync.sh
-  - ls -l $ANDROID_HOME
-  - ls -l $ANDROID_HOME/cmdline-tools
 
 script:
   - ./build.sh
