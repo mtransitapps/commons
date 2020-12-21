@@ -1,7 +1,8 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 os: linux
-dist: trusty
-language: android
+# dist: trusty # Ubuntu 14.04.x LTS (Trusty Tahr)
+dist: xenial # Ubuntu 16.04.x LTS (Xenial Xerus)
+language: android # requested Linus distribution not always honored!
 # language: java
 jdk: openjdk11
 sudo: required
@@ -56,7 +57,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y install gawk
   - gawk --version # after
-  - echo y | sdkmanager "platform-tools" "build-tools;$ANDROID_BUILD_TOOLS_VERSION" "platforms;android-$ANDROID_API_LEVEL";
+  # - echo y | sdkmanager "platform-tools" "build-tools;$ANDROID_BUILD_TOOLS_VERSION" "platforms;android-$ANDROID_API_LEVEL";
   - chmod +x checkout_submodules.sh
   - ./checkout_submodules.sh
   - chmod +x commons/sync.sh
