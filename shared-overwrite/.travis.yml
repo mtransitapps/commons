@@ -1,9 +1,17 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 os: linux
+dist: focal
+
 arch: amd64
-dist: bionic
+
 language: android
 jdk: openjdk11
+
+addons:
+apt:
+  update: true
+  packages:
+  - gawk
 
 install: true
 
@@ -45,8 +53,6 @@ git:
   submodules: false
 
 before_install:
-  - sudo apt-get -q update || true
-  - sudo apt-get -y install gawk # Install GAWK - GNU awk
   - chmod +x checkout_submodules.sh
   - ./checkout_submodules.sh
   - chmod +x commons/sync.sh
