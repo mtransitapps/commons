@@ -1,7 +1,7 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 os: linux
 arch: amd64
-dist: focal
+dist: bionic
 language: android
 jdk: openjdk11
 
