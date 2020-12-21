@@ -8,10 +8,10 @@ language: android
 jdk: openjdk11
 
 addons:
-apt:
-  update: true
-  packages:
-  - gawk
+  apt:
+    update: true
+    packages:
+    - gawk
 
 install: true
 
