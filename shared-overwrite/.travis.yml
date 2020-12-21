@@ -1,19 +1,19 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 os: linux
-dist: focal
-# language: android
-language: java
+dist: trusty
+language: android
+# language: java
 jdk: openjdk11
-# sudo: false
+sudo: required
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    update: true
-    packages:
-      - gawk
-
+# addons:
+#   apt:
+#     sources:
+#       - ubuntu-toolchain-r-test
+#     update: true
+#     packages:
+#       - gawk
+#
 git:
   submodules: false
 
@@ -31,15 +31,15 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=30.0.2
     - TZ=America/Toronto
 
-# android:
-#   components:
-#     - tools # to get the new repositories
-#     - platform-tools
-#     - tools # to install Android SDK tools
-#     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-#     - android-$ANDROID_API_LEVEL
-#   licenses:
-#     - 'android-sdk-license-.+'
+android:
+  components:
+    - tools # to get the new repositories
+    - platform-tools
+    - tools # to install Android SDK tools
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - android-$ANDROID_API_LEVEL
+  licenses:
+    - 'android-sdk-license-.+'
 
 cache:
   directories:
@@ -51,9 +51,11 @@ cache:
 # https://docs.travis-ci.com/user/job-lifecycle/
 
 before_install:
+  - uname -a
+  - gawk --version # before
   - sudo apt-get update
   - sudo apt-get -y install gawk
-  - gawk --version
+  - gawk --version # after
   - echo y | sdkmanager "platform-tools" "build-tools;$ANDROID_BUILD_TOOLS_VERSION" "platforms;android-$ANDROID_API_LEVEL";
   - chmod +x checkout_submodules.sh
   - ./checkout_submodules.sh
