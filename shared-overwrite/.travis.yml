@@ -1,45 +1,20 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 os: linux
 dist: focal
-
-arch: amd64
-
 language: android
 jdk: openjdk11
+# sudo: false
 
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     update: true
     packages:
-    - gawk
+      - gawk
 
-install: true
-
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
-
-env:
-  global:
-    - ANDROID_API_LEVEL=30
-    - ANDROID_BUILD_TOOLS_VERSION=30.0.2
-    - TZ=America/Toronto
-
-android:
-  components:
-    - tools # to get the new `repository-11.xml`
-    - platform-tools
-    - tools # to install Android SDK tools
-    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-    - android-$ANDROID_API_LEVEL
-  licenses:
-    - 'android-sdk-license-.+'
+git:
+  submodules: false
 
 branches:
   only:
@@ -49,10 +24,35 @@ branches:
     - develop
     - /^feature/.*$/
 
-git:
-  submodules: false
+env:
+  global:
+    - ANDROID_API_LEVEL=30
+    - ANDROID_BUILD_TOOLS_VERSION=30.0.2
+    - TZ=America/Toronto
+
+android:
+  components:
+    - tools # to get the new repositories
+    - platform-tools
+    - tools # to install Android SDK tools
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - android-$ANDROID_API_LEVEL
+  licenses:
+    - 'android-sdk-license-.+'
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+
+# STEPS:
+# https://docs.travis-ci.com/user/job-lifecycle/
 
 before_install:
+#  - sudo apt-get update
+#  - sudo apt-get -y install gawk
+#  - echo y | sdkmanager "platform-tools" "build-tools;$ANDROID_BUILD_TOOLS_VERSION" "platforms;android-$ANDROID_API_LEVEL";
   - chmod +x checkout_submodules.sh
   - ./checkout_submodules.sh
   - chmod +x commons/sync.sh
@@ -62,5 +62,11 @@ before_install:
   - echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" >> "$ANDROID_HOME/licenses/android-sdk-license"
   - touch ~/.android/repositories.cfg
 
+install: true
+
 script:
   - ./build.sh
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
