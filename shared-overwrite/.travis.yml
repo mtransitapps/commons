@@ -45,7 +45,7 @@ git:
   submodules: false
 
 before_install:
-  - sudo apt-get update
+  - sudo apt-get -q update
   - sudo apt-get -y install gawk # Install GAWK - GNU awk
   - chmod +x checkout_submodules.sh
   - ./checkout_submodules.sh
