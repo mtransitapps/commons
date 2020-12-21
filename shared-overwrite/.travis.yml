@@ -44,6 +44,12 @@ branches:
 git:
   submodules: false
 
+addons:
+  apt:
+    update: true
+    packages:
+    - gawk
+
 before_install:
   - chmod +x checkout_submodules.sh
   - ./checkout_submodules.sh
