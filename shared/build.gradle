@@ -1,7 +1,7 @@
 apply from: "$project.rootDir/commons-android/dependencies.gradle"
 
 buildscript {
-    ext.kotlin_version = '1.4.20'
+    ext.kotlin_version = '1.4.21'
     repositories {
         google()
         jcenter()
@@ -10,13 +10,15 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.triplet.gradle:play-publisher:3.0.0'
+        // https://github.com/Triple-T/gradle-play-publisher/releases
+        classpath 'com.github.triplet.gradle:play-publisher:3.2.0'
         def appAndroidGoogleServicesJSON = file("app-android/google-services.json")
         if (appAndroidGoogleServicesJSON.exists()) {
             println "> Using Google Services, Fabric & SonarQube gradle plugin."
             // TODO 4.3.4+ when bug fixed https://github.com/google/play-services-plugins/issues/163
             classpath 'com.google.gms:google-services:4.3.3'
             classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+            // https://plugins.gradle.org/plugin/org.sonarqube
             classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0'
         } else {
             println "> Not using Google Services, Fabric & SonarQube gradle plugin."

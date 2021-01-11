@@ -14,6 +14,8 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android-gradle/commons/runall.sh "git commit --allow-empty -m \"Update git submodules\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "git commit --allow-empty -m \"Trigger build\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -f app-android/.gitignore ] && git -C app-android add .gitignore || echo \"> SKIP\"; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -f app-android/.gitignore ] && git -C app-android commit -m \"Update git submodules\" || echo \"> SKIP\"; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -f app-android/.gitignore ] && git -C app-android push || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -f agency-parser/.gitignore ] && git -C agency-parser add .gitignore || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -f agency-parser/.gitignore ] && git -C agency-parser commit -m \"Update git submodules\" || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -f agency-parser/.gitignore ] && git -C agency-parser push || echo \"> SKIP\"; ";
