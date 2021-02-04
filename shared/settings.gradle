@@ -1,4 +1,4 @@
-rootProject.name = "MT" // same Jetbrain IntelliJ files
+rootProject.name = "MT" // same JetBrains IntelliJ files
 
 include ':commons' // common code shared by all
 
