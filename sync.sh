@@ -79,12 +79,14 @@ fi
 
 declare -a SUBMODULES=(
 	"commons"
+	"commons-java"
 	"commons-android"
 	"app-android"
 );
 PROJECT_NAME="${GIT_PROJECT_NAME:0:$((${#GIT_PROJECT_NAME} - 7))}";
 declare -a SUBMODULES_REPO=(
 	"commons"
+	"commons-java"
 	"commons-android"
 );
 if [[ $PROJECT_NAME == *android ]]; then

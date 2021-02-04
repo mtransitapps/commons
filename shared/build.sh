@@ -122,6 +122,9 @@ echo "--------------------------------------------------------------------------
 if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
 
+	./gradlew :commons-java:clean ${GRADLE_ARGS};
+	checkResult $? ${CONFIRM};
+
 	./gradlew :parser:clean ${GRADLE_ARGS};
 	checkResult $? ${CONFIRM};
 
@@ -141,13 +144,17 @@ if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
 
 	echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... ";
-	../gradlew :parser:build ${GRADLE_ARGS};
+	../gradlew :commons-java:build ${GRADLE_ARGS}; #includes test
+	checkResult $? ${CONFIRM};
+
+	../gradlew :parser:build ${GRADLE_ARGS}; #includes test
 	checkResult $? ${CONFIRM};
 
 	echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 
 	echo "> PARSING DATA FOR '$AGENCY_ID'...";
 
+  # CURRENT...
 	./parse_pre_current.sh;
 	checkResult $? ${CONFIRM};
 
@@ -156,7 +163,9 @@ if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 
 	./parse_current.sh;
 	checkResult $? ${CONFIRM};
+	# CURRENT... DONE
 
+	# NEXT...
 	./parse_pre_next.sh;
 	checkResult $? ${CONFIRM};
 
@@ -165,6 +174,7 @@ if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 
 	./parse_next.sh;
 	checkResult $? ${CONFIRM};
+	# NEXT... DONE
 
 	./list_change.sh;
 	checkResult $? ${CONFIRM};

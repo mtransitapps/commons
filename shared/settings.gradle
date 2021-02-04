@@ -2,6 +2,8 @@ rootProject.name = "MT" // same Jetbrain IntelliJ files
 
 include ':commons' // common code shared by all
 
+include ':commons-java' // common code shared by all projects
+
 if (file("agency-parser").exists()) {
     include ':parser' // common code shared by all parsers
     include ':agency-parser' // parser

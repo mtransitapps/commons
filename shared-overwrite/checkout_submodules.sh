@@ -18,6 +18,7 @@ fi
 
 declare -a SUBMODULES=(
 	"commons"
+	"commons-java"
 	"commons-android"
 	"app-android"
 );

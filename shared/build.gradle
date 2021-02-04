@@ -15,11 +15,10 @@ buildscript {
         def appAndroidGoogleServicesJSON = file("app-android/google-services.json")
         if (appAndroidGoogleServicesJSON.exists()) {
             println "> Using Google Services, Fabric & SonarQube gradle plugin."
-            // TODO 4.3.4+ when bug fixed https://github.com/google/play-services-plugins/issues/163
-            classpath 'com.google.gms:google-services:4.3.3'
+            classpath 'com.google.gms:google-services:4.3.5'
             classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
             // https://plugins.gradle.org/plugin/org.sonarqube
-            classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.1'
+            classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.1.1'
         } else {
             println "> Not using Google Services, Fabric & SonarQube gradle plugin."
         }
