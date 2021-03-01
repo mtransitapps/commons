@@ -38,7 +38,6 @@ dependencies {
         }
 
         debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
-        debugImplementation rootProject.ext.multidexLibs.multidex
 
         testImplementation rootProject.ext.jUnitLibs.jUnit
         testImplementation rootProject.ext.mockitoLibs.mockitoCore
@@ -122,12 +121,8 @@ android {
         // resConfigs "en", "xxxhdpi" // DEBUG xxxhdpi = Pixel 2 XL
         // resConfigs "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
         minSdkVersion rootProject.ext.minSdkVersion
-        // minSdkVersion 21 // DEBUG avoid using legacy multidex
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdkVersion rootProject.ext.targetSdkVersion
-        if (minSdkVersion.apiLevel < 21) {
-            vectorDrawables.useSupportLibrary = true
-        }
 
         manifestPlaceholders = [
                 permission_provider_read     : "org.mtransit.android.provider.permission.READ_PROVIDER",
