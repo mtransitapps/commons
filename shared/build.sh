@@ -155,9 +155,6 @@ if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	echo "> PARSING DATA FOR '$AGENCY_ID'...";
 
   # CURRENT...
-	./parse_pre_current.sh;
-	checkResult $? ${CONFIRM};
-
 	../gradlew :agency-parser:build ${GRADLE_ARGS};
 	checkResult $? ${CONFIRM};
 
@@ -166,9 +163,6 @@ if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	# CURRENT... DONE
 
 	# NEXT...
-	./parse_pre_next.sh;
-	checkResult $? ${CONFIRM};
-
 	../gradlew :agency-parser:build ${GRADLE_ARGS};
 	checkResult $? ${CONFIRM};
 
