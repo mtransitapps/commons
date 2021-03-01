@@ -27,8 +27,8 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && git -C agency-parser push origin mmathieum:master || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d app-android ] && git -C app-android push origin mmathieum:master || echo \"> SKIP\"; ";
 # SEARCH
-# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && grep --include=\*.{java,kt} -rnw 'agency-parser' -e \"extractUsefulServiceIdInts\" || echo \"> SKIP\"; ";
-# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && grep --include=\*.{java,kt} -r -i \"extractUsefulServiceId\" agency-parser || echo \"> SKIP\"; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && grep --color=auto --include=\*.{java,kt} -rnw 'agency-parser' -e \"extractUsefulServiceIdInts\" || echo \"> SKIP\"; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && grep --color=auto --include=\*.{java,kt} -r -i \"extractUsefulServiceId\" agency-parser || echo \"> SKIP\"; ";
 
 echo "================================================================================";
 echo "> RUN ALL...";
