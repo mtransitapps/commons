@@ -107,6 +107,16 @@ if [[ ${IS_CI} = true ]]; then
 	echo ">> Running build, assemble & bundle... DONE";
 fi
 
+echo ">> Gradle status...";
+../gradlew --status;
+checkResult ${RESULT};
+echo ">> Gradle status... DONE";
+
+echo ">> Gradle STOP...";
+../gradlew --stop;
+checkResult ${RESULT};
+echo ">> Gradle STOP... DONE";
+
 echo ">> Running bundle release...";
 ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
 RESULT=$?;
