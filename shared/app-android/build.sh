@@ -123,6 +123,16 @@ RESULT=$?;
 checkResult ${RESULT};
 echo ">> Running bundle release... DONE";
 
+echo ">> Gradle status...";
+../gradlew --status;
+checkResult ${RESULT};
+echo ">> Gradle status... DONE";
+
+echo ">> Gradle STOP...";
+../gradlew --stop;
+checkResult ${RESULT};
+echo ">> Gradle STOP... DONE";
+
 echo ">> Running assemble release...";
 ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
 RESULT=$?;
