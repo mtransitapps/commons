@@ -12,6 +12,9 @@ declare -a FILES=(
 
 if [[ -f "src/main/res/values/keys.xml" ]]; then
 	FILES+=("src/main/res/values/keys.xml");
+	if [[ -f "src/debug/res/values/keys.xml" ]]; then
+		FILES+=("src/debug/res/values/keys.xml");
+	fi
 fi
 
 if [[ -f "google-services.json" ]]; then
