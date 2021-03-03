@@ -8,6 +8,10 @@ projectNameProperties.load(new FileInputStream(file("project_name.properties")))
 def projectName = projectNameProperties["project.name"]
 println "> App project name: " + projectName
 
+def envCI = System.getenv("CI")
+def isCI = envCI != null && envCI != ""
+println "> CI: " + isCI
+
 if (projectName == "MT") {
     apply plugin: 'com.google.firebase.crashlytics'
     apply plugin: "org.sonarqube"
@@ -197,6 +201,11 @@ android {
                 shrinkResources false
                 minifyEnabled false
             }
+        }
+    }
+    if (isCI) {
+        dexOptions {
+            preDexLibraries false
         }
     }
 
