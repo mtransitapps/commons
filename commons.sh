@@ -77,6 +77,9 @@ function download() {
 	local URL=$1;
 	local NEW_FILE=$(basename "$URL");
 	local LAST_FILE=$2;
+	if [[ "$NEW_FILE" == "$LAST_FILE" ]]; then
+	  NEW_FILE="NEW_${NEW_FILE}"
+	fi
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
 		cp "${LAST_FILE}" "${NEW_FILE}";

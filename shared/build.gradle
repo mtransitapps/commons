@@ -12,6 +12,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/Triple-T/gradle-play-publisher/releases
         classpath 'com.github.triplet.gradle:play-publisher:3.2.0'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.15'
         def appAndroidGoogleServicesJSON = file("app-android/google-services.json")
         if (appAndroidGoogleServicesJSON.exists()) {
             println "> Using Google Services, Fabric & SonarQube gradle plugin."
