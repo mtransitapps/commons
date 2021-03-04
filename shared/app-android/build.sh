@@ -107,37 +107,17 @@ if [[ ${IS_CI} = true ]]; then
 	echo ">> Running build, assemble & bundle... DONE";
 fi
 
-echo ">> Gradle status...";
-../gradlew --status;
-checkResult ${RESULT};
-echo ">> Gradle status... DONE";
-
-echo ">> Gradle STOP...";
-../gradlew --stop;
-checkResult ${RESULT};
-echo ">> Gradle STOP... DONE";
-
-echo ">> Running bundle release...";
+echo ">> Running bundle release AAB...";
 ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
 RESULT=$?;
 checkResult ${RESULT};
-echo ">> Running bundle release... DONE";
+echo ">> Running bundle release AAB... DONE";
 
-echo ">> Gradle status...";
-../gradlew --status;
-checkResult ${RESULT};
-echo ">> Gradle status... DONE";
-
-echo ">> Gradle STOP...";
-../gradlew --stop;
-checkResult ${RESULT};
-echo ">> Gradle STOP... DONE";
-
-echo ">> Running assemble release...";
+echo ">> Running assemble release APK...";
 ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
 RESULT=$?;
 checkResult ${RESULT};
-echo ">> Running assemble release... DONE";
+echo ">> Running assemble release APK... DONE";
 
 if [[ ! -z "${MT_OUTPUT_DIR}" ]]; then
 	echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'...";
