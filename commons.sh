@@ -17,7 +17,7 @@ function setGradleArgs() {
 
 	GRADLE_ARGS="";
 	if [[ ${IS_CI} = true ]]; then
-		GRADLE_ARGS+=" --no-daemon --no-parallel --no-configure-on-demand --max-workers=1 --console=plain -Dkotlin.compiler.execution.strategy=in-process";
+		GRADLE_ARGS+=" --no-daemon --no-parallel --no-configure-on-demand --max-workers=2 --console=plain -Dkotlin.compiler.execution.strategy=in-process";
 	fi
 }
 
