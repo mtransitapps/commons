@@ -12,6 +12,18 @@ def envCI = System.getenv("CI")
 def isCI = envCI != null && envCI != ""
 println "> CI: " + isCI
 
+def isDevLeakCanaryOff = false
+Properties devProperties = new Properties()
+def devPropertiesFile = file("dev.properties")
+if (!devPropertiesFile.exists()) {
+    devPropertiesFile = file("../dev.properties")
+}
+if (devPropertiesFile.exists()) {
+    devProperties.load(new FileInputStream(devPropertiesFile))
+    isDevLeakCanaryOff = devProperties['dev.leakCanaryOff']
+}
+println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
+
 if (projectName == "MT") {
     apply plugin: 'com.google.firebase.crashlytics'
     apply plugin: "org.sonarqube"
@@ -41,7 +53,9 @@ dependencies {
             transitive = true
         }
 
-        debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
+        if (!isDevLeakCanaryOff) {
+            debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
+        }
 
         testImplementation rootProject.ext.jUnitLibs.jUnit
         testImplementation rootProject.ext.mockitoLibs.mockitoCore
