@@ -218,10 +218,13 @@ android {
             }
         }
     }
-    if (isCI) {
-        dexOptions {
+
+    dexOptions {
+        if (isCI) {
             preDexLibraries false
         }
+        javaMaxHeapSize "1g"
+        threadCount 1 // reduce predex thread count to limit memory usage
     }
 
     //noinspection GroovyMissingReturnStatement
