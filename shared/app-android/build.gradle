@@ -222,9 +222,13 @@ android {
     dexOptions {
         if (isCI) {
             preDexLibraries false
+            javaMaxHeapSize "1g"
+            threadCount 1 // reduce predex thread count to limit memory usage
+        } else {
+            preDexLibraries true
+            javaMaxHeapSize "2g"
+            threadCount 2
         }
-        javaMaxHeapSize "1g"
-        threadCount 1 // reduce predex thread count to limit memory usage
     }
 
     //noinspection GroovyMissingReturnStatement
