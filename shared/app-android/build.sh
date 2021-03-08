@@ -49,7 +49,7 @@ if [[ ${IS_CI} = true ]]; then
     echo ">> Running lint... DONE";
 
 	declare -a SONAR_PROJECTS=(
-	    # "mtransit-for-android" # disable to try fixing memory usage on CircleCI
+	    "mtransit-for-android"
 	    "commons-android"
 	);
 	if contains ${GIT_PROJECT_NAME} ${SONAR_PROJECTS[@]}; then
