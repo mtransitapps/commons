@@ -1,7 +1,7 @@
 #!/bin/bash
 source ../commons/commons.sh
 echo "> Listing change...";
-TARGET=$(cat "change_directory");
+TARGET="../app-android/src/main/";
 RESULT=$(git -C ${TARGET} status);
 checkResult $? false;
 RESULT=$(echo ${RESULT} | grep "res/raw");
