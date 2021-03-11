@@ -252,6 +252,7 @@ android {
                     'UselessParent', //
                     'IconDensities',  //
                     'RtlHardcoded'
+            error 'NonConstantResourceId'
         }
     }
 
