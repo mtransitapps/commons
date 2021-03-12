@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.triplet.play'
 
 Properties projectNameProperties = new Properties()
@@ -42,6 +43,7 @@ dependencies {
         implementation rootProject.ext.kotlinLibs.values()
         implementation rootProject.ext.kotlinAndroidLibs.values()
         implementation rootProject.ext.supportLibs.values()
+        kapt rootProject.ext.supportLibsCompiler.roomCompiler
         // implementation rootProject.ext.gpsLibs.mediation_test_suite // DEBUG
         implementation rootProject.ext.gpsLibs.values()
         implementation rootProject.ext.billingClientLibs.values()
@@ -147,6 +149,15 @@ android {
                 permission_provider_read     : "org.mtransit.android.provider.permission.READ_PROVIDER",
                 permission_receiver_broadcast: "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER"
         ]
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                ]
+            }
+        }
     }
 
     signingConfigs {
