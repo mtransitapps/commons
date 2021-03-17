@@ -17,7 +17,13 @@ function setGradleArgs() {
 
 	GRADLE_ARGS="";
 	if [[ ${IS_CI} = true ]]; then
-		GRADLE_ARGS+=" --no-daemon --no-parallel --no-configure-on-demand --max-workers=2 --console=plain -Dkotlin.compiler.execution.strategy=in-process";
+		GRADLE_ARGS+=" --no-daemon"; # org.gradle.daemon=false
+		GRADLE_ARGS+=" --no-parallel"; # org.gradle.parallel=false
+		GRADLE_ARGS+=" --no-configure-on-demand"; # org.gradle.configureondemand=false
+		GRADLE_ARGS+=" --max-workers=2"; # org.gradle.workers.max=2
+		GRADLE_ARGS+=" --console=plain";
+		GRADLE_ARGS+=" -Dkotlin.compiler.execution.strategy=in-process";
+		GRADLE_ARGS+=" -Dkotlin.incremental=false";
 	fi
 }
 
