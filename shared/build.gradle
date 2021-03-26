@@ -12,12 +12,13 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/Triple-T/gradle-play-publisher/releases
         classpath 'com.github.triplet.gradle:play-publisher:3.3.0'
+        // https://github.com/google/protobuf-gradle-plugin/releases
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.15'
         def appAndroidGoogleServicesJSON = file("app-android/google-services.json")
         if (appAndroidGoogleServicesJSON.exists()) {
             println "> Using Google Services, Fabric & SonarQube gradle plugin."
             classpath 'com.google.gms:google-services:4.3.5'
-            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.1'
+            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
             // https://plugins.gradle.org/plugin/org.sonarqube
             classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.1.1'
         } else {
