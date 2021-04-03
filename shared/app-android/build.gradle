@@ -183,6 +183,20 @@ android {
         }
     }
 
+    buildFeatures {
+        aidl false
+        buildConfig true
+        dataBinding false
+        renderScript false
+        resValues true
+        shaders false
+        if (projectName == "MT") {
+            viewBinding true
+        } else {
+            viewBinding false
+        }
+    }
+
     buildTypes {
         debug {
             versionNameSuffix "_DEBUG"
@@ -208,7 +222,6 @@ android {
             }
             aaptOptions.cruncherEnabled = false
         }
-        //noinspection GroovyMissingReturnStatement
         release {
             if (useGooglePlayUploadKeysProperties) {
                 if (googlePlayUploadKeysPropertiesFile.exists()) {
@@ -245,7 +258,6 @@ android {
         }
     }
 
-    //noinspection GroovyMissingReturnStatement
     lintOptions {
         if (projectName == "MT") {
             abortOnError true
