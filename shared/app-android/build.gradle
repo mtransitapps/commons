@@ -45,7 +45,6 @@ dependencies {
         implementation rootProject.ext.supportLibs.values()
         kapt rootProject.ext.supportLibsCompiler.lifecycleCompiler
         kapt rootProject.ext.supportLibsCompiler.roomCompiler
-        // implementation rootProject.ext.gpsLibs.mediation_test_suite // DEBUG
         implementation rootProject.ext.gpsLibs.values()
         implementation rootProject.ext.billingClientLibs.values()
         implementation rootProject.ext.fbLibs.values()
