@@ -95,6 +95,17 @@ android {
     }
     println "> App version code: " + theVersionCode
 
+    Properties debugSigningKeysProperties = new Properties()
+    def debugSigningKeysPropertiesFile = file("app-signing-debug-keys.properties")
+    if (debugSigningKeysPropertiesFile.exists()) {
+        debugSigningKeysProperties.load(new FileInputStream(debugSigningKeysPropertiesFile))
+    } else {
+        debugSigningKeysPropertiesFile = file("../app-signing-debug-keys.properties")
+        if (debugSigningKeysPropertiesFile.exists()) {
+            debugSigningKeysProperties.load(new FileInputStream(debugSigningKeysPropertiesFile))
+        }
+    }
+
     def useGooglePlayUploadKeysProperties = true
     if (project.hasProperty("useGooglePlayUploadKeysProperties")) {
         useGooglePlayUploadKeysProperties = project.getProperty("useGooglePlayUploadKeysProperties").toBoolean()
@@ -163,6 +174,14 @@ android {
     }
 
     signingConfigs {
+        debug {
+            if (debugSigningKeysPropertiesFile.exists()) {
+                storeFile file(debugSigningKeysProperties['key.store'])
+                storePassword debugSigningKeysProperties['key.store.password']
+                keyAlias debugSigningKeysProperties['key.alias']
+                keyPassword debugSigningKeysProperties['key.alias.password']
+            }
+        }
         release {
             if (useGooglePlayUploadKeysProperties) {
                 if (googlePlayUploadKeysPropertiesFile.exists()) {
