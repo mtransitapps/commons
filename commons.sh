@@ -19,8 +19,8 @@ function setGradleArgs() {
 	if [[ ${IS_CI} = true ]]; then
 		# GRADLE_ARGS+=" --info"; # -i
 		# GRADLE_ARGS+=" --stacktrace"; # -s
-		# GRADLE_ARGS+=" --no-daemon"; # org.gradle.daemon=false
-		GRADLE_ARGS+=" --daemon"; # org.gradle.daemon=true #memory
+		GRADLE_ARGS+=" --no-daemon"; # org.gradle.daemon=false
+		# GRADLE_ARGS+=" --daemon"; # org.gradle.daemon=true #memory
 		GRADLE_ARGS+=" --no-parallel"; # org.gradle.parallel=false
 		GRADLE_ARGS+=" --no-configure-on-demand"; # org.gradle.configureondemand=false
 		GRADLE_ARGS+=" --max-workers=2"; # org.gradle.workers.max=2
