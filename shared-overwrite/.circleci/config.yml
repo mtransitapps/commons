@@ -7,7 +7,7 @@ jobs:
   build:
     working_directory: ~/mtransit
     docker:
-      - image: circleci/android:api-30
+      - image: mtransitapps/docker-image-android:latest
         auth:
           username: montransit
           password: $MT_DOCKER_PASSWORD
