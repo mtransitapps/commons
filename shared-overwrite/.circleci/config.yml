@@ -20,11 +20,11 @@ jobs:
       TERM: xterm-256color
       TZ: "America/Toronto"
     steps:
-      - run:
-          name: Install GAWK - GNU awk
-          command: |
-            sudo apt-get update
-            sudo apt-get -y install gawk
+      # - run:
+      #     name: Install GAWK - GNU awk
+      #     command: |
+      #       sudo apt-get update
+      #       sudo apt-get -y install gawk
       - android/accept-licenses
       - run:
           name: Update SDK
