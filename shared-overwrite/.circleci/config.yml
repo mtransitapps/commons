@@ -2,7 +2,8 @@
 version: 2.1
 orbs:
   # https://circleci.com/developer/orbs/orb/circleci/android
-  android: circleci/android@1.0.2
+  # https://github.com/CircleCI-Public/android-orb/tree/master/src/commands
+  android: circleci/android@1.0.3
 jobs:
   build:
     working_directory: ~/mtransit
@@ -43,9 +44,9 @@ jobs:
           name: Sync files
           command: ./commons/sync.sh
       - android/restore-build-cache:
-          cache-prefix: android-build-cache
+          cache-prefix: mt-android-build-cache
       # - android/restore-gradle-cache:
-      # cache-prefix: gradle-cache
+      # cache-prefix: mt-gradle-cache
       # find-args: . -type f \( -name "*.gradle" -o -name "gradle-wrapper.properties" \)
       - restore_cache:
           key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
@@ -71,9 +72,9 @@ jobs:
             - ~/.gradle/wrapper/
           key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - android/save-build-cache:
-          cache-prefix: android-build-cache
+          cache-prefix: mt-android-build-cache
       # - android/save-gradle-cache:
-      # cache-prefix: gradle-cache
+      # cache-prefix: mt-gradle-cache
       - store_artifacts:
           path: app-android/build/reports
           destination: reports
