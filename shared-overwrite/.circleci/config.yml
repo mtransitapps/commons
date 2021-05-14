@@ -43,6 +43,12 @@ jobs:
       - run:
           name: Sync files
           command: ./commons/sync.sh
+      - run:
+          name: List gradle
+          command: |
+          ls -l ${HOME} || echo "> SKIP"
+          ls -l ${HOME}/.gradle || echo "> SKIP"
+          ls -l ${HOME}/.gradle/wrapper || echo "> SKIP"
       - android/restore-build-cache:
           cache-prefix: mt-android-build-cache
       # - android/restore-gradle-cache:
@@ -70,7 +76,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle/wrapper/
-          key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+          key: mt-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - android/save-build-cache:
           cache-prefix: mt-android-build-cache
       # - android/save-gradle-cache:
