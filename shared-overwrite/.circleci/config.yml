@@ -46,9 +46,9 @@ jobs:
       - run:
           name: List gradle
           command: |
-          ls -l ${HOME} || echo "> SKIP"
-          ls -l ${HOME}/.gradle || echo "> SKIP"
-          ls -l ${HOME}/.gradle/wrapper || echo "> SKIP";
+          ls -l ${HOME}
+          ls -l ${HOME}/.gradle
+          ls -l ${HOME}/.gradle/wrapper
       - android/restore-build-cache:
           cache-prefix: mt-android-build-cache
       # - android/restore-gradle-cache:
