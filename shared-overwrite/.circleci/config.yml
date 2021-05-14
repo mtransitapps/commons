@@ -48,7 +48,7 @@ jobs:
           command: |
           ls -l ${HOME} || echo "> SKIP"
           ls -l ${HOME}/.gradle || echo "> SKIP"
-          ls -l ${HOME}/.gradle/wrapper || echo "> SKIP"
+          ls -l ${HOME}/.gradle/wrapper || echo "> SKIP";
       - android/restore-build-cache:
           cache-prefix: mt-android-build-cache
       # - android/restore-gradle-cache:
