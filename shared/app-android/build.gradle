@@ -269,7 +269,7 @@ android {
         if (isCI) {
             preDexLibraries false
             javaMaxHeapSize "1g"
-            threadCount 1 // reduce predex thread count to limit memory usage
+            threadCount 1 // reduce pre-dex thread count to limit memory usage
         } else {
             preDexLibraries true
             javaMaxHeapSize "2g"

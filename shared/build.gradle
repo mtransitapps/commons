@@ -9,7 +9,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.0'
+        classpath 'com.android.tools.build:gradle:4.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/Triple-T/gradle-play-publisher/releases
         //noinspection GradleDependency // TODO 3.4.0+
