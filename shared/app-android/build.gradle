@@ -26,6 +26,7 @@ if (devPropertiesFile.exists()) {
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
 if (projectName == "MT") {
+    apply plugin: 'dagger.hilt.android.plugin'
     apply plugin: 'com.google.firebase.crashlytics'
     apply plugin: "org.sonarqube"
 }
@@ -43,6 +44,8 @@ dependencies {
         }
         implementation rootProject.ext.kotlinLibs.values()
         implementation rootProject.ext.kotlinAndroidLibs.values()
+        implementation rootProject.ext.daggerLibs.values()
+        kapt rootProject.ext.daggerLibsCompiler.hiltCompiler
         implementation rootProject.ext.supportLibs.values()
         kapt rootProject.ext.supportLibsCompiler.lifecycleCompiler
         kapt rootProject.ext.supportLibsCompiler.roomCompiler
