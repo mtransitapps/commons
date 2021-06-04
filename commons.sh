@@ -86,6 +86,7 @@ function download() {
 	local URL=$1;
 	local NEW_FILE=$(basename "$URL");
 	local LAST_FILE=$2;
+	local OPENSSL_CONF_FILE="download_openssl_allow_tls1_0.cnf"
 	if [[ "$NEW_FILE" == "$LAST_FILE" ]]; then
 	  NEW_FILE="NEW_${NEW_FILE}"
 	fi
@@ -105,6 +106,12 @@ function download() {
 				echo "> download() > Downloading from '$URL' (unsecure)...FAILED";
 				echo "> download() > Downloading from '$URL' with WGET...";
 				wget -O "${NEW_FILE}" --header="User-Agent: MonTransit" --timeout=60 --tries=3 -N "$URL";
+				local RESULT=$?;
+				if [[ ${RESULT} != 0 ]]; then
+					echo "> download() > Downloading from '$URL' with WGET... FAILED";
+					echo "> download() > Downloading from '$URL' with CURL & curstom OPENSSL_CONF...";
+					OPENSSL_CONF="${OPENSSL_CONF_FILE}" curl --insecure -L -o "${NEW_FILE}" -z "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
+				fi
 			fi
 		fi
 	else
@@ -120,6 +127,12 @@ function download() {
 				echo "> download() > Downloading from '$URL' (unsecure)...FAILED";
 				echo "> download() > Downloading from '$URL' with WGET...";
 				wget -O "${NEW_FILE}" --header="User-Agent: MonTransit" --timeout=60 --tries=3 -N "$URL";
+				local RESULT=$?;
+				if [[ ${RESULT} != 0 ]]; then
+					echo "> download() > Downloading from '$URL' with WGET... FAILED";
+					echo "> download() > Downloading from '$URL' with CURL & curstom OPENSSL_CONF...";
+					OPENSSL_CONF="${OPENSSL_CONF_FILE}" curl --insecure -L -o "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
+				fi
 			fi
 		fi
 	fi;
