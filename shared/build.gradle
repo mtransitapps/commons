@@ -1,7 +1,7 @@
 apply from: "$project.rootDir/commons-android/dependencies.gradle"
 
 buildscript {
-    ext.hilt_version = "2.36"
+    ext.hilt_version = "2.37"
     ext.kotlin_version = "1.5.10"
     repositories {
         google()
@@ -20,8 +20,9 @@ buildscript {
         if (appAndroidGoogleServicesJSON.exists()) {
             println "> Using Google Services, Crashlytics... gradle plugin."
             classpath "com.google.gms:google-services:4.3.8"
+            // https://github.com/google/dagger/releases
             classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-            classpath "com.google.firebase:firebase-crashlytics-gradle:2.6.1"
+            classpath "com.google.firebase:firebase-crashlytics-gradle:2.7.0"
             // // https://plugins.gradle.org/plugin/org.sonarqube
             // classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.2.0"
         } else {

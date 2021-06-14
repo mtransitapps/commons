@@ -27,6 +27,7 @@ println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
 if (projectName == "MT") {
     apply plugin: 'dagger.hilt.android.plugin'
+    apply plugin: 'com.google.gms.google-services'
     apply plugin: 'com.google.firebase.crashlytics'
     // apply plugin: "org.sonarqube"
 }
@@ -93,13 +94,16 @@ android {
     def theVersionName = versionProperties['version.name']
     println "> App version name: " + theVersionName
 
-    def commitCountS = "git -C ../ rev-list HEAD --count".execute().text.trim()
+    def commitCountS = "git -C ${project.rootDir} rev-list HEAD --count".execute().text.trim()
     def theVersionCode = 1
     if (!commitCountS.empty) {
         def commitCount = commitCountS.toInteger()
         theVersionCode = 1000 + commitCount
     }
     println "> App version code: " + theVersionCode
+
+    def gitHash = "git -C ${project.rootDir} rev-parse --short HEAD".execute().text.trim()
+    println "> App version hash: " + gitHash
 
     Properties debugSigningKeysProperties = new Properties()
     def debugSigningKeysPropertiesFile = file("app-signing-debug-keys.properties")
@@ -146,6 +150,7 @@ android {
     defaultConfig {
         versionCode theVersionCode
         versionName theVersionName + "r" + theVersionCode
+        buildConfigField "String", "GIT_HASH", "\"$gitHash\""
         if (useGooglePlayUploadKeysProperties) {
             setProperty("archivesBaseName", "${projectName}_v${theVersionName}_r${theVersionCode}_upload")
         } else {
@@ -343,8 +348,4 @@ play {
     releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT) // ReleaseStatus.[COMPLETED/DRAFT/HALTED/IN_PROGRESS]
     userFraction.set(0.01d) // 0.00 - 0.10 - 0.33 - 0.50 - 1.00 WHEN releaseStatus=[inProgress/halted]
     updatePriority.set(4) // 0-5, 0=default, 5=highest priority
-}
-
-if (projectName == "MT") {
-    apply plugin: 'com.google.gms.google-services'
 }
