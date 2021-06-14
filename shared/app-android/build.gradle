@@ -28,7 +28,7 @@ println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 if (projectName == "MT") {
     apply plugin: 'dagger.hilt.android.plugin'
     apply plugin: 'com.google.firebase.crashlytics'
-    apply plugin: "org.sonarqube"
+    // apply plugin: "org.sonarqube"
 }
 
 repositories {

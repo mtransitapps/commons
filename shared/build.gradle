@@ -18,14 +18,14 @@ buildscript {
         classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.16"
         def appAndroidGoogleServicesJSON = file("app-android/google-services.json")
         if (appAndroidGoogleServicesJSON.exists()) {
-            println "> Using Google Services, Fabric & SonarQube gradle plugin."
+            println "> Using Google Services, Crashlytics... gradle plugin."
             classpath "com.google.gms:google-services:4.3.8"
             classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
             classpath "com.google.firebase:firebase-crashlytics-gradle:2.6.1"
-            // https://plugins.gradle.org/plugin/org.sonarqube
-            classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.2.0"
+            // // https://plugins.gradle.org/plugin/org.sonarqube
+            // classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.2.0"
         } else {
-            println "> Not using Google Services, Fabric & SonarQube gradle plugin."
+            println "> Not using Google Services, Crashlytics... gradle plugin."
         }
     }
 }

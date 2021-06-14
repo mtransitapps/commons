@@ -48,57 +48,57 @@ if [[ ${IS_CI} = true ]]; then
 	checkResult ${RESULT};
     echo ">> Running lint... DONE";
 
-	declare -a SONAR_PROJECTS=(
-	    "mtransit-for-android"
-	    "commons-android"
-	);
-	if contains ${GIT_PROJECT_NAME} ${SONAR_PROJECTS[@]}; then
-		if [[ -z "${MT_SONAR_LOGIN}" ]]; then
-			echo "MT_SONAR_LOGIN environment variable is NOT defined!";
-			exit 1;
-		fi
-		if [[ ! -z "${CIRCLECI}" ]]; then
-            GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
-            if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-                GIT_BRANCH="";
-            fi
-            if [[ -z "${GIT_BRANCH}" ]]; then
-	            GIT_BRANCH=${CIRCLE_BRANCH}; #CircleCI
-                if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-                    GIT_BRANCH="";
-                fi
-            fi
-            SONAR_ARGS="";
-            SONAR_ARGS+=" -Dsonar.organization=mtransitapps-github";
-            SONAR_ARGS+=" -Dsonar.projectKey=mt:${GIT_PROJECT_NAME}";
-            SONAR_ARGS+=" -Dsonar.projectName=MT:${GIT_PROJECT_NAME}";
-            SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
-            echo ">> Sonar args: '$SONAR_ARGS'.";
-            SONAR_PR_ARGS="";
-            if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
-                # https://docs.sonarqube.org/latest/analysis/pull-request/
-                TARGET_BRANCH="mmathieum"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
-                # TODO IF hotfix/... || develop -> master ELSE feature/... -> develop
-                PR_NUMBER=${CIRCLE_PULL_REQUEST##*/};
-                echo ">> Git PR number: '$PR_NUMBER'.";
-                SONAR_PR_ARGS+=" -Dsonar.pullrequest.base=${TARGET_BRANCH}";
-                SONAR_PR_ARGS+=" -Dsonar.pullrequest.branch=${GIT_BRANCH}";
-                SONAR_PR_ARGS+=" -Dsonar.pullrequest.key=${PR_NUMBER}";
-            fi
-            echo ">> Sonar PR args: '$SONAR_PR_ARGS'.";
-            echo ">> Running sonar...";
-            ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:sonarqube \
-                $SONAR_ARGS \
-                -Dsonar.login=${MT_SONAR_LOGIN} \
-                $SONAR_PR_ARGS \
-                ${GRADLE_ARGS}
-            RESULT=$?;
-            checkResult ${RESULT};
-            echo ">> Running sonar... DONE";
-        fi
-	else
-		echo ">> Skipping sonar for '$GIT_PROJECT_NAME'.";
-	fi
+# declare -a SONAR_PROJECTS=(
+# "mtransit-for-android"
+# "commons-android"
+# );
+# if contains ${GIT_PROJECT_NAME} ${SONAR_PROJECTS[@]}; then
+# if [[ -z "${MT_SONAR_LOGIN}" ]]; then
+# echo "MT_SONAR_LOGIN environment variable is NOT defined!";
+# exit 1;
+# fi
+# if [[ ! -z "${CIRCLECI}" ]]; then
+# GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
+# if [[ "$GIT_BRANCH" = "HEAD" ]]; then
+# GIT_BRANCH="";
+# fi
+# if [[ -z "${GIT_BRANCH}" ]]; then
+# GIT_BRANCH=${CIRCLE_BRANCH}; #CircleCI
+# if [[ "$GIT_BRANCH" = "HEAD" ]]; then
+# GIT_BRANCH="";
+# fi
+# fi
+# SONAR_ARGS="";
+# SONAR_ARGS+=" -Dsonar.organization=mtransitapps-github";
+# SONAR_ARGS+=" -Dsonar.projectKey=mt:${GIT_PROJECT_NAME}";
+# SONAR_ARGS+=" -Dsonar.projectName=MT:${GIT_PROJECT_NAME}";
+# SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
+# echo ">> Sonar args: '$SONAR_ARGS'.";
+# SONAR_PR_ARGS="";
+# if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
+# # https://docs.sonarqube.org/latest/analysis/pull-request/
+# TARGET_BRANCH="mmathieum"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
+# # TO DO IF hotfix/... || develop -> master ELSE feature/... -> develop
+# PR_NUMBER=${CIRCLE_PULL_REQUEST##*/};
+# echo ">> Git PR number: '$PR_NUMBER'.";
+# SONAR_PR_ARGS+=" -Dsonar.pullrequest.base=${TARGET_BRANCH}";
+# SONAR_PR_ARGS+=" -Dsonar.pullrequest.branch=${GIT_BRANCH}";
+# SONAR_PR_ARGS+=" -Dsonar.pullrequest.key=${PR_NUMBER}";
+# fi
+# echo ">> Sonar PR args: '$SONAR_PR_ARGS'.";
+# echo ">> Running sonar...";
+# ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:sonarqube \
+# $SONAR_ARGS \
+# -Dsonar.login=${MT_SONAR_LOGIN} \
+# $SONAR_PR_ARGS \
+# ${GRADLE_ARGS}
+# RESULT=$?;
+# checkResult ${RESULT};
+# echo ">> Running sonar... DONE";
+# fi
+# else
+# echo ">> Skipping sonar for '$GIT_PROJECT_NAME'.";
+# fi
 
     echo ">> Running build, assemble & bundle...";
 	../gradlew ${SETTINGS_FILE_ARGS} buildDebug assembleDebug bundleDebug ${GRADLE_ARGS};
