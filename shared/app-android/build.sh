@@ -100,11 +100,11 @@ if [[ ${IS_CI} = true ]]; then
 # echo ">> Skipping sonar for '$GIT_PROJECT_NAME'.";
 # fi
 
-    echo ">> Running build, assemble & bundle...";
-	../gradlew ${SETTINGS_FILE_ARGS} buildDebug assembleDebug bundleDebug ${GRADLE_ARGS};
+    echo ">> Running assemble & bundle...";
+	../gradlew ${SETTINGS_FILE_ARGS} assembleDebug bundleDebug ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
-	echo ">> Running build, assemble & bundle... DONE";
+	echo ">> Running assemble & bundle... DONE";
 fi
 
 echo ">> Running bundle release AAB...";
@@ -113,11 +113,13 @@ RESULT=$?;
 checkResult ${RESULT};
 echo ">> Running bundle release AAB... DONE";
 
-echo ">> Running assemble release APK...";
-../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
-RESULT=$?;
-checkResult ${RESULT};
-echo ">> Running assemble release APK... DONE";
+if [[ ${IS_CI} = false ]]; then
+	echo ">> Running assemble release APK...";
+	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
+	RESULT=$?;
+	checkResult ${RESULT};
+	echo ">> Running assemble release APK... DONE";
+fi
 
 if [[ ! -z "${MT_OUTPUT_DIR}" ]]; then
 	echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'...";
