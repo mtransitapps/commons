@@ -94,8 +94,10 @@ echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
 ./gradlew :commons-java:clean ${GRADLE_ARGS};
 checkResult $? ${CONFIRM};
 
-./gradlew :parser:clean ${GRADLE_ARGS};
-checkResult $? ${CONFIRM};
+if [[ -d "parser" ]]; then
+	./gradlew :parser:clean ${GRADLE_ARGS};
+	checkResult $? ${CONFIRM};
+fi
 
 if [[ -d "agency-parser" ]]; then
 	./gradlew :agency-parser:clean ${GRADLE_ARGS};
@@ -119,8 +121,10 @@ echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... ";
 ./gradlew :commons-java:build ${GRADLE_ARGS}; # includes test
 checkResult $? ${CONFIRM};
 
-./gradlew :parser:build ${GRADLE_ARGS}; # includes test
-checkResult $? ${CONFIRM};
+if [[ -d "parser" ]]; then
+	./gradlew :parser:build ${GRADLE_ARGS}; # includes test
+	checkResult $? ${CONFIRM};
+fi
 
 if [[ -d "agency-parser" ]]; then
 	./gradlew :agency-parser:build ${GRADLE_ARGS};
