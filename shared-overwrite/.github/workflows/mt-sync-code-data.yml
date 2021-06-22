@@ -161,6 +161,10 @@ jobs:
           path: app-android/build/outputs/bundle
       - name: MT download & parse
         run: ./download_and_parse.sh
-      - name: DEBUG List files in the repository
+      - name: DEBUG GIT STATUS
+        run: |
+          git status -sb
+          git submodule foreach git status -sb
+      - name: DEBUG LIST FILES
         run: |
           ls ${{ github.workspace }}
