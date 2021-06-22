@@ -49,7 +49,7 @@ checkResult $?;
 echo "> GIT submodule > add... DONE";
 echo "> GIT submodule > commit '$GIT_MSG'...";
 # git submodule foreach git commit -q -m "$GIT_MSG";
-git submodule foreach 'git diff-index --quiet HEAD || git commit -m "${GIT_MSG}"';
+git submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
