@@ -31,6 +31,7 @@ else
 fi
 
 cd app-android || exit;
+DIRECTORY=$(basename ${PWD});
 
 echo ">> Setup-ing keys...";
 ./keys_setup.sh;
@@ -38,7 +39,7 @@ checkResult $?;
 echo ">> Setup-ing keys... DONE";
 
 echo ">> Running bundle release AAB...";
-../gradlew :${CURRENT_DIRECTORY}:bundleRelease ${GRADLE_ARGS};
+../gradlew :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
 checkResult $?;
 echo ">> Running bundle release AAB... DONE";
 
