@@ -1,7 +1,7 @@
 #!/bin/bash
 source commons/commons.sh;
 echo "================================================================================";
-echo "> RUN ALL...";
+echo "> TEST ALL...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
@@ -89,22 +89,22 @@ setGradleArgs;
 
 # if [[ -d "agency-parser" ]]; then
 # && [[ $GIT_BRANCH != "master" ]]
-echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
+# echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
 
-./gradlew :commons-java:clean ${GRADLE_ARGS};
-checkResult $? ${CONFIRM};
+# ./gradlew :commons-java:clean ${GRADLE_ARGS};
+# checkResult $? ${CONFIRM};
 
-if [[ -d "parser" ]]; then
-	./gradlew :parser:clean ${GRADLE_ARGS};
-	checkResult $? ${CONFIRM};
-fi
+# if [[ -d "parser" ]]; then
+# 	./gradlew :parser:clean ${GRADLE_ARGS};
+# 	checkResult $? ${CONFIRM};
+# fi
 
-if [[ -d "agency-parser" ]]; then
-	./gradlew :agency-parser:clean ${GRADLE_ARGS};
-	checkResult $? ${CONFIRM};
-fi
+# if [[ -d "agency-parser" ]]; then
+# 	./gradlew :agency-parser:clean ${GRADLE_ARGS};
+# 	checkResult $? ${CONFIRM};
+# fi
 
-echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
+# echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 
 	# echo "> DOWNLOADING DATA FOR '$AGENCY_ID'...";
 	# cd agency-parser || exit; # >>
@@ -118,16 +118,16 @@ echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 	# echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
 
 echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... ";
-./gradlew :commons-java:build ${GRADLE_ARGS}; # includes test
+./gradlew :commons-java:test ${GRADLE_ARGS}; # build includes test
 checkResult $? ${CONFIRM};
 
 if [[ -d "parser" ]]; then
-	./gradlew :parser:build ${GRADLE_ARGS}; # includes test
+	./gradlew :parser:test ${GRADLE_ARGS}; # build includes test
 	checkResult $? ${CONFIRM};
 fi
 
 if [[ -d "agency-parser" ]]; then
-	./gradlew :agency-parser:build ${GRADLE_ARGS};
+	./gradlew :agency-parser:test ${GRADLE_ARGS}; # build includes test
 	checkResult $? ${CONFIRM};
 fi
 
@@ -172,11 +172,11 @@ echo ">> Setup-ing keys...";
 checkResult $?;
 echo ">> Setup-ing keys... DONE";
 
-echo ">> Gradle cleaning...";
-../gradlew ${SETTINGS_FILE_ARGS} :app-android:clean ${GRADLE_ARGS};
-RESULT=$?;
-checkResult ${RESULT};
-echo ">> Gradle cleaning... DONE";
+# echo ">> Gradle cleaning...";
+# ../gradlew ${SETTINGS_FILE_ARGS} :app-android:clean ${GRADLE_ARGS};
+# RESULT=$?;
+# checkResult ${RESULT};
+# echo ">> Gradle cleaning... DONE";
 
 echo ">> Running test...";
 ../gradlew ${SETTINGS_FILE_ARGS} :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
@@ -190,11 +190,11 @@ RESULT=$?;
 checkResult ${RESULT};
 echo ">> Running lint... DONE";
 
-echo ">> Running assemble & bundle...";
-../gradlew ${SETTINGS_FILE_ARGS} assembleDebug bundleDebug ${GRADLE_ARGS};
-RESULT=$?;
-checkResult ${RESULT};
-echo ">> Running assemble & bundle... DONE";
+# echo ">> Running assemble & bundle...";
+# ../gradlew ${SETTINGS_FILE_ARGS} assembleDebug bundleDebug ${GRADLE_ARGS};
+# RESULT=$?;
+# checkResult ${RESULT};
+# echo ">> Running assemble & bundle... DONE";
 
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
@@ -209,5 +209,5 @@ AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> RUN ALL... DONE";
+echo "> TEST ALL... DONE";
 echo "================================================================================";
