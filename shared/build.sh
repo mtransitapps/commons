@@ -1,7 +1,7 @@
 #!/bin/bash
 source commons/commons.sh;
 echo "================================================================================";
-echo "> RUN ALL...";
+echo "> BUILD ALL...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
@@ -193,5 +193,5 @@ AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> RUN ALL... DONE";
+echo "> BUILD ALL... DONE";
 echo "================================================================================";
