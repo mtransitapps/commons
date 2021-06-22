@@ -26,7 +26,7 @@ DIRECTORY=$(basename ${PWD});
 
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
-echo "RESULT: $?";
+echo "RESULT: $? (fail ok/expected)";
 echo ">> Cleaning keys... DONE";
 
 cd ..;
@@ -34,24 +34,45 @@ cd ..;
 echo "> Cleaning GIT repo... DONE";
 
 if [[ ${IS_CI} = true ]]; then
-    git config --global user.name 'MonTransit Bot'
-    git config --global user.email 'montransit@users.noreply.github.com'
+    git config --global user.name 'MonTransit Bot';
+    checkResult $?;
+    git config --global user.email '84137772+montransit@users.noreply.github.com';
+    checkResult $?;
 fi
 
 GIT_MSG="CI: sync code";
 echo "GIT_MSG: $GIT_MSG";
 
-git submodule foreach git add .;
+echo "> GIT submodule > add...";
+git submodule foreach git add -A;
+checkResult $?;
+echo "> GIT submodule > add... DONE";
+echo "> GIT submodule > commit '$GIT_MSG'...";
 git submodule foreach git commit -q -m "$GIT_MSG";
+checkResult $?;
+echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
-git add .;
+echo "> GIT > add...";
+git add -A;
+checkResult $?;
+echo "> GIT > add... DONE";
+echo "> GIT submodule > commit '$GIT_MSG'...";
 git commit -q -m "$GIT_MSG";
+checkResult $?;
+echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 
 echo "DEBUG: ======================="
 git status -sb;
+echo "DEBUG: ======================="
 git submodule foreach git status -sb;
-git log -n 2;
-git submodule foreach git log -n 2;
+echo "DEBUG: ======================="
+git log -n 2 --pretty=format:"%h - %an (%ae), %ar (%ad) : %s" --date=iso;
+echo "DEBUG: ======================="
+git submodule foreach git log -n 2 --pretty=format:"%h - %an (%ae), %ar (%ad) : %s" --date=iso;
+echo "DEBUG: ======================="
+git diff --cached;
+echo "DEBUG: ======================="
+git submodule foreach git diff --cached;
 echo "DEBUG: ======================="
 
 exit 1; #STOP
