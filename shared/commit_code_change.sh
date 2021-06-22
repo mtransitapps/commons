@@ -33,6 +33,11 @@ cd ..;
 
 echo "> Cleaning GIT repo... DONE";
 
+if [[ ${IS_CI} = true ]]; then
+    git config --global user.name 'MonTransit Bot'
+    git config --global user.email 'montransit@users.noreply.github.com'
+fi
+
 GIT_MSG="CI: sync code";
 echo "GIT_MSG: $GIT_MSG";
 
@@ -46,7 +51,7 @@ echo "DEBUG: ======================="
 git status -sb;
 git submodule foreach git status -sb;
 git log -n 2;
-git submodule foreach log -n 2;
+git submodule foreach git log -n 2;
 echo "DEBUG: ======================="
 
 exit 1; #STOP
