@@ -30,13 +30,15 @@ else
 	echo "> Not a shallow GIT repo.";
 fi
 
+cd app-android || exit;
+
 echo ">> Setup-ing keys...";
 ./keys_setup.sh;
 checkResult $?;
 echo ">> Setup-ing keys... DONE";
 
 echo ">> Running bundle release AAB...";
-./gradlew :${CURRENT_DIRECTORY}:bundleRelease ${GRADLE_ARGS};
+../gradlew :${CURRENT_DIRECTORY}:bundleRelease ${GRADLE_ARGS};
 checkResult $?;
 echo ">> Running bundle release AAB... DONE";
 
@@ -44,6 +46,8 @@ echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
 checkResult $?;
 echo ">> Cleaning keys... DONE";
+
+cd ..;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
