@@ -57,8 +57,10 @@ echo "GIT_BRANCH: $GIT_BRANCH.";
 setIsCI;
 echo "IS_CI: $IS_CI";
 
+echo "GITHUB_ACTIONS: $GITHUB_ACTIONS";
+
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
-if [[ "$IS_SHALLOW" == true ]]; then
+if [[ "$IS_SHALLOW" == true && "${GITHUB_ACTIONS}" == false ]]; then
 	echo "> Fetching unshallow GIT repo...";
 	git fetch --unshallow;
 	RESULT=$?;
