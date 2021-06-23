@@ -28,7 +28,7 @@ function cleanupFile() {
 	local SRC_FILE_PATH=$1;
 	local DEST_FILE_PATH=$2;
 	local FILE_NAME=$(basename ${SRC_FILE_PATH});
-	if [[ $FILE_NAME == ".gitignore" ]]; then
+	if [[ $FILE_NAME == ".gitignore" || $FILE_NAME == "MT.gitignore" ]]; then
 		return; # keep .gitignore files, even if modified
 	fi
 	if [[ -f "$DEST_FILE_PATH" ]]; then

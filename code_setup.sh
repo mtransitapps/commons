@@ -180,7 +180,7 @@ function canOverwriteFile() {
 		diff -q ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then # FILE CHANGED
-			if [[ $FILE_NAME == ".gitignore" ]]; then
+			if [[ $FILE_NAME == ".gitignore" || $FILE_NAME == "MT.gitignore" ]]; then
 				echo "> Changed '$FILE_NAME' removed ('$SRC_FILE_PATH'=>'$DEST_FILE_PATH')!";
 				rm ${DEST_FILE_PATH};
 				checkResult $?;
