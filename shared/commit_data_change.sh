@@ -1,7 +1,7 @@
 #!/bin/bash
 source commons/commons.sh;
 echo "================================================================================";
-echo "> COMMIT CODE CHANGE..";
+echo "> COMMIT DATA CHANGE..";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
@@ -38,7 +38,6 @@ fi
 
 echo "> Git commit enabled ...";
 
-exit 1 # DEBUG
 
 # ./gradlew androidDependencies ${GRADLE_ARGS};
 # checkResult $?;
@@ -64,19 +63,27 @@ if [[ ${IS_CI} = true ]]; then
     checkResult $?;
 fi
 
-GIT_MSG="CI: sync code";
+GIT_MSG="CI: $(date +'%-B %-d update')";
 echo "GIT_MSG: $GIT_MSG";
 
-echo "> GIT submodule > add...";
-git submodule foreach git add -A;
+echo "> GIT app-android > add...";
+git -C app-android add -A src/main/play; # release notes...
 checkResult $?;
-echo "> GIT submodule > add... DONE";
-echo "> GIT submodule > commit '$GIT_MSG'...";
+git -C app-android add -A src/main/res/value*; # values, values-fr...
+checkResult $?;
+git -C app-android add -A src/main/res-current; # main static schedule # required
+checkResult $?;
+if [[ -d "app-android/src/main/res-next" ]]; then
+    git -C app-android add -A src/main/res-next; # next static schedule # optional
+    checkResult $?;
+fi
+echo "> GIT app-android > add... DONE";
+echo "> GIT app-android > commit '$GIT_MSG'...";
 # git submodule foreach git commit -q -m "$GIT_MSG";
 # git submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-git submodule foreach "git diff-index --quiet HEAD || git commit -m '$GIT_MSG'";
+git -C app-android diff-index --quiet HEAD || git -C app-android commit -m "$GIT_MSG";
 checkResult $?;
-echo "> GIT submodule > commit '$GIT_MSG'... DONE";
+echo "> GIT app-android > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
 
 echo "> GIT > add...";
@@ -89,25 +96,23 @@ git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT > commit '$GIT_MSG'... DONE";
 
-echo "\nDEBUG: =======================";
+echo "DEBUG: =======================";
 git status -sb;
-echo "\nDEBUG: =======================";
+echo "DEBUG: =======================";
 git submodule foreach git status -sb;
-echo "\nDEBUG: =======================";
-git log -n 2 --pretty=format:"%h - %an (%ae), %ar (%ad) : %s" --date=iso;
-echo "\nDEBUG: =======================";
-git submodule foreach git log -n 2 --pretty=format:"%h - %an (%ae), %ar (%ad) : %s" --date=iso;
-echo "\nDEBUG: =======================";
+echo "DEBUG: =======================";
+git log -n 7 --pretty=format:"%h - %an (%ae), %ar (%ad) : %s" --date=iso;
+echo "DEBUG: =======================";
+git submodule foreach git log -n 7 --pretty=format:"%h - %an (%ae), %ar (%ad) : %s" --date=iso;
+echo "DEBUG: =======================";
 git diff --cached;
-echo "\nDEBUG: =======================";
+echo "DEBUG: =======================";
 git submodule foreach git diff --cached;
-echo "\nDEBUG: =======================";
-
-exit 1; #DEBUG
+echo "DEBUG: =======================";
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> COMMIT CODE CHANGE... DONE";
+echo "> COMMIT DATA CHANGE... DONE";
 echo "================================================================================";
