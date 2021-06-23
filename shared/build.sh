@@ -10,33 +10,7 @@ CURRENT_PATH=$(pwd);
 CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
-GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
-if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-	GIT_BRANCH="";
-fi
-if [[ -z "${GIT_BRANCH}" ]]; then
-	GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}; #TravicCI
-	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-		GIT_BRANCH="";
-	fi
-fi
-if [[ -z "${GIT_BRANCH}" ]]; then
-	GIT_BRANCH=${TRAVIS_BRANCH}; #TravicCI
-	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-		GIT_BRANCH="";
-	fi
-fi
-if [[ -z "${GIT_BRANCH}" ]]; then
-	GIT_BRANCH=${CI_COMMIT_REF_NAME}; #GitLab
-	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-		GIT_BRANCH="";
-	fi
-fi
-if [[ -z "${GIT_BRANCH}" ]]; then
-	echo "GIT_BRANCH not found!";
-	exit 1;
-fi
-echo "GIT_BRANCH: $GIT_BRANCH.";
+setGitBranch
 
 CONFIRM=false;
 

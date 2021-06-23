@@ -57,7 +57,7 @@ function setGitBranch() {
 	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 		GIT_BRANCH="";
 	fi
-	if [[ -z "${MT_GIT_BRANCH}" ]]; then
+	if [[ -z "${GIT_BRANCH}" ]]; then
 		GIT_BRANCH=${MT_GIT_BRANCH}; #GitHub Actions CI
 		if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 			GIT_BRANCH="";
