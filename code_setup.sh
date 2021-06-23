@@ -26,33 +26,7 @@ if [[ -z "${GIT_PROJECT_NAME}" ]]; then
 	exit 1;
 fi
 
-GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
-if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-	GIT_BRANCH="";
-fi
-if [[ -z "${GIT_BRANCH}" ]]; then
-	GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}; #TravicCI
-	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-		GIT_BRANCH="";
-	fi
-fi
-if [[ -z "${GIT_BRANCH}" ]]; then
-	GIT_BRANCH=${TRAVIS_BRANCH}; #TravicCI
-	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-		GIT_BRANCH="";
-	fi
-fi
-if [[ -z "${GIT_BRANCH}" ]]; then
-	GIT_BRANCH=${CI_COMMIT_REF_NAME}; #GitLab
-	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
-		GIT_BRANCH="";
-	fi
-fi
-if [[ -z "${GIT_BRANCH}" ]]; then
-	echo "GIT_BRANCH not found!";
-	exit 1;
-fi
-echo "GIT_BRANCH: $GIT_BRANCH.";
+setGitBranch;
 
 setIsCI;
 echo "IS_CI: $IS_CI";
@@ -148,20 +122,6 @@ for S in "${!SUBMODULES[@]}"; do
 		fi
 		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
 	fi
-	# echo "> Setting submodule branch '$GIT_BRANCH' in '$SUBMODULE'...";
-	# git checkout $GIT_BRANCH;
-	# RESULT=$?;
-	# if [[ ${RESULT} -ne 0 ]]; then
-	# 	echo "> Error while checking out '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
-	# 	exit ${RESULT};
-	# fi
-	# git pull;
-	# RESULT=$?;
-	# if [[ ${RESULT} -ne 0 ]]; then
-	# 	echo "> Error while pulling latest changes from '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
-	# 	exit ${RESULT};
-	# fi
-	# echo "> Setting submodule branch '$GIT_BRANCH' in '$SUBMODULE'... DONE";
 	cd $CURRENT_PATH || exit; # <<
 	echo "--------------------------------------------------------------------------------";
 done
