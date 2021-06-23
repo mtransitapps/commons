@@ -283,7 +283,8 @@ function deployDirectory() {
 		if [[ $S_FILE_NAME == "." ]] || [[ $S_FILE_NAME == ".." ]]; then
 			continue;
 		fi
-		local S_DEST_FILE_PATH="$DEST_FILE_PATH/$S_FILE_NAME";
+		local S_FILE_NAME_DEST=${S_FILE_NAME#"MT"}; # MT+filename used to ignore ".gitignore"
+		local S_DEST_FILE_PATH="$DEST_FILE_PATH/$S_FILE_NAME_DEST";
 		if [[ -f $S_SRC_FILE_PATH ]]; then
 			deployFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH} ${OVER_WRITE};
 			checkResult $?;
@@ -309,7 +310,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
 		continue;
 	fi
-	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
+	FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+	DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST";
 	if [[ -f $SRC_FILE_PATH ]]; then
 		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
@@ -333,7 +335,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
 		continue;
 	fi
-	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
+	FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+	DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST"
 	if [[ -f $SRC_FILE_PATH ]]; then
 		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
@@ -357,7 +360,8 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
 		continue;
 	fi
-	DEST_FILE_PATH="$DEST_PATH/$FILENAME"
+	FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+	DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST"
 	if [[ -f $SRC_FILE_PATH ]]; then
 		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH} true; #over-write
 		checkResult $?;
