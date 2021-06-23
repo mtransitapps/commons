@@ -1,7 +1,7 @@
 #!/bin/bash
 source commons/commons.sh;
 echo "================================================================================";
-echo "> COMMIT CODE CHANGE..";
+echo "> PUSH COMMITS...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
@@ -43,27 +43,27 @@ setGitUser;
 GIT_MSG="CI: sync code";
 echo "GIT_MSG: $GIT_MSG";
 
-echo "> GIT submodule > add...";
-git submodule foreach git add -A;
+echo "> GIT submodule > push...";
+git submodule foreach git push;
 checkResult $?;
-echo "> GIT submodule > add... DONE";
-echo "> GIT submodule > commit '$GIT_MSG'...";
-# git submodule foreach git commit -q -m "$GIT_MSG";
-# git submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-git submodule foreach "git diff-index --quiet HEAD || git commit -m '$GIT_MSG'";
-checkResult $?;
-echo "> GIT submodule > commit '$GIT_MSG'... DONE";
-# TODO ? git submodule foreach git push;
+echo "> GIT submodule > push... DONE";
+# echo "> GIT submodule > commit '$GIT_MSG'...";
+# # git submodule foreach git commit -q -m "$GIT_MSG";
+# # git submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
+# git submodule foreach "git diff-index --quiet HEAD || git commit -m '$GIT_MSG'";
+# checkResult $?;
+# echo "> GIT submodule > commit '$GIT_MSG'... DONE";
+# # TODO ? git submodule foreach git push;
 
-echo "> GIT > add...";
-git add -A;
+echo "> GIT > push...";
+git push;
 checkResult $?;
-echo "> GIT > add... DONE";
-echo "> GIT > commit '$GIT_MSG'...";
-# git commit -q -m "$GIT_MSG";
-git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-checkResult $?;
-echo "> GIT > commit '$GIT_MSG'... DONE";
+echo "> GIT > push... DONE";
+# echo "> GIT > commit '$GIT_MSG'...";
+# # git commit -q -m "$GIT_MSG";
+# git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
+# checkResult $?;
+# echo "> GIT > commit '$GIT_MSG'... DONE";
 
 printGitStatus;
 
@@ -71,5 +71,5 @@ AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> COMMIT CODE CHANGE... DONE";
+echo "> PUSH COMMITS... DONE";
 echo "================================================================================";

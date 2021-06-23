@@ -16,26 +16,12 @@ setIsCI;
 
 setGradleArgs;
 
-echo "MT_ORG_GIT_COMMIT_ON: '$MT_ORG_GIT_COMMIT_ON'." # allowed
-echo "MT_ORG_GIT_COMMIT_OFF: '$MT_ORG_GIT_COMMIT_OFF'." # forbidden
-echo "MT_GIT_COMMIT_ON: '$MT_GIT_COMMIT_ON'." # allowed
-echo "MT_GIT_COMMIT_OFF: '$MT_GIT_COMMIT_OFF'." # forbidden
+setGitCommitEnabled;
 
-if [[ ${MT_ORG_GIT_COMMIT_OFF} == true ]]; then
-  echo "> Git commit disabled (org).. SKIP";
+if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
+  echo "> Git commit NOT enabled.. SKIP";
   exit 0 # success
 fi
-
-if [[ ${MT_GIT_COMMIT_OFF} == true ]]; then
-  echo "> Git commit disabled (project).. SKIP";
-  exit 0 # success
-fi
-
-if [[ ${MT_ORG_GIT_COMMIT_ON} != true && $MT_GIT_COMMIT_ON != true ]]; then
-  echo "> Git commit not enabled (org:'$MT_ORG_GIT_COMMIT_ON'|project:'$MT_GIT_COMMIT_ON').. SKIP";
-  exit 0 # success
-fi
-
 echo "> Git commit enabled ...";
 
 
@@ -56,12 +42,7 @@ cd ..;
 
 echo "> Cleaning GIT repo... DONE";
 
-if [[ ${IS_CI} = true ]]; then
-    git config --global user.name 'MonTransit Bot';
-    checkResult $?;
-    git config --global user.email '84137772+montransit@users.noreply.github.com';
-    checkResult $?;
-fi
+setGitUser;
 
 GIT_MSG="CI: $(date +'%-B %-d update')";
 echo "GIT_MSG: $GIT_MSG";
@@ -96,19 +77,7 @@ git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT > commit '$GIT_MSG'... DONE";
 
-echo "DEBUG: =======================";
-git status -sb;
-echo "DEBUG: =======================";
-git submodule foreach git status -sb;
-echo "DEBUG: =======================";
-git log -n 7 --pretty=format:"%h - %an (%ae), %ar (%ad) : %s" --date=iso;
-echo "DEBUG: =======================";
-git submodule foreach git log -n 7 --pretty=format:"%h - %an (%ae), %ar (%ad) : %s" --date=iso;
-echo "DEBUG: =======================";
-git diff --cached;
-echo "DEBUG: =======================";
-git submodule foreach git diff --cached;
-echo "DEBUG: =======================";
+printGitStatus;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);

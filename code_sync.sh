@@ -29,26 +29,12 @@ setGitBranch;
 
 setIsCI;
 
-echo "MT_ORG_GIT_COMMIT_ON: '$MT_ORG_GIT_COMMIT_ON'." # allowed
-echo "MT_ORG_GIT_COMMIT_OFF: '$MT_ORG_GIT_COMMIT_OFF'." # forbidden
-echo "MT_GIT_COMMIT_ON: '$MT_GIT_COMMIT_ON'." # allowed
-echo "MT_GIT_COMMIT_OFF: '$MT_GIT_COMMIT_OFF'." # forbidden
+setGitCommitEnabled;
 
-if [[ ${MT_ORG_GIT_COMMIT_OFF} = false ]]; then
-  echo "> Git commit disabled (org).. SKIP";
+if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
+  echo "> Git commit NOT enabled.. SKIP";
   exit 0 # success
 fi
-
-if [[ ${MT_GIT_COMMIT_OFF} = false ]]; then
-  echo "> Git commit disabled (project).. SKIP";
-  exit 0 # success
-fi
-
-if [[ ${MT_ORG_GIT_COMMIT_ON} != true && $MT_GIT_COMMIT_ON != true ]]; then
-  echo "> Git commit not enabled (org:'$MT_ORG_GIT_COMMIT_ON'|project:'$MT_GIT_COMMIT_ON').. SKIP";
-  exit 0 # success
-fi
-
 echo "> Git commit enabled ...";
 
 echo "--------------------------------------------------------------------------------";

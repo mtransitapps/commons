@@ -12,6 +12,46 @@ function setIsCI() {
 	# IS_CI=true; # DEBUG
 }
 
+function setGitCommitEnabled() {
+	MT_GIT_COMMIT_ENABLED="false";
+
+	echo "MT_ORG_GIT_COMMIT_ON: '$MT_ORG_GIT_COMMIT_ON'." # allowed
+	echo "MT_ORG_GIT_COMMIT_OFF: '$MT_ORG_GIT_COMMIT_OFF'." # forbidden
+	echo "MT_GIT_COMMIT_ON: '$MT_GIT_COMMIT_ON'." # allowed
+	echo "MT_GIT_COMMIT_OFF: '$MT_GIT_COMMIT_OFF'." # forbidden
+
+	if [[ ${MT_ORG_GIT_COMMIT_OFF} == true ]]; then
+		echo "> Git commit disabled (org).. SKIP";
+		MT_GIT_COMMIT_ENABLED="false";
+		exit 0 # success
+	fi
+
+	if [[ ${MT_GIT_COMMIT_OFF} == true ]]; then
+		echo "> Git commit disabled (project).. SKIP";
+		MT_GIT_COMMIT_ENABLED="false";
+		exit 0 # success
+	fi
+
+	if [[ ${MT_ORG_GIT_COMMIT_ON} != true && $MT_GIT_COMMIT_ON != true ]]; then
+		echo "> Git commit not enabled (org:'$MT_ORG_GIT_COMMIT_ON'|project:'$MT_GIT_COMMIT_ON').. SKIP";
+		MT_GIT_COMMIT_ENABLED="false";
+		exit 0 # success
+	fi
+
+	MT_GIT_COMMIT_ENABLED="true";
+	echo "> Git commit enabled ...$MT_GIT_COMMIT_ENABLED";
+}
+
+function setGitUser() {
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		git config --global user.name 'MonTransit Bot';
+		checkResult $?;
+		git config --global user.email '84137772+montransit@users.noreply.github.com';
+		checkResult $?;
+	fi
+}
+
 function setGitBranch() {
 	GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
 	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
@@ -46,6 +86,36 @@ function setGitBranch() {
 		exit 1;
 	fi
 	echo "GIT_BRANCH: $GIT_BRANCH.";
+}
+
+function printGitStatus() {
+	GIT_LOG_FORMAT="%h - %ad - %ae : %s";
+	GIT_LOG_SINCE_DATE="1 hours ago";
+	GIT_LOG_LAST_OTHER_ARGS="--date=iso";
+	GIT_LOG_SINCE_OTHER_ARGS="--date=iso --name-status";
+	echo "GIT_LOG_ARGS:$GIT_LOG_ARGS."
+	echo " > ==================================================";
+	echo " > [GIT STATUS & LOG]";
+	echo "'$(basename $PWD)'"
+	git status -sb;
+	echo "> staged:"
+	git diff --cached;
+	echo "> last:"
+	git log --max-count 1 --pretty=format:"${GIT_LOG_FORMAT}" $GIT_LOG_LAST_OTHER_ARGS;
+	echo "> since $GIT_LOG_SINCE_DATE:"
+	git log --since="$GIT_LOG_SINCE_DATE" --pretty=format:"${GIT_LOG_FORMAT}" $GIT_LOG_SINCE_OTHER_ARGS;
+	echo "--------------------------------------------------";
+	git submodule foreach "
+		git status -sb &&
+		echo \"> staged:\" &&
+		git diff --cached &&
+		echo \"> last:\" &&
+		git log --max-count 1 --pretty=format:\"${GIT_LOG_FORMAT}\" $GIT_LOG_LAST_OTHER_ARGS &&
+		echo \"> since $GIT_LOG_SINCE_DATE:\" &&
+		git log --since=\"$GIT_LOG_SINCE_DATE\" --pretty=format:\"${GIT_LOG_FORMAT}\" $GIT_LOG_SINCE_OTHER_ARGS &&
+		echo \"--------------------------------------------------\"
+	";
+	echo " > ==================================================";
 }
 
 function setGradleArgs() {

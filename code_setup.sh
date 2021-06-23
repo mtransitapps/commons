@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "Hello !"; # DEBUG
 SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/commons.sh;
 
