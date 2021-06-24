@@ -90,32 +90,57 @@ function setGitBranch() {
 
 function printGitStatus() {
 	GIT_LOG_FORMAT="%h - %ad - %ae : %s";
+	GIT_LOG_FORMAT_RECENT_ONLY="%ar"
 	GIT_LOG_SINCE_DATE="1 hours ago";
 	GIT_LOG_LAST_OTHER_ARGS="--date=iso";
+	DIFF_LIMIT="33";
 	GIT_LOG_SINCE_OTHER_ARGS="--date=iso --name-status";
-	echo "GIT_LOG_ARGS:$GIT_LOG_ARGS."
-	echo " > ==================================================";
-	echo " > [GIT STATUS & LOG]";
+	echo "==================================================";
+	echo "> [GIT STATUS & LOG]";
 	echo "'$(basename $PWD)'"
 	git status -sb;
-	echo "> staged:"
-	git diff --cached;
-	echo "> last:"
-	git log --max-count 1 --pretty=format:"${GIT_LOG_FORMAT}" $GIT_LOG_LAST_OTHER_ARGS;
-	echo "> since $GIT_LOG_SINCE_DATE:"
-	git log --since="$GIT_LOG_SINCE_DATE" --pretty=format:"${GIT_LOG_FORMAT}" $GIT_LOG_SINCE_OTHER_ARGS;
+	STATGED_DIFF=$(git diff --cached | head -n $DIFF_LIMIT);
+	if [ ! -z "$STATGED_DIFF" ]; then
+		echo "> staged:";
+		echo "$STATGED_DIFF";
+	fi
+	NOT_STATGED_DIFF=$(git diff | head -n $DIFF_LIMIT);
+	if [ ! -z "$NOT_STATGED_DIFF" ]; then
+		echo "> not staged:";
+		echo "$NOT_STATGED_DIFF";
+	fi
+	LOG=$(git log --since="$GIT_LOG_SINCE_DATE" --pretty=format:"${GIT_LOG_FORMAT}" $GIT_LOG_SINCE_OTHER_ARGS);
+	if [ -z "$LOG" ]; then
+		LOG=$(git log --max-count 1 --pretty=format:"${GIT_LOG_FORMAT}" $GIT_LOG_LAST_OTHER_ARGS);
+		echo "> latest old commit ($(git log --max-count 1 --pretty=format:$GIT_LOG_FORMAT_RECENT_ONLY)):";
+	else
+		echo "> commits since $GIT_LOG_SINCE_DATE:";
+	fi
+	echo "$LOG";
 	echo "--------------------------------------------------";
 	git submodule foreach "
-		git status -sb &&
-		echo \"> staged:\" &&
-		git diff --cached &&
-		echo \"> last:\" &&
-		git log --max-count 1 --pretty=format:\"${GIT_LOG_FORMAT}\" $GIT_LOG_LAST_OTHER_ARGS &&
-		echo \"> since $GIT_LOG_SINCE_DATE:\" &&
-		git log --since=\"$GIT_LOG_SINCE_DATE\" --pretty=format:\"${GIT_LOG_FORMAT}\" $GIT_LOG_SINCE_OTHER_ARGS &&
-		echo \"--------------------------------------------------\"
+		git status -sb;
+		STATGED_DIFF=\$(git diff --cached | head -n $DIFF_LIMIT);
+		if [ ! -z \"\$STATGED_DIFF\" ]; then
+			echo \"> staged:\";
+			echo \"\$STATGED_DIFF\";
+		fi
+		NOT_STATGED_DIFF=\$(git diff | head -n $DIFF_LIMIT);
+		if [ ! -z \"\$NOT_STATGED_DIFF\" ]; then
+			echo \"> not staged:\";
+			echo \"\$NOT_STATGED_DIFF\";
+		fi
+		LOG=\$(git log --since=\"$GIT_LOG_SINCE_DATE\" --pretty=format:\"${GIT_LOG_FORMAT}\" $GIT_LOG_SINCE_OTHER_ARGS);
+		if [ -z \"\$LOG\" ]; then
+			LOG=\$(git log --max-count 1 --pretty=format:\"${GIT_LOG_FORMAT}\" $GIT_LOG_LAST_OTHER_ARGS);
+			echo \"> latest old commit (\$(git log --max-count 1 --pretty=format:\"$GIT_LOG_FORMAT_RECENT_ONLY\")):\";
+		else
+			echo \"> commits since $GIT_LOG_SINCE_DATE:\";
+		fi
+		echo \"\$LOG\";
+		echo \"--------------------------------------------------\";
 	";
-	echo " > ==================================================";
+	echo "==================================================";
 }
 
 function setGradleArgs() {
@@ -199,7 +224,7 @@ function download() {
 	local LAST_FILE=$2;
 	local OPENSSL_CONF_FILE="download_openssl_allow_tls1_0.cnf"
 	if [[ "$NEW_FILE" == "$LAST_FILE" ]]; then
-	  NEW_FILE="NEW_${NEW_FILE}"
+		NEW_FILE="NEW_${NEW_FILE}"
 	fi
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then

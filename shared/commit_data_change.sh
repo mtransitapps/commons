@@ -51,17 +51,19 @@ git -C app-android add -A src/main/play; # release notes...
 checkResult $?;
 git -C app-android add -A src/main/res/value*; # values, values-fr...
 checkResult $?;
-git -C app-android add -A src/main/res-current; # main static schedule # required
-checkResult $?;
-if [[ -d "app-android/src/main/res-next" ]]; then
-    git -C app-android add -A src/main/res-next; # next static schedule # optional
-    checkResult $?;
+if [[ -d "app-android/src/main/res-current" ]]; then # not in main app
+  git -C app-android add -A src/main/res-current; # main static schedule # required for non-bike agency modules
+  checkResult $?;
+  if [[ -d "app-android/src/main/res-next" ]]; then
+      git -C app-android add -A src/main/res-next; # next static schedule # optional
+      checkResult $?;
+  fi
 fi
 echo "> GIT app-android > add... DONE";
 echo "> GIT app-android > commit '$GIT_MSG'...";
 # git submodule foreach git commit -q -m "$GIT_MSG";
 # git submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-git -C app-android diff-index --quiet HEAD || git -C app-android commit -m "$GIT_MSG";
+git -C app-android diff --staged --quiet || git -C app-android commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT app-android > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
@@ -72,7 +74,7 @@ checkResult $?;
 echo "> GIT > add... DONE";
 echo "> GIT > commit '$GIT_MSG'...";
 # git commit -q -m "$GIT_MSG";
-git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
+git diff --staged --quiet || git commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT > commit '$GIT_MSG'... DONE";
 
