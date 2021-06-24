@@ -18,6 +18,21 @@ setGradleArgs;
 if [[ -f "./gradlew" ]]; then
 	./gradlew clean ${GRADLE_ARGS};
 	checkResult $?;
+	rm gradlew; # only once
+	checkResult $?;
+fi
+
+if [[ -d "app-android" ]]; then
+	cd app-android || exit; # >>
+
+	if [[ -f "keys_cleanup.sh" ]]; then
+		echo ">> Cleaning keys...";
+		./keys_cleanup.sh;
+		echo "RESULT: $? (fail ok/expected)";
+		echo ">> Cleaning keys... DONE";
+	fi
+
+	cd ../; # <<
 fi
 
 function cleanupFile() {

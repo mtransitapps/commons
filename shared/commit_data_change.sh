@@ -31,7 +31,6 @@ echo "> Git commit enabled ...";
 echo "> Cleaning GIT repo...";
 
 cd app-android || exit;
-DIRECTORY=$(basename ${PWD});
 
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
