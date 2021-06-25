@@ -16,6 +16,8 @@ setIsCI;
 
 setGradleArgs;
 
+setGitCommitEnabled;
+
 if [[ -d "agency-parser" ]]; then
 
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'...";
@@ -42,7 +44,12 @@ if [[ -d "agency-parser" ]]; then
 	# NEXT... DONE
 
 	./list_change.sh;
-	checkResult $? ${CONFIRM};
+	RESULT=$?;
+	if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
+		echo "RESULT: $RESULT (fail ok/expected)"; # will auto commitk
+	else
+		checkResult $RESULT ${CONFIRM}; # break build, need to manually commit
+	fi
 
 	cd ..; # <<
 	echo "> PARSING DATA FOR '$AGENCY_ID'... DONE";
