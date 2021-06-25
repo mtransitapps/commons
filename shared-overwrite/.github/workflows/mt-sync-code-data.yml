@@ -20,7 +20,13 @@ jobs:
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |
-           echo "MT_GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "MT_GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: MT setup env
+        run: |
+          echo "MT_ORG_GIT_COMMIT_ON=${{ secrets.MT_ORG_GIT_COMMIT_ON }}" >> $GITHUB_ENV
+          echo "MT_ORG_GIT_COMMIT_OFF=${{ secrets.MT_ORG_GIT_COMMIT_OFF }}" >> $GITHUB_ENV
+          echo "MT_GIT_COMMIT_ON=${{ secrets.MT_GIT_COMMIT_ON }}" >> $GITHUB_ENV
+          echo "MT_GIT_COMMIT_OFF=${{ secrets.MT_GIT_COMMIT_OFF }}" >> $GITHUB_ENV
       - name: MT code sync
         # if: github.event_name != 'pull_request'
         if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
