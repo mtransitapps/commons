@@ -44,6 +44,7 @@ GIT_MSG="CI: sync code";
 echo "GIT_MSG: $GIT_MSG";
 
 echo "> GIT submodule > push...";
+TODO not working because default token only work for root repository
 git submodule foreach git push;
 checkResult $?;
 echo "> GIT submodule > push... DONE";

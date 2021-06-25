@@ -1,6 +1,6 @@
 name: MT SYNC CODE & DATA # download & parse
-on: workflow_dispatch # manual
-# on:
+on:
+  workflow_dispatch: # manual
 #   schedule:  TODO
 #     cron: 0 0 * * 1 # 0 0 * * MON # WEEKLY
 #     # cron: 0 0 * * 1,4 # 0 0 * * MON,THU #BI-WEEKLY
