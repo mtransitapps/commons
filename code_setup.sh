@@ -120,6 +120,15 @@ for S in "${!SUBMODULES[@]}"; do
 			exit ${RESULT};
 		fi
 		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
+	elif [[ "$GITHUB_ACTIONS" == true ]]; then
+		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
+		git remote set-url origin https://github.com/mtransitapps/$SUBMODULE_REPO.git;
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+			exit ${RESULT};
+		fi
+		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
 	fi
 	cd $CURRENT_PATH || exit; # <<
 	echo "--------------------------------------------------------------------------------";
