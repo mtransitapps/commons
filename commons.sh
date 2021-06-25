@@ -98,6 +98,7 @@ function printGitStatus() {
 	echo "==================================================";
 	echo "> [GIT STATUS & LOG]";
 	echo "'$(basename $PWD)'"
+	git config --get remote.origin.url;
 	git status -sb;
 	STATGED_DIFF=$(git diff --cached | head -n $DIFF_LIMIT);
 	if [ ! -z "$STATGED_DIFF" ]; then
@@ -120,6 +121,7 @@ function printGitStatus() {
 	echo "--------------------------------------------------";
 	git submodule foreach "
 		git status -sb;
+		git config --get remote.origin.url;
 		STATGED_DIFF=\$(git diff --cached | head -n $DIFF_LIMIT);
 		if [ ! -z \"\$STATGED_DIFF\" ]; then
 			echo \"> staged:\";
