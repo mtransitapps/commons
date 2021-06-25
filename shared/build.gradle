@@ -10,9 +10,10 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.1"
+        //noinspection DifferentKotlinGradleVersion, GradleDependency // TODO 1.5.21+ (not compatible with Dagger Hilt),
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/Triple-T/gradle-play-publisher/releases
-        //noinspection GradleDependency // TODO 3.4.0+
+        //noinspection GradleDependency // TODO 3.5.1+ (requires Gradle Wrapper 6.8+)
         classpath "com.github.triplet.gradle:play-publisher:3.4.0-agp4.2"
         // https://github.com/google/protobuf-gradle-plugin/releases
         classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.16"
@@ -22,7 +23,7 @@ buildscript {
             classpath "com.google.gms:google-services:4.3.8"
             // https://github.com/google/dagger/releases
             classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-            classpath "com.google.firebase:firebase-crashlytics-gradle:2.7.0"
+            classpath "com.google.firebase:firebase-crashlytics-gradle:2.7.1"
             // // https://plugins.gradle.org/plugin/org.sonarqube
             // classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.2.0"
         } else {
