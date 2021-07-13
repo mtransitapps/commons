@@ -2,7 +2,7 @@ apply from: "$project.rootDir/commons-android/dependencies.gradle"
 
 buildscript {
     ext.hilt_version = "2.37"
-    ext.kotlin_version = "1.5.10"
+    ext.kotlin_version = "1.5.21"
     repositories {
         google()
         mavenCentral()
@@ -10,7 +10,6 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.2"
-        //noinspection DifferentKotlinGradleVersion, GradleDependency // TODO 1.5.21+ (not compatible with Dagger Hilt),
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/Triple-T/gradle-play-publisher/releases
         //noinspection GradleDependency // TODO 3.5.1+ (requires Gradle Wrapper 6.8+)
