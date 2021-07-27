@@ -5,6 +5,8 @@ orbs:
   android: circleci/android@1.0.3
 jobs:
   build:
+    context:
+      - MT_shared_context
     working_directory: ~/mtransit
     docker:
       - image: circleci/android:api-30
