@@ -1,7 +1,7 @@
 apply from: "$project.rootDir/commons-android/dependencies.gradle"
 
 buildscript {
-    ext.hilt_version = "2.37"
+    ext.hilt_version = "2.38.1"
     ext.kotlin_version = "1.5.21"
     repositories {
         google()
@@ -9,11 +9,10 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath "com.android.tools.build:gradle:7.0.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/Triple-T/gradle-play-publisher/releases
-        //noinspection GradleDependency // TODO 3.5.1+ (requires Gradle Wrapper 6.8+)
-        classpath "com.github.triplet.gradle:play-publisher:3.4.0-agp4.2"
+        classpath "com.github.triplet.gradle:play-publisher:3.5.0"
         // https://github.com/google/protobuf-gradle-plugin/releases
         classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.17"
         def appAndroidGoogleServicesJSON = file("app-android/google-services.json")

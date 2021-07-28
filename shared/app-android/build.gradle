@@ -279,18 +279,6 @@ android {
         }
     }
 
-    dexOptions {
-        if (isCI) {
-            preDexLibraries false
-            javaMaxHeapSize "1g"
-            threadCount 1 // reduce pre-dex thread count to limit memory usage
-        } else {
-            preDexLibraries true
-            javaMaxHeapSize "2g"
-            threadCount 2
-        }
-    }
-
     lintOptions {
         if (projectName == "MT") {
             abortOnError true
