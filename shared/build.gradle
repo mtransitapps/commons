@@ -1,7 +1,7 @@
 apply from: "$project.rootDir/commons-android/dependencies.gradle"
 
 buildscript {
-    ext.hilt_version = "2.39"
+    ext.hilt_version = "2.39.1"
     ext.kotlin_version = "1.5.31"
     repositories {
         google()
