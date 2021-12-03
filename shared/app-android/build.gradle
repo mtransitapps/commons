@@ -87,8 +87,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
-        useOldBackend = true // (use less memory than new IR)
-        useIR = false // (will be required for compose)
     }
 
     Properties versionProperties = new Properties()
