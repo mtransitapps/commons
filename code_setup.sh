@@ -98,7 +98,8 @@ for S in "${!SUBMODULES[@]}"; do
 			exit 1;
 		fi
 		echo "> Adding submodule '$SUBMODULE_REPO' in '$SUBMODULE'...";
-		git submodule add git://github.com/mtransitapps/$SUBMODULE_REPO.git $SUBMODULE;
+		# git submodule add git://github.com/mtransitapps/$SUBMODULE_REPO.git $SUBMODULE;
+		git submodule add https://github.com/mtransitapps/$SUBMODULE_REPO.git $SUBMODULE; # GitHub secret PAT
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while cloning '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
