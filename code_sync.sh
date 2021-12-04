@@ -39,8 +39,8 @@ echo "> Git commit enabled ...";
 
 echo "--------------------------------------------------------------------------------";
 echo "> Checkout branch '$GIT_BRANCH'...";
-# git submodule foreach git fetch;
-# git submodule foreach git branch -a;
+git submodule foreach git fetch;
+git submodule foreach git branch -a;
 # git submodule foreach git checkout $GIT_BRANCH;
 git submodule foreach git switch --no-guess $GIT_BRANCH;
 RESULT=$?;
