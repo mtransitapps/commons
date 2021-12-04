@@ -10,8 +10,6 @@ CURRENT_PATH=$(pwd);
 CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
-CONFIRM=false;
-
 setIsCI;
 
 setGradleArgs;
@@ -61,12 +59,12 @@ if [[ -d "app-android/src/main/res-current" ]]; then # not in main app
 fi
 echo "> GIT app-android > add... DONE";
 echo "> GIT app-android > commit '$GIT_MSG'...";
-# git submodule foreach git commit -q -m "$GIT_MSG";
-# git submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
+# git -C app-android git commit -q -m "$GIT_MSG";
+# git -C app-android git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
 git -C app-android diff --staged --quiet || git -C app-android commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT app-android > commit '$GIT_MSG'... DONE";
-# TODO ? git submodule foreach git push;
+# TODO ? git -C app-android git push;
 
 echo "> GIT > add...";
 git add -A;
@@ -77,6 +75,7 @@ echo "> GIT > commit '$GIT_MSG'...";
 git diff --staged --quiet || git commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT > commit '$GIT_MSG'... DONE";
+# TODO ? git push;
 
 printGitStatus;
 

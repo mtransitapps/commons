@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: false
+          token: ${{ secrets.MT_PAT }}
           # fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
         run: ./checkout_submodules.sh

@@ -10,8 +10,6 @@ CURRENT_PATH=$(pwd);
 CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
-CONFIRM=false;
-
 setIsCI;
 
 setGradleArgs;
@@ -40,8 +38,8 @@ echo "> Cleaning GIT repo... DONE";
 
 setGitUser;
 
-GIT_MSG="CI: sync code";
-echo "GIT_MSG: $GIT_MSG";
+# GIT_MSG="CI: sync code";
+# echo "GIT_MSG: $GIT_MSG";
 
 echo "> GIT submodule > push...";
 TODO not working because default token only work for root repository

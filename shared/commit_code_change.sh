@@ -64,6 +64,7 @@ echo "> GIT > commit '$GIT_MSG'...";
 git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT > commit '$GIT_MSG'... DONE";
+# TODO ? git push;
 
 printGitStatus;
 

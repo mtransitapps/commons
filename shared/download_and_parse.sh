@@ -10,8 +10,6 @@ CURRENT_PATH=$(pwd);
 CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
-CONFIRM=false;
-
 setIsCI;
 
 setGradleArgs;
@@ -24,10 +22,10 @@ if [[ -d "agency-parser" ]]; then
 	cd agency-parser || exit; # >>
 
 	./download.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	./unzip_gtfs.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
 
@@ -35,20 +33,21 @@ if [[ -d "agency-parser" ]]; then
 
 	# CURRENT...
 	./parse_current.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 	# CURRENT... DONE
 
 	# NEXT...
 	./parse_next.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 	# NEXT... DONE
 
 	./list_change.sh;
 	RESULT=$?;
 	if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
-		echo "RESULT: $RESULT (fail ok/expected)"; # will auto commitk
+		echo "RESULT: $RESULT (fail ok/expected)"; # will auto commit
 	else
-		checkResult $RESULT ${CONFIRM}; # break build, need to manually commit
+		echo "Data changed but GIT commit disabled!";
+		checkResult $RESULT; # break build, need to manually commit
 	fi
 
 	cd ..; # <<
