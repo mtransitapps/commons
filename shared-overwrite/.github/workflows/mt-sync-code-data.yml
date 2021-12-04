@@ -24,6 +24,7 @@ jobs:
       - name: DEBUG GIT PUSH
         run: |
           git push -v
+          git submodule foreach git push -v
       - name: MT check out submodules
         run: ./checkout_submodules.sh
       - name: MT setup MT_GIT_BRANCH env

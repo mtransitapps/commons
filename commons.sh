@@ -20,19 +20,19 @@ function setGitCommitEnabled() {
 	echo "MT_GIT_COMMIT_ON: '$MT_GIT_COMMIT_ON'." # allowed
 	echo "MT_GIT_COMMIT_OFF: '$MT_GIT_COMMIT_OFF'." # forbidden
 
-	if [[ ${MT_ORG_GIT_COMMIT_OFF} == true ]]; then
+	if [[ ${MT_ORG_GIT_COMMIT_OFF} == "mt_true" ]]; then
 		echo "> Git commit disabled (org).. SKIP";
 		MT_GIT_COMMIT_ENABLED="false";
 		exit 0 # success
 	fi
 
-	if [[ ${MT_GIT_COMMIT_OFF} == true ]]; then
+	if [[ ${MT_GIT_COMMIT_OFF} == "mt_true" ]]; then
 		echo "> Git commit disabled (project).. SKIP";
 		MT_GIT_COMMIT_ENABLED="false";
 		exit 0 # success
 	fi
 
-	if [[ ${MT_ORG_GIT_COMMIT_ON} != true && $MT_GIT_COMMIT_ON != true ]]; then
+	if [[ ${MT_ORG_GIT_COMMIT_ON} != "mt_true" && $MT_GIT_COMMIT_ON != "mt_true" ]]; then
 		echo "> Git commit not enabled (org:'$MT_ORG_GIT_COMMIT_ON'|project:'$MT_GIT_COMMIT_ON').. SKIP";
 		MT_GIT_COMMIT_ENABLED="false";
 		exit 0 # success
