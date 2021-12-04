@@ -21,6 +21,10 @@ jobs:
           submodules: false
           token: ${{ secrets.MT_PAT }}
           # fetch-depth: 0 # fetch all (not required util release build)
+      - name: DEBUG GIT PUSH
+        run: |
+          git push
+          git submodule foreach git push
       - name: MT check out submodules
         run: ./checkout_submodules.sh
       - name: MT setup MT_GIT_BRANCH env
