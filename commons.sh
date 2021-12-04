@@ -96,7 +96,7 @@ function printGitStatus() {
 	DIFF_LIMIT="33";
 	GIT_LOG_SINCE_OTHER_ARGS="--date=iso --name-status";
 	echo "==================================================";
-	echo "> [GIT STATUS & LOG]";
+	echo "> [GIT STATUS & LOG]...";
 	echo "'$(basename $PWD)'"
 	git config --get remote.origin.url;
 	git status -sb;
@@ -142,6 +142,7 @@ function printGitStatus() {
 		echo \"\$LOG\";
 		echo \"--------------------------------------------------\";
 	";
+	echo "> [GIT STATUS & LOG]... DONE";
 	echo "==================================================";
 }
 
