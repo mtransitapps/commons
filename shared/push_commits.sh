@@ -43,8 +43,8 @@ setGitUser;
 
 echo "> GIT submodule > push...";
 # TODO ? not working ? because default token only work for root repository
-# git submodule foreach git push;
-# checkResult $?;
+git submodule foreach git push;
+checkResult $?;
 # git -C app-andrid push;
 # checkResult $?;
 echo "> GIT submodule > push... DONE";
