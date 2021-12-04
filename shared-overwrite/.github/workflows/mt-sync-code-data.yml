@@ -21,10 +21,6 @@ jobs:
           submodules: true # required to set right token
           token: ${{ secrets.MT_PAT }}
           # fetch-depth: 0 # fetch all (not required util release build)
-      - name: DEBUG GIT PUSH
-        run: |
-          git push -v
-          git submodule foreach git push -v
       - name: MT check out submodules
         run: ./checkout_submodules.sh
       - name: MT setup MT_GIT_BRANCH env
@@ -41,6 +37,10 @@ jobs:
         # if: github.event_name != 'pull_request'
         if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
         run: ./commons/code_sync.sh
+      - name: DEBUG GIT PUSH
+        run: |
+          git push -v
+          git submodule foreach git push -v
       - name: MT code setup
         run: ./commons/code_setup.sh
       - name: MT set up JDK 11
