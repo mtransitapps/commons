@@ -23,8 +23,9 @@ jobs:
           # fetch-depth: 0 # fetch all (not required util release build)
       - name: DEBUG GIT PUSH
         run: |
-          git push
-          git submodule foreach git push
+          ssh -Tv git@github.com
+          git push -v
+          git submodule foreach git push -v
       - name: MT check out submodules
         run: ./checkout_submodules.sh
       - name: MT setup MT_GIT_BRANCH env
