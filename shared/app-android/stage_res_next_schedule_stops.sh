@@ -1,7 +1,7 @@
 #!/bin/bash
 source ../commons/commons.sh
 
-git add src/main/res-next/raw/next_gtfs_schedule_stop_*;
+git add -v src/main/res-next/raw/next_gtfs_schedule_stop_*;
 
 git ls-files --deleted --error-unmatch src/main/res-next/raw/ &> /dev/null;
 RESULT=$?;

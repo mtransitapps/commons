@@ -43,7 +43,7 @@ setGitUser;
 
 echo "> GIT submodule > push...";
 # TODO ? not working ? because default token only work for root repository
-git submodule foreach git push;
+git submodule foreach git push; # git push fails if there are new changes on remote
 checkResult $?;
 # git -C app-andrid push;
 # checkResult $?;
@@ -57,7 +57,7 @@ echo "> GIT submodule > push... DONE";
 # # TODO ? git submodule foreach git push;
 
 echo "> GIT > push...";
-git push;
+git push; # git push fails if there are new changes on remote
 checkResult $?;
 echo "> GIT > push... DONE";
 # echo "> GIT > commit '$GIT_MSG'...";

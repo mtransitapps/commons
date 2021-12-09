@@ -35,7 +35,7 @@ echo "GITHUB_ACTIONS: $GITHUB_ACTIONS";
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
 if [[ "$IS_SHALLOW" == true && "${GITHUB_ACTIONS}" == false ]]; then
 	echo "> Fetching unshallow GIT repo...";
-	git fetch --unshallow;
+	git fetch -v --unshallow;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while fetching unshallow GIT repository!";
@@ -114,7 +114,7 @@ for S in "${!SUBMODULES[@]}"; do
 	cd $CURRENT_PATH/$SUBMODULE || exit; # >>
 	if [[ ${IS_CI} = false ]]; then
 		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
-		git remote set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
+		git remote -v set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
@@ -123,8 +123,8 @@ for S in "${!SUBMODULES[@]}"; do
 		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
 	elif [[ "$GITHUB_ACTIONS" == true ]]; then
 		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
-		# git remote set-url origin https://github.com/mtransitapps/$SUBMODULE_REPO.git;
-		git remote set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
+		# git remote -v  set-url origin https://github.com/mtransitapps/$SUBMODULE_REPO.git;
+		git remote -v  set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";

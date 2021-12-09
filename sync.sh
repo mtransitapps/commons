@@ -33,7 +33,7 @@ echo "IS_CI: $IS_CI";
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
 if [[ "$IS_SHALLOW" == true ]]; then
 	echo "> Fetching unshallow GIT repo...";
-	git fetch --unshallow;
+	git fetch -v --unshallow;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while fetching unshallow GIT repository!";
@@ -111,7 +111,7 @@ for S in "${!SUBMODULES[@]}"; do
 	cd $CURRENT_PATH/$SUBMODULE || exit; # >>
 	if [[ ${IS_CI} = false ]]; then
 		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
-		git remote set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
+		git remote -v set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
@@ -126,7 +126,7 @@ for S in "${!SUBMODULES[@]}"; do
 		echo "> Error while checking out '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
 		exit ${RESULT};
 	fi
-	git pull;
+	git pull -v --ff-only;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while pulling latest changes from '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";

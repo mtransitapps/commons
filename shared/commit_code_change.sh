@@ -44,7 +44,7 @@ GIT_MSG="CI: sync code";
 echo "GIT_MSG: $GIT_MSG";
 
 echo "> GIT submodule > add...";
-git submodule foreach git add -A;
+git submodule foreach git add -v -A;
 checkResult $?;
 echo "> GIT submodule > add... DONE";
 echo "> GIT submodule > commit '$GIT_MSG'...";
@@ -56,7 +56,7 @@ echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
 
 echo "> GIT > add...";
-git add -A;
+git add -v -A;
 checkResult $?;
 echo "> GIT > add... DONE";
 echo "> GIT > commit '$GIT_MSG'...";
