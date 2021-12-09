@@ -41,8 +41,8 @@ echo "--------------------------------------------------------------------------
 echo "> Checkout branch '$GIT_BRANCH'...";
 git submodule foreach git fetch -v --all;
 git submodule foreach git branch -v -a;
-# git submodule foreach git checkout $GIT_BRANCH;
-git submodule foreach git switch -v $GIT_BRANCH;
+git submodule foreach git checkout $GIT_BRANCH;
+# git submodule foreach git switch --guess $GIT_BRANCH; # EXPERIMENTAL
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
 	echo "> Error while checking out '$GIT_BRANCH' in submodules!";
