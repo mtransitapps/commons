@@ -278,7 +278,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         if (projectName == "MT") {
             abortOnError true
             warningsAsErrors false
