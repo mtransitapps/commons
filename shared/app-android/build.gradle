@@ -32,10 +32,6 @@ if (projectName == "MT") {
     // apply plugin: "org.sonarqube"
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     if (projectName == "MT") {
         implementation(project(':commons-android')) {
@@ -55,6 +51,7 @@ dependencies {
         implementation rootProject.ext.gpsLibs.values()
         implementation rootProject.ext.billingClientLibs.values()
         implementation rootProject.ext.fbLibs.values()
+        implementation rootProject.ext.appLovinLibs.values()
         implementation rootProject.ext.moPubLibs.values()
         implementation(rootProject.ext.moPubLibsAar.moPubAdsBanner) {
             transitive = true
