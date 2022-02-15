@@ -70,6 +70,7 @@ else
   MT_APP_RELEASE_REQUIRED=false;
 fi
 echo "> App release requred: $MT_APP_RELEASE_REQUIRED.";
+echo "$MT_APP_RELEASE_REQUIRED" > $MT_APP_RELEASE_REQUIRED_FILE;
 checkResult $?;
 
 echo "--------------------------------------------------------------------------------";
