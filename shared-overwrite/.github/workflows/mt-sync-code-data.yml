@@ -135,6 +135,8 @@ jobs:
         run: ./push_commits.sh
       - name: MT Publish release (?)
         run: ./publish_app_release.sh
+        env:
+          MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
       - name: DEBUG GIT STATUS
         run: |
           git status -sb
