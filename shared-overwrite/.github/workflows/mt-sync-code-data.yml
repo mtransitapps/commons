@@ -108,6 +108,8 @@ jobs:
           path: |
             app-android/build/outputs/apk
             app-android/build/outputs/bundle
+      - name: MT set app release required (or not)
+        run: ./set_app_release_required.sh
       - name: MT push commits
         run: ./push_commits.sh
       - name: DEBUG GIT STATUS
