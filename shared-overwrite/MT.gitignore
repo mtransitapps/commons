@@ -153,6 +153,7 @@ dev.properties
 /gradlew
 /gradlew.bat
 /init_cache_key.sh
+/publish_app_release.sh
 /push_commits.sh
 /set_app_release_required.sh
 /settings.gradle

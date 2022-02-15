@@ -32,9 +32,9 @@ if [[ -f ${MT_DATA_CHANGED_FILE} ]]; then
 fi
 echo "> Data changed: $MT_DATA_CHANGED.";
 
-if [[ "$MT_DATA_CHANGED" = "true" ]]; then
+if [[ "$MT_DATA_CHANGED" == "true" ]]; then
   MT_APP_RELEASE_REQUIRED=true; # new data
-elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
+elif [[ "$GIT_BRANCH" == "mmathieum" ]]; then #LEGACY
   git fetch -v;
   RESULT=$?;
   if [[ ${RESULT} -ne 0 ]]; then
