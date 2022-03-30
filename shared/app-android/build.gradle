@@ -52,13 +52,6 @@ dependencies {
         implementation rootProject.ext.billingClientLibs.values()
         implementation rootProject.ext.fbLibs.values()
         implementation rootProject.ext.appLovinLibs.values()
-        implementation rootProject.ext.moPubLibs.values()
-        implementation(rootProject.ext.moPubLibsAar.moPubAdsBanner) {
-            transitive = true
-        }
-        implementation(rootProject.ext.moPubLibsAar.moPubAdsRewarded) {
-            transitive = true
-        }
 
         if (!isDevLeakCanaryOff) {
             debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
