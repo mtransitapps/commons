@@ -5,9 +5,18 @@ apply plugin: 'com.github.triplet.play'
 
 Properties projectNameProperties = new Properties()
 projectNameProperties.load(new FileInputStream(file("project_name.properties")))
-
 def projectName = projectNameProperties["project.name"]
 println "> App project name: " + projectName
+
+File pkgConfigFile = file("${project.rootDir}/app-android/config/pkg")
+def projectNamespace = ""
+if (pkgConfigFile.exists()) {
+    projectNamespace = pkgConfigFile.text.trim()
+    println "> App namespace (pkg): " + projectNamespace
+}
+
+def isMainApp = projectNamespace == "org.mtransit.android"
+println "> Main app? " + isMainApp
 
 def envCI = System.getenv("CI")
 def isCI = envCI != null && envCI != ""
@@ -25,7 +34,7 @@ if (devPropertiesFile.exists()) {
 }
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
-if (projectName == "MT") {
+if (isMainApp) {
     apply plugin: 'dagger.hilt.android.plugin'
     apply plugin: 'com.google.gms.google-services'
     apply plugin: 'com.google.firebase.crashlytics'
@@ -33,7 +42,7 @@ if (projectName == "MT") {
 }
 
 dependencies {
-    if (projectName == "MT") {
+    if (isMainApp) {
         implementation(project(':commons-android')) {
             exclude group: 'com.google.protobuf', module: 'protoc'
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
@@ -79,8 +88,12 @@ android {
         jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
     }
 
+    if (!projectNamespace.empty) {
+        namespace = projectNamespace
+    }
+
     Properties versionProperties = new Properties()
-    versionProperties.load(new FileInputStream(file("../commons-android/version.properties")))
+    versionProperties.load(new FileInputStream(file("${project.rootDir}/commons-android/version.properties")))
     def theVersionName = versionProperties['version.name']
     println "> App version name: " + theVersionName
 
@@ -100,7 +113,7 @@ android {
     if (debugSigningKeysPropertiesFile.exists()) {
         debugSigningKeysProperties.load(new FileInputStream(debugSigningKeysPropertiesFile))
     } else {
-        debugSigningKeysPropertiesFile = file("../app-signing-debug-keys.properties")
+        debugSigningKeysPropertiesFile = file("${project.rootDir}/app-signing-debug-keys.properties")
         if (debugSigningKeysPropertiesFile.exists()) {
             debugSigningKeysProperties.load(new FileInputStream(debugSigningKeysPropertiesFile))
         }
@@ -117,7 +130,7 @@ android {
     if (appSigningKeysPropertiesFile.exists()) {
         appSigningKeysProperties.load(new FileInputStream(appSigningKeysPropertiesFile))
     } else {
-        appSigningKeysPropertiesFile = file("../app-signing-release-keys.properties")
+        appSigningKeysPropertiesFile = file("${project.rootDir}/app-signing-release-keys.properties")
         if (appSigningKeysPropertiesFile.exists()) {
             appSigningKeysProperties.load(new FileInputStream(appSigningKeysPropertiesFile))
         }
@@ -128,7 +141,7 @@ android {
     if (googlePlayUploadKeysPropertiesFile.exists()) {
         googlePlayUploadKeysProperties.load(new FileInputStream(googlePlayUploadKeysPropertiesFile))
     } else {
-        googlePlayUploadKeysPropertiesFile = file("../google-play-upload-keys.properties")
+        googlePlayUploadKeysPropertiesFile = file("${project.rootDir}/google-play-upload-keys.properties")
         if (googlePlayUploadKeysPropertiesFile.exists()) {
             googlePlayUploadKeysProperties.load(new FileInputStream(googlePlayUploadKeysPropertiesFile))
         }
@@ -161,11 +174,12 @@ android {
                 permission_provider_read     : "org.mtransit.android.provider.permission.READ_PROVIDER",
                 permission_receiver_broadcast: "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER",
                 target_sdk_version           : "$rootProject.ext.targetSdkVersion",
+                pkg_namespace                : namespace,
         ]
 
         javaCompileOptions {
             annotationProcessorOptions {
-                if (projectName == "MT") {
+                if (isMainApp) {
                     arguments += [
                             "room.schemaLocation": "$projectDir/schemas".toString(),
                             "room.incremental"   : "true",
@@ -211,7 +225,7 @@ android {
         renderScript false
         resValues true
         shaders false
-        if (projectName == "MT") {
+        if (isMainApp) {
             viewBinding true
         } else {
             viewBinding false
@@ -225,12 +239,11 @@ android {
             manifestPlaceholders = [
                     permission_provider_read     : "org.mtransit.android.debug.provider.permission.READ_PROVIDER",
                     permission_receiver_broadcast: "org.mtransit.android.debug.receiver.permission.BROADCAST_RECEIVER",
-                    target_sdk_version           : "$rootProject.ext.targetSdkVersion",
             ]
 
             // testCoverageEnabled false // DEBUG skip coverage report
             shrinkResources false
-            if (projectName == "MT") {
+            if (isMainApp) {
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'),
                         'proguard-rules.pro'
@@ -255,7 +268,7 @@ android {
                 }
             }
 
-            if (projectName == "MT") {
+            if (isMainApp) {
                 shrinkResources true
                 minifyEnabled true
                 // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
@@ -269,7 +282,7 @@ android {
     }
 
     lint {
-        if (projectName == "MT") {
+        if (isMainApp) {
             abortOnError true
             warningsAsErrors false
             ignoreWarnings false
@@ -280,7 +293,7 @@ android {
         checkDependencies true // also check leaf modules
         // checkAllWarnings true // too slow for CI, can be enabled locally
         ignoreTestSources true
-        if (projectName == "MT") {
+        if (isMainApp) {
             warning 'InvalidPackage', //
                     'ClickableViewAccessibility', //
                     'MergeRootFrame', //
@@ -294,7 +307,7 @@ android {
 
     sourceSets {
         main {
-            if (projectName == "MT") {
+            if (isMainApp) {
                 // NOTHING
             } else {
                 res.srcDirs += 'src/main/res-current'
