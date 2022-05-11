@@ -9,13 +9,13 @@ def projectName = projectNameProperties["project.name"]
 println "> App project name: " + projectName
 
 File pkgConfigFile = file("${project.rootDir}/app-android/config/pkg")
-def projectNamespace = ""
+def projectPkg = ""
 if (pkgConfigFile.exists()) {
-    projectNamespace = pkgConfigFile.text.trim()
-    println "> App namespace (pkg): " + projectNamespace
+    projectPkg = pkgConfigFile.text.trim()
+    println "> App pkg: " + projectPkg
 }
 
-def isMainApp = projectNamespace == "org.mtransit.android"
+def isMainApp = projectPkg == "org.mtransit.android"
 println "> Main app? " + isMainApp
 
 def envCI = System.getenv("CI")
@@ -88,8 +88,8 @@ android {
         jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
     }
 
-    if (!projectNamespace.empty) {
-        namespace = projectNamespace
+    if (!projectPkg.empty) {
+        namespace = projectPkg
     }
 
     Properties versionProperties = new Properties()
@@ -151,6 +151,9 @@ android {
     println "> Including French language: " + resValueFr.exists()
 
     defaultConfig {
+        if (!projectPkg.empty) {
+            applicationId = projectPkg
+        }
         versionCode theVersionCode
         versionName theVersionName + "r" + theVersionCode
         buildConfigField "String", "GIT_HASH", "\"$gitHash\""
