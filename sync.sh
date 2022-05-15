@@ -324,7 +324,7 @@ echo "> Deploying optional shared files... DONE";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
-echo "> Deploying overwriten shared files...";
+echo "> Deploying overwritten shared files...";
 SRC_DIR_PATH="commons/shared-overwrite";
 for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
@@ -345,7 +345,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying overwriten shared files... DONE";
+echo "> Deploying overwritten shared files... DONE";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
