@@ -20,26 +20,111 @@ function setGitCommitEnabled() {
 	echo "MT_GIT_COMMIT_ON: '$MT_GIT_COMMIT_ON'." # allowed
 	echo "MT_GIT_COMMIT_OFF: '$MT_GIT_COMMIT_OFF'." # forbidden
 
-	if [[ ${MT_ORG_GIT_COMMIT_OFF} == true ]]; then
+	if [[ ${MT_ORG_GIT_COMMIT_OFF} == "mt_true" ]]; then
 		echo "> Git commit disabled (org).. SKIP";
 		MT_GIT_COMMIT_ENABLED="false";
-		exit 0 # success
-	fi
-
-	if [[ ${MT_GIT_COMMIT_OFF} == true ]]; then
+	elif [[ ${MT_GIT_COMMIT_OFF} == "mt_true" ]]; then
 		echo "> Git commit disabled (project).. SKIP";
 		MT_GIT_COMMIT_ENABLED="false";
-		exit 0 # success
-	fi
-
-	if [[ ${MT_ORG_GIT_COMMIT_ON} != true && $MT_GIT_COMMIT_ON != true ]]; then
-		echo "> Git commit not enabled (org:'$MT_ORG_GIT_COMMIT_ON'|project:'$MT_GIT_COMMIT_ON').. SKIP";
+	elif [[ ${MT_ORG_GIT_COMMIT_ON} != "mt_true" && $MT_GIT_COMMIT_ON != "mt_true" ]]; then
+		echo "> Git commit NOT enabled (org:'$MT_ORG_GIT_COMMIT_ON'|project:'$MT_GIT_COMMIT_ON').. SKIP";
 		MT_GIT_COMMIT_ENABLED="false";
-		exit 0 # success
+	else
+		echo "> Git commit enabled (org:'$MT_ORG_GIT_COMMIT_ON'|project:'$MT_GIT_COMMIT_ON').";
+		MT_GIT_COMMIT_ENABLED="true";
 	fi
+}
 
-	MT_GIT_COMMIT_ENABLED="true";
-	echo "> Git commit enabled ...$MT_GIT_COMMIT_ENABLED";
+function setPushToStoreEnabled() {
+	MT_PUSH_STORE_ENABLED="false";
+
+	echo "MT_ORG_PUSH_STORE_ON: '$MT_ORG_PUSH_STORE_ON'." # allowed
+	echo "MT_ORG_PUSH_STORE_OFF: '$MT_ORG_PUSH_STORE_OFF'." # forbidden
+	echo "MT_PUSH_STORE_ON: '$MT_PUSH_STORE_ON'." # allowed
+	echo "MT_PUSH_STORE_OFF: '$MT_PUSH_STORE_OFF'." # forbidden
+
+	if [[ ${MT_ORG_PUSH_STORE_OFF} == "mt_true" ]]; then
+		echo "> Push to Store disabled (org).. SKIP";
+		MT_PUSH_STORE_ENABLED="false";
+	elif [[ ${MT_PUSH_STORE_OFF} == "mt_true" ]]; then
+		echo "> Push to Store disabled (project).. SKIP";
+		MT_PUSH_STORE_ENABLED="false";
+	elif [[ ${MT_ORG_PUSH_STORE_ON} != "mt_true" && $MT_PUSH_STORE_ON != "mt_true" ]]; then
+		echo "> Push to Store NOT enabled (org:'$MT_ORG_PUSH_STORE_ON'|project:'$MT_PUSH_STORE_ON').. SKIP";
+		MT_PUSH_STORE_ENABLED="false";
+	else
+		echo "> Push to Store enabled (org:'$MT_ORG_PUSH_STORE_ON'|project:'$MT_PUSH_STORE_ON')";
+		MT_PUSH_STORE_ENABLED="true";
+	fi
+}
+
+function setPushToStoreAlphaEnabled() {
+	MT_PUSH_STORE_ALPHA_ENABLED="false";
+
+	echo "MT_ORG_STORE_ALPHA_ON: '$MT_ORG_STORE_ALPHA_ON'." # allowed
+	echo "MT_ORG_STORE_ALPHA_OFF: '$MT_ORG_STORE_ALPHA_OFF'." # forbidden
+	echo "MT_STORE_ALPHA_ON: '$MT_STORE_ALPHA_ON'." # allowed
+	echo "MT_STORE_ALPHA_OFF: '$MT_STORE_ALPHA_OFF'." # forbidden
+
+	if [[ ${MT_ORG_STORE_ALPHA_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Alpha disabled (org).. SKIP";
+		MT_PUSH_STORE_ALPHA_ENABLED="false";
+	elif [[ ${MT_STORE_ALPHA_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Alpha disabled (project).. SKIP";
+		MT_PUSH_STORE_ALPHA_ENABLED="false";
+	elif [[ ${MT_ORG_STORE_ALPHA_ON} != "mt_true" && $MT_STORE_ALPHA_ON != "mt_true" ]]; then
+		echo "> Push to Store Alpha NOT enabled (org:'$MT_ORG_STORE_ALPHA_ON'|project:'$MT_STORE_ALPHA_ON').. SKIP";
+		MT_PUSH_STORE_ALPHA_ENABLED="false";
+	else
+		echo "> Push to Store Alpha enabled (org:'$MT_ORG_STORE_ALPHA_ON'|project:'$MT_STORE_ALPHA_ON')";
+		MT_PUSH_STORE_ALPHA_ENABLED="true";
+	fi
+}
+
+function setPushToStoreBetaPrivateEnabled() {
+	MT_PUSH_STORE_BETA_PRIVATE_ENABLED="false";
+
+	echo "MT_ORG_STORE_BETA_PRIVATE_ON: '$MT_ORG_STORE_BETA_PRIVATE_ON'." # allowed
+	echo "MT_ORG_STORE_BETA_PRIVATE_OFF: '$MT_ORG_STORE_BETA_PRIVATE_OFF'." # forbidden
+	echo "MT_STORE_BETA_PRIVATE_ON: '$MT_STORE_BETA_PRIVATE_ON'." # allowed
+	echo "MT_STORE_BETA_PRIVATE_OFF: '$MT_STORE_BETA_PRIVATE_OFF'." # forbidden
+
+	if [[ ${MT_ORG_STORE_BETA_PRIVATE_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Beta Private disabled (org).. SKIP";
+		MT_PUSH_STORE_BETA_PRIVATE_ENABLED="false";
+	elif [[ ${MT_STORE_BETA_PRIVATE_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Beta Private disabled (project).. SKIP";
+		MT_PUSH_STORE_BETA_PRIVATE_ENABLED="false";
+	elif [[ ${MT_ORG_STORE_BETA_PRIVATE_ON} != "mt_true" && $MT_STORE_BETA_PRIVATE_ON != "mt_true" ]]; then
+		echo "> Push to Store Beta Private NOT enabled (org:'$MT_ORG_STORE_BETA_PRIVATE_ON'|project:'$MT_STORE_BETA_PRIVATE_ON').. SKIP";
+		MT_PUSH_STORE_BETA_PRIVATE_ENABLED="false";
+	else
+		echo "> Push to Store Beta Private enabled (org:'$MT_ORG_STORE_BETA_PRIVATE_ON'|project:'$MT_STORE_BETA_PRIVATE_ON')";
+		MT_PUSH_STORE_BETA_PRIVATE_ENABLED="true";
+	fi
+}
+
+function setPushToStoreProductionEnabled() {
+	MT_PUSH_STORE_PRODUCTION_ENABLED="false";
+
+	echo "MT_ORG_STORE_PRODUCTION_ON: '$MT_ORG_STORE_PRODUCTION_ON'." # allowed
+	echo "MT_ORG_STORE_PRODUCTION_OFF: '$MT_ORG_STORE_PRODUCTION_OFF'." # forbidden
+	echo "MT_STORE_PRODUCTION_ON: '$MT_STORE_PRODUCTION_ON'." # allowed
+	echo "MT_STORE_PRODUCTION_OFF: '$MT_STORE_PRODUCTION_OFF'." # forbidden
+
+	if [[ ${MT_ORG_STORE_PRODUCTION_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Production disabled (org).. SKIP";
+		MT_PUSH_STORE_PRODUCTION_ENABLED="false";
+	elif [[ ${MT_STORE_PRODUCTION_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Production disabled (project).. SKIP";
+		MT_PUSH_STORE_PRODUCTION_ENABLED="false";
+	elif [[ ${MT_ORG_STORE_PRODUCTION_ON} != "mt_true" && $MT_STORE_PRODUCTION_ON != "mt_true" ]]; then
+		echo "> Push to Store Production NOT enabled (org:'$MT_ORG_STORE_PRODUCTION_ON'|project:'$MT_STORE_PRODUCTION_ON').. SKIP";
+		MT_PUSH_STORE_PRODUCTION_ENABLED="false";
+	else
+		echo "> Push to Store Production enabled (org:'$MT_ORG_STORE_PRODUCTION_ON'|project:'$MT_STORE_PRODUCTION_ON')";
+		MT_PUSH_STORE_PRODUCTION_ENABLED="true";
+	fi
 }
 
 function setGitUser() {
@@ -96,7 +181,7 @@ function printGitStatus() {
 	DIFF_LIMIT="33";
 	GIT_LOG_SINCE_OTHER_ARGS="--date=iso --name-status";
 	echo "==================================================";
-	echo "> [GIT STATUS & LOG]";
+	echo "> [GIT STATUS & LOG]...";
 	echo "'$(basename $PWD)'"
 	git config --get remote.origin.url;
 	git status -sb;
@@ -142,6 +227,7 @@ function printGitStatus() {
 		echo \"\$LOG\";
 		echo \"--------------------------------------------------\";
 	";
+	echo "> [GIT STATUS & LOG]... DONE";
 	echo "==================================================";
 }
 

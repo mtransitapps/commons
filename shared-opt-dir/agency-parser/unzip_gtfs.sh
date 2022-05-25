@@ -8,7 +8,7 @@ if [[ -d ${TARGET_DIR} ]]; then
 	rm -r ${TARGET_DIR};
 	checkResult $? false;
 fi
-unzip ${GTFS_ZIP} -d ${TARGET_DIR};
+unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
 checkResult $? false;
 
 GTFS_ZIP="input/gtfs_next.zip";
@@ -18,7 +18,7 @@ if [[ -f ${GTFS_ZIP} ]]; then
         rm -r ${TARGET_DIR};
         checkResult $? false;
     fi
-    unzip ${GTFS_ZIP} -d ${TARGET_DIR};
+    unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
     checkResult $? false;
 fi
 

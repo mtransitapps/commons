@@ -10,8 +10,6 @@ CURRENT_PATH=$(pwd);
 CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
-CONFIRM=false;
-
 setIsCI;
 
 setGradleArgs;
@@ -19,7 +17,7 @@ setGradleArgs;
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
 if [[ "$IS_SHALLOW" == true ]]; then
 	echo "> Fetching unshallow GIT repo...";
-	git fetch --unshallow;
+	git fetch -v --unshallow;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while fetching unshallow GIT repository!";

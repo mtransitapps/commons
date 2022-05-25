@@ -2,6 +2,14 @@
 source ../commons/commons.sh
 echo ">> Publishing '${@}'...";
 
+setPushToStoreEnabled;
+
+if [[ ${MT_PUSH_STORE_ENABLED} != true ]]; then
+  echo "> Push to Store NOT enabled... SKIP ($MT_PUSH_STORE_ENABLED)";
+  exit 0 # success
+fi
+echo "> Push to Store enabled ...";
+
 # LINKS:
 # https://github.com/Triple-T/gradle-play-publisher#common-configuration
 # https://github.com/Triple-T/gradle-play-publisher#publishing-an-app-bundle

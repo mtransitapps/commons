@@ -10,8 +10,6 @@ CURRENT_PATH=$(pwd);
 CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
-CONFIRM=false;
-
 setIsCI;
 
 setGradleArgs;
@@ -40,13 +38,15 @@ echo "> Cleaning GIT repo... DONE";
 
 setGitUser;
 
-GIT_MSG="CI: sync code";
-echo "GIT_MSG: $GIT_MSG";
+# GIT_MSG="CI: sync code";
+# echo "GIT_MSG: $GIT_MSG";
 
 echo "> GIT submodule > push...";
-TODO not working because default token only work for root repository
-git submodule foreach git push;
+# TODO ? not working ? because default token only work for root repository
+git submodule foreach git push; # git push fails if there are new changes on remote
 checkResult $?;
+# git -C app-andrid push;
+# checkResult $?;
 echo "> GIT submodule > push... DONE";
 # echo "> GIT submodule > commit '$GIT_MSG'...";
 # # git submodule foreach git commit -q -m "$GIT_MSG";
@@ -57,7 +57,7 @@ echo "> GIT submodule > push... DONE";
 # # TODO ? git submodule foreach git push;
 
 echo "> GIT > push...";
-git push;
+git push; # git push fails if there are new changes on remote
 checkResult $?;
 echo "> GIT > push... DONE";
 # echo "> GIT > commit '$GIT_MSG'...";

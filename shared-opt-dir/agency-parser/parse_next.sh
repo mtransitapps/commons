@@ -9,8 +9,13 @@ if [[ -f "generate_stop_times_from_frequencies" ]]; then
 	GENERATE_STOP_TIMES_FROM_FREQUENCIES=$(cat "generate_stop_times_from_frequencies");
 fi
 
+FILE_PATH=".";
+if [[ -d "../app-android/config" ]]; then
+	FILE_PATH="../app-android/config";
+fi
+
 GTFS_ZIP="input/gtfs_next.zip";
-if ! [[ -e "input_url_next" ]]; then
+if ! [[ -e "$FILE_PATH/input_url_next" ]]; then
 	GTFS_ZIP="input/gtfs.zip";
 fi
 if ! [[ -e "input/gtfs_next/agency.txt" ]]; then
