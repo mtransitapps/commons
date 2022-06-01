@@ -48,44 +48,45 @@ dependencies {
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
             exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
         }
-        implementation rootProject.ext.kotlinLibs.values()
-        implementation rootProject.ext.kotlinAndroidLibs.values()
-        implementation rootProject.ext.daggerLibs.values()
-        kapt rootProject.ext.daggerLibsCompiler.hiltCompiler
-        implementation rootProject.ext.supportLibs.values()
-        kapt rootProject.ext.supportLibsCompiler.lifecycleCompiler
-        kapt rootProject.ext.supportLibsCompiler.roomCompiler
+        implementation libs.bundles.kotlinLibs
+        implementation libs.bundles.kotlinAndroidLibs
+        implementation libs.bundles.daggerLibs
+        kapt libs.hiltCompiler
+        implementation libs.bundles.supportLibs
+        implementation libs.material
+        kapt libs.lifecycleCompiler
+        kapt libs.roomCompiler
         implementation libs.bundles.imgLibs
-        implementation platform(rootProject.ext.gpsPlatform.firebase_bom)
-        implementation rootProject.ext.gpsLibs.values()
-        implementation rootProject.ext.billingClientLibs.values()
-        implementation rootProject.ext.fbLibs.values()
-        implementation rootProject.ext.appLovinLibs.values()
+        implementation platform(libs.firebaseBom)
+        implementation libs.bundles.gpsLibs
+        implementation libs.bundles.billingClientLibs
+        implementation libs.bundles.fbLibs
+        implementation libs.bundles.appLovinLibs
 
         if (!isDevLeakCanaryOff) {
-            debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
+            debugImplementation libs.leakcanary
         }
 
         testImplementation libs.bundles.JUnitLibs
         testImplementation libs.bundles.mockitoLibs
     } else {
         implementation project(':commons-android')
-        implementation rootProject.ext.kotlinLibs.values()
-        implementation rootProject.ext.kotlinAndroidLibs.values()
-        implementation rootProject.ext.supportLibs.core
+        implementation libs.bundles.kotlinLibs
+        implementation libs.bundles.kotlinAndroidLibs
+        implementation libs.core
     }
 }
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    buildToolsVersion libs.versions.buildToolsVersion.get()
 
     compileOptions {
         sourceCompatibility rootProject.javaVersion
         targetCompatibility rootProject.javaVersion
     }
     kotlinOptions {
-        jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
+        jvmTarget = libs.versions.kotlinOptionsJvmTarget.get()
     }
 
     if (!projectPkg.empty) {

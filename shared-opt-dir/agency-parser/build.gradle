@@ -5,22 +5,22 @@ mainClassName = file('parser_class').text
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = rootProject.javaVersion
+    targetCompatibility = rootProject.javaVersion
 }
 compileKotlin {
     kotlinOptions {
-        jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
+        jvmTarget = libs.versions.kotlinOptionsJvmTarget.get()
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = rootProject.ext.kotlinOptionsJvmTarget
+        jvmTarget = libs.versions.kotlinOptionsJvmTarget.get()
     }
 }
 
 dependencies {
-    implementation rootProject.ext.kotlinLibs.values()
+    implementation libs.bundles.kotlinLibs
 
     implementation project(':parser')
 }
