@@ -55,7 +55,7 @@ dependencies {
         implementation rootProject.ext.supportLibs.values()
         kapt rootProject.ext.supportLibsCompiler.lifecycleCompiler
         kapt rootProject.ext.supportLibsCompiler.roomCompiler
-        implementation rootProject.ext.imgLibs.values()
+        implementation libs.bundles.imgLibs
         implementation platform(rootProject.ext.gpsPlatform.firebase_bom)
         implementation rootProject.ext.gpsLibs.values()
         implementation rootProject.ext.billingClientLibs.values()
@@ -66,8 +66,8 @@ dependencies {
             debugImplementation rootProject.ext.leakCanaryLibs.leakcanary
         }
 
-        testImplementation rootProject.ext.jUnitLibs.jUnit
-        testImplementation rootProject.ext.mockitoLibs.mockitoCore
+        testImplementation libs.bundles.JUnitLibs
+        testImplementation libs.bundles.mockitoLibs
     } else {
         implementation project(':commons-android')
         implementation rootProject.ext.kotlinLibs.values()

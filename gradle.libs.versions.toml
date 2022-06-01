@@ -1,0 +1,33 @@
+[versions]
+# https://github.com/square/retrofit/tags
+retrofitVersion = "2.9.0"
+# https://github.com/square/okhttp/tags
+# https://square.github.io/okhttp/changelog/
+okHttpVersion = "4.9.2"
+# https://github.com/google/gson/releases
+# https://github.com/google/gson/blob/master/CHANGELOG.md
+gsonVersion = "2.9.0"
+# https://github.com/bumptech/glide/releases
+glideVersion = "4.13.2"
+# https://mvnrepository.com/artifact/junit/junit
+jUnitVersion = "4.13.2"
+# https://mvnrepository.com/artifact/org.mockito/mockito-core
+mockitoVersion = '4.5.1'
+
+[libraries]
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
+retrofitGsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttpVersion" }
+okhttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okHttpVersion" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
+jUnit = { module = "junit:junit", version.ref = "jUnitVersion" }
+mockitoCore = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
+
+[bundles]
+retrofitLibs = ["retrofit", "retrofitGsonConverter"]
+okHttpLibs = ["okhttp", "okhttpLoggingInterceptor"]
+gsonLibs = ["gson"]
+imgLibs = ["glide"]
+jUnitLibs = ["jUnit"]
+mockitoLibs = ["mockitoCore"]
