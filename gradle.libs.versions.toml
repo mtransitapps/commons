@@ -132,7 +132,6 @@ firebaseAnalytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebaseCrashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebaseCrashlyticsPlugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsPluginVersion" }
 firebaseBom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
-# firebaseBom = "com.google.firebase:firebase-bom:30.0.2"
 playBilling = { module = "com.android.billingclient:billing-ktx", version.ref = "billingVersion" }
 playAppUpdate = { module = "com.google.android.play:app-update-ktx", version.ref = "googlePlayAppUpdateLibVersion" }
 fbAudienceNetwork = { module = "com.facebook.android:audience-network-sdk", version.ref = "facebookSdkVersion" }
@@ -145,7 +144,6 @@ protobufJavaLite = { module = "com.google.protobuf:protobuf-javalite", version.r
 protobufPlugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobufPluginVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 retrofitGsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
-# okhttpBom = "com.squareup.okhttp3:okhttp-bom:4.9.3"
 okhttpBom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttpVersion" }
 okhttp = { module = "com.squareup.okhttp3:okhttp" }
 okhttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
