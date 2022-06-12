@@ -6,11 +6,11 @@ compileSdkVersion = "32" # Android 12
 buildToolsVersion = "32.0.0" # Android 12
 kotlinOptionsJvmTarget = "1.8"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlinVersion = "1.6.21"
+kotlinVersion = "1.7.0"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinCoroutinesVersion = "1.6.2"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonarVersion = "3.3"
+sonarVersion = "3.4.0.2513"
 # https://developer.android.com/studio/releases/gradle-plugin
 androidPluginVersion = "7.2.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
@@ -21,12 +21,12 @@ hiltVersion = "2.42"
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 activityVersion = "1.4.0"
 annotationVersion = "1.3.0"
-appCompatVersion = "1.4.1"
+appCompatVersion = "1.4.2"
 browserVersion = "1.4.0"
 cardViewVersion = "1.0.0"
 coordinatorVersion = "1.2.0"
-constraintVersion = "2.1.3"
-coreVersion = '1.7.0'
+constraintVersion = "2.1.4"
+coreVersion = '1.8.0'
 fragmentVersion = "1.4.1"
 lifecycleVersion = "2.4.1"
 materialVersion = "1.5.0"
@@ -45,26 +45,28 @@ adsMediationTestSuiteVersion = "2.0.0"
 mapsUtilsVersion = "2.3.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 mapsKtxVersion = "3.4.0"
-playServicesAdsVersion = "20.6.0"
-playServicesBasementVersion = "18.0.1" # "18.0.2" crashes
-playServicesLocationVersion = "19.0.1"
+playServicesAdsVersion = "21.0.0"
+playServicesBasementVersion = "18.0.2"
+playServicesLocationVersion = "20.0.0"
 playServicesMapsVersion = "18.0.2"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "30.0.2"
-firebaseCrashlyticsPluginVersion = "2.8.1"
+firebaseBomVersion = "30.1.0"
+firebaseCrashlyticsPluginVersion = "2.9.0"
 billingVersion = "5.0.0"
 googlePlayAppUpdateLibVersion = "2.0.0"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 facebookSdkVersion = "6.11.0"
-facebookMediationSdkVersion = "6.11.0.0"
+facebookMediationSdkVersion = "6.11.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
-appLovinSdkVersion = "11.4.0"
+appLovinSdkVersion = "11.4.2"
 appLovinMediationSdkVersion = "11.4.0.0"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
 leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
-protobufVersion = "3.20.1"
+# https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
+# https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
+protobufVersion = "3.20.1" # TODO v3.21.1+
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.8.18"
 # https://github.com/square/retrofit/tags
@@ -73,7 +75,7 @@ retrofitVersion = "2.9.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
-okHttpVersion = "4.9.3"
+okHttpVersion = "4.10.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gsonVersion = "2.9.0"
@@ -82,7 +84,7 @@ glideVersion = "4.13.2"
 # https://mvnrepository.com/artifact/junit/junit
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockitoVersion = '4.5.1'
+mockitoVersion = '4.6.1'
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
