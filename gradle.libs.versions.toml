@@ -43,6 +43,7 @@ gpsPluginVersion = "4.3.13"
 adsMediationTestSuiteVersion = "3.0.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
+# https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
 mapsUtilsVersion = "2.3.0" # "2.4.0" not available on maven
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 mapsKtxVersion = "3.4.0"
