@@ -42,7 +42,8 @@ gpsPluginVersion = "4.3.13"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuiteVersion = "3.0.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
-mapsUtilsVersion = "2.4.0"
+# https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
+mapsUtilsVersion = "2.3.0" # "2.4.0" not available on maven
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 mapsKtxVersion = "3.4.0"
 playServicesAdsVersion = "21.0.0"
