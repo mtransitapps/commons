@@ -8,7 +8,7 @@ kotlinOptionsJvmTarget = "1.8"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlinVersion = "1.7.10"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-kotlinCoroutinesVersion = "1.6.3"
+kotlinCoroutinesVersion = "1.6.4"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonarVersion = "3.4.0.2513"
 # https://developer.android.com/studio/releases/gradle-plugin
@@ -16,7 +16,7 @@ androidPluginVersion = "7.2.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 playPublisherVersion = "3.7.0"
 # https://github.com/google/dagger/releases/latest
-hiltVersion = "2.42"
+hiltVersion = "2.43"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 activityVersion = "1.5.0"
@@ -47,13 +47,13 @@ adsMediationTestSuiteVersion = "3.0.0"
 mapsUtilsVersion = "2.3.0" # "2.4.0" not available on maven
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 mapsKtxVersion = "3.4.0"
-playServicesAdsVersion = "21.0.0"
+playServicesAdsVersion = "21.1.0"
 playServicesBasementVersion = "18.1.0"
 playServicesLocationVersion = "20.0.0"
-playServicesMapsVersion = "18.0.2"
+playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "30.2.0"
+firebaseBomVersion = "30.3.0"
 firebaseCrashlyticsPluginVersion = "2.9.1"
 billingVersion = "5.0.0"
 googlePlayAppUpdateLibVersion = "2.0.0"
@@ -68,7 +68,7 @@ leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.21.2"
+protobufVersion = "3.21.3"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.8.19"
 # https://github.com/square/retrofit/tags
