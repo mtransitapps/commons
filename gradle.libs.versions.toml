@@ -1,9 +1,6 @@
 [versions]
-minSdkVersion = "21"
-targetSdkVersion = "32" # Android 12
-compileSdkVersion = "32" # Android 12
 # https://maven.google.com/
-buildToolsVersion = "32.0.0" # Android 12
+buildToolsVersion = "33.0.0" # Android 13
 kotlinOptionsJvmTarget = "1.8"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlinVersion = "1.7.10"
@@ -12,7 +9,7 @@ kotlinCoroutinesVersion = "1.6.4"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonarVersion = "3.4.0.2513"
 # https://developer.android.com/studio/releases/gradle-plugin
-androidPluginVersion = "7.2.1"
+androidPluginVersion = "7.2.1" # Android 13 -> 7.3.0 when stable
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 playPublisherVersion = "3.7.0"
 # https://github.com/google/dagger/releases/latest

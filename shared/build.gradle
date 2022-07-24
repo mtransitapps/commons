@@ -1,8 +1,8 @@
 buildscript {
     ext {
         minSdkVersion = 21
-        targetSdkVersion = 32 // Android 12
-        compileSdkVersion = 32 // Android 12
+        targetSdkVersion = 33 // Android 13
+        compileSdkVersion = 32 // Android 12 // TODO 33 when com.android.tools.build.gradle-7.3.0 available
         javaVersion = JavaVersion.VERSION_1_8
     }
     repositories {
