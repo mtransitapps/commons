@@ -24,6 +24,7 @@ cardViewVersion = "1.0.0"
 coordinatorVersion = "1.2.0"
 constraintVersion = "2.1.4"
 coreVersion = '1.8.0'
+coreSpashscreenVersion = '1.0.0'
 fragmentVersion = "1.5.1"
 lifecycleVersion = "2.5.1"
 materialVersion = "1.5.0"
@@ -103,6 +104,7 @@ cardView = { module = "androidx.cardview:cardview", version.ref = "cardViewVersi
 coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorVersion" }
 constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintVersion" }
 core = { module = "androidx.core:core-ktx", version.ref = "coreVersion" }
+coreSplashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSpashscreenVersion" }
 fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentVersion" }
 livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
 lifecycleJava8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycleVersion" }
@@ -165,6 +167,7 @@ supportLibs = [
     "coordinatorlayout",
     "constraintLayout",
     "core",
+    "coreSplashscreen",
     "fragment",
     "livedata",
     "lifecycleJava8",
