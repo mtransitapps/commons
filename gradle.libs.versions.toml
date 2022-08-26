@@ -13,21 +13,21 @@ androidPluginVersion = "7.2.2" # Android 13 -> 7.3.0 when stable
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 playPublisherVersion = "3.7.0"
 # https://github.com/google/dagger/releases/latest
-hiltVersion = "2.43.1"
+hiltVersion = "2.43.2"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 activityVersion = "1.5.1"
 annotationVersion = "1.4.0"
-appCompatVersion = "1.4.2"
+appCompatVersion = "1.5.0"
 browserVersion = "1.4.0"
 cardViewVersion = "1.0.0"
 coordinatorVersion = "1.2.0"
 constraintVersion = "2.1.4"
 coreVersion = '1.8.0'
 coreSpashscreenVersion = '1.0.0'
-fragmentVersion = "1.5.1"
+fragmentVersion = "1.5.2"
 lifecycleVersion = "2.5.1"
-materialVersion = "1.5.0"
+materialVersion = "1.5.0" # TODO 1.6.1
 navigationVersion = "2.5.1"
 prefVersion = "1.2.0"
 recyclerviewVersion = "1.2.1"
@@ -51,7 +51,7 @@ playServicesLocationVersion = "20.0.0"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "30.3.1"
+firebaseBomVersion = "30.3.2"
 firebaseCrashlyticsPluginVersion = "2.9.1"
 billingVersion = "5.0.0"
 googlePlayAppUpdateLibVersion = "2.0.0"
@@ -66,7 +66,7 @@ leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.21.4"
+protobufVersion = "3.21.5"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.8.19"
 # https://github.com/square/retrofit/tags
@@ -84,7 +84,7 @@ glideVersion = "4.13.2"
 # https://mvnrepository.com/artifact/junit/junit
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockitoVersion = '4.6.1'
+mockitoVersion = '4.7.0'
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
