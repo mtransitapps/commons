@@ -248,9 +248,13 @@ function setGradleArgs() {
 		GRADLE_ARGS+=" -Dkotlin.incremental=false";
 	fi
 
-	echo "GITHUB_ACTIONS: $GITHUB_ACTIONS";
+	echo "> GitHub Actions: $GITHUB_ACTIONS.";
 	if [[ ${GITHUB_ACTIONS} = true ]]; then
 		GRADLE_ARGS=""; # use daemon on GitHub
+	fi
+
+	if [[ ${IS_CI} = true ]]; then
+		GRADLE_ARGS+=" --warning-mode all"; # print warnings in CI
 	fi
 }
 

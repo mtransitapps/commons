@@ -12,8 +12,6 @@ if (file("agency-parser").exists()) {
 include ':commons-android' // common code shared by all Android apps
 include ':app-android' // Android app
 
-enableFeaturePreview("VERSION_CATALOGS")
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {

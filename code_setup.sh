@@ -28,9 +28,9 @@ fi
 setGitBranch;
 
 setIsCI;
-echo "IS_CI: $IS_CI";
+echo "> CI: $IS_CI.";
 
-echo "GITHUB_ACTIONS: $GITHUB_ACTIONS";
+echo "> GitHub Actions: $GITHUB_ACTIONS.";
 
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
 if [[ "$IS_SHALLOW" == true && "${GITHUB_ACTIONS}" == false ]]; then

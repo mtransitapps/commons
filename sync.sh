@@ -28,7 +28,7 @@ fi
 setGitBranch;
 
 setIsCI;
-echo "IS_CI: $IS_CI";
+echo "> CI: $IS_CI.";
 
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
 if [[ "$IS_SHALLOW" == true ]]; then
