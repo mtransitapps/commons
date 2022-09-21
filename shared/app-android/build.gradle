@@ -57,6 +57,7 @@ dependencies {
         kapt libs.lifecycleCompiler
         kapt libs.roomCompiler
         implementation libs.bundles.imgLibs
+        kapt libs.glideCompiler
         implementation platform(libs.firebaseBom)
         implementation libs.bundles.gpsLibs
         implementation libs.bundles.billingClientLibs
