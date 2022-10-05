@@ -3,7 +3,7 @@
 buildToolsVersion = "33.0.0" # Android 13
 kotlinOptionsJvmTarget = "1.8"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlinVersion = "1.7.10"
+kotlinVersion = "1.7.20"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinCoroutinesVersion = "1.6.4"
 # https://plugins.gradle.org/plugin/org.sonarqube
@@ -13,11 +13,11 @@ androidPluginVersion = "7.3.0"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 playPublisherVersion = "3.7.0"
 # https://github.com/google/dagger/releases/latest
-hiltVersion = "2.43.2"
+hiltVersion = "2.44"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
-activityVersion = "1.5.1"
-annotationVersion = "1.4.0"
+activityVersion = "1.6.0"
+annotationVersion = "1.5.0"
 appCompatVersion = "1.5.1"
 browserVersion = "1.4.0"
 cardViewVersion = "1.0.0"
@@ -25,13 +25,14 @@ coordinatorVersion = "1.2.0"
 constraintVersion = "2.1.4"
 coreVersion = '1.9.0'
 coreSpashscreenVersion = '1.0.0'
-fragmentVersion = "1.5.2"
+fragmentVersion = "1.5.3"
 lifecycleVersion = "2.5.1"
 materialVersion = "1.6.1"
 navigationVersion = "2.5.2"
 prefVersion = "1.2.0"
 recyclerviewVersion = "1.2.1"
 roomVersion = "2.4.3"
+slidePanelLayoutVersion = "1.2.0"
 swipeRefreshLayoutVersion = "1.1.0"
 vectorDrawableVersion = "1.1.0"
 viewPager2Version = "1.0.0"
@@ -59,14 +60,14 @@ googlePlayAppUpdateLibVersion = "2.0.0"
 facebookSdkVersion = "6.11.0"
 facebookMediationSdkVersion = "6.11.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
-appLovinSdkVersion = "11.4.5"
-appLovinMediationSdkVersion = "11.4.5.0"
+appLovinSdkVersion = "11.5.1"
+appLovinMediationSdkVersion = "11.5.1.0"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
 leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.21.6"
+protobufVersion = "3.21.7"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.8.19"
 # https://github.com/square/retrofit/tags
@@ -80,7 +81,7 @@ okHttpVersion = "4.10.0"
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gsonVersion = "2.9.1"
 # https://github.com/bumptech/glide/releases/latest
-glideVersion = "4.13.2"
+glideVersion = "4.14.1"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 androidSVGVersion = "1.4"
@@ -117,6 +118,7 @@ pref = { module = "androidx.preference:preference-ktx", version.ref = "prefVersi
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerviewVersion" }
 roomKtx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 roomRuntime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
+slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "slidePanelLayoutVersion" }
 swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayoutVersion" }
 vectordrawable = { module = "androidx.vectordrawable:vectordrawable", version.ref = "vectorDrawableVersion" }
 viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
@@ -180,6 +182,7 @@ supportLibs = [
     "pref",
     "recyclerview",
     "roomKtx", "roomRuntime",
+    "slidingpanelayout",
     "swiperefreshlayout",
     "vectordrawable",
     "viewmodel", "viewmodelState",
