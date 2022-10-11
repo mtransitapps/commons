@@ -304,8 +304,7 @@ android {
                     'MergeRootFrame', //
                     'Overdraw', //
                     'UselessParent', //
-                    'IconDensities',  //
-                    'RtlHardcoded'
+                    'IconDensities'  //
             error 'NonConstantResourceId'
         }
     }
