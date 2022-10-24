@@ -16,7 +16,7 @@ playPublisherVersion = "3.7.0"
 hiltVersion = "2.44"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
-activityVersion = "1.6.0"
+activityVersion = "1.6.1"
 annotationVersion = "1.5.0"
 appCompatVersion = "1.5.1"
 browserVersion = "1.4.0"
@@ -25,10 +25,10 @@ coordinatorVersion = "1.2.0"
 constraintVersion = "2.1.4"
 coreVersion = '1.9.0'
 coreSpashscreenVersion = '1.0.0'
-fragmentVersion = "1.5.3"
+fragmentVersion = "1.5.4"
 lifecycleVersion = "2.5.1"
-materialVersion = "1.6.1"
-navigationVersion = "2.5.2"
+materialVersion = "1.6.1" # TODO 1.7.0
+navigationVersion = "2.5.3"
 prefVersion = "1.2.0"
 recyclerviewVersion = "1.2.1"
 roomVersion = "2.4.3"
@@ -36,40 +36,42 @@ slidePanelLayoutVersion = "1.2.0"
 swipeRefreshLayoutVersion = "1.1.0"
 vectorDrawableVersion = "1.1.0"
 viewPager2Version = "1.0.0"
-# https://developers.google.com/android/guides/google-services-plugin
-gpsPluginVersion = "4.3.14"
-# LATEST: https://developers.google.com/android/guides/releases
-adsMediationTestSuiteVersion = "3.0.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
 mapsUtilsVersion = "2.4.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 mapsKtxVersion = "3.4.0"
-playServicesAdsVersion = "21.2.0"
+# https://developers.google.com/android/guides/google-services-plugin
+gpsPluginVersion = "4.3.14"
+# LATEST: https://developers.google.com/android/guides/releases
+adsMediationTestSuiteVersion = "3.0.0"
+playServicesAdsVersion = "21.3.0"
 playServicesBasementVersion = "18.1.0"
-playServicesLocationVersion = "20.0.0"
+playServicesLocationVersion = "21.0.0"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "30.5.0"
+firebaseBomVersion = "31.0.1"
 firebaseCrashlyticsPluginVersion = "2.9.2"
 billingVersion = "5.0.0"
+# https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
+# https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 googlePlayAppUpdateLibVersion = "2.0.0"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 facebookSdkVersion = "6.11.0"
 facebookMediationSdkVersion = "6.11.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
-appLovinSdkVersion = "11.5.1"
-appLovinMediationSdkVersion = "11.5.1.0"
+appLovinSdkVersion = "11.5.2"
+appLovinMediationSdkVersion = "11.5.2.0"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
 leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.21.7"
+protobufVersion = "3.21.8"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
-protobufPluginVersion = "0.8.19"
+protobufPluginVersion = "0.9.1"
 # https://github.com/square/retrofit/tags
 # https://github.com/square/retrofit/releases/latest
 retrofitVersion = "2.9.0"
@@ -81,14 +83,14 @@ okHttpVersion = "4.10.0"
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gsonVersion = "2.9.1"
 # https://github.com/bumptech/glide/releases/latest
-glideVersion = "4.14.1"
+glideVersion = "4.14.2"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 androidSVGVersion = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockitoVersion = '4.8.0'
+mockitoVersion = '4.8.1'
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
