@@ -1,31 +1,28 @@
 buildscript {
     ext {
-        minSdkVersion = 21
-        targetSdkVersion = 33 // Android 13
-        compileSdkVersion = 33 // Android 13
         javaVersion = JavaVersion.VERSION_1_8
     }
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
     dependencies {
-        classpath(libs.androidPlugin)
-        classpath(libs.ktPlugin)
-        classpath(libs.playPublisherPlugin)
         classpath(libs.protobufPlugin)
         def appAndroidGoogleServicesJSON = file("app-android/google-services.json")
         if (appAndroidGoogleServicesJSON.exists()) {
             println "> Using Google Services, Crashlytics... gradle plugin."
             classpath(libs.gpsPlugin)
-            classpath(libs.hiltPlugin)
             classpath(libs.firebaseCrashlyticsPlugin)
             // classpath(libs.sonarPlugin)
         } else {
             println "> Not using Google Services, Crashlytics... gradle plugin."
         }
     }
+}
+
+plugins {
+    id 'com.android.application' version libs.versions.androidPluginVersion apply false
+    id 'com.android.library' version libs.versions.androidPluginVersion apply false
+    id 'org.jetbrains.kotlin.android' version libs.versions.kotlinVersion apply false
+    id 'com.google.dagger.hilt.android' version libs.versions.hiltVersion apply false
+    id "com.github.ben-manes.versions" version libs.versions.benManesVersionsVersion
+    id "nl.littlerobots.version-catalog-update" version libs.versions.littlerobotsVersionCatalogVersion
 }
 
 task clean(type: Delete) {
@@ -35,3 +32,5 @@ task clean(type: Delete) {
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
+
+apply from: "${project.rootDir}/commons/gradle.libs.versions.toml.updater.config.gradle"

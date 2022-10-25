@@ -1,6 +1,13 @@
 [versions]
+# Android 5.0 Lollipop
+minSdkVersion = "21"
+# Android 13 Tiramisu
+targetSdkVersion = "33"
+# Android 13 Tiramisu
+compileSdkVersion = "33"
 # https://maven.google.com/
-buildToolsVersion = "33.0.0" # Android 13
+# Android 13 Tiramisu
+buildToolsVersion = "33.0.0"
 kotlinOptionsJvmTarget = "1.8"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlinVersion = "1.7.20"
@@ -12,6 +19,8 @@ sonarVersion = "3.4.0.2513"
 androidPluginVersion = "7.3.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 playPublisherVersion = "3.7.0"
+benManesVersionsVersion = "0.43.0"
+littlerobotsVersionCatalogVersion = "0.7.0"
 # https://github.com/google/dagger/releases/latest
 hiltVersion = "2.44"
 # ALL: https://developer.android.com/jetpack/androidx/versions
@@ -23,8 +32,8 @@ browserVersion = "1.4.0"
 cardViewVersion = "1.0.0"
 coordinatorVersion = "1.2.0"
 constraintVersion = "2.1.4"
-coreVersion = '1.9.0'
-coreSpashscreenVersion = '1.0.0'
+coreVersion = "1.9.0"
+coreSpashscreenVersion = "1.0.0"
 fragmentVersion = "1.5.4"
 lifecycleVersion = "2.5.1"
 materialVersion = "1.6.1" # TODO 1.7.0
@@ -59,11 +68,11 @@ billingVersion = "5.0.0"
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 googlePlayAppUpdateLibVersion = "2.0.0"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
-facebookSdkVersion = "6.11.0"
+# facebookSdkVersion = "6.11.0" # included with nediation adapter
 facebookMediationSdkVersion = "6.11.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
-appLovinSdkVersion = "11.5.2"
-appLovinMediationSdkVersion = "11.5.2.0"
+# appLovinSdkVersion = "11.5.2" # included with nediation adapter
+appLovinMediationSdkVersion = "11.5.3.0"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
 leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
@@ -90,7 +99,7 @@ androidSVGVersion = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockitoVersion = '4.8.1'
+mockitoVersion = "4.8.1"
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
@@ -98,6 +107,8 @@ ktCoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", versi
 ktAndroidCoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinCoroutinesVersion" }
 androidPlugin = { module = "com.android.tools.build:gradle", version.ref = "androidPluginVersion" }
 playPublisherPlugin = { module = "com.github.triplet.gradle:play-publisher", version.ref = "playPublisherVersion" }
+benManesVersions = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "benManesVersionsVersion" }
+littlerobotsVersionCatalog = { module = "nl.littlerobots.vcu:plugin", version.ref = "littlerobotsVersionCatalogVersion" }
 sonarPlugin = { module = "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin", version.ref = "sonarVersion" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hiltVersion" }
 hiltPlugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltVersion" }
@@ -144,9 +155,9 @@ firebaseCrashlyticsPlugin = { module = "com.google.firebase:firebase-crashlytics
 firebaseBom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
 playBilling = { module = "com.android.billingclient:billing-ktx", version.ref = "billingVersion" }
 playAppUpdate = { module = "com.google.android.play:app-update-ktx", version.ref = "googlePlayAppUpdateLibVersion" }
-fbAudienceNetwork = { module = "com.facebook.android:audience-network-sdk", version.ref = "facebookSdkVersion" }
+# fbAudienceNetwork = { module = "com.facebook.android:audience-network-sdk", version.ref = "facebookSdkVersion" } # included with nediation adapter
 fbAudienceNetworkMediation = { module = "com.google.ads.mediation:facebook", version.ref = "facebookMediationSdkVersion" }
-appLovinAds = { module = "com.applovin:applovin-sdk", version.ref = "facebookSdkVersion" }
+# appLovinAds = { module = "com.applovin:applovin-sdk", version.ref = "appLovinSdkVersion" } # included with nediation adapter
 appLovinAdsMediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovinMediationSdkVersion" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanaryVersion" }
 protobufCompiler = { module = "com.google.protobuf:protoc", version.ref = "protobufVersion" }
@@ -165,45 +176,91 @@ jUnit = { module = "junit:junit", version.ref = "jUnitVersion" }
 mockitoCore = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
 
 [bundles]
-kotlinLibs = ["ktCoroutines"]
-kotlinAndroidLibs = ["ktAndroidCoroutines"]
+kotlinLibs = [
+    "ktCoroutines",
+]
+kotlinAndroidLibs = [
+    "ktAndroidCoroutines",
+]
 supportLibs = [
     "activity",
     "annotation",
     "appCompat",
     "browser",
     "cardView",
-    "coordinatorlayout",
     "constraintLayout",
+    "coordinatorlayout",
     "core",
     "coreSplashscreen",
     "fragment",
-    "livedata",
     "lifecycleJava8",
-    "navFragment", "navUI",
+    "livedata",
+    "navFragment",
+    "navUI",
     "pref",
     "recyclerview",
-    "roomKtx", "roomRuntime",
+    "roomKtx",
+    "roomRuntime",
     "slidingpanelayout",
     "swiperefreshlayout",
     "vectordrawable",
-    "viewmodel", "viewmodelState",
+    "viewmodel",
+    "viewmodelState",
     "viewpager2",
 ]
-daggerLibs = ["hilt"]
+daggerLibs = [
+    "hilt",
+]
 # daggerLibsCompiler = ["hiltCompiler"]
 # supportLibsCompiler = [ "lifecycleCompiler", "roomCompiler"]
-gpsLibs = ["gpsAds", "gpsBasement", "gpsLocation", "gpsMaps", "mapsKtx", "mapsUtils", "mapsUtilsKtx", "firebaseAnalytics", "firebaseCrashlytics"]
-gpsPlatform = ["firebaseBom"]
-billingClientLibs = ["playBilling"]
-googlePlayLibs = ["playAppUpdate"]
-fbLibs = ["fbAudienceNetwork", "fbAudienceNetworkMediation"]
-appLovinLibs = ["appLovinAds", "appLovinAdsMediation"]
-leakCanaryLibs = ["leakcanary"]
+gpsLibs = [
+    "firebaseAnalytics",
+    "firebaseCrashlytics",
+    "gpsAds",
+    "gpsBasement",
+    "gpsLocation",
+    "gpsMaps",
+    "mapsKtx",
+    "mapsUtils",
+    "mapsUtilsKtx",
+]
+gpsPlatform = [
+    "firebaseBom",
+]
+billingClientLibs = [
+    "playBilling",
+]
+googlePlayLibs = [
+    "playAppUpdate",
+]
+fbLibs = [
+    "fbAudienceNetworkMediation",
+]
+appLovinLibs = [
+    "appLovinAdsMediation",
+]
+leakCanaryLibs = [
+    "leakcanary",
+]
 # protobufLibs = ["protobufCompiler", "protobufJavaLite"]
-retrofitLibs = ["retrofit", "retrofitGsonConverter"]
-okHttpLibs = ["okhttp", "okhttpLoggingInterceptor"]
-gsonLibs = ["gson"]
-imgLibs = ["glide", "androidSVG"]
-jUnitLibs = ["jUnit"]
-mockitoLibs = ["mockitoCore"]
+retrofitLibs = [
+    "retrofit",
+    "retrofitGsonConverter",
+]
+okHttpLibs = [
+    "okhttp",
+    "okhttpLoggingInterceptor",
+]
+gsonLibs = [
+    "gson",
+]
+imgLibs = [
+    "androidSVG",
+    "glide",
+]
+jUnitLibs = [
+    "jUnit",
+]
+mockitoLibs = [
+    "mockitoCore",
+]

@@ -1,7 +1,9 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'com.github.triplet.play'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'com.github.triplet.play' version libs.versions.playPublisherVersion
+}
 
 Properties projectNameProperties = new Properties()
 projectNameProperties.load(new FileInputStream(file("project_name.properties")))
@@ -41,45 +43,8 @@ if (isMainApp) {
     // apply plugin: "org.sonarqube"
 }
 
-dependencies {
-    if (isMainApp) {
-        implementation(project(':commons-android')) {
-            exclude group: 'com.google.protobuf', module: 'protoc'
-            exclude group: 'com.google.protobuf', module: 'protobuf-java'
-            exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
-        }
-        implementation libs.bundles.kotlinLibs
-        implementation libs.bundles.kotlinAndroidLibs
-        implementation libs.bundles.daggerLibs
-        kapt libs.hiltCompiler
-        implementation libs.bundles.supportLibs
-        implementation libs.material
-        kapt libs.lifecycleCompiler
-        kapt libs.roomCompiler
-        implementation libs.bundles.imgLibs
-        kapt libs.glideCompiler
-        implementation platform(libs.firebaseBom)
-        implementation libs.bundles.gpsLibs
-        implementation libs.bundles.billingClientLibs
-        implementation libs.bundles.fbLibs
-        implementation libs.bundles.appLovinLibs
-
-        if (!isDevLeakCanaryOff) {
-            debugImplementation libs.leakcanary
-        }
-
-        testImplementation libs.bundles.JUnitLibs
-        testImplementation libs.bundles.mockitoLibs
-    } else {
-        implementation project(':commons-android')
-        implementation libs.bundles.kotlinLibs
-        implementation libs.bundles.kotlinAndroidLibs
-        implementation libs.core
-    }
-}
-
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion libs.versions.compileSdkVersion.get().toInteger()
     buildToolsVersion libs.versions.buildToolsVersion.get()
 
     compileOptions {
@@ -171,14 +136,14 @@ android {
         }
         // resConfigs "en", "xxxhdpi" // DEBUG xxxhdpi = Pixel 2 XL
         // resConfigs "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion libs.versions.minSdkVersion.get().toInteger()
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion libs.versions.targetSdkVersion.get().toInteger()
 
         manifestPlaceholders = [
                 permission_provider_read     : "org.mtransit.android.provider.permission.READ_PROVIDER",
                 permission_receiver_broadcast: "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER",
-                target_sdk_version           : "$rootProject.ext.targetSdkVersion",
+                target_sdk_version           : libs.versions.targetSdkVersion.get(),
                 pkg_namespace                : namespace,
         ]
 
@@ -332,6 +297,47 @@ android {
             }
         }
     }
+}
+
+dependencies {
+    if (isMainApp) {
+        implementation(project(':commons-android')) {
+            exclude group: 'com.google.protobuf', module: 'protoc'
+            exclude group: 'com.google.protobuf', module: 'protobuf-java'
+            exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
+        }
+        implementation libs.bundles.kotlinLibs
+        implementation libs.bundles.kotlinAndroidLibs
+        implementation libs.bundles.daggerLibs
+        kapt libs.hiltCompiler
+        implementation libs.bundles.supportLibs
+        implementation libs.material
+        kapt libs.lifecycleCompiler
+        kapt libs.roomCompiler
+        implementation libs.bundles.imgLibs
+        kapt libs.glideCompiler
+        implementation platform(libs.firebaseBom)
+        implementation libs.bundles.gpsLibs
+        implementation libs.bundles.billingClientLibs
+        implementation libs.bundles.fbLibs
+        implementation libs.bundles.appLovinLibs
+
+        if (!isDevLeakCanaryOff) {
+            debugImplementation libs.leakcanary
+        }
+
+        testImplementation libs.bundles.JUnitLibs
+        testImplementation libs.bundles.mockitoLibs
+    } else {
+        implementation project(':commons-android')
+        implementation libs.bundles.kotlinLibs
+        implementation libs.bundles.kotlinAndroidLibs
+        implementation libs.core
+    }
+}
+
+kapt {
+    correctErrorTypes true // allow references to generated code
 }
 
 play {
