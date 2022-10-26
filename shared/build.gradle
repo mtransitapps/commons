@@ -33,4 +33,4 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-apply from: "${project.rootDir}/commons/gradle.libs.versions.toml.updater.config.gradle"
+apply from: "${project.rootDir}/commons/dependency_updates_version_config.gradle"
