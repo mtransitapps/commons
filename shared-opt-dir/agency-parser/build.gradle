@@ -1,5 +1,7 @@
-apply plugin: 'application'
-apply plugin: 'kotlin'
+plugins {
+    id 'application'
+    id 'kotlin'
+}
 
 mainClassName = file('parser_class').text
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
