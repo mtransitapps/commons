@@ -1,2 +1,5 @@
 # IntelliJ
 *.iml
+
+# TOML Dependency updater file
+*.updates.toml

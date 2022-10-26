@@ -30,6 +30,7 @@ def isNonStable = { String version ->
 tasks.named("dependencyUpdates").configure {
     checkConstraints = true
     checkForGradleUpdate = false
+    outputFormatter = "plain,json,xml,html"
     resolutionStrategy {
         componentSelection {
             all {
