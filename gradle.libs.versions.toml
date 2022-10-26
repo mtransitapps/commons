@@ -36,7 +36,6 @@ coreVersion = "1.9.0"
 coreSpashscreenVersion = "1.0.0"
 fragmentVersion = "1.5.4"
 lifecycleVersion = "2.5.1"
-materialVersion = "1.6.1" # TODO 1.7.0
 navigationVersion = "2.5.3"
 prefVersion = "1.2.0"
 recyclerviewVersion = "1.2.1"
@@ -45,6 +44,8 @@ slidePanelLayoutVersion = "1.2.0"
 swipeRefreshLayoutVersion = "1.1.0"
 vectorDrawableVersion = "1.1.0"
 viewPager2Version = "1.0.0"
+# https://github.com/material-components/material-components-android/releases/latest
+materialVersion = "1.6.1" # TODO 1.7.0
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
@@ -100,6 +101,13 @@ androidSVGVersion = "1.4"
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
 mockitoVersion = "4.8.1"
+# https://commons.apache.org/
+commonsIOVersion = "2.11.0"
+commonsCSVVersion = "1.9.0"
+commonsLang3Version = "3.12.0"
+commonsTextVersion = "1.9"
+# https://github.com/xerial/sqlite-jdbc/releases/latest
+xerialSQLiteJDBCVersion = "3.36.0.3"
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
@@ -174,6 +182,11 @@ glideCompiler = { module = "com.github.bumptech.glide:compiler", version.ref = "
 androidSVG = { module = "com.caverock:androidsvg-aar", version.ref = "androidSVGVersion" }
 jUnit = { module = "junit:junit", version.ref = "jUnitVersion" }
 mockitoCore = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
+commonsIO = { module = "commons-io:commons-io", version.ref = "commonsIOVersion" }
+commonsCSV = { module = "org.apache.commons:commons-csv", version.ref = "commonsCSVVersion" }
+commonsLang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang3Version" }
+commonsText = { module = "org.apache.commons:commons-text", version.ref = "commonsTextVersion" }
+xerialSQLiteJDBC = { module = "org.xerial:sqlite-jdbc", version.ref = "xerialSQLiteJDBCVersion" }
 
 [bundles]
 kotlinLibs = [
@@ -211,8 +224,6 @@ supportLibs = [
 daggerLibs = [
     "hilt",
 ]
-# daggerLibsCompiler = ["hiltCompiler"]
-# supportLibsCompiler = [ "lifecycleCompiler", "roomCompiler"]
 gpsLibs = [
     "firebaseAnalytics",
     "firebaseCrashlytics",
@@ -242,7 +253,6 @@ appLovinLibs = [
 leakCanaryLibs = [
     "leakcanary",
 ]
-# protobufLibs = ["protobufCompiler", "protobufJavaLite"]
 retrofitLibs = [
     "retrofit",
     "retrofitGsonConverter",
@@ -263,4 +273,10 @@ jUnitLibs = [
 ]
 mockitoLibs = [
     "mockitoCore",
+]
+commonsLibs = [
+    "commonsIO",
+    "commonsCSV",
+    "commonsLang3",
+    "commonsText",
 ]
