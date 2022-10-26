@@ -105,9 +105,9 @@ mockitoVersion = "4.8.1"
 commonsCSVVersion = "1.9.0"
 commonsIOVersion = "2.11.0"
 commonsLang3Version = "3.12.0"
-commonsTextVersion = "1.10.0"
+commonsTextVersion = "1.9" # TODO "1.10.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerialSQLiteJDBCVersion = "3.39.3.0"
+xerialSQLiteJDBCVersion = "3.36.0.3" # TODO "3.39.3.0"
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
