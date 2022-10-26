@@ -137,7 +137,7 @@ navFragment = { module = "androidx.navigation:navigation-fragment-ktx", version.
 navUI = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationVersion" }
 pref = { module = "androidx.preference:preference-ktx", version.ref = "prefVersion" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerviewVersion" }
-roomKtx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
+room = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 roomRuntime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "slidePanelLayoutVersion" }
 swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayoutVersion" }
@@ -212,7 +212,7 @@ supportLibs = [
     "navUI",
     "pref",
     "recyclerview",
-    "roomKtx",
+    "room",
     "roomRuntime",
     "slidingpanelayout",
     "swiperefreshlayout",
