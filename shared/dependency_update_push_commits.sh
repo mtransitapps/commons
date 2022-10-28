@@ -16,8 +16,10 @@ setGradleArgs;
 
 setGitCommitEnabled;
 
-if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
-  echo "> Git commit NOT enabled.. SKIP";
+setGitCommitDependencyUpdateEnabled;
+
+if [[ ${MT_GIT_COMMIT_ENABLED} != true && ${MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED} != true ]]; then
+  echo "> Git commit NOT enabled.. SKIP (MT_GIT_COMMIT_ENABLED:$MT_GIT_COMMIT_ENABLED|MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED:$MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED)";
   exit 0 # success
 fi
 echo "> Git commit enabled ...";

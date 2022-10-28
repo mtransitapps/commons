@@ -35,6 +35,29 @@ function setGitCommitEnabled() {
 	fi
 }
 
+function setGitCommitDependencyUpdateEnabled() {
+	MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED="false";
+
+	echo "MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON: '$MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON'." # allowed
+	echo "MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_OFF: '$MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_OFF'." # forbidden
+	echo "MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON: '$MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON'." # allowed
+	echo "MT_GIT_COMMIT_DEPENDENCY_UPDATE_OFF: '$MT_GIT_COMMIT_DEPENDENCY_UPDATE_OFF'." # forbidden
+
+	if [[ ${MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_OFF} == "mt_true" ]]; then
+		echo "> Git dependency update commit disabled (org).. SKIP";
+		MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED="false";
+	elif [[ ${MT_GIT_COMMIT_DEPENDENCY_UPDATE_OFF} == "mt_true" ]]; then
+		echo "> Git dependency update commit disabled (project).. SKIP";
+		MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED="false";
+	elif [[ ${MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON} != "mt_true" && $MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON != "mt_true" ]]; then
+		echo "> Git dependency update commit NOT enabled (org:'$MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON'|project:'$MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON').. SKIP";
+		MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED="false";
+	else
+		echo "> Git dependency update commit enabled (org:'$MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON'|project:'$MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON').";
+		MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED="true";
+	fi
+}
+
 function setPushToStoreEnabled() {
 	MT_PUSH_STORE_ENABLED="false";
 
