@@ -58,7 +58,7 @@ checkResult $?;
 echo "> GIT commons > diff staged... DONE";
 
 echo "> GIT commons > commit '$GIT_MSG'...";
-git -C commons diff-index --quiet HEAD || git -C commons commit -m '$GIT_MSG';
+git -C commons diff-index --quiet HEAD || git -C commons commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT commons > commit '$GIT_MSG'... DONE";
 
