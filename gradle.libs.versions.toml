@@ -45,7 +45,7 @@ swipeRefreshLayoutVersion = "1.1.0"
 vectorDrawableVersion = "1.1.0"
 viewPager2Version = "1.0.0"
 # https://github.com/material-components/material-components-android/releases/latest
-materialVersion = "1.6.1" # TODO 1.7.0
+materialVersion = "1.7.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
@@ -62,7 +62,7 @@ playServicesLocationVersion = "21.0.0"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "31.0.1"
+firebaseBomVersion = "31.0.2"
 firebaseCrashlyticsPluginVersion = "2.9.2"
 billingVersion = "5.0.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
@@ -73,13 +73,13 @@ googlePlayAppUpdateLibVersion = "2.0.0"
 facebookMediationSdkVersion = "6.11.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
-appLovinMediationSdkVersion = "11.5.3.0"
+appLovinMediationSdkVersion = "11.5.3.1"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
 leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.21.8"
+protobufVersion = "3.21.9"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.9.1"
 # https://github.com/square/retrofit/tags
@@ -105,9 +105,9 @@ mockitoVersion = "4.8.1"
 commonsCSVVersion = "1.9.0"
 commonsIOVersion = "2.11.0"
 commonsLang3Version = "3.12.0"
-commonsTextVersion = "1.9" # TODO "1.10.0"
+commonsTextVersion = "1.10.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerialSQLiteJDBCVersion = "3.36.0.3" # TODO "3.39.3.0"
+xerialSQLiteJDBCVersion = "3.39.3.0"
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
