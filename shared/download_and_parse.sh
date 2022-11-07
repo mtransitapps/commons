@@ -24,6 +24,12 @@ if [[ -d "agency-parser" ]]; then
 	./download.sh;
 	checkResult $?;
 
+	../commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
+
+	if [[ -e "$FILE_PATH/input_url_next" ]]; then
+		../commons/gtfs/gtfs-validator.sh "input/gtfs_next.zip" "output/next";
+	fi
+
 	./unzip_gtfs.sh;
 	checkResult $?;
 

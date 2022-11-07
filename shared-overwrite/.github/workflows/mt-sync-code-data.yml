@@ -122,6 +122,14 @@ jobs:
         run: ./commit_code_change.sh
       - name: MT download & parse
         run: ./download_and_parse.sh
+      - name: MT artifact > GTFS validator results
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }} # even if tests fails
+        with:
+          name: gtfs-validator-results
+          path: |
+            agency-parser/output/current/
+            agency-parser/output/next/
       - name: MT commit data change
         run: ./commit_data_change.sh
       - name: MT assemble release (APK & ABB)
