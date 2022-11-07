@@ -36,10 +36,13 @@ echo "> Launching GTFS Validator...";
 # https://github.com/MobilityData/gtfs-validator#run-the-app-via-command-line
 # https://github.com/MobilityData/gtfs-validator/releases/latest/
 # https://github.com/MobilityData/gtfs-validator/releases/latest/download/gtfs-validator-4.0.0-cli.jar
+# --url $(cat $FILE_PATH/input_url) --storage_directory "$GTFS_ZIP_FILE"
+# --country_code ca
 java \
   -jar "$JAR_FILE" \
-  -i "$GTFS_ZIP_FILE" \
-  -o "$OUTPUT" \
+  --input "$GTFS_ZIP_FILE" \
+  --output_base "$OUTPUT" \
+  --pretty \
 ;
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
@@ -52,3 +55,13 @@ echo "> Reports available:";
 echo "> - file://$CURRENT_PATH/$OUTPUT/report.html";
 echo "> - file://$CURRENT_PATH/$OUTPUT/report.json";
 echo "> - file://$CURRENT_PATH/$OUTPUT/system_errors.json";
+
+echo "> Looking for errors...";
+ERROR_COUNT=$(grep -i "\"severity\": \"ERROR\"," $OUTPUT/report.json | wc -l);
+if [[ "$ERROR_COUNT" -gt 0 ]]; then
+  echo "> Found $ERROR_COUNT error!";
+else
+  echo "> Found no error.";
+fi
+echo "> Looking for errors... DONE";
+exit $ERROR_COUNT;
