@@ -56,6 +56,15 @@ echo "> - file://$CURRENT_PATH/$OUTPUT/report.html";
 echo "> - file://$CURRENT_PATH/$OUTPUT/report.json";
 echo "> - file://$CURRENT_PATH/$OUTPUT/system_errors.json";
 
+echo "> Report summary:";
+echo "> - Warnings:";
+echo "> ----------";
+grep -B 1 -A 1 -i "\"severity\": \"WARNING\"," $OUTPUT/report.json;
+echo "> ----------";
+echo "> - Errors:";
+echo "> ----------";
+grep -B 1 -A 1 -i "\"severity\": \"ERROR\"," $OUTPUT/report.json;
+echo "> ----------";
 echo "> Looking for errors...";
 ERROR_COUNT=$(grep -i "\"severity\": \"ERROR\"," $OUTPUT/report.json | wc -l);
 if [[ "$ERROR_COUNT" -gt 0 ]]; then
