@@ -31,11 +31,11 @@ fi
 checkResult $?;
 
 VERSION_FILE="gradle.libs.versions.toml";
-git -C commons diff $VERSION_FILE;
+git -C commons diff -U0 $VERSION_FILE;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
-DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
+DURATION_SEC=$((AFTER_DATE_SEC-BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
 echo "> DEPENDENCY UPDATE > APPLY... DONE";
 echo "================================================================================";
