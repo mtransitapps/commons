@@ -112,6 +112,14 @@ if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	./download.sh;
 	checkResult $? ${CONFIRM};
 
+	../commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
+  # checkResult $?; # too many errors for now
+
+  if [[ -e "$FILE_PATH/input_url_next" ]]; then
+    ../commons/gtfs/gtfs-validator.sh "input/gtfs_next.zip" "output/next";
+    # checkResult $?; # too many errors for now
+  fi
+
 	./unzip_gtfs.sh;
 	checkResult $? ${CONFIRM};
 
