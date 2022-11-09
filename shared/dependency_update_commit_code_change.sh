@@ -42,7 +42,7 @@ echo "> Cleaning GIT repo... DONE";
 
 setGitUser;
 
-GIT_MSG = "CI: depedencies update";
+GIT_MSG="CI: dependencies update";
 echo "GIT_MSG: $GIT_MSG";
 
 VERSIONS_FILE="gradle.libs.versions.toml";
@@ -53,7 +53,7 @@ checkResult $?;
 echo "> GIT commons > add $VERSIONS_FILE... DONE";
 
 echo "> GIT commons > diff staged...";
-git -C commons diff --staged;
+git -C commons diff -U0 --staged;
 checkResult $?;
 echo "> GIT commons > diff staged... DONE";
 
@@ -66,7 +66,7 @@ printGitStatus;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
-DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
+DURATION_SEC=$((AFTER_DATE_SEC-BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
 echo "> DEPENDENCY UPDATE > COMMIT CODE CHANGE... DONE";
 echo "================================================================================";
