@@ -58,19 +58,19 @@ gpsPluginVersion = "4.3.14"
 adsMediationTestSuiteVersion = "3.0.0"
 playServicesAdsVersion = "21.3.0"
 playServicesBasementVersion = "18.1.0"
-playServicesLocationVersion = "21.0.0"
+playServicesLocationVersion = "21.0.1"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
 firebaseBomVersion = "31.0.2"
 firebaseCrashlyticsPluginVersion = "2.9.2"
-billingVersion = "5.0.0"
+billingVersion = "5.1.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
-googlePlayAppUpdateLibVersion = "2.0.0"
+googlePlayAppUpdateLibVersion = "2.0.1"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # facebookSdkVersion = "6.11.0" # included with nediation adapter
-facebookMediationSdkVersion = "6.11.0.1"
+facebookMediationSdkVersion = "6.12.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
 appLovinMediationSdkVersion = "11.5.3.1"
@@ -107,7 +107,7 @@ commonsIOVersion = "2.11.0"
 commonsLang3Version = "3.12.0"
 commonsTextVersion = "1.10.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerialSQLiteJDBCVersion = "3.39.3.0"
+xerialSQLiteJDBCVersion = "3.39.4.0"
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
