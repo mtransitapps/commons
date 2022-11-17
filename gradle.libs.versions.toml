@@ -22,7 +22,7 @@ playPublisherVersion = "3.7.0"
 benManesVersionsVersion = "0.43.0"
 littlerobotsVersionCatalogVersion = "0.7.0"
 # https://github.com/google/dagger/releases/latest
-hiltVersion = "2.44"
+hiltVersion = "2.44.2"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 activityVersion = "1.6.1"
@@ -62,7 +62,7 @@ playServicesLocationVersion = "21.0.1"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "31.0.2"
+firebaseBomVersion = "31.0.3"
 firebaseCrashlyticsPluginVersion = "2.9.2"
 billingVersion = "5.1.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
@@ -73,7 +73,7 @@ googlePlayAppUpdateLibVersion = "2.0.1"
 facebookMediationSdkVersion = "6.12.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
-appLovinMediationSdkVersion = "11.5.3.1"
+appLovinMediationSdkVersion = "11.5.4.0"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
 leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
@@ -100,14 +100,14 @@ androidSVGVersion = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockitoVersion = "4.8.1"
+mockitoVersion = "4.9.0"
 # https://commons.apache.org/
 commonsCSVVersion = "1.9.0"
 commonsIOVersion = "2.11.0"
 commonsLang3Version = "3.12.0"
 commonsTextVersion = "1.10.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerialSQLiteJDBCVersion = "3.39.4.0"
+xerialSQLiteJDBCVersion = "3.39.4.1"
 
 [libraries]
 ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
