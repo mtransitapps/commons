@@ -32,7 +32,7 @@ if (!devPropertiesFile.exists()) {
 }
 if (devPropertiesFile.exists()) {
     devProperties.load(new FileInputStream(devPropertiesFile))
-    isDevLeakCanaryOff = devProperties['dev.leakCanaryOff']
+    isDevLeakCanaryOff = devProperties['dev.leakCanaryOff'] == "true"
 }
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
