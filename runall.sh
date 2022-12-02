@@ -46,22 +46,22 @@ echo "Command: '$@'.";
 
 for FILE_NAME in $(ls -a) ; do
 	if [[ $FILE_NAME == "." ]] || [[ $FILE_NAME == ".." ]]; then
-		echo "> Skip $FILE_NAME.";
+		echo "> '$FILE_NAME' > Skip.";
 		continue;
 	fi
 	if ! [[ -d "$FILE_NAME" ]]; then
-		echo "> Skip $FILE_NAME (not a directory).";
+		echo "> '$FILE_NAME' > Skip (not a directory).";
 		continue;
 	fi
 	echo "--------------------------------------------------------------------------------";
-	echo "> Running '$@' in '$FILE_NAME'...";
+	echo "> '$FILE_NAME' > running '$@'...";
 	cd ${FILE_NAME} || exit;
 	
 	eval $@;
 	checkResult $?;
 	
 	cd ..;
-	echo "> Running '$@' in '$FILE_NAME'... DONE";
+	echo "> '$FILE_NAME' > running '$@'... DONE";
 	echo "--------------------------------------------------------------------------------";
 done
 
