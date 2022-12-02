@@ -1,50 +1,52 @@
 #!/bin/bash
-source ../commons/commons.sh
+SCRIPT_DIR="$(dirname "$0")";
+source ${SCRIPT_DIR}/../commons/commons.sh
 echo ">> Cleaning keys...";
 
-source keys_files.sh;
+source ${SCRIPT_DIR}/keys_files.sh;
 
 if [[ ${#FILES[@]} -lt 1 ]]; then
 	echo "FILES environment variable is NOT defined (need at least 1 empty \"\")!";
 	exit 1;
 fi
 
-CLEAR="clr"
+CLEAR="${SCRIPT_DIR}/clr"
 
 for FILE in "${FILES[@]}" ; do
-	if [[ -z "${FILE}" ]]; then
-		echo "Ignoring empty '$FILE'.";
+	FILE_PATH="${SCRIPT_DIR}/${FILE}";
+	if [[ -z "${FILE_PATH}" ]]; then
+		echo "Ignoring empty '$FILE_PATH'.";
 		continue;
 	fi
 	echo "--------------------------------------------------------------------------------";
-	echo "> Cleaning '$FILE'...";
+	echo "> Cleaning '$FILE_PATH'...";
 
-	git ls-files --error-unmatch ${FILE} &> /dev/null;
+	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then #file is NOT tracked by git
 		if ! [[ -d $CLEAR ]]; then
 			echo "Missing '$CLEAR' directory!";
 			exit 1;
 		fi
-		mv $CLEAR/${FILE} ${FILE};
+		mv $CLEAR/${FILE} ${FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "Resetting decrypted file '$FILE' using 'mv $CLEAR/${FILE} ${FILE}' did NOT work!";
-			rm ${FILE}; # deleting file
+			echo "Resetting decrypted file '$FILE_PATH' using 'mv $CLEAR/${FILE} ${FILE_PATH}' did NOT work!";
+			rm ${FILE_PATH}; # deleting file
 			exit ${RESULT};
 		fi
 	else #file is tracked by git
-		git checkout -- ${FILE};
+		git checkout -- ${FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "Resetting decrypted file '$FILE' using 'git checkout' did NOT work!";
+			echo "Resetting decrypted file '$FILE_PATH' using 'git checkout' did NOT work!";
 			rm ${FILE}; # deleting file
 			exit ${RESULT};
 		fi
-		git diff --name-status --exit-code ${FILE};
+		git diff --name-status --exit-code ${FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "File '$FILE' NOT the same as clear file!";
+			echo "File '$FILE_PATH' NOT the same as clear file!";
 			exit ${RESULT};
 		fi
 	fi

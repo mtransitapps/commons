@@ -1,4 +1,5 @@
 #!/bin/bash
+SCRIPT_DIR="$(dirname "$0")";
 declare -a FILES=(
 	"app-signing-release-keystore.keystore"
 	"app-signing-release-keys.properties"
@@ -10,16 +11,16 @@ declare -a FILES=(
 	"src/main/play/contact-email.txt"
 );
 
-if [[ -f "src/main/res/values/keys.xml" ]]; then
+if [[ -f "${SCRIPT_DIR}/src/main/res/values/keys.xml" ]]; then
 	FILES+=("src/main/res/values/keys.xml");
-	if [[ -f "src/debug/res/values/keys.xml" ]]; then
+	if [[ -f "${SCRIPT_DIR}/src/debug/res/values/keys.xml" ]]; then
 		FILES+=("src/debug/res/values/keys.xml");
 	fi
 fi
 
-if [[ -f "google-services.json" ]]; then
+if [[ -f "${SCRIPT_DIR}/google-services.json" ]]; then
 	FILES+=("google-services.json");
-	if [[ -f "src/debug/google-services.json" ]]; then
+	if [[ -f "${SCRIPT_DIR}/src/debug/google-services.json" ]]; then
         FILES+=("src/debug/google-services.json");
     fi
 fi

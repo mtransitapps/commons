@@ -1,5 +1,6 @@
 #!/bin/bash
-source ../commons/commons.sh
+SCRIPT_DIR="$(dirname "$0")";
+source ${SCRIPT_DIR}/../commons/commons.sh
 echo ">> Decrypting-ing file $@...";
 
 if [[ -z "${MT_ENCRYPT_KEY}" ]]; then
