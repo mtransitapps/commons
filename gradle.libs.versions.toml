@@ -79,7 +79,7 @@ leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.21.9"
+protobufVersion = "3.21.10"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.9.1"
 # https://github.com/square/retrofit/tags
@@ -169,7 +169,7 @@ fbAudienceNetworkMediation = { module = "com.google.ads.mediation:facebook", ver
 appLovinAdsMediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovinMediationSdkVersion" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanaryVersion" }
 protobufCompiler = { module = "com.google.protobuf:protoc", version.ref = "protobufVersion" }
-protobufJavaLite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufVersion" }
+protobufJavaLite = "com.google.protobuf:protobuf-javalite:3.21.9"
 protobufPlugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobufPluginVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 retrofitGsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
