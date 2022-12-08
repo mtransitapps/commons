@@ -169,7 +169,7 @@ fbAudienceNetworkMediation = { module = "com.google.ads.mediation:facebook", ver
 appLovinAdsMediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovinMediationSdkVersion" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanaryVersion" }
 protobufCompiler = { module = "com.google.protobuf:protoc", version.ref = "protobufVersion" }
-protobufJavaLite = "com.google.protobuf:protobuf-javalite:3.21.9"
+protobufJavaLite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufVersion" }
 protobufPlugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobufPluginVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 retrofitGsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
