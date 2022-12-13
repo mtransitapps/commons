@@ -7,7 +7,7 @@ targetSdkVersion = "33"
 compileSdkVersion = "33"
 # https://maven.google.com/
 # Android 13 Tiramisu
-buildToolsVersion = "33.0.0"
+buildToolsVersion = "33.0.1"
 kotlinOptionsJvmTarget = "1.8"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlinVersion = "1.7.20"
