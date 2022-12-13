@@ -34,7 +34,7 @@ coordinatorVersion = "1.2.0"
 constraintVersion = "2.1.4"
 coreVersion = "1.9.0"
 coreSpashscreenVersion = "1.0.0"
-fragmentVersion = "1.5.4"
+fragmentVersion = "1.5.5"
 lifecycleVersion = "2.5.1"
 navigationVersion = "2.5.3"
 prefVersion = "1.2.0"
@@ -62,7 +62,7 @@ playServicesLocationVersion = "21.0.1"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "31.1.0"
+firebaseBomVersion = "31.1.1"
 firebaseCrashlyticsPluginVersion = "2.9.2"
 billingVersion = "5.1.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
@@ -79,7 +79,7 @@ leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.21.10"
+protobufVersion = "3.21.11"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.9.1"
 # https://github.com/square/retrofit/tags
