@@ -56,7 +56,7 @@ mapsKtxVersion = "3.4.0"
 gpsPluginVersion = "4.3.14"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuiteVersion = "3.0.0"
-playServicesAdsVersion = "21.3.0"
+playServicesAdsVersion = "21.4.0"
 playServicesBasementVersion = "18.1.0"
 playServicesLocationVersion = "21.0.1"
 playServicesMapsVersion = "18.1.0"
@@ -73,13 +73,13 @@ googlePlayAppUpdateLibVersion = "2.0.1"
 facebookMediationSdkVersion = "6.12.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
-appLovinMediationSdkVersion = "11.5.5.0"
+appLovinMediationSdkVersion = "11.6.0.0"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
 leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.21.11"
+protobufVersion = "3.21.12"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.9.1"
 # https://github.com/square/retrofit/tags
@@ -100,7 +100,7 @@ androidSVGVersion = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockitoVersion = "4.9.0"
+mockitoVersion = "4.10.0"
 # https://commons.apache.org/
 commonsCSVVersion = "1.9.0"
 commonsIOVersion = "2.11.0"
