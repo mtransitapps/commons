@@ -100,7 +100,7 @@ androidSVGVersion = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockitoVersion = "4.10.0"
+mockitoVersion = "4.11.0"
 # https://commons.apache.org/
 commonsCSVVersion = "1.9.0"
 commonsIOVersion = "2.11.0"
