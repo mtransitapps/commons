@@ -1,5 +1,6 @@
 #!/bin/bash
-source ../commons/commons.sh
+SCRIPT_DIR="$(dirname "$0")";
+source ${SCRIPT_DIR}/../commons/commons.sh
 echo ">> Encrypting file $@...";
 
 if [[ -z "${MT_ENCRYPT_KEY}" ]]; then
@@ -11,7 +12,6 @@ if [[ $# -ne 2 ]]; then
 	echo "Expecting 2 arguments for the file (arg:$@)!";
 	exit 1;
 fi
-
 
 if [[ -z "$1" ]]; then
 	echo "Empty file name '$1'!";
