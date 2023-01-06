@@ -32,7 +32,8 @@ if [[ -f $2 ]]; then
 	echo ">> Overriding existing '$2' file.";
 fi
 
-openssl aes-256-cbc -md sha256 -d -in $1 -out $2 -k ${MT_ENCRYPT_KEY};
+# openssl aes-256-cbc -md sha256 -d -in $1 -out $2 -k ${MT_ENCRYPT_KEY};
+openssl aes-256-cbc -pbkdf2 -iter 7007 -md sha256 -d -in $1 -out $2 -k ${MT_ENCRYPT_KEY};
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
 	echo ">> Error while decrypting '$1' to '$2'!";
