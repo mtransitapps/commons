@@ -10,4 +10,6 @@
     <issue id="NetworkSecurityConfig">
         <ignore path="src/main/res/xml/network_security_config.xml" />
     </issue>
+    <!-- usage from com.bumptech.glide.request.target.NotificationTarget -->
+    <issue id="NotificationPermission" severity="ignore" />
 </lint>
