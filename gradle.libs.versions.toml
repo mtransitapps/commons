@@ -49,7 +49,7 @@ materialVersion = "1.7.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-mapsUtilsVersion = "3.0.0"
+mapsUtilsVersion = "3.1.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 mapsKtxVersion = "3.4.0"
 # https://developers.google.com/android/guides/google-services-plugin
@@ -101,7 +101,7 @@ androidSVGVersion = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 jUnitVersion = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockitoVersion = "4.11.0"
+mockitoVersion = "5.0.0"
 # https://commons.apache.org/
 commonsCSVVersion = "1.9.0"
 commonsIOVersion = "2.11.0"
