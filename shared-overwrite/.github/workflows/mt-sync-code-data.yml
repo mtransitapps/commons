@@ -128,8 +128,8 @@ jobs:
         with:
           name: gtfs
           path: |
-            agency-parser/input/gtfs/
-            agency-parser/input/gtfs_next/
+            agency-parser/input/gtfs.zip
+            agency-parser/input/gtfs_next.zip
           retention-days: 31
       - name: MT artifact > GTFS validator results
         uses: actions/upload-artifact@v3
