@@ -44,6 +44,7 @@ slidePanelLayoutVersion = "1.2.0"
 swipeRefreshLayoutVersion = "1.1.0"
 vectorDrawableVersion = "1.1.0"
 viewPager2Version = "1.0.0"
+workManagerVersion = "2.8.0"
 # https://github.com/material-components/material-components-android/releases/latest
 materialVersion = "1.8.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
@@ -146,6 +147,7 @@ vectordrawable = { module = "androidx.vectordrawable:vectordrawable", version.re
 viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
 viewmodelState = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycleVersion" }
 viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2Version" }
+workManagerRuntime = { module = "androidx.work:work-runtime-ktx", version.ref = "workManagerVersion" }
 lifecycleCompiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycleVersion" }
 roomCompiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
 material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
@@ -221,6 +223,9 @@ supportLibs = [
     "viewmodel",
     "viewmodelState",
     "viewpager2",
+]
+workManagerLibs = [
+    "workManagerRuntime"
 ]
 daggerLibs = [
     "hilt",
