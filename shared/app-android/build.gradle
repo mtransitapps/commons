@@ -302,7 +302,6 @@ android {
 dependencies {
     if (isMainApp) {
         implementation(project(':commons-android')) {
-            exclude group: 'androidx.work'
             exclude group: 'com.google.protobuf', module: 'protoc'
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
             exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
