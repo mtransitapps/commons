@@ -299,6 +299,12 @@ android {
     }
 }
 
+if (isMainApp) {
+    hilt {
+        enableAggregatingTask = true
+    }
+}
+
 dependencies {
     if (isMainApp) {
         implementation(project(':commons-android')) {
