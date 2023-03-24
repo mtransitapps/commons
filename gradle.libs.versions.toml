@@ -25,7 +25,7 @@ littlerobotsVersionCatalogVersion = "0.7.0"
 hiltVersion = "2.45"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
-activityVersion = "1.6.1"
+activityVersion = "1.7.0"
 annotationVersion = "1.6.0"
 appCompatVersion = "1.6.1"
 browserVersion = "1.5.0"
@@ -34,17 +34,17 @@ coordinatorVersion = "1.2.0"
 constraintVersion = "2.1.4"
 coreVersion = "1.9.0"
 coreSpashscreenVersion = "1.0.0"
-fragmentVersion = "1.5.5"
-lifecycleVersion = "2.6.0"
+fragmentVersion = "1.5.6"
+lifecycleVersion = "2.6.1"
 navigationVersion = "2.5.3"
 prefVersion = "1.2.0"
 recyclerviewVersion = "1.3.0"
-roomVersion = "2.5.0"
+roomVersion = "2.5.1"
 slidePanelLayoutVersion = "1.2.0"
 swipeRefreshLayoutVersion = "1.1.0"
 vectorDrawableVersion = "1.1.0"
 viewPager2Version = "1.0.0"
-workManagerVersion = "2.8.0"
+workManagerVersion = "2.8.1"
 # https://github.com/material-components/material-components-android/releases/latest
 materialVersion = "1.8.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
@@ -58,7 +58,7 @@ gpsPluginVersion = "4.3.15"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuiteVersion = "3.0.0"
 playServicesAdsVersion = "21.5.0"
-playServicesBasementVersion = "18.1.0"
+playServicesBasementVersion = "18.2.0"
 playServicesLocationVersion = "21.0.1"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
@@ -71,7 +71,7 @@ billingVersion = "5.1.0"
 googlePlayAppUpdateLibVersion = "2.0.1"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # facebookSdkVersion = "6.11.0" # included with nediation adapter
-facebookMediationSdkVersion = "6.12.0.0"
+facebookMediationSdkVersion = "6.13.7.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
 appLovinMediationSdkVersion = "11.7.1.0"
@@ -80,7 +80,7 @@ leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.22.0"
+protobufVersion = "3.22.2"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 # @pin waiting for 0.9.3+ https://github.com/google/protobuf-gradle-plugin/issues/656
 protobufPluginVersion = "0.9.1"
@@ -95,7 +95,7 @@ okHttpVersion = "4.10.0"
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gsonVersion = "2.9.1"
 # https://github.com/bumptech/glide/releases/latest
-glideVersion = "4.15.0"
+glideVersion = "4.15.1"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 androidSVGVersion = "1.4"
