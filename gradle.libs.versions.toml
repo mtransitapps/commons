@@ -57,15 +57,15 @@ mapsKtxVersion = "3.4.0"
 gpsPluginVersion = "4.3.15"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuiteVersion = "3.0.0"
-playServicesAdsVersion = "21.5.0"
+playServicesAdsVersion = "22.0.0"
 playServicesBasementVersion = "18.2.0"
 playServicesLocationVersion = "21.0.1"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "31.2.3"
+firebaseBomVersion = "31.4.0"
 firebaseCrashlyticsPluginVersion = "2.9.4"
-billingVersion = "5.1.0"
+billingVersion = "5.2.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 googlePlayAppUpdateLibVersion = "2.0.1"
@@ -74,7 +74,7 @@ googlePlayAppUpdateLibVersion = "2.0.1"
 facebookMediationSdkVersion = "6.13.7.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
-appLovinMediationSdkVersion = "11.7.1.0"
+appLovinMediationSdkVersion = "11.8.2.1"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
 leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
