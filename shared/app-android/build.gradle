@@ -53,6 +53,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = libs.versions.kotlinOptionsJvmTarget.get()
+        allWarningsAsErrors = true
     }
 
     if (!projectPkg.empty) {
