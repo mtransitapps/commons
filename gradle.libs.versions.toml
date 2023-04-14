@@ -8,7 +8,7 @@ compileSdkVersion = "33"
 # https://maven.google.com/
 # Android 13 Tiramisu
 buildToolsVersion = "33.0.2"
-kotlinOptionsJvmTarget = "1.8"
+kotlinOptionsJvmTarget = "17"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlinVersion = "1.8.0"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
@@ -16,7 +16,7 @@ kotlinCoroutinesVersion = "1.6.4"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonarVersion = "3.4.0.2513"
 # https://developer.android.com/studio/releases/gradle-plugin
-androidPluginVersion = "7.4.2"
+androidPluginVersion = "8.0.0"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 playPublisherVersion = "3.7.0"
 benManesVersionsVersion = "0.46.0"
