@@ -38,13 +38,15 @@ echo ">> Setup-ing keys... DONE";
 
 echo ">> Running bundle release AAB...";
 ../gradlew :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
-checkResult $?;
+RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
 checkResult $?;
 echo ">> Cleaning keys... DONE";
+
+checkResult $RESULT;
 
 cd ..;
 
