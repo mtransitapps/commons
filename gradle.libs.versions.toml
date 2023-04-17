@@ -63,15 +63,15 @@ playServicesLocationVersion = "21.0.1"
 playServicesMapsVersion = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebaseBomVersion = "31.4.0"
-firebaseCrashlyticsPluginVersion = "2.9.4"
+firebaseBomVersion = "31.5.0"
+firebaseCrashlyticsPluginVersion = "2.9.5"
 billingVersion = "5.2.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 googlePlayAppUpdateLibVersion = "2.0.1"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # facebookSdkVersion = "6.11.0" # included with nediation adapter
-facebookMediationSdkVersion = "6.13.7.0"
+facebookMediationSdkVersion = "6.13.7.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
 appLovinMediationSdkVersion = "11.8.2.1"
@@ -80,7 +80,7 @@ leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.22.2"
+protobufVersion = "3.22.3"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 # @pin waiting for 0.9.3+ https://github.com/google/protobuf-gradle-plugin/issues/656
 protobufPluginVersion = "0.9.1"
