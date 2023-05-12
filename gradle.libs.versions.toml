@@ -12,7 +12,7 @@ kotlinOptionsJvmTarget = "17"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlinVersion = "1.8.21"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-kotlinCoroutinesVersion = "1.6.4"
+kotlinCoroutinesVersion = "1.7.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonarVersion = "3.4.0.2513"
 # https://developer.android.com/studio/releases/gradle-plugin
@@ -47,7 +47,7 @@ vectorDrawableVersion = "1.1.0"
 viewPager2Version = "1.0.0"
 workManagerVersion = "2.8.1"
 # https://github.com/material-components/material-components-android/releases/latest
-materialVersion = "1.8.0"
+materialVersion = "1.9.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
@@ -66,7 +66,7 @@ playServicesMapsVersion = "18.1.0"
 # ALL: https://firebase.google.com/support/releases
 firebaseBomVersion = "32.0.0"
 firebaseCrashlyticsPluginVersion = "2.9.5"
-billingVersion = "5.2.0"
+billingVersion = "6.0.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 googlePlayAppUpdateLibVersion = "2.0.1"
@@ -81,7 +81,7 @@ leakCanaryVersion = "2.9.1"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobufVersion = "3.22.3"
+protobufVersion = "3.23.0"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobufPluginVersion = "0.9.3"
 # https://github.com/square/retrofit/tags
