@@ -20,7 +20,7 @@ sonarVersion = "3.4.0.2513"
 # https://developer.android.com/studio/releases/gradle-plugin
 androidPluginVersion = "8.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
-playPublisherVersion = "3.8.2"
+playPublisherVersion = "3.8.3"
 benManesVersionsVersion = "0.46.0"
 littlerobotsVersionCatalogVersion = "0.8.0"
 # https://github.com/google/dagger/releases/latest
