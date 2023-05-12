@@ -79,7 +79,7 @@ facebookMediationSdkVersion = "6.14.0.0"
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
 appLovinMediationSdkVersion = "11.9.0.0"
 # https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
-leakCanaryVersion = "2.9.1"
+leakCanaryVersion = "2.10"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
