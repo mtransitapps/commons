@@ -9,7 +9,7 @@ versionCatalogUpdate {
 
     versionCatalogs {
         libs {
-            catalogFile = file("commons/gradle.libs.versions.toml")
+            catalogFile = file("commons/gradle/libs.versions.toml")
             sortByKey = false
             keep {
                 keepUnusedVersions = true

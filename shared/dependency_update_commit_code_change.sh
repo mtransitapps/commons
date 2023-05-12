@@ -45,7 +45,7 @@ setGitUser;
 GIT_MSG="CI: dependencies update";
 echo "GIT_MSG: $GIT_MSG";
 
-VERSIONS_FILE="gradle.libs.versions.toml";
+VERSIONS_FILE="gradle/libs.versions.toml";
 
 echo "> GIT commons > add $VERSIONS_FILE...";
 git -C commons add -v $VERSIONS_FILE;

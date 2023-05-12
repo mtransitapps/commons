@@ -30,7 +30,7 @@ fi
 ./gradlew versionCatalogApplyUpdatesLibs ${GRADLE_ARGS};
 checkResult $?;
 
-VERSION_FILE="gradle.libs.versions.toml";
+VERSION_FILE="gradle/libs.versions.toml";
 git -C commons diff -U0 $VERSION_FILE;
 
 AFTER_DATE=$(date +%D-%X);

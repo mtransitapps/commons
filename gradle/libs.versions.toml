@@ -1,3 +1,5 @@
+# Dependabot file location is: gradle/libs.versions.toml
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates#gradle
 [versions]
 # Android 5.0 Lollipop
 minSdkVersion = "21"
