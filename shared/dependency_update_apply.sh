@@ -16,7 +16,7 @@ setIsCI;
 
 setGradleArgs;
 
-UPDATES_FILE="commons/gradle.libs.versions.updates.toml";
+UPDATES_FILE="commons/gradle/libs.versions.updates.toml";
 
 if [[ -f "$UPDATES_FILE" ]]; then
   echo "----------------------------------------------------------------------";
