@@ -20,7 +20,7 @@ sonarVersion = "3.4.0.2513"
 # https://developer.android.com/studio/releases/gradle-plugin
 androidPluginVersion = "8.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
-playPublisherVersion = "3.8.2"
+playPublisherVersion = "3.8.3"
 benManesVersionsVersion = "0.46.0"
 littlerobotsVersionCatalogVersion = "0.8.0"
 # https://github.com/google/dagger/releases/latest
@@ -78,8 +78,8 @@ facebookMediationSdkVersion = "6.14.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovinSdkVersion = "11.5.2" # included with nediation adapter
 appLovinMediationSdkVersion = "11.9.0.0"
-# https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
-leakCanaryVersion = "2.9.1"
+# https://github.com/square/leakcanary/releases
+leakCanaryVersion = "2.10"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
@@ -95,7 +95,7 @@ retrofitVersion = "2.9.0"
 okHttpVersion = "4.11.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/master/CHANGELOG.md
-gsonVersion = "2.9.1"
+gsonVersion = "2.10.1"
 # https://github.com/bumptech/glide/releases/latest
 glideVersion = "4.15.1"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
