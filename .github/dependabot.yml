@@ -1,16 +1,12 @@
 version: 2
 updates:
-  # GitHub Actions
+  # GitHub Actions in /shared-overwrite/.github/workflows/
   - package-ecosystem: "github-actions"
     directory: "/shared-overwrite"
     schedule:
       interval: "weekly"
-  # Gradle
+  # Gradle in /gradle/libs.versions.toml
   - package-ecosystem: "gradle"
     directory: "/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "gradle"
-    directory: "/shared"
     schedule:
       interval: "weekly"
