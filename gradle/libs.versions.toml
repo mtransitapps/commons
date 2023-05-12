@@ -95,7 +95,7 @@ retrofitVersion = "2.9.0"
 okHttpVersion = "4.11.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/master/CHANGELOG.md
-gsonVersion = "2.9.1"
+gsonVersion = "2.10.1"
 # https://github.com/bumptech/glide/releases/latest
 glideVersion = "4.15.1"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
