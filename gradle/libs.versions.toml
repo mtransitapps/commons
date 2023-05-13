@@ -25,7 +25,7 @@ benManesVersionsVersion = "0.46.0"
 littlerobotsVersionCatalogVersion = "0.8.0"
 # https://github.com/google/dagger/releases/latest
 # @pin 2.46 is incompatible with Room 2.5.1 https://github.com/google/dagger/issues/3701
-hiltVersion = "2.45"
+hiltVersion = "2.46.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 activityVersion = "1.7.1"
