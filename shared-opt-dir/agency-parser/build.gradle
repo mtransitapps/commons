@@ -1,10 +1,12 @@
 plugins {
-    id 'application'
-    id 'kotlin'
+    id 'application' // includes 'java' plugin
+    alias libs.plugins.kotlin.jvm
 }
 
-mainClassName = file('parser_class').text
-applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
+application {
+    mainClass = file('parser_class').text
+    applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
+}
 
 java {
     sourceCompatibility = rootProject.javaVersion

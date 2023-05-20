@@ -1,8 +1,8 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'com.github.triplet.play' version libs.versions.playPublisherVersion
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.kapt
+    alias libs.plugins.triplet.playPublisher
 }
 
 Properties projectNameProperties = new Properties()
@@ -37,10 +37,10 @@ if (devPropertiesFile.exists()) {
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
 if (isMainApp) {
-    apply plugin: 'dagger.hilt.android.plugin'
-    apply plugin: 'com.google.gms.google-services'
-    apply plugin: 'com.google.firebase.crashlytics'
-    // apply plugin: "org.sonarqube"
+    apply plugin: libs.plugins.hilt.get().pluginId
+    apply plugin: libs.plugins.gms.get().pluginId
+    apply plugin: libs.plugins.firebase.crashlytics.get().pluginId
+    // apply plugin: libs.plugins.sonar.get().pluginId
 }
 
 android {
@@ -313,32 +313,32 @@ dependencies {
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
             exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
         }
-        implementation libs.bundles.kotlinLibs
-        implementation libs.bundles.kotlinAndroidLibs
-        implementation libs.bundles.daggerLibs
-        kapt libs.hiltCompiler
-        implementation libs.bundles.supportLibs
+        implementation libs.bundles.kotlin
+        implementation libs.bundles.kotlin.android
+        implementation libs.bundles.dagger
+        kapt libs.hilt.compiler
+        implementation libs.bundles.androidx
         implementation libs.material
-        kapt libs.lifecycleCompiler
-        kapt libs.roomCompiler
-        implementation libs.bundles.imgLibs
-        kapt libs.glideCompiler
-        implementation platform(libs.firebaseBom)
-        implementation libs.bundles.gpsLibs
-        implementation libs.bundles.billingClientLibs
-        implementation libs.bundles.fbLibs
-        implementation libs.bundles.appLovinLibs
+        kapt libs.androidx.lifecycle.compiler
+        kapt libs.androidx.room.compiler
+        implementation libs.bundles.img
+        kapt libs.glide.compiler
+        implementation platform(libs.firebase.bom)
+        implementation libs.bundles.gps
+        implementation libs.bundles.billingClient
+        implementation libs.bundles.fb
+        implementation libs.bundles.appLovin
 
         if (!isDevLeakCanaryOff) {
             debugImplementation libs.leakcanary
         }
 
-        testImplementation libs.bundles.JUnitLibs
-        testImplementation libs.bundles.mockitoLibs
+        testImplementation libs.bundles.JUnit
+        testImplementation libs.bundles.mockito
     } else {
         implementation project(':commons-android')
-        implementation libs.bundles.kotlinLibs
-        implementation libs.bundles.kotlinAndroidLibs
+        implementation libs.bundles.kotlin
+        implementation libs.bundles.kotlin.android
         implementation libs.core
     }
 }

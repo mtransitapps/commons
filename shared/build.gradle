@@ -2,27 +2,25 @@ buildscript {
     ext {
         javaVersion = JavaVersion.VERSION_17
     }
-    dependencies {
-        classpath(libs.protobufPlugin)
-        def appAndroidGoogleServicesJSON = file("app-android/google-services.json")
-        if (appAndroidGoogleServicesJSON.exists()) {
-            println "> Using Google Services, Crashlytics... gradle plugin."
-            classpath(libs.gpsPlugin)
-            classpath(libs.firebaseCrashlyticsPlugin)
-            // classpath(libs.sonarPlugin)
-        } else {
-            println "> Not using Google Services, Crashlytics... gradle plugin."
-        }
-    }
 }
 
 plugins {
-    id 'com.android.application' version libs.versions.androidPluginVersion apply false
-    id 'com.android.library' version libs.versions.androidPluginVersion apply false
-    id 'org.jetbrains.kotlin.android' version libs.versions.kotlinVersion apply false
-    id 'com.google.dagger.hilt.android' version libs.versions.hiltVersion apply false
-    id "com.github.ben-manes.versions" version libs.versions.benManesVersionsVersion
-    id "nl.littlerobots.version-catalog-update" version libs.versions.littlerobotsVersionCatalogVersion
+    alias libs.plugins.android.application apply false
+    alias libs.plugins.android.library apply false
+
+    alias libs.plugins.kotlin.jvm apply false
+    alias libs.plugins.kotlin.android apply false
+    alias libs.plugins.kotlin.kapt apply false
+
+    alias libs.plugins.hilt apply false
+
+    alias libs.plugins.triplet.playPublisher apply false
+
+    alias libs.plugins.benmanes.versions
+    alias libs.plugins.littlerobots.versioncatalog
+
+    alias libs.plugins.gms apply false
+    alias libs.plugins.firebase.crashlytics apply false
 }
 
 task clean(type: Delete) {

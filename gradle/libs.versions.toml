@@ -2,7 +2,7 @@
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates#gradle
 [versions]
 # Android 5.0 Lollipop
-minSdkVersion = "21"
+minSdkVersion = "21" # TODO sdkversion-min...
 # Android 13 Tiramisu
 targetSdkVersion = "33"
 # Android 13 Tiramisu
@@ -14,18 +14,17 @@ kotlinOptionsJvmTarget = "17"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlinVersion = "1.8.21"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-kotlinCoroutinesVersion = "1.7.0"
+kotlinCoroutinesVersion = "1.7.1"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonarVersion = "3.4.0.2513"
 # https://developer.android.com/studio/releases/gradle-plugin
-androidPluginVersion = "8.0.1"
+androidGradlePluginVersion = "8.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 playPublisherVersion = "3.8.3"
 benManesVersionsVersion = "0.46.0"
 littlerobotsVersionCatalogVersion = "0.8.0"
 # https://github.com/google/dagger/releases/latest
-# @pin 2.46 is incompatible with Room 2.5.1 https://github.com/google/dagger/issues/3701
-hiltVersion = "2.45"
+hiltVersion = "2.46.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 activityVersion = "1.7.1"
@@ -35,7 +34,7 @@ browserVersion = "1.5.0"
 cardViewVersion = "1.0.0"
 coordinatorVersion = "1.2.0"
 constraintVersion = "2.1.4"
-coreVersion = "1.9.0"
+coreVersion = "1.10.1"
 coreSpashscreenVersion = "1.0.1"
 fragmentVersion = "1.5.7"
 lifecycleVersion = "2.6.1"
@@ -114,177 +113,192 @@ commonsTextVersion = "1.10.0"
 xerialSQLiteJDBCVersion = "3.41.2.1"
 
 [libraries]
-ktPlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
-ktCoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutinesVersion" }
-ktAndroidCoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinCoroutinesVersion" }
-androidPlugin = { module = "com.android.tools.build:gradle", version.ref = "androidPluginVersion" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinVersion" }
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutinesVersion" }
+kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinCoroutinesVersion" }
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePluginVersion" }
 playPublisherPlugin = { module = "com.github.triplet.gradle:play-publisher", version.ref = "playPublisherVersion" }
-benManesVersions = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "benManesVersionsVersion" }
-littlerobotsVersionCatalog = { module = "nl.littlerobots.vcu:plugin", version.ref = "littlerobotsVersionCatalogVersion" }
-sonarPlugin = { module = "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin", version.ref = "sonarVersion" }
+# benManesVersions = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "benManesVersionsVersion" }
+# littlerobotsVersionCatalog = { module = "nl.littlerobots.vcu:plugin", version.ref = "littlerobotsVersionCatalogVersion" }
+sonar-plugin = { module = "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin", version.ref = "sonarVersion" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hiltVersion" }
-hiltPlugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltVersion" }
-hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltVersion" }
-activity = { module = "androidx.activity:activity-ktx", version.ref = "activityVersion" }
-annotation = { module = "androidx.annotation:annotation", version.ref = "annotationVersion" }
-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompatVersion" }
-browser = { module = "androidx.browser:browser", version.ref = "browserVersion" }
-cardView = { module = "androidx.cardview:cardview", version.ref = "cardViewVersion" }
-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorVersion" }
-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintVersion" }
-core = { module = "androidx.core:core-ktx", version.ref = "coreVersion" }
-coreSplashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSpashscreenVersion" }
-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentVersion" }
-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
-lifecycleJava8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycleVersion" }
-navFragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationVersion" }
-navUI = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationVersion" }
-pref = { module = "androidx.preference:preference-ktx", version.ref = "prefVersion" }
-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerviewVersion" }
-room = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
-roomRuntime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
-slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "slidePanelLayoutVersion" }
-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayoutVersion" }
-vectordrawable = { module = "androidx.vectordrawable:vectordrawable", version.ref = "vectorDrawableVersion" }
-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
-viewmodelState = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycleVersion" }
-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2Version" }
-workManagerRuntime = { module = "androidx.work:work-runtime-ktx", version.ref = "workManagerVersion" }
-lifecycleCompiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycleVersion" }
-roomCompiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+# hilt-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltVersion" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltVersion" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "activityVersion" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotationVersion" }
+androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompatVersion" }
+androidx-browser = { module = "androidx.browser:browser", version.ref = "browserVersion" }
+androidx-cardView = { module = "androidx.cardview:cardview", version.ref = "cardViewVersion" }
+androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorVersion" }
+androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintVersion" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "coreVersion" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSpashscreenVersion" }
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentVersion" }
+androidx-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
+androidx-lifecycle-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycleVersion" }
+androidx-nav-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationVersion" }
+androidx-nav-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationVersion" }
+androidx-pref = { module = "androidx.preference:preference-ktx", version.ref = "prefVersion" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerviewVersion" }
+androidx-room = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
+androidx-slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "slidePanelLayoutVersion" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swipeRefreshLayoutVersion" }
+androidx-vectordrawable = { module = "androidx.vectordrawable:vectordrawable", version.ref = "vectorDrawableVersion" }
+androidx-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
+androidx-viewmodel-state = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycleVersion" }
+androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewPager2Version" }
+androidx-workManager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "workManagerVersion" }
+androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycleVersion" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
 material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
-gpsPlugin = { module = "com.google.gms:google-services", version.ref = "gpsPluginVersion" }
+# gpsPlugin = { module = "com.google.gms:google-services", version.ref = "gpsPluginVersion" }
 # mediationTestSuite = { module = "com.google.android.ads:mediation-test-suite", version.ref = "adsMediationTestSuiteVersion"} # adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
-gpsAds = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAdsVersion" }
-gpsBasement = { module = "com.google.android.gms:play-services-basement", version.ref = "playServicesBasementVersion" }
-gpsLocation = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationVersion" }
-gpsMaps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMapsVersion" }
-mapsKtx = { module = "com.google.maps.android:maps-ktx", version.ref = "mapsKtxVersion" }
-mapsUtils = { module = "com.google.maps.android:android-maps-utils", version.ref = "mapsUtilsVersion" }
-mapsUtilsKtx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "mapsKtxVersion" }
-firebaseAnalytics = { module = "com.google.firebase:firebase-analytics-ktx" }
-firebaseCrashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
-firebaseCrashlyticsPlugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsPluginVersion" }
-firebaseBom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
-playBilling = { module = "com.android.billingclient:billing-ktx", version.ref = "billingVersion" }
-playAppUpdate = { module = "com.google.android.play:app-update-ktx", version.ref = "googlePlayAppUpdateLibVersion" }
+gps-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAdsVersion" }
+gps-basement = { module = "com.google.android.gms:play-services-basement", version.ref = "playServicesBasementVersion" }
+gps-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationVersion" }
+gps-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMapsVersion" }
+maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "mapsKtxVersion" }
+maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "mapsUtilsVersion" }
+maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "mapsKtxVersion" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-crashlytics-plugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsPluginVersion" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
+play-billing = { module = "com.android.billingclient:billing-ktx", version.ref = "billingVersion" }
+play-appUpdate = { module = "com.google.android.play:app-update-ktx", version.ref = "googlePlayAppUpdateLibVersion" }
 # fbAudienceNetwork = { module = "com.facebook.android:audience-network-sdk", version.ref = "facebookSdkVersion" } # included with nediation adapter
-fbAudienceNetworkMediation = { module = "com.google.ads.mediation:facebook", version.ref = "facebookMediationSdkVersion" }
-# appLovinAds = { module = "com.applovin:applovin-sdk", version.ref = "appLovinSdkVersion" } # included with nediation adapter
-appLovinAdsMediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovinMediationSdkVersion" }
+fbAudienceNetwork-mediation = { module = "com.google.ads.mediation:facebook", version.ref = "facebookMediationSdkVersion" }
+# appLovin = { module = "com.applovin:applovin-sdk", version.ref = "appLovinSdkVersion" } # included with nediation adapter
+appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovinMediationSdkVersion" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanaryVersion" }
-protobufCompiler = { module = "com.google.protobuf:protoc", version.ref = "protobufVersion" }
-protobufJavaLite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufVersion" }
-protobufPlugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobufPluginVersion" }
+protobuf-compiler = { module = "com.google.protobuf:protoc", version.ref = "protobufVersion" }
+protobuf-javaLite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufVersion" }
+protobuf-plugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobufPluginVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
-retrofitGsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
-okhttpBom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttpVersion" }
+retrofit-gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
+okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttpVersion" }
 okhttp = { module = "com.squareup.okhttp3:okhttp" }
-okhttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
+okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
-glideCompiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glideVersion" }
-androidSVG = { module = "com.caverock:androidsvg-aar", version.ref = "androidSVGVersion" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glideVersion" }
+android-svg = { module = "com.caverock:androidsvg-aar", version.ref = "androidSVGVersion" }
 jUnit = { module = "junit:junit", version.ref = "jUnitVersion" }
-mockitoCore = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
-commonsCSV = { module = "org.apache.commons:commons-csv", version.ref = "commonsCSVVersion" }
-commonsIO = { module = "commons-io:commons-io", version.ref = "commonsIOVersion" }
-commonsLang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang3Version" }
-commonsText = { module = "org.apache.commons:commons-text", version.ref = "commonsTextVersion" }
-xerialSQLiteJDBC = { module = "org.xerial:sqlite-jdbc", version.ref = "xerialSQLiteJDBCVersion" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
+commons-csv = { module = "org.apache.commons:commons-csv", version.ref = "commonsCSVVersion" }
+commons-io = { module = "commons-io:commons-io", version.ref = "commonsIOVersion" }
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang3Version" }
+commons-text = { module = "org.apache.commons:commons-text", version.ref = "commonsTextVersion" }
+xerial-sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "xerialSQLiteJDBCVersion" }
 
 [bundles]
-kotlinLibs = [
-    "ktCoroutines",
+kotlin = [
+    "kotlin-coroutines",
 ]
-kotlinAndroidLibs = [
-    "ktAndroidCoroutines",
+kotlin-android = [
+    "kotlin-coroutines-android",
 ]
-supportLibs = [
-    "activity",
-    "annotation",
-    "appCompat",
-    "browser",
-    "cardView",
-    "constraintLayout",
-    "coordinatorlayout",
-    "core",
-    "coreSplashscreen",
-    "fragment",
-    "lifecycleJava8",
-    "livedata",
-    "navFragment",
-    "navUI",
-    "pref",
-    "recyclerview",
-    "room",
-    "roomRuntime",
-    "slidingpanelayout",
-    "swiperefreshlayout",
-    "vectordrawable",
-    "viewmodel",
-    "viewmodelState",
-    "viewpager2",
+androidx = [
+    "androidx-activity",
+    "androidx-annotation",
+    "androidx-appCompat",
+    "androidx-browser",
+    "androidx-cardView",
+    "androidx-constraintLayout",
+    "androidx-coordinatorlayout",
+    "androidx-core",
+    "androidx-core-splashscreen",
+    "androidx-fragment",
+    "androidx-lifecycle-java8",
+    "androidx-livedata",
+    "androidx-nav-fragment",
+    "androidx-nav-ui",
+    "androidx-pref",
+    "androidx-recyclerview",
+    "androidx-room",
+    "androidx-room-runtime",
+    "androidx-slidingpanelayout",
+    "androidx-swiperefreshlayout",
+    "androidx-vectordrawable",
+    "androidx-viewmodel",
+    "androidx-viewmodel-state",
+    "androidx-viewpager2",
 ]
-workManagerLibs = [
-    "workManagerRuntime",
+workManager = [
+    "androidx-workManager-runtime",
 ]
-daggerLibs = [
+dagger = [
     "hilt",
 ]
-gpsLibs = [
-    "firebaseAnalytics",
-    "firebaseCrashlytics",
-    "gpsAds",
-    "gpsBasement",
-    "gpsLocation",
-    "gpsMaps",
-    "mapsKtx",
-    "mapsUtils",
-    "mapsUtilsKtx",
+gps = [
+    "firebase-analytics",
+    "firebase-crashlytics",
+    "gps-ads",
+    "gps-basement",
+    "gps-location",
+    "gps-maps",
+    "maps-ktx",
+    "maps-utils",
+    "maps-utils-ktx",
 ]
 gpsPlatform = [
-    "firebaseBom",
+    "firebase-bom",
 ]
-billingClientLibs = [
-    "playBilling",
+billingClient = [
+    "play-billing",
 ]
-googlePlayLibs = [
-    "playAppUpdate",
+googlePlay = [
+    "play-appUpdate",
 ]
-fbLibs = [
-    "fbAudienceNetworkMediation",
+fb = [
+    "fbAudienceNetwork-mediation",
 ]
-appLovinLibs = [
-    "appLovinAdsMediation",
+appLovin = [
+    "appLovin-mediation",
 ]
-leakCanaryLibs = [
+leakCanary = [
     "leakcanary",
 ]
-retrofitLibs = [
+retrofit = [
     "retrofit",
-    "retrofitGsonConverter",
+    "retrofit-gsonConverter",
 ]
-okHttpLibs = [
+okHttp = [
     "okhttp",
-    "okhttpLoggingInterceptor",
+    "okhttp-loggingInterceptor",
 ]
-gsonLibs = [
+gson = [
     "gson",
 ]
-imgLibs = [
-    "androidSVG",
+img = [
+    "android-svg",
     "glide",
 ]
-jUnitLibs = [
+jUnit = [
     "jUnit",
 ]
-mockitoLibs = [
-    "mockitoCore",
+mockito = [
+    "mockito-core",
 ]
-commonsLibs = [
-    "commonsCSV",
-    "commonsIO",
-    "commonsLang3",
-    "commonsText",
+commons = [
+    "commons-csv",
+    "commons-io",
+    "commons-lang3",
+    "commons-text",
 ]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePluginVersion" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePluginVersion" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPluginVersion" }
+gms = { id = "com.google.gms.google-services", version.ref = "gpsPluginVersion" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVersion" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinVersion" }
+triplet-playPublisher = { id = "com.github.triplet.play", version.ref = "playPublisherVersion" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPluginVersion" }
+benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benManesVersionsVersion" }
+littlerobots-versioncatalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "littlerobotsVersionCatalogVersion" }
+sonar = { id = "org.sonarqube", version.ref = "sonarVersion" }
