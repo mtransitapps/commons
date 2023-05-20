@@ -251,26 +251,22 @@ android {
         }
     }
 
+    // https://developer.android.com/studio/write/lint
+    // https://developer.android.com/reference/tools/gradle-api/8.0/com/android/build/api/dsl/Lint
     lint {
         if (isMainApp) {
-            abortOnError true
-            warningsAsErrors false
-            ignoreWarnings false
-            quiet false
+            abortOnError true // do fail CI on main app
+            warningsAsErrors true
         } else {
-            abortOnError false
+            abortOnError false // do not fail CI on module apps
         }
         checkDependencies true // also check leaf modules
         // checkAllWarnings true // too slow for CI, can be enabled locally
-        ignoreTestSources true
+    }
+    // https://developer.android.com/studio/write/lint#snapshot
+    lintOptions {
         if (isMainApp) {
-            warning 'InvalidPackage', //
-                    'ClickableViewAccessibility', //
-                    'MergeRootFrame', //
-                    'Overdraw', //
-                    'UselessParent', //
-                    'IconDensities'  //
-            error 'NonConstantResourceId'
+            baseline file("lint-baseline.xml")
         }
     }
 

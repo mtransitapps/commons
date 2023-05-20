@@ -282,6 +282,7 @@ commons = [
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradlePlugin" }
+android-lint = { id = "com.android.lint", version.ref = "android-gradlePlugin" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
 gms = { id = "com.google.gms.google-services", version.ref = "gps-plugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
