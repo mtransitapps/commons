@@ -26,7 +26,7 @@ compileTestKotlin {
 }
 
 dependencies {
-    implementation libs.bundles.kotlinLibs
+    implementation libs.bundles.kotlin
 
     implementation project(':parser')
 }
