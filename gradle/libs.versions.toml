@@ -112,7 +112,7 @@ commons-io = "2.11.0"
 commons-lang3 = "3.12.0"
 commons-text = "1.10.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-sqlite-jdbc = "3.41.2.1"
+xerial-SQLiteJDBC = "3.41.2.1"
 
 [libraries]
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
@@ -183,7 +183,7 @@ commons-csv = { module = "org.apache.commons:commons-csv", version.ref = "common
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3" }
 commons-text = { module = "org.apache.commons:commons-text", version.ref = "commons-text" }
-xerial-sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "xerial-sqlite-jdbc" }
+xerial-SQLiteJDBC = { module = "org.xerial:sqlite-jdbc", version.ref = "xerial-SQLiteJDBC" }
 
 [bundles]
 kotlin = [
