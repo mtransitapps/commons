@@ -130,13 +130,12 @@ android {
         } else {
             setProperty("archivesBaseName", "${projectName}_v${theVersionName}_r${theVersionCode}")
         }
+        resourceConfigurations += ["en"]
         if (resValueFr.exists()) {
-            resConfigs "en", "fr"
-        } else {
-            resConfigs "en"
+            resourceConfigurations += ["fr"]
         }
-        // resConfigs "en", "xxxhdpi" // DEBUG xxxhdpi = Pixel 2 XL
-        // resConfigs "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
+        // resourceConfigurations "en", "xxxhdpi" // DEBUG xxxhdpi = Pixel 2 XL
+        // resourceConfigurations "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
         minSdkVersion libs.versions.sdk.min.get().toInteger()
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdkVersion libs.versions.sdk.target.get().toInteger()
