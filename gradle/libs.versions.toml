@@ -16,7 +16,7 @@ kotlin = "1.8.21"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlin-coroutines = "1.7.1"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "3.4.0.2513"
+sonar = "4.0.0.2929"
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradlePlugin = "8.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
