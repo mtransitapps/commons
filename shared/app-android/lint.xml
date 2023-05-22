@@ -11,12 +11,6 @@
     </issue>
     <!-- usage from com.bumptech.glide.request.target.NotificationTarget -->
     <issue id="NotificationPermission" severity="ignore" />
-    <issue id="Typos">
-        <ignore path="res/values/keys.xml" />
-    </issue>
-    <issue id="InconsistentArrays">
-        <ignore path="res/values/keys.xml" />
-    </issue>
     <issue id="InconsistentLayout">
         <!-- responsive design (compact / medium / large) -->
         <ignore path="res/layout/activity_main.xml" />
