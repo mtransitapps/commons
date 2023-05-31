@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        javaVersion = JavaVersion.VERSION_17
+        javaVersion = JavaVersion.VERSION_1_8
     }
 }
 

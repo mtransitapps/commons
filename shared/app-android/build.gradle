@@ -1,7 +1,6 @@
 plugins {
     alias libs.plugins.android.application
     alias libs.plugins.kotlin.android
-    alias libs.plugins.kotlin.kapt
     alias libs.plugins.triplet.playPublisher
 }
 
@@ -37,6 +36,7 @@ if (devPropertiesFile.exists()) {
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
 if (isMainApp) {
+    apply plugin: libs.plugins.kotlin.kapt.get().pluginId
     apply plugin: libs.plugins.hilt.get().pluginId
     apply plugin: libs.plugins.gms.get().pluginId
     apply plugin: libs.plugins.firebase.crashlytics.get().pluginId
@@ -337,8 +337,16 @@ dependencies {
     }
 }
 
-kapt {
-    correctErrorTypes true // allow references to generated code
+if (isMainApp) {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs).configureEach {
+        kotlinOptions {
+            jvmTarget = rootProject.javaVersion
+        }
+    }
+
+    kapt {
+        correctErrorTypes true // allow references to generated code
+    }
 }
 
 play {
