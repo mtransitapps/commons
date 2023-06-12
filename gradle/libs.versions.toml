@@ -12,7 +12,7 @@ sdk-compile = "33"
 buildTools = "33.0.2"
 # kotlinOptionsJvmTarget = "17"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "1.8.21"
+kotlin = "1.8.22"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlin-coroutines = "1.7.1"
 # https://plugins.gradle.org/plugin/org.sonarqube
