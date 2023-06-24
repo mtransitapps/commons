@@ -84,7 +84,8 @@ leakcanary = "2.11"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobuf = "3.23.3"
+# @pin Could not find protoc-3.23.3-linux-x86_64.exe https://repo1.maven.org/maven2/com/google/protobuf/protoc/3.23.3/
+protobuf = "3.23.2"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.3"
 # https://github.com/square/retrofit/tags
