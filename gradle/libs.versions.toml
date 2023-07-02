@@ -14,13 +14,13 @@ buildTools = "33.0.2"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "1.8.22"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-kotlin-coroutines = "1.7.1"
+kotlin-coroutines = "1.7.2"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.2.1.3168"
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradlePlugin = "8.0.2"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
-triplet-playPublisher = "3.8.3"
+triplet-playPublisher = "3.8.4"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
 benmanes-versions = "0.47.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
@@ -80,7 +80,7 @@ fbAudienceNetwork-mediation = "6.14.0.0"
 # appLovin = "__._._" # included with nediation adapter
 appLovin-mediation = "11.9.0.0"
 # https://github.com/square/leakcanary/releases
-leakcanary = "2.11"
+leakcanary = "2.12"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
