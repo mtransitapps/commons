@@ -80,7 +80,7 @@ fbAudienceNetwork-mediation = "6.14.0.0"
 # appLovin = "__._._" # included with nediation adapter
 appLovin-mediation = "11.9.0.0"
 # https://github.com/square/leakcanary/releases
-leakcanary = "2.11"
+leakcanary = "2.12"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
