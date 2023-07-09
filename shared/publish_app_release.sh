@@ -46,16 +46,44 @@ echo "> App release required: $MT_APP_RELEASE_REQUIRED.";
 if [[ "$MT_APP_RELEASE_REQUIRED" != "true" ]]; then
   echo "> App release NOT required > SKIP";
 elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
+
+  # PUSH CODE TO MASTER BRANCH ON GITHUB
   MAIN_BRANCH_NAME="master"; #TODO master->main
+
   echo "> GIT submodule > push origin mmathieum:$MAIN_BRANCH_NAME...";
   git submodule foreach git push origin mmathieum:$MAIN_BRANCH_NAME; # git push fails if there are new changes on remote
   checkResult $?;
   echo "> GIT submodule > push origin mmathieum:$MAIN_BRANCH_NAME... DONE";
+
   echo "> GIT > push origin mmathieum:$MAIN_BRANCH_NAME...";
   git push origin mmathieum:$MAIN_BRANCH_NAME; # git push fails if there are new changes on remote
   checkResult $?;
   echo "> GIT > push origin mmathieum:$MAIN_BRANCH_NAME... DONE";
 
+  # TAG RELEASE ON GITHUB
+  # Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/build.gradle
+  MT_SHARED_VERSION_NAME=$(grep "version.name=" commons-android/version.properties | cut -d "=" -f 2);
+  # App version code also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/build.gradle
+  APP_VERSION_CODE_INT=$(git -C ./ rev-list HEAD --count);
+  APP_VERSION_CODE_INT=$(($APP_VERSION_CODE_INT + 1000));
+  # App version name also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/build.gradle
+  APP_VERSION_NAME="${MT_SHARED_VERSION_NAME}r${APP_VERSION_CODE_INT}";
+  if [[ -z "${APP_VERSION_NAME}" ]]; then
+    echo "APP_VERSION_NAME empty!";
+    exit 1;
+  fi
+  echo "> GitHub > publishing release '$APP_VERSION_NAME'...";
+  gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes ./app-android/build/outputs/apk/release/*.apk;
+  checkResult $?;
+  if [[ -d "app-android" ]]; then
+    cd app-android || exit -1; # >>
+    gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes ./build/outputs/apk/release/*.apk;
+    checkResult $?;
+    cd ../; # <<
+  fi
+  echo "> GitHub > publishing release '$APP_VERSION_NAME'... DONE";
+
+  # PUSH TO GOOGLE PLAY STORE
   if [[ -d "app-android" ]]; then
     cd app-android || exit -1; # >>
 

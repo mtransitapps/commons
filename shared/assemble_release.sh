@@ -41,6 +41,11 @@ echo ">> Running bundle release AAB...";
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 
+echo ">> Running assemble release APK..."; # for GH release
+../gradlew :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
+RESULT=$?;
+echo ">> Running assemble release APK... DONE";
+
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
 checkResult $?;

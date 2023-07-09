@@ -38,33 +38,15 @@ echo "> Cleaning GIT repo... DONE";
 
 setGitUser;
 
-# GIT_MSG="CI: sync code";
-# echo "GIT_MSG: $GIT_MSG";
-
 echo "> GIT submodule > push...";
-# TODO ? not working ? because default token only work for root repository
 git submodule foreach git push; # git push fails if there are new changes on remote
 checkResult $?;
-# git -C app-andrid push;
-# checkResult $?;
 echo "> GIT submodule > push... DONE";
-# echo "> GIT submodule > commit '$GIT_MSG'...";
-# # git submodule foreach git commit -q -m "$GIT_MSG";
-# # git submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-# git submodule foreach "git diff-index --quiet HEAD || git commit -m '$GIT_MSG'";
-# checkResult $?;
-# echo "> GIT submodule > commit '$GIT_MSG'... DONE";
-# # TODO ? git submodule foreach git push;
 
 echo "> GIT > push...";
 git push; # git push fails if there are new changes on remote
 checkResult $?;
 echo "> GIT > push... DONE";
-# echo "> GIT > commit '$GIT_MSG'...";
-# # git commit -q -m "$GIT_MSG";
-# git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-# checkResult $?;
-# echo "> GIT > commit '$GIT_MSG'... DONE";
 
 printGitStatus;
 

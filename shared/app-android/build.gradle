@@ -60,18 +60,20 @@ android {
         namespace = projectPkg
     }
 
+    // Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
     Properties versionProperties = new Properties()
     versionProperties.load(new FileInputStream(file("${project.rootDir}/commons-android/version.properties")))
-    def theVersionName = versionProperties['version.name']
-    println "> App version name: " + theVersionName
+    def sharedVersionName = versionProperties['version.name']
+    println "> Shared version name: " + sharedVersionName
 
+    // App version code also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
     def commitCountS = "git -C ${project.rootDir} rev-list HEAD --count".execute().text.trim()
-    def theVersionCode = 1
+    def appVersionCode = 1
     if (!commitCountS.empty) {
         def commitCount = commitCountS.toInteger()
-        theVersionCode = 1000 + commitCount
+        appVersionCode = 1000 + commitCount
     }
-    println "> App version code: " + theVersionCode
+    println "> App version code: " + appVersionCode
 
     def gitHash = "git -C ${project.rootDir} rev-parse --short HEAD".execute().text.trim()
     println "> App version hash: " + gitHash
@@ -122,13 +124,15 @@ android {
         if (!projectPkg.empty) {
             applicationId = projectPkg
         }
-        versionCode theVersionCode
-        versionName theVersionName + "r" + theVersionCode
+        versionCode appVersionCode
+        // App version name also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
+        def appVersionName = sharedVersionName + "r" + appVersionCode
+        versionName appVersionName
         buildConfigField "String", "GIT_HASH", "\"$gitHash\""
         if (useGooglePlayUploadKeysProperties) {
-            setProperty("archivesBaseName", "${projectName}_v${theVersionName}_r${theVersionCode}_upload")
+            setProperty("archivesBaseName", "${projectName}_v${sharedVersionName}_r${appVersionCode}_upload")
         } else {
-            setProperty("archivesBaseName", "${projectName}_v${theVersionName}_r${theVersionCode}")
+            setProperty("archivesBaseName", "${projectName}_v${sharedVersionName}_r${appVersionCode}")
         }
         resourceConfigurations += ["en"]
         if (resValueFr.exists()) {
