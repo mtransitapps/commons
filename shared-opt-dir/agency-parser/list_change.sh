@@ -10,7 +10,7 @@ MT_DATA_CHANGED_FILE="$MT_TEMP_DIR/mt_data_changed";
 TARGET="../app-android/src/main/";
 RESULT=$(git -C ${TARGET} status);
 checkResult $? false;
-RESULT=$(echo ${RESULT} | grep "res/raw");
+RESULT=$(echo ${RESULT} | grep "/raw/");
 STATUS=$?;
 if [[ ${STATUS} == 1 ]]; then STATUS=0; fi; # grep returns 1 when no result
 checkResult ${STATUS} false;
