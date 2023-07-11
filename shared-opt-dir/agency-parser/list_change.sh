@@ -10,8 +10,15 @@ MT_DATA_CHANGED_FILE="$MT_TEMP_DIR/mt_data_changed";
 TARGET="../app-android/src/main/";
 RESULT=$(git -C ${TARGET} status);
 checkResult $? false;
-RESULT=$(echo ${RESULT} | grep "/raw/");
+RESULT=$(echo ${RESULT} | grep "/raw/" | wc -l);
 STATUS=$?;
+if [[ "$RESULT" -gt 0 ]]; then
+	echo "> SCHEDULE CHANGED > MANUAL FIX!";
+	git -C ${TARGET} status | grep "/raw/" | head -n 7;
+	echo "true" > $MT_DATA_CHANGED_FILE;
+	checkResult $?;
+	exit -1;
+fi
 if [[ ${STATUS} == 1 ]]; then STATUS=0; fi; # grep returns 1 when no result
 checkResult ${STATUS} false;
 git -C ${TARGET} diff res/values/gtfs_rts_values_gen.xml;
