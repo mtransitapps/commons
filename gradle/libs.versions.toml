@@ -12,6 +12,7 @@ sdk-compile = "33"
 buildTools = "33.0.2"
 # kotlinOptionsJvmTarget = "17"
 # https://github.com/JetBrains/kotlin/releases/latest
+# @pin incompatible with AndroidX Room & Studio Flamingo
 kotlin = "1.8.22"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlin-coroutines = "1.7.2"
@@ -61,14 +62,14 @@ maps-ktx = "3.4.0"
 gps-plugin = "4.3.15"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuite = "3.0.0"
-gps-ads = "22.1.0"
+gps-ads = "22.2.0"
 gps-basement = "18.2.0"
 gps-location = "21.0.1"
 gps-maps = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
 firebase-bom = "32.1.1"
-firebase-crashlytics-plugin = "2.9.6"
+firebase-crashlytics-plugin = "2.9.7"
 play-billing = "6.0.1"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
@@ -84,8 +85,7 @@ leakcanary = "2.12"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-# @pin Could not find protoc-3.23.3-linux-x86_64.exe https://repo1.maven.org/maven2/com/google/protobuf/protoc/3.23.3/
-protobuf = "3.23.2"
+protobuf = "3.23.4"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.3"
 # https://github.com/square/retrofit/tags
