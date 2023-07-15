@@ -6,10 +6,6 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
-AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
-
 setIsCI;
 
 setGradleArgs;
@@ -31,6 +27,8 @@ fi
 cd app-android || exit;
 DIRECTORY=$(basename ${PWD});
 
+# ----------------------------------------
+
 echo ">> Setup-ing keys...";
 ./keys_setup.sh;
 checkResult $?;
@@ -40,6 +38,20 @@ echo ">> Running bundle release AAB...";
 ../gradlew :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
+
+echo ">> Cleaning keys...";
+./keys_cleanup.sh;
+checkResult $?;
+echo ">> Cleaning keys... DONE";
+
+checkResult $RESULT;
+
+# ----------------------------------------
+
+echo ">> Setup-ing keys...";
+./keys_setup.sh;
+checkResult $?;
+echo ">> Setup-ing keys... DONE";
 
 echo ">> Running assemble release APK..."; # for GH release
 ../gradlew :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
@@ -52,6 +64,8 @@ checkResult $?;
 echo ">> Cleaning keys... DONE";
 
 checkResult $RESULT;
+
+# ----------------------------------------
 
 cd ..;
 

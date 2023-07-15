@@ -12,8 +12,7 @@ checksum_file() {
   openssl md5 $1 | awk '{print $2}';
 }
 
-MT_CACHE_KEY="gradle-cache";
-echo "gradle-cache" >> ${RESULT_FILE}
+echo "gradle-cache-" >> ${RESULT_FILE}
 checksum_file build.gradle >> ${RESULT_FILE}
 checksum_file commons/gradle/libs.versions.toml >> ${RESULT_FILE}
 checksum_file commons-java/build.gradle >> ${RESULT_FILE}
