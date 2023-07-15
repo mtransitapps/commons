@@ -1,0 +1,16 @@
+name: "MT Validate Gradle Wrapper"
+on:
+  workflow_dispatch: # manual
+  push:
+  pull_request:
+
+jobs:
+  MT-GRADLE_WRAPPER-VALIDATION:
+    name: "MT Gradle wrapper validation"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "MT move gradle files to default location"
+        run: |
+          cp -R shared/gradl* .
+      - uses: gradle/wrapper-validation-action@v1
