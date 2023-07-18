@@ -8,6 +8,8 @@ BEFORE_DATE_SEC=$(date +%s);
 
 setIsCI;
 
+setIsGHEnabled;
+
 setGradleArgs;
 
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
@@ -48,22 +50,27 @@ checkResult $RESULT;
 
 # ----------------------------------------
 
-echo ">> Setup-ing keys...";
-./keys_setup.sh;
-checkResult $?;
-echo ">> Setup-ing keys... DONE";
+if [[ ${IS_GH_ENABLED} == true ]]; then
 
-echo ">> Running assemble release APK..."; # for GH release
-../gradlew :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
-RESULT=$?;
-echo ">> Running assemble release APK... DONE";
+	echo ">> Setup-ing keys...";
+	./keys_setup.sh;
+	checkResult $?;
+	echo ">> Setup-ing keys... DONE";
 
-echo ">> Cleaning keys...";
-./keys_cleanup.sh;
-checkResult $?;
-echo ">> Cleaning keys... DONE";
+	echo ">> Running assemble release APK..."; # for GH release
+	../gradlew :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
+	RESULT=$?;
+	echo ">> Running assemble release APK... DONE";
 
-checkResult $RESULT;
+	echo ">> Cleaning keys...";
+	./keys_cleanup.sh;
+	checkResult $?;
+	echo ">> Cleaning keys... DONE";
+
+	checkResult $RESULT;
+else
+  echo ">> Running assemble release APK... SKIP (no GH token -> no GH release artifacts)";
+fi
 
 # ----------------------------------------
 

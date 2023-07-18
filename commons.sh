@@ -12,6 +12,15 @@ function setIsCI() {
 	# IS_CI=true; # DEBUG
 }
 
+function setIsGHEnabled() {
+	IS_GH_ENABLED=false;
+	if [[ ! -z "${GH_TOKEN}" ]]; then
+		IS_GH_ENABLED=true;
+	fi
+	# IS_CI=true; # DEBUG
+	echo "IS_GH_ENABLED: $IS_GH_ENABLED"; # DEBUG
+}
+
 function setGitCommitEnabled() {
 	MT_GIT_COMMIT_ENABLED="false";
 

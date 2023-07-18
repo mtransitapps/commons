@@ -12,6 +12,8 @@ AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
 setIsCI;
 
+setIsGHEnabled;
+
 setGitBranch;
 
 setGradleArgs;
@@ -72,16 +74,20 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
     echo "APP_VERSION_NAME empty!";
     exit 1;
   fi
-  echo "> GitHub > publishing release '$APP_VERSION_NAME'...";
-  gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes ./app-android/build/outputs/apk/release/*.apk;
-  checkResult $?;
-  if [[ -d "app-android" ]]; then
-    cd app-android || exit -1; # >>
-    gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes ./build/outputs/apk/release/*.apk;
+  if [[ ${IS_GH_ENABLED} == true ]]; then
+    echo "> GitHub > publishing release '$APP_VERSION_NAME'...";
+    gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes ./app-android/build/outputs/apk/release/*.apk;
     checkResult $?;
-    cd ../; # <<
+    if [[ -d "app-android" ]]; then
+      cd app-android || exit -1; # >>
+      gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes ./build/outputs/apk/release/*.apk;
+      checkResult $?;
+      cd ../; # <<
+    fi
+    echo "> GitHub > publishing release '$APP_VERSION_NAME'... DONE";
+  else
+    echo "> GitHub > publishing release '$APP_VERSION_NAME'... SKIP (no token)";
   fi
-  echo "> GitHub > publishing release '$APP_VERSION_NAME'... DONE";
 
   # PUSH TO GOOGLE PLAY STORE
   if [[ -d "app-android" ]]; then
