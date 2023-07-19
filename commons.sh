@@ -17,8 +17,7 @@ function setIsGHEnabled() {
 	if [[ ! -z "${GH_TOKEN}" ]]; then
 		IS_GH_ENABLED=true;
 	fi
-	# IS_CI=true; # DEBUG
-	echo "IS_GH_ENABLED: $IS_GH_ENABLED"; # DEBUG
+	# echo "IS_GH_ENABLED: $IS_GH_ENABLED"; # DEBUG
 }
 
 function setGitCommitEnabled() {
