@@ -10,6 +10,8 @@ setIsCI;
 
 setIsGHEnabled;
 
+setPushToStoreEnabled;
+
 setGradleArgs;
 
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
@@ -50,7 +52,7 @@ checkResult $RESULT;
 
 # ----------------------------------------
 
-if [[ ${IS_GH_ENABLED} == true ]]; then
+if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} != true ]]; then
 
 	echo ">> Setup-ing keys...";
 	./keys_setup.sh;
@@ -69,7 +71,7 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
 
 	checkResult $RESULT;
 else
-  echo ">> Running assemble release APK... SKIP (no GH token -> no GH release artifacts)";
+  echo ">> Running assemble release APK... SKIP (GH:$IS_GH_ENABLED|PushToStore:$MT_PUSH_STORE_ENABLED)";
 fi
 
 # ----------------------------------------

@@ -13,8 +13,9 @@ function setIsCI() {
 }
 
 function setIsGHEnabled() {
+	# https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows
 	IS_GH_ENABLED=false;
-	if [[ ! -z "${GH_TOKEN}" ]]; then
+	if [[ ! -z "${GITHUB_TOKEN}" ]]; then
 		IS_GH_ENABLED=true;
 	fi
 	# echo "IS_GH_ENABLED: $IS_GH_ENABLED"; # DEBUG
