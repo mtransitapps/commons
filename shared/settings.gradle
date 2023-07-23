@@ -23,16 +23,16 @@ dependencyResolutionManagement {
 
 rootProject.name = "MT" // same JetBrains IntelliJ files
 
-include ':commons' // common code shared by all
-include ':commons-java' // common code shared by all projects
+include ":commons" // common code shared by all
+include ":commons-java" // common code shared by all projects
 
 if (file("agency-parser").exists()) {
-    include ':agency-parser' // parser
+    include ":agency-parser" // parser
 }
 
 if (file("parser").exists()) {
-    include ':parser' // common code shared by all parsers
+    include ":parser" // common code shared by all parsers
 }
 
-include ':commons-android' // common code shared by all Android apps
-include ':app-android' // Android app
+include ":commons-android" // common code shared by all Android apps
+include ":app-android" // Android app

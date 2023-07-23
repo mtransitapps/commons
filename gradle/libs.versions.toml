@@ -15,7 +15,7 @@ buildTools = "33.0.2"
 # @pin incompatible with AndroidX Room & Studio Flamingo
 kotlin = "1.8.22"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-kotlin-coroutines = "1.7.2"
+kotlinx-coroutines = "1.7.2"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.2.1.3168"
 # https://developer.android.com/studio/releases/gradle-plugin
@@ -25,7 +25,7 @@ triplet-playPublisher = "3.8.4"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
 benmanes-versions = "0.47.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
-littlerobots-versioncatalog = "0.8.0"
+littlerobots-versioncatalog = "0.8.1"
 # https://github.com/google/dagger/releases/latest
 hilt = "2.47"
 # ALL: https://developer.android.com/jetpack/androidx/versions
@@ -118,8 +118,8 @@ xerial-SQLiteJDBC = "3.42.0.0"
 
 [libraries]
 kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
-kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
@@ -191,11 +191,11 @@ xerial-SQLiteJDBC = { module = "org.xerial:sqlite-jdbc", version.ref = "xerial-S
 
 [bundles]
 kotlin = [
-    "kotlin-coroutines",
     "kotlin-stblib",
+    "kotlinx-coroutines",
 ]
 kotlin-android = [
-    "kotlin-coroutines-android",
+    "kotlinx-coroutines-android",
 ]
 androidx = [
     "androidx-activity",
