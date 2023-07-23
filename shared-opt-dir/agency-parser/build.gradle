@@ -1,10 +1,10 @@
 plugins {
-    id 'application' // includes 'java' plugin
-    alias libs.plugins.kotlin.jvm
+    id("application") // includes "java" plugin
+    alias(libs.plugins.kotlin.jvm)
 }
 
 application {
-    mainClass = file('parser_class').text
+    mainClass = file("parser_class").text
     applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
 }
 
@@ -26,7 +26,7 @@ compileTestKotlin {
 }
 
 dependencies {
-    implementation libs.bundles.kotlin
+    implementation(libs.bundles.kotlin)
 
-    implementation project(':parser')
+    implementation(project(":parser"))
 }
