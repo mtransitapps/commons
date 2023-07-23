@@ -5,8 +5,10 @@ updates:
     directory: "/shared-overwrite/.github/workflows/"
     schedule:
       interval: "weekly"
+    target-branch: "mmathieum"
   # Gradle in /gradle/libs.versions.toml
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
       interval: "weekly"
+    target-branch: "mmathieum"

@@ -21,7 +21,7 @@ versionCatalogUpdate {
 }
 
 def isNonStable = { String version ->
-    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def stableKeyword = ["RELEASE", "FINAL", "GA"].any { it -> version.toUpperCase().contains(it) }
     def regex = /^[0-9,.v-]+(-r)?$/
     return !stableKeyword && !(version ==~ regex)
 }
@@ -35,7 +35,7 @@ tasks.named("dependencyUpdates").configure {
         componentSelection {
             all {
                 if (isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)) {
-                    reject('Release candidate')
+                    reject("Release candidate")
                 }
             }
         }

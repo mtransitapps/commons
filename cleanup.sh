@@ -50,23 +50,20 @@ function cleanupFile() {
 		diff -q ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then # FILE CHANGED
-			echo "--------------------------------------------------------------------------------";
 			echo "> Deployed shared file '$DEST_FILE_PATH' was changed from '$SRC_FILE_PATH'!";
 			ls -l $DEST_FILE_PATH;
 			ls -l $SRC_FILE_PATH;
-			diff ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+			diff --color ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 			exit ${RESULT};
 		fi
-		echo "--------------------------------------------------------------------------------";
-		echo "> Cleaning-up file '$DEST_FILE_PATH'...";
+		echo -n "> Cleaning-up file '$DEST_FILE_PATH'...";
 		rm ${DEST_FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while cleaning-up file '$DEST_FILE_PATH'!";
+			echo " ERROR !";
 			exit ${RESULT};
 		fi
-		echo "> Cleaning-up file '$DEST_FILE_PATH'... DONE";
-		echo "--------------------------------------------------------------------------------";
+		echo " DONE ✓";
 	else
 		echo "> Ignoring missing file '$DEST_FILE_PATH'...";
 	fi
@@ -103,19 +100,17 @@ function cleanupDirectory() {
 			fi
 		done
 		if ! [[ "$(ls -A ${DEST_FILE_PATH})" ]]; then
-			echo "--------------------------------------------------------------------------------";
-			echo "> Deleting empty directory '$DEST_FILE_PATH'...";
+			echo -n "> Deleting empty directory '$DEST_FILE_PATH'...";
 			rm -r ${DEST_FILE_PATH};
 			local RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
-				echo "> Error while deleting empty directory '$DEST_FILE_PATH'!";
+				echo " ERROR !";
 				exit ${RESULT};
 			fi
-			echo "> Deleting empty directory '$DEST_FILE_PATH'... DONE";
-			echo "--------------------------------------------------------------------------------";
+			echo "DONE ✓";
 		fi
 	else
-		echo "> Ignoring missing directory '$DEST_FILE_PATH'...";
+		echo "> Ignoring missing directory '$DEST_FILE_PATH'.";
 	fi
 }
 

@@ -110,14 +110,14 @@ for S in "${!SUBMODULES[@]}"; do
 	fi
 	cd $CURRENT_PATH/$SUBMODULE || exit; # >>
 	if [[ ${IS_CI} = false ]]; then
-		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
+		echo -n "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
 		git remote -v set-url origin git@github.com:mtransitapps/$SUBMODULE_REPO.git;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
+			echo " ERROR !";
 			exit ${RESULT};
 		fi
-		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
+		echo " DONE ✓";
 	fi
 	echo "> Setting submodule branch '$GIT_BRANCH' in '$SUBMODULE'...";
 	git checkout $GIT_BRANCH;
@@ -177,7 +177,6 @@ function deployFile() {
 	if [[ "$#" -ge 3 ]]; then
 		OVER_WRITE=$3;
 	fi
-	echo "--------------------------------------------------------------------------------";
 	if [[ "$OVER_WRITE" == true ]]; then
 		if [[ -f "${DEST_FILE_PATH}" ]]; then
 			rm ${DEST_FILE_PATH};
@@ -187,7 +186,7 @@ function deployFile() {
 		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
 	fi
-	echo "> Deploying file '$SRC_FILE_PATH'... to '${DEST_FILE_PATH}'";
+	echo -n ">>> Deploying file '$SRC_FILE_PATH' to '${DEST_FILE_PATH}'...";
 	# cp -n -p does NOT work on OS X => rm 1st
 	if [[ -f "${DEST_FILE_PATH}" ]]; then
 		rm ${DEST_FILE_PATH};
@@ -196,11 +195,10 @@ function deployFile() {
 	cp -n -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}";
 	local RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
-		echo "> Error while deploying file '$SRC_FILE_PATH'!";
+		echo " ERROR!";
 		exit ${RESULT};
 	fi
-	echo "> Deploying file '$SRC_FILE_PATH'... DONE";
-	echo "--------------------------------------------------------------------------------";
+	echo " DONE ✓";
 }
 
 function canOverwriteDirectory() {
@@ -239,17 +237,16 @@ function deployDirectory() {
 	if [[ "$#" -ge 4 ]]; then
 		OPT_DIR=$4;
 	fi
-	echo "--------------------------------------------------------------------------------";
-	echo "> Deploying directory '${SRC_FILE_PATH}'...";
+	echo ">> Deploying directory '${SRC_FILE_PATH}'...";
 	if ! [[ -d "$DEST_FILE_PATH" ]]; then
 		if [[ "$OPT_DIR" == true ]]; then
-			echo "> Skip optional directory '$DEST_FILE_PATH' in target directory.";
+			echo ">> Deploying directory '${SRC_FILE_PATH}'... SKIP (optional)";
 			return;
 		fi
 		mkdir $DEST_FILE_PATH;
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while creating directory '$DEST_FILE_PATH' in target directory!";
+			echo ">> ERROR! while creating directory in target directory!";
 			exit ${RESULT};
 		fi
 	fi
@@ -268,17 +265,16 @@ function deployDirectory() {
 			deployDirectory ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH} ${OVER_WRITE}; # ${OPT_DIR} only for 1st level
 			checkResult $?;
 		else #WTF
-			echo "--------------------------------------------------------------------------------";
-			echo "> File to deploy '$S_FILE_NAME' ($S_SRC_FILE_PATH) is neither a directory or a file!";
+			echo ">> File to deploy '$S_FILE_NAME' ($S_SRC_FILE_PATH) is neither a directory or a file!";
 			ls -l ${S_FILE_NAME};
 			exit 1;
 		fi
 	done
-	echo "> Deploying directory '${SRC_FILE_PATH}'... DONE";
-	echo "--------------------------------------------------------------------------------";
+	echo ">> Deploying directory '${SRC_FILE_PATH}'... DONE ✓";
 }
 
 echo "--------------------------------------------------------------------------------";
+
 echo "> Deploying shared files...";
 SRC_DIR_PATH="commons/shared";
 for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
@@ -300,10 +296,10 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying shared files... DONE";
-echo "--------------------------------------------------------------------------------";
+echo "> Deploying shared files... DONE ✓";
 
 echo "--------------------------------------------------------------------------------";
+
 echo "> Deploying optional shared files...";
 SRC_DIR_PATH="commons/shared-opt-dir";
 for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
@@ -325,10 +321,10 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying optional shared files... DONE";
-echo "--------------------------------------------------------------------------------";
+echo "> Deploying optional shared files... DONE ✓";
 
 echo "--------------------------------------------------------------------------------";
+
 echo "> Deploying overwritten shared files...";
 SRC_DIR_PATH="commons/shared-overwrite";
 for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
@@ -350,10 +346,10 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying overwritten shared files... DONE";
-echo "--------------------------------------------------------------------------------";
+echo "> Deploying overwritten shared files... DONE ✓";
 
 echo "--------------------------------------------------------------------------------";
+
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
