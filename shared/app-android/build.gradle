@@ -1,7 +1,7 @@
 plugins {
-    alias libs.plugins.android.application
-    alias libs.plugins.kotlin.android
-    alias libs.plugins.triplet.playPublisher
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.triplet.playPublisher)
 }
 
 Properties projectNameProperties = new Properties()
@@ -31,7 +31,7 @@ if (!devPropertiesFile.exists()) {
 }
 if (devPropertiesFile.exists()) {
     devProperties.load(new FileInputStream(devPropertiesFile))
-    isDevLeakCanaryOff = devProperties['dev.leakCanaryOff'] == "true"
+    isDevLeakCanaryOff = devProperties["dev.leakCanaryOff"] == "true"
 }
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
@@ -44,8 +44,8 @@ if (isMainApp) {
 }
 
 android {
-    compileSdkVersion libs.versions.sdk.compile.get().toInteger()
-    buildToolsVersion libs.versions.buildTools.get()
+    compileSdk = libs.versions.sdk.compile.get().toInteger()
+    buildToolsVersion = libs.versions.buildTools.get()
 
     compileOptions {
         sourceCompatibility rootProject.javaVersion
@@ -63,7 +63,7 @@ android {
     // Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
     Properties versionProperties = new Properties()
     versionProperties.load(new FileInputStream(file("${project.rootDir}/commons-android/version.properties")))
-    def sharedVersionName = versionProperties['version.name']
+    def sharedVersionName = versionProperties["version.name"]
     println "> Shared version name: " + sharedVersionName
 
     // App version code also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
@@ -140,9 +140,9 @@ android {
         }
         // resourceConfigurations "en", "xxxhdpi" // DEBUG xxxhdpi = Pixel 2 XL
         // resourceConfigurations "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
-        minSdkVersion libs.versions.sdk.min.get().toInteger()
+        minSdk = libs.versions.sdk.min.get().toInteger()
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
-        targetSdkVersion libs.versions.sdk.target.get().toInteger()
+        targetSdk = libs.versions.sdk.target.get().toInteger()
 
         manifestPlaceholders = [
                 permission_provider_read     : "org.mtransit.android.provider.permission.READ_PROVIDER",
@@ -166,68 +166,68 @@ android {
     signingConfigs {
         debug {
             if (debugSigningKeysPropertiesFile.exists()) {
-                storeFile file(debugSigningKeysProperties['key.store'])
-                storePassword debugSigningKeysProperties['key.store.password']
-                keyAlias debugSigningKeysProperties['key.alias']
-                keyPassword debugSigningKeysProperties['key.alias.password']
+                storeFile file(debugSigningKeysProperties["key.store"])
+                storePassword debugSigningKeysProperties["key.store.password"]
+                keyAlias debugSigningKeysProperties["key.alias"]
+                keyPassword debugSigningKeysProperties["key.alias.password"]
             }
         }
         release {
             if (useGooglePlayUploadKeysProperties) {
                 if (googlePlayUploadKeysPropertiesFile.exists()) {
-                    storeFile file(googlePlayUploadKeysProperties['key.store'])
-                    storePassword googlePlayUploadKeysProperties['key.store.password']
-                    keyAlias googlePlayUploadKeysProperties['key.alias']
-                    keyPassword googlePlayUploadKeysProperties['key.alias.password']
+                    storeFile file(googlePlayUploadKeysProperties["key.store"])
+                    storePassword googlePlayUploadKeysProperties["key.store.password"]
+                    keyAlias googlePlayUploadKeysProperties["key.alias"]
+                    keyPassword googlePlayUploadKeysProperties["key.alias.password"]
                 }
             } else {
                 if (appSigningKeysPropertiesFile.exists()) {
-                    storeFile file(appSigningKeysProperties['key.store'])
-                    storePassword appSigningKeysProperties['key.store.password']
-                    keyAlias appSigningKeysProperties['key.alias']
-                    keyPassword appSigningKeysProperties['key.alias.password']
+                    storeFile file(appSigningKeysProperties["key.store"])
+                    storePassword appSigningKeysProperties["key.store.password"]
+                    keyAlias appSigningKeysProperties["key.alias"]
+                    keyPassword appSigningKeysProperties["key.alias.password"]
                 }
             }
         }
     }
 
     buildFeatures {
-        aidl false
-        buildConfig true
-        compose false
-        dataBinding false
-        renderScript false
-        resValues true
-        shaders false
+        aidl = false
+        buildConfig = true
+        compose = false
+        dataBinding = false
+        renderScript = false
+        resValues = true
+        shaders = false
         if (isMainApp) {
-            viewBinding true
+            viewBinding = true
         } else {
-            viewBinding false
+            viewBinding = false
         }
     }
 
     buildTypes {
         debug {
-            versionNameSuffix "_DEBUG"
-            applicationIdSuffix ".debug"
+            versionNameSuffix = "_DEBUG"
+            applicationIdSuffix = ".debug"
             manifestPlaceholders = [
                     permission_provider_read     : "org.mtransit.android.debug.provider.permission.READ_PROVIDER",
                     permission_receiver_broadcast: "org.mtransit.android.debug.receiver.permission.BROADCAST_RECEIVER",
             ]
 
             // testCoverageEnabled false // DEBUG skip coverage report
-            shrinkResources false
+            shrinkResources = false
             if (isMainApp) {
-                minifyEnabled false
-                proguardFiles getDefaultProguardFile('proguard-android.txt'),
-                        'proguard-rules.pro'
-                multiDexEnabled true
+                minifyEnabled = false
+                proguardFiles getDefaultProguardFile("proguard-android.txt"),
+                        "proguard-rules.pro"
+                multiDexEnabled = true
                 firebaseCrashlytics {
                     // https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?platform=android#keep_obfuscated_build_variants
-                    mappingFileUploadEnabled false
+                    mappingFileUploadEnabled = false
                 }
             } else {
-                minifyEnabled false
+                minifyEnabled = false
             }
             aaptOptions.cruncherEnabled = false
         }
@@ -243,14 +243,14 @@ android {
             }
 
             if (isMainApp) {
-                shrinkResources true
-                minifyEnabled true
+                shrinkResources = true
+                minifyEnabled = true
                 // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
-                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), // 'proguard-android.txt'),
-                        'proguard-rules.pro'
+                proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), // "proguard-android.txt"),
+                        "proguard-rules.pro"
             } else {
-                shrinkResources false
-                minifyEnabled false
+                shrinkResources = false
+                minifyEnabled = false
             }
         }
     }
@@ -259,12 +259,12 @@ android {
     // https://developer.android.com/reference/tools/gradle-api/8.0/com/android/build/api/dsl/Lint
     lint {
         if (isMainApp) {
-            abortOnError true // do fail CI on main app
-            warningsAsErrors true
+            abortOnError = true // do fail CI on main app
+            warningsAsErrors = true
         } else {
-            abortOnError false // do not fail CI on module apps
+            abortOnError = false // do not fail CI on module apps
         }
-        checkDependencies true // also check leaf modules
+        checkDependencies = true // also check leaf modules
         // checkAllWarnings true // too slow for CI, can be enabled locally
     }
     // https://developer.android.com/studio/write/lint#snapshot
@@ -279,8 +279,8 @@ android {
             if (isMainApp) {
                 // NOTHING
             } else {
-                res.srcDirs += 'src/main/res-current'
-                res.srcDirs += 'src/main/res-next'
+                res.srcDirs += "src/main/res-current"
+                res.srcDirs += "src/main/res-next"
             }
         }
     }
@@ -290,9 +290,9 @@ android {
             includeAndroidResources = true
             returnDefaultValues = true
             all {
-                jvmArgs '-noverify'
+                jvmArgs "-noverify"
                 testLogging {
-                    events 'passed', 'skipped', 'failed'
+                    events("passed", "skipped", "failed")
                 }
             }
         }
@@ -307,37 +307,37 @@ if (isMainApp) {
 
 dependencies {
     if (isMainApp) {
-        implementation(project(':commons-android')) {
+        implementation(project(":commons-android")) {
             exclude group: 'com.google.protobuf', module: 'protoc'
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
             exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
         }
-        implementation libs.bundles.kotlin
-        implementation libs.bundles.kotlin.android
-        implementation libs.bundles.dagger
-        kapt libs.hilt.compiler
-        implementation libs.bundles.androidx
-        implementation libs.material
-        kapt libs.androidx.lifecycle.compiler
-        kapt libs.androidx.room.compiler
-        implementation libs.bundles.img
-        kapt libs.glide.compiler
-        implementation platform(libs.firebase.bom)
-        implementation libs.bundles.gps
-        implementation libs.bundles.billingClient
-        implementation libs.bundles.fb
-        implementation libs.bundles.appLovin
+        implementation(libs.bundles.kotlin)
+        implementation(libs.bundles.kotlin.android)
+        implementation(libs.bundles.dagger)
+        kapt(libs.hilt.compiler)
+        implementation(libs.bundles.androidx)
+        implementation(libs.material)
+        kapt(libs.androidx.lifecycle.compiler)
+        kapt(libs.androidx.room.compiler)
+        implementation(libs.bundles.img)
+        kapt(libs.glide.compiler)
+        implementation(platform(libs.firebase.bom))
+        implementation(libs.bundles.gps)
+        implementation(libs.bundles.billingClient)
+        implementation(libs.bundles.fb)
+        implementation(libs.bundles.appLovin)
 
         if (!isDevLeakCanaryOff) {
-            debugImplementation libs.leakcanary
+            debugImplementation(libs.leakcanary)
         }
 
-        testImplementation libs.bundles.test.unit
+        testImplementation(libs.bundles.test.unit)
     } else {
-        implementation project(':commons-android')
-        implementation libs.bundles.kotlin
-        implementation libs.bundles.kotlin.android
-        implementation libs.androidx.core
+        implementation(project(":commons-android"))
+        implementation(libs.bundles.kotlin)
+        implementation(libs.bundles.kotlin.android)
+        implementation(libs.androidx.core)
     }
 }
 
@@ -349,7 +349,7 @@ if (isMainApp) {
     }
 
     kapt {
-        correctErrorTypes true // allow references to generated code
+        correctErrorTypes = true // allow references to generated code
     }
 }
 
