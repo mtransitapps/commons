@@ -52,7 +52,7 @@ checkResult $RESULT;
 
 # ----------------------------------------
 
-if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} != true ]]; then
+if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 
 	echo ">> Setup-ing keys...";
 	./keys_setup.sh;
