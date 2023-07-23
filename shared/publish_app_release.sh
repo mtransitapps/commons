@@ -76,11 +76,29 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
   fi
   if [[ ${IS_GH_ENABLED} == true ]]; then
     echo "> GitHub > publishing release '$APP_VERSION_NAME'...";
-    gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes ./app-android/build/outputs/apk/release/*.apk;
+    GH_FILES="";
+    GH_FILES_APP_ANDROID="";
+    APK_PATH="./app-android/build/outputs/apk/release/*.apk";
+    APK_PATH_APP_ANDROID="./build/outputs/apk/release/*.apk";
+    APK_FILES=($APK_PATH);
+    AAB_PATH="./app-android/build/outputs/bundle/release/*.aab";
+    AAB_PATH_APP_ANDROID="./build/outputs/bundle/release/*.aab";
+    AAB_FILES=($AAB_PATH);
+    if [ -e "${APK_FILES[0]}" ]; then
+        GH_FILES+=" $APK_PATH";
+        GH_FILES_APP_ANDROID+=" $APK_PATH_APP_ANDROID";
+    elif [ -e "${AAB_FILES[0]}" ]; then
+        GH_FILES+=" $AAB_PATH";
+        GH_FILES_APP_ANDROID+=" $AAB_PATH_APP_ANDROID";
+    else
+        echo "No APK/AAB";
+    fi
+    echo "GH_FILES: $GH_FILES.";
+    gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes $GH_FILES;
     checkResult $?;
     if [[ -d "app-android" ]]; then
       cd app-android || exit -1; # >>
-      gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes ./build/outputs/apk/release/*.apk;
+      gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes $GH_FILES_APP_ANDROID;
       checkResult $?;
       cd ../; # <<
     fi
