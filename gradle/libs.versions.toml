@@ -15,7 +15,7 @@ buildTools = "33.0.2"
 # @pin incompatible with AndroidX Room & Studio Flamingo
 kotlin = "1.8.22"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-kotlinx-coroutines = "1.7.2"
+kotlinx-coroutines = "1.7.3"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.2.1.3168"
 # https://developer.android.com/studio/releases/gradle-plugin
