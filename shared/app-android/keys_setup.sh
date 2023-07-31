@@ -6,12 +6,12 @@ echo ">> Setup-ing keys...";
 source ${SCRIPT_DIR}/keys_files.sh;
 
 if [[ ${#FILES[@]} -lt 1 ]]; then
-	echo "FILES environment variable is NOT defined (need at least 1 empty \"\")!";
+	echo " ERROR! FILES environment variable is NOT defined (need at least 1 empty \"\")!";
 	exit 1;
 fi
 
 if [[ -z "${MT_ENCRYPT_KEY}" ]]; then
-	echo "MT_ENCRYPT_KEY environment variable is NOT defined!";
+	echo " ERROR! MT_ENCRYPT_KEY environment variable is NOT defined!";
 	exit 1;
 fi
 
@@ -23,14 +23,14 @@ for FILE in "${FILES[@]}" ; do
 	fi
 
 	if [[ ! -f ${FILE_PATH} ]]; then
-		echo "File '$FILE_PATH' does NOT exist!";
+		echo " ERROR! File '$FILE_PATH' does NOT exist!";
 		exit 1;
 	fi
 
 	FILE_ENC_PATH="${SCRIPT_DIR}/enc/${FILE}";
 
 	if [[ ! -f ${FILE_ENC_PATH} ]]; then
-		echo "File '$FILE_ENC_PATH' does NOT exist!";
+		echo " ERROR! File '$FILE_ENC_PATH' does NOT exist!";
 		exit 1;
 	fi
 done
@@ -43,43 +43,42 @@ for FILE in "${FILES[@]}" ; do
 		echo "Ignoring empty '$FILE_PATH'.";
 		continue;
 	fi
-	echo "--------------------------------------------------------------------------------";
-	echo "> Decrypting '$FILE_PATH'...";
+	echo -n "> Decrypting '$FILE_PATH'...";
 
 	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
 	RESULT=$?;
-	if [[ ${RESULT} -ne 0 ]]; then #file is NOT tracked by git
+	if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
 		if ! [[ -d $CLEAR ]]; then
 			mkdir $CLEAR;
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
-				echo "Error while creating '$CLEAR' directory!";
+				echo " ERROR! while creating '$CLEAR' directory!";
 				exit ${RESULT};
 			else
-				echo "Directory '$CLEAR' created.";
+				echo -n " (directory '$CLEAR' created)";
 			fi
 		fi
 		CLEAR_DIR=$(dirname "$CLEAR/${FILE}");
 		mkdir -p $CLEAR_DIR;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "Error while creating clear directory '$CLEAR_DIR'!";
+			echo " ERROR! while creating clear directory '$CLEAR_DIR'!";
 			exit ${RESULT};
 		fi
 		cp ${FILE_PATH} $CLEAR/${FILE};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "Error while copying '${FILE_PATH}' to '$CLEAR/${FILE}'!";
+			echo " ERROR! while copying '${FILE_PATH}' to '$CLEAR/${FILE}'!";
 			exit ${RESULT};
 		fi
 	fi
 
 	FILE_ENC="${SCRIPT_DIR}/enc/${FILE}";
 
-	./${SCRIPT_DIR}/decrypt_file.sh ${FILE_ENC} ${FILE_PATH};
+	./${SCRIPT_DIR}/decrypt_file.sh ${FILE_ENC} ${FILE_PATH} "quiet";
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
-		echo "Error while decrypting '$FILE_ENC'!";
+		echo " ERROR! while decrypting '$FILE_ENC'!";
 		exit ${RESULT};
 	fi
 
@@ -89,23 +88,22 @@ for FILE in "${FILES[@]}" ; do
 		diff -q ${FILE_PATH} $CLEAR/${FILE} &> /dev/null;
 		RESULT=$?;
 		if [[ ${RESULT} -eq 0 ]]; then
-			echo "Decrypted file '$FILE_PATH' NOT different than clear file!";
+			echo " ERROR! Decrypted file '$FILE_PATH' NOT different than clear file!";
 			exit 1;
 		fi
 		# rm ${FILE}.clear;
-	else  #file is tracked by git
+	else # file is tracked by git
 		git diff --name-status --exit-code ${FILE_PATH} &> /dev/null;
 		RESULT=$?;
 		if [[ ${RESULT} -eq 0 ]]; then
-			echo "Decrypted file '$FILE_PATH' NOT different than clear file!";
+			echo " ERROR! Decrypted file '$FILE_PATH' NOT different than clear file!";
 			ls -al ${FILE_PATH}; #DEBUG
 			ls -al ${FILE_ENC}; #DEBUG
 			exit 1;
 		fi
 	fi
 
-	echo "> Decrypting '$FILE'... DONE";
-	echo "--------------------------------------------------------------------------------";
+	echo " DONE ✓";
 done
 
 echo ">> Setup-ing keys... DONE";

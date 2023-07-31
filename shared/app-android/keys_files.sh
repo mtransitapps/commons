@@ -25,5 +25,5 @@ if [[ -f "${SCRIPT_DIR}/google-services.json" ]]; then
     fi
 fi
 
-echo "Files:";
-printf '* "%s"\n' "${FILES[@]}";
+echo "> Files:";
+printf '> - "%s"\n' "${FILES[@]}";
