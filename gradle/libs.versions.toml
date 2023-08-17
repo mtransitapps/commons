@@ -5,21 +5,24 @@
 sdk-min = "21"
 # Android 13 Tiramisu
 sdk-target = "33"
+# sdk-target = "34" # "requires" new Android Gradle plugin
 # Android 13 Tiramisu
 sdk-compile = "33"
+# sdk-compile = "34" # "requires" new Android Gradle plugin
 # https://maven.google.com/
 # Android 13 Tiramisu
 buildTools = "33.0.2"
 # kotlinOptionsJvmTarget = "17"
 # https://github.com/JetBrains/kotlin/releases/latest
-# @pin incompatible with AndroidX Room & Studio Flamingo
-kotlin = "1.8.22"
+kotlin = "1.9.0"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-kotlinx-coroutines = "1.7.2"
+kotlinx-coroutines = "1.7.3"
+# https://github.com/google/ksp/releases/latest
+ksp = "1.9.0-1.0.13"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "4.2.1.3168"
+sonar = "4.3.0.3225"
 # https://developer.android.com/studio/releases/gradle-plugin
-android-gradlePlugin = "8.0.2"
+android-gradlePlugin = "8.1.0"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 triplet-playPublisher = "3.8.4"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
@@ -33,17 +36,19 @@ hilt = "2.47"
 androidx-activity = "1.7.2"
 androidx-annotation = "1.6.0"
 androidx-appCompat = "1.6.1"
+# @pin 1.6.0 requires compile SDK 34 #noinspection GradleDependency
 androidx-browser = "1.5.0"
 androidx-cardview = "1.0.0"
 androidx-coordinator = "1.2.0"
 androidx-constraint = "2.1.4"
 androidx-core = "1.10.1"
 androidx-core-splashscreen = "1.0.1"
-androidx-fragment = "1.6.0"
+androidx-fragment = "1.6.1"
 androidx-lifecycle = "2.6.1"
+# @pin 2.7.0 requires compile SDK 34 #noinspection GradleDependency
 androidx-nav = "2.6.0"
-androidx-pref = "1.2.0"
-androidx-recyclerview = "1.3.0"
+androidx-pref = "1.2.1"
+androidx-recyclerview = "1.3.1"
 androidx-room = "2.5.2"
 androidx-slidingpanelayout = "1.2.0"
 androidx-sqlite = "2.3.1"
@@ -56,7 +61,7 @@ material = "1.9.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.4.0"
+maps-utils = "3.5.2"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "3.4.0"
 # https://developers.google.com/android/guides/google-services-plugin
@@ -69,24 +74,24 @@ gps-location = "21.0.1"
 gps-maps = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "32.2.0"
-firebase-crashlytics-plugin = "2.9.7"
+firebase-bom = "32.2.2"
+firebase-crashlytics-plugin = "2.9.8"
 play-billing = "6.0.1"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 play-appUpdate = "2.1.0"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
-fbAudienceNetwork-mediation = "6.14.0.0"
+fbAudienceNetwork-mediation = "6.15.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
-appLovin-mediation = "11.9.0.0"
+appLovin-mediation = "11.11.1.0"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.12"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobuf = "3.23.4"
+protobuf = "3.24.0"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.4"
 # https://github.com/square/retrofit/tags
@@ -111,7 +116,7 @@ mockito = "5.4.0"
 # https://commons.apache.org/
 commons-csv = "1.10.0"
 commons-io = "2.13.0"
-commons-lang3 = "3.12.0"
+commons-lang3 = "3.13.0"
 commons-text = "1.10.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
 xerial-SQLiteJDBC = "3.42.0.0"
@@ -139,6 +144,7 @@ androidx-nav-ui = { module = "androidx.navigation:navigation-ui-ktx", version.re
 androidx-pref = { module = "androidx.preference:preference-ktx", version.ref = "androidx-pref" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
+androidx-room-common = { module = "androidx.room:room-common", version.ref = "androidx-room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 androidx-slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "androidx-slidingpanelayout" }
@@ -294,6 +300,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 triplet-playPublisher = { id = "com.github.triplet.play", version.ref = "triplet-playPublisher" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }

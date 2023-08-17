@@ -1,3 +1,5 @@
+import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -37,6 +39,7 @@ println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
 if (isMainApp) {
     apply plugin: libs.plugins.kotlin.kapt.get().pluginId
+    apply plugin: libs.plugins.google.ksp.get().pluginId
     apply plugin: libs.plugins.hilt.get().pluginId
     apply plugin: libs.plugins.gms.get().pluginId
     apply plugin: libs.plugins.firebase.crashlytics.get().pluginId
@@ -151,16 +154,6 @@ android {
                 pkg_namespace                : namespace,
         ]
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                if (isMainApp) {
-                    arguments += [
-                            "room.schemaLocation": "$projectDir/schemas".toString(),
-                            "room.incremental"   : "true",
-                    ]
-                }
-            }
-        }
     }
 
     signingConfigs {
@@ -266,12 +259,8 @@ android {
         }
         checkDependencies = true // also check leaf modules
         // checkAllWarnings true // too slow for CI, can be enabled locally
-    }
-    // https://developer.android.com/studio/write/lint#snapshot
-    lintOptions {
-        if (isMainApp) {
-            baseline file("lint-baseline.xml")
-        }
+        // https://developer.android.com/studio/write/lint#snapshot
+        baseline file("lint-baseline.xml")
     }
 
     sourceSets {
@@ -319,7 +308,7 @@ dependencies {
         implementation(libs.bundles.androidx)
         implementation(libs.material)
         kapt(libs.androidx.lifecycle.compiler)
-        kapt(libs.androidx.room.compiler)
+        ksp(libs.androidx.room.compiler)
         implementation(libs.bundles.img)
         kapt(libs.glide.compiler)
         implementation(platform(libs.firebase.bom))
@@ -351,6 +340,10 @@ if (isMainApp) {
     kapt {
         correctErrorTypes = true // allow references to generated code
     }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.incremental", "true")
+    }
 }
 
 play {
@@ -361,7 +354,7 @@ play {
     track.set("Beta (Private)")
     fromTrack.set("Beta (Private)")
     promoteTrack.set("Beta (Private)")
-    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT) // ReleaseStatus.[COMPLETED/DRAFT/HALTED/IN_PROGRESS]
+    releaseStatus.set(ReleaseStatus.DRAFT) // ReleaseStatus.[COMPLETED/DRAFT/HALTED/IN_PROGRESS]
     userFraction.set(0.01d) // 0.00 - 0.10 - 0.33 - 0.50 - 1.00 WHEN releaseStatus=[inProgress/halted]
     updatePriority.set(4) // 0-5, 0=default, 5=highest priority
 }
