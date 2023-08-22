@@ -254,13 +254,13 @@ android {
         if (isMainApp) {
             abortOnError = true // do fail CI on main app
             warningsAsErrors = true
+            // https://developer.android.com/studio/write/lint#snapshot
+            baseline file("lint-baseline.xml")
         } else {
             abortOnError = false // do not fail CI on module apps
         }
         checkDependencies = true // also check leaf modules
         // checkAllWarnings true // too slow for CI, can be enabled locally
-        // https://developer.android.com/studio/write/lint#snapshot
-        baseline file("lint-baseline.xml")
     }
 
     sourceSets {
