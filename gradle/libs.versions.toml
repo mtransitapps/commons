@@ -54,7 +54,7 @@ androidx-slidingpanelayout = "1.2.0"
 androidx-sqlite = "2.3.1"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.1.0"
-androidx-viewpager2 = "1.1.0-beta02"
+androidx-viewpager2 = "1.0.0"
 androidx-workManager = "2.8.1"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.9.0"
@@ -122,7 +122,7 @@ commons-text = "1.10.0"
 xerial-SQLiteJDBC = "3.42.0.0"
 
 [libraries]
-kotlin-stblib = "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
+kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
