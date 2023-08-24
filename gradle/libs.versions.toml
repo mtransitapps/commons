@@ -14,15 +14,15 @@ sdk-compile = "33"
 buildTools = "33.0.2"
 # kotlinOptionsJvmTarget = "17"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "1.9.0"
+kotlin = "1.9.10"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.7.3"
 # https://github.com/google/ksp/releases/latest
-ksp = "1.9.0-1.0.13"
+ksp = "1.9.10-1.0.13"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.3.0.3225"
 # https://developer.android.com/studio/releases/gradle-plugin
-android-gradlePlugin = "8.1.0"
+android-gradlePlugin = "8.1.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 triplet-playPublisher = "3.8.4"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
@@ -54,28 +54,28 @@ androidx-slidingpanelayout = "1.2.0"
 androidx-sqlite = "2.3.1"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.1.0"
-androidx-viewpager2 = "1.0.0"
+androidx-viewpager2 = "1.1.0-beta02"
 androidx-workManager = "2.8.1"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.9.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.5.2"
+maps-utils = "3.5.3"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "3.4.0"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.3.15"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuite = "3.0.0"
-gps-ads = "22.2.0"
+gps-ads = "22.3.0"
 gps-basement = "18.2.0"
 gps-location = "21.0.1"
 gps-maps = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "32.2.2"
-firebase-crashlytics-plugin = "2.9.8"
+firebase-bom = "32.2.3"
+firebase-crashlytics-plugin = "2.9.9"
 play-billing = "6.0.1"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
@@ -91,7 +91,7 @@ leakcanary = "2.12"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobuf = "3.24.0"
+protobuf = "3.24.1"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.4"
 # https://github.com/square/retrofit/tags
@@ -105,14 +105,14 @@ okhttp = "4.11.0"
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "2.10.1"
 # https://github.com/bumptech/glide/releases/latest
-glide = "4.15.1"
+glide = "4.16.0"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 android-svg = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 junit = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockito = "5.4.0"
+mockito = "5.5.0"
 # https://commons.apache.org/
 commons-csv = "1.10.0"
 commons-io = "2.13.0"
@@ -122,7 +122,7 @@ commons-text = "1.10.0"
 xerial-SQLiteJDBC = "3.42.0.0"
 
 [libraries]
-kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-stblib = "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
