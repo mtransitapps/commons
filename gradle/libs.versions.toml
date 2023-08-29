@@ -85,13 +85,13 @@ play-appUpdate = "2.1.0"
 fbAudienceNetwork-mediation = "6.15.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
-appLovin-mediation = "11.11.1.0"
+appLovin-mediation = "11.11.2.0"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.12"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobuf = "3.24.1"
+protobuf = "3.24.2"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.4"
 # https://github.com/square/retrofit/tags
@@ -119,7 +119,7 @@ commons-io = "2.13.0"
 commons-lang3 = "3.13.0"
 commons-text = "1.10.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.42.0.0"
+xerial-SQLiteJDBC = "3.42.0.1"
 
 [libraries]
 kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
