@@ -155,7 +155,6 @@ androidx-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", ve
 androidx-viewmodel-state = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager2" }
 androidx-workManager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-workManager" }
-androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "androidx-lifecycle" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 # mediationTestSuite = { module = "com.google.android.ads:mediation-test-suite", version.ref = "adsMediationTestSuite"} # adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
 gps-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "gps-ads" }
@@ -185,7 +184,7 @@ okhttp = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
 android-svg = { module = "com.caverock:androidsvg-aar", version.ref = "android-svg" }
 junit = { module = "junit:junit", version.ref = "junit" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
