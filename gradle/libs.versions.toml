@@ -176,7 +176,6 @@ appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 protobuf-compiler = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 protobuf-javaLite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
-protobuf-plugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobuf-plugin" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp" }
