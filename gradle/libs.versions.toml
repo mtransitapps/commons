@@ -20,7 +20,7 @@ kotlinx-coroutines = "1.7.3"
 # https://github.com/google/ksp/releases/latest
 ksp = "1.9.10-1.0.13"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "4.3.0.3225"
+sonar = "4.3.1.3277"
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradlePlugin = "8.1.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
