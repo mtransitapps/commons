@@ -26,7 +26,7 @@ android-gradlePlugin = "8.1.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 triplet-playPublisher = "3.8.4"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
-benmanes-versions = "0.47.0"
+benmanes-versions = "0.48.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
 littlerobots-versioncatalog = "0.8.1"
 # https://github.com/google/dagger/releases/latest
