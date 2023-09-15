@@ -34,17 +34,18 @@ hilt = "2.48"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.7.2"
-androidx-annotation = "1.6.0"
+androidx-annotation = "1.7.0"
 androidx-appCompat = "1.6.1"
 # @pin 1.6.0 requires compile SDK 34 #noinspection GradleDependency
 androidx-browser = "1.5.0"
 androidx-cardview = "1.0.0"
 androidx-coordinator = "1.2.0"
 androidx-constraint = "2.1.4"
+# @pin 1.12.0 requires compile SDK 34 #noinspection GradleDependency
 androidx-core = "1.10.1"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.6.1"
-androidx-lifecycle = "2.6.1"
+androidx-lifecycle = "2.6.2"
 # @pin 2.7.0 requires compile SDK 34 #noinspection GradleDependency
 androidx-nav = "2.6.0"
 androidx-pref = "1.2.1"
@@ -68,13 +69,13 @@ maps-ktx = "3.4.0"
 gps-plugin = "4.3.15"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuite = "3.0.0"
-gps-ads = "22.3.0"
+gps-ads = "22.4.0"
 gps-basement = "18.2.0"
 gps-location = "21.0.1"
 gps-maps = "18.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "32.2.3"
+firebase-bom = "32.3.1"
 firebase-crashlytics-plugin = "2.9.9"
 play-billing = "6.0.1"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
@@ -82,7 +83,7 @@ play-billing = "6.0.1"
 play-appUpdate = "2.1.0"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
-fbAudienceNetwork-mediation = "6.15.0.0"
+fbAudienceNetwork-mediation = "6.16.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
 appLovin-mediation = "11.11.3.0"
@@ -175,6 +176,7 @@ fbAudienceNetwork-mediation = { module = "com.google.ads.mediation:facebook", ve
 appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovin-mediation" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 protobuf-compiler = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
+protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
 protobuf-javaLite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
