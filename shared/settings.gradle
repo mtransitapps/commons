@@ -1,9 +1,26 @@
 // https://developer.android.com/studio/build#settings-file
+// https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:repository-content-filtering
+// https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:declaring-repository-filter
 pluginManagement {
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("androidx\\..*")
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google\\.android\\.gms.*")
+                includeGroupByRegex("com\\.google\\.firebase.*")
+                includeGroupByRegex("com\\.google\\.gms.*")
+                includeGroupByRegex("com\\.google\\.test.*")
+            }
+        }
+        gradlePluginPortal {
+            content {
+                includeGroupByRegex("com\\.github\\.ben\\-manes.*")
+                includeGroupByRegex("com\\.github\\.triplet.*")
+                includeGroupByRegex("com\\.google\\.protobuf.*")
+            }
+        }
         mavenCentral()
-        gradlePluginPortal()
     }
 }
 
@@ -11,7 +28,16 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("androidx\\..*")
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google\\.ads.*")
+                includeGroupByRegex("com\\.google\\.android.*")
+                includeGroupByRegex("com\\.google\\.android\\.gms.*")
+                includeGroupByRegex("com\\.google\\.firebase.*")
+            }
+        }
         mavenCentral()
     }
     versionCatalogs {
