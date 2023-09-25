@@ -17,6 +17,8 @@ function setIsGHEnabled() {
 	IS_GH_ENABLED=false;
 	if [[ ! -z "${GITHUB_TOKEN}" ]]; then
 		IS_GH_ENABLED=true;
+	elif [[ -z "${CI}" ]]; then # IF not CI DO
+		IS_GH_ENABLED=true; # local
 	fi
 	# echo "IS_GH_ENABLED: $IS_GH_ENABLED"; # DEBUG
 }
