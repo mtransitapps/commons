@@ -1,4 +1,5 @@
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+import org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs
 
 plugins {
     alias(libs.plugins.android.application)
@@ -147,12 +148,10 @@ android {
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdk = libs.versions.sdk.target.get().toInteger()
 
-        manifestPlaceholders = [
-                permission_provider_read     : "org.mtransit.android.provider.permission.READ_PROVIDER",
-                permission_receiver_broadcast: "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER",
-                target_sdk_version           : libs.versions.sdk.target.get(),
-                pkg_namespace                : namespace,
-        ]
+        manifestPlaceholders.permission_provider_read = "org.mtransit.android.provider.permission.READ_PROVIDER"
+        manifestPlaceholders.permission_receiver_broadcast = "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER"
+        manifestPlaceholders.target_sdk_version = libs.versions.sdk.target.get()
+        manifestPlaceholders.pkg_namespace = namespace
 
     }
 
@@ -192,6 +191,7 @@ android {
         renderScript = false
         resValues = true
         shaders = false
+        //noinspection GroovyTrivialIf
         if (isMainApp) {
             viewBinding = true
         } else {
@@ -203,10 +203,8 @@ android {
         debug {
             versionNameSuffix = "_DEBUG"
             applicationIdSuffix = ".debug"
-            manifestPlaceholders = [
-                    permission_provider_read     : "org.mtransit.android.debug.provider.permission.READ_PROVIDER",
-                    permission_receiver_broadcast: "org.mtransit.android.debug.receiver.permission.BROADCAST_RECEIVER",
-            ]
+            manifestPlaceholders.permission_provider_read = "org.mtransit.android.debug.provider.permission.READ_PROVIDER"
+            manifestPlaceholders.permission_receiver_broadcast = "org.mtransit.android.debug.receiver.permission.BROADCAST_RECEIVER"
 
             // testCoverageEnabled false // DEBUG skip coverage report
             shrinkResources = false
@@ -278,7 +276,7 @@ android {
         unitTests {
             includeAndroidResources = true
             returnDefaultValues = true
-            all {
+            tasks.withType(Test).configureEach {
                 jvmArgs "-noverify"
                 testLogging {
                     events("passed", "skipped", "failed")
@@ -301,6 +299,7 @@ dependencies {
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
             exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
         }
+        //noinspection DependencyNotationArgument // fixed in AGP 8.3.0 https://issuetracker.google.com/issues/295282939
         implementation(libs.bundles.kotlin)
         implementation(libs.bundles.kotlin.android)
         implementation(libs.bundles.dagger)
@@ -323,14 +322,17 @@ dependencies {
         testImplementation(libs.bundles.test.unit)
     } else {
         implementation(project(":commons-android"))
+        //noinspection DependencyNotationArgument // fixed in AGP 8.3.0 https://issuetracker.google.com/issues/295282939
         implementation(libs.bundles.kotlin)
         implementation(libs.bundles.kotlin.android)
+        //noinspection DependencyNotationArgument // fixed in AGP 8.3.0 https://issuetracker.google.com/issues/295282939
         implementation(libs.androidx.core)
     }
 }
 
 if (isMainApp) {
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs).configureEach {
+    tasks.withType(KaptGenerateStubs).configureEach {
+        //noinspection GrDeprecatedAPIUsage // TODO use compilerOptions.jvmTarget.set()
         kotlinOptions {
             jvmTarget = rootProject.javaVersion
         }
