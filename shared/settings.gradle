@@ -49,7 +49,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "MT" // same JetBrains IntelliJ files
 
-include(":commons") // common code shared by all
+// include(":commons") // common code shared by all - not a Gradle module
 include(":commons-java") // common code shared by all projects
 
 if (file("agency-parser").exists()) {

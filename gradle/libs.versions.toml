@@ -1,17 +1,16 @@
 # Dependabot file location is: gradle/libs.versions.toml
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates#gradle
+# https://maven.google.com/
 [versions]
 # Android 5.0 Lollipop
 sdk-min = "21"
-# Android 13 Tiramisu
-sdk-target = "33"
-# sdk-target = "34" # "requires" new Android Gradle plugin
-# Android 13 Tiramisu
-sdk-compile = "33"
-# sdk-compile = "34" # "requires" new Android Gradle plugin
-# https://maven.google.com/
-# Android 13 Tiramisu
-buildTools = "33.0.2"
+# Android 14 Upside Down Cake
+sdk-target = "34"
+# Android 14 Upside Down Cake
+sdk-compile = "34"
+# https://developer.android.com/tools/releases/build-tools
+# Android 14 Upside Down Cake
+buildTools = "34.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "1.9.10"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
@@ -35,18 +34,15 @@ hilt = "2.48"
 androidx-activity = "1.7.2"
 androidx-annotation = "1.7.0"
 androidx-appCompat = "1.6.1"
-# @pin 1.6.0 requires compile SDK 34 #noinspection GradleDependency
-androidx-browser = "1.5.0"
+androidx-browser = "1.6.0"
 androidx-cardview = "1.0.0"
 androidx-coordinator = "1.2.0"
 androidx-constraint = "2.1.4"
-# @pin 1.12.0 requires compile SDK 34 #noinspection GradleDependency
-androidx-core = "1.10.1"
+androidx-core = "1.12.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.6.1"
 androidx-lifecycle = "2.6.2"
-# @pin 2.7.0 requires compile SDK 34 #noinspection GradleDependency
-androidx-nav = "2.6.0"
+androidx-nav = "2.7.3"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.3.1"
 androidx-room = "2.5.2"
