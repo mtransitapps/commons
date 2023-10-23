@@ -97,7 +97,7 @@ retrofit = "2.9.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
-okhttp = "4.11.0"
+okhttp = "4.12.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "2.10.1"
