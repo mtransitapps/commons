@@ -44,10 +44,10 @@ androidx-fragment = "1.6.1"
 androidx-lifecycle = "2.6.2"
 androidx-nav = "2.7.4"
 androidx-pref = "1.2.1"
-androidx-recyclerview = "1.3.1"
-androidx-room = "2.5.2"
+androidx-recyclerview = "1.3.2"
+androidx-room = "2.6.0"
 androidx-slidingpanelayout = "1.2.0"
-androidx-sqlite = "2.3.1"
+androidx-sqlite = "2.4.0"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.1.0"
 # @pin 1.1.0-beta02
@@ -58,7 +58,7 @@ material = "1.10.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.5.3"
+maps-utils = "3.6.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "4.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
@@ -68,10 +68,10 @@ adsMediationTestSuite = "3.0.0"
 gps-ads = "22.4.0"
 gps-basement = "18.2.0"
 gps-location = "21.0.1"
-gps-maps = "18.1.0"
+gps-maps = "18.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "32.3.1"
+firebase-bom = "32.4.0"
 firebase-crashlytics-plugin = "2.9.9"
 play-billing = "6.0.1"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
@@ -97,7 +97,7 @@ retrofit = "2.9.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
-okhttp = "4.11.0"
+okhttp = "4.12.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "2.10.1"
@@ -116,7 +116,7 @@ commons-io = "2.14.0"
 commons-lang3 = "3.13.0"
 commons-text = "1.10.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.43.0.0"
+xerial-SQLiteJDBC = "3.43.2.1"
 
 [libraries]
 kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
