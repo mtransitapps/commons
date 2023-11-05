@@ -97,7 +97,7 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
     gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes $GH_FILES;
     checkResult $?;
     if [[ -d "app-android" ]]; then
-      cd app-android || exit -1; # >>
+      cd app-android || exit 1; # >>
       gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes $GH_FILES_APP_ANDROID;
       checkResult $?;
       cd ../; # <<
@@ -109,7 +109,7 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
 
   # PUSH TO GOOGLE PLAY STORE
   if [[ -d "app-android" ]]; then
-    cd app-android || exit -1; # >>
+    cd app-android || exit 1; # >>
 
     if [[ -f "keys_cleanup.sh" ]]; then
       echo ">> Cleaning keys...";

@@ -17,7 +17,7 @@ if [[ "$RESULT" -gt 0 ]]; then
 	git -C ${TARGET} status | grep "/raw/" | head -n 7;
 	echo "true" > $MT_DATA_CHANGED_FILE;
 	checkResult $?;
-	exit -1;
+	exit 1;
 fi
 if [[ ${STATUS} == 1 ]]; then STATUS=0; fi; # grep returns 1 when no result
 checkResult ${STATUS} false;
@@ -29,7 +29,7 @@ if [[ "$RESULT" -gt 0 ]]; then
 	git -C ${TARGET} status | grep "res/raw" | head -n 7;
 	echo "true" > $MT_DATA_CHANGED_FILE;
 	checkResult $?;
-	exit -1;
+	exit 1;
 fi
 git -C ${TARGET} diff res-current/values/current_gtfs_rts_values_gen.xml;
 checkResult $?;
@@ -39,7 +39,7 @@ if [[ "$RESULT" -gt 0 ]]; then
 	git -C ${TARGET} status | grep "res-current/raw" | head -n 7;
 	echo "true" > $MT_DATA_CHANGED_FILE;
 	checkResult $?;
-	exit -1;
+	exit 1;
 fi
 if [[ -d ${TARGET}/res-next ]]; then
 	git -C ${TARGET} status | grep "res-next" | head -n 1;
@@ -53,7 +53,7 @@ if [[ -d ${TARGET}/res-next ]]; then
 			cat ${TARGET}/res-next/values/next_gtfs_rts_values_gen.xml;
 			echo "true" > $MT_DATA_CHANGED_FILE;
 			checkResult $?;
-			exit -1;
+			exit 1;
 		fi
 	fi
 	if [[ -d ${TARGET}/res-next/raw ]]; then
@@ -63,7 +63,7 @@ if [[ -d ${TARGET}/res-next ]]; then
 			git -C ${TARGET} status | grep "res-next/raw" | head -n 7;
 			echo "true" > $MT_DATA_CHANGED_FILE;
 			checkResult $?;
-			exit -1;
+			exit 1;
 		fi
 	fi
 fi

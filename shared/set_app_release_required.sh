@@ -6,9 +6,9 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
-AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
+# CURRENT_PATH=$(pwd);
+# CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
+# AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
 setIsCI;
 
@@ -46,10 +46,10 @@ elif [[ "$GIT_BRANCH" == "mmathieum" ]]; then #LEGACY
   LOCAL_LAST_HASH=$(git log --max-count 1 --pretty=format:"%h");
 
   MAIN_LAST_TIMESTAMP_SEC=$(git log origin/$MAIN_BRANCH_NAME --max-count 1 --pretty=format:"%at");
-  MAIN_LAST_RELEASE_DATE_TIME=$(date --date='@'$MAIN_LAST_TIMESTAMP_SEC'');
+  MAIN_LAST_RELEASE_DATE_TIME=$(date --date='@'"$MAIN_LAST_TIMESTAMP_SEC"'');
   echo "> Last release date: $MAIN_LAST_RELEASE_DATE_TIME.";
 
-  LOCAL_LAST_TIMESTAMP_SEC=$(git log --max-count 1 --pretty=format:"%at");
+  # LOCAL_LAST_TIMESTAMP_SEC=$(git log --max-count 1 --pretty=format:"%at");
   NOW_TIMESTAMP_SEC=$(date +%s);
   DIFF_SEC=$(($NOW_TIMESTAMP_SEC-$MAIN_LAST_TIMESTAMP_SEC));
   DIFF_DAYS=$(($DIFF_SEC/86400));
@@ -69,7 +69,7 @@ else
   echo "> Use case not supported yet!"; #TODO GH release?
   MT_APP_RELEASE_REQUIRED=false;
 fi
-echo "> App release requred: $MT_APP_RELEASE_REQUIRED.";
+echo "> App release required: $MT_APP_RELEASE_REQUIRED.";
 echo "$MT_APP_RELEASE_REQUIRED" > $MT_APP_RELEASE_REQUIRED_FILE;
 checkResult $?;
 
