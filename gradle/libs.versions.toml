@@ -20,21 +20,21 @@ ksp = "1.9.20-1.0.14"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.4.1.3373"
 # https://developer.android.com/studio/releases/gradle-plugin
-android-gradlePlugin = "8.1.3"
+android-gradlePlugin = "8.1.4"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
-triplet-playPublisher = "3.8.5"
+triplet-playPublisher = "3.8.6"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
-benmanes-versions = "0.49.0"
+benmanes-versions = "0.50.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
 littlerobots-versioncatalog = "0.8.1"
 # https://github.com/google/dagger/releases/latest
 hilt = "2.48.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
-androidx-activity = "1.8.0"
+androidx-activity = "1.8.1"
 androidx-annotation = "1.7.0"
 androidx-appCompat = "1.6.1"
-androidx-browser = "1.6.0"
+androidx-browser = "1.7.0"
 androidx-cardview = "1.0.0"
 androidx-coordinator = "1.2.0"
 androidx-constraint = "2.1.4"
@@ -71,9 +71,9 @@ gps-location = "21.0.1"
 gps-maps = "18.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "32.5.0"
+firebase-bom = "32.6.0"
 firebase-crashlytics-plugin = "2.9.9"
-play-billing = "6.0.1"
+play-billing = "6.1.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 play-appUpdate = "2.1.0"
@@ -88,7 +88,7 @@ leakcanary = "2.12"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobuf = "3.25.0"
+protobuf = "3.25.1"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.4"
 # https://github.com/square/retrofit/tags
@@ -116,7 +116,7 @@ commons-io = "2.15.0"
 commons-lang3 = "3.13.0"
 commons-text = "1.11.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.43.2.2"
+xerial-SQLiteJDBC = "3.44.0.0"
 
 [libraries]
 kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
