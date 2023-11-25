@@ -12,7 +12,7 @@ sdk-compile = "34"
 # Android 14 Upside Down Cake
 buildTools = "34.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "1.9.20"
+kotlin = "1.9.21"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.7.3"
 # https://github.com/google/ksp/releases/latest
@@ -113,13 +113,13 @@ mockito = "5.7.0"
 # https://commons.apache.org/
 commons-csv = "1.10.0"
 commons-io = "2.15.0"
-commons-lang3 = "3.13.0"
+commons-lang3 = "3.14.0"
 commons-text = "1.11.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
 xerial-SQLiteJDBC = "3.44.0.0"
 
 [libraries]
-kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-stblib = "org.jetbrains.kotlin:kotlin-stdlib:1.9.20"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
