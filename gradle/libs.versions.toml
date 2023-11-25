@@ -119,7 +119,7 @@ commons-text = "1.11.0"
 xerial-SQLiteJDBC = "3.44.0.0"
 
 [libraries]
-kotlin-stblib = "org.jetbrains.kotlin:kotlin-stdlib:1.9.20"
+kotlin-stblib = "org.jetbrains.kotlin:kotlin-stdlib:1.9.21"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
