@@ -12,12 +12,11 @@ sdk-compile = "34"
 # Android 14 Upside Down Cake
 buildTools = "34.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "1.9.20"
-# kotlin = "1.9.21" # when KSP ready
+kotlin = "1.9.21"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.7.3"
 # https://github.com/google/ksp/releases/latest
-ksp = "1.9.20-1.0.14"
+ksp = "1.9.21-1.0.15"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.4.1.3373"
 # https://developer.android.com/studio/releases/gradle-plugin
@@ -29,7 +28,7 @@ benmanes-versions = "0.50.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
 littlerobots-versioncatalog = "0.8.1"
 # https://github.com/google/dagger/releases/latest
-hilt = "2.48.1"
+hilt = "2.49"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.8.1"
@@ -113,11 +112,11 @@ junit = "4.13.2"
 mockito = "5.7.0"
 # https://commons.apache.org/
 commons-csv = "1.10.0"
-commons-io = "2.15.0"
+commons-io = "2.15.1"
 commons-lang3 = "3.14.0"
 commons-text = "1.11.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.44.0.0"
+xerial-SQLiteJDBC = "3.44.1.0"
 
 [libraries]
 kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
