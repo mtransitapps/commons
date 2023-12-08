@@ -134,9 +134,9 @@ android {
         versionName appVersionName
         buildConfigField "String", "GIT_HASH", "\"$gitHash\""
         if (useGooglePlayUploadKeysProperties) {
-            setProperty("archivesBaseName", "${projectName}_v${sharedVersionName}_r${appVersionCode}_upload")
+            base.archivesName = "${projectName}_v${sharedVersionName}_r${appVersionCode}_upload"
         } else {
-            setProperty("archivesBaseName", "${projectName}_v${sharedVersionName}_r${appVersionCode}")
+            base.archivesName = "${projectName}_v${sharedVersionName}_r${appVersionCode}"
         }
         resourceConfigurations += ["en"]
         if (resValueFr.exists()) {
