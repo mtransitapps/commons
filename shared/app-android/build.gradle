@@ -148,11 +148,12 @@ android {
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdk = libs.versions.sdk.target.get().toInteger()
 
-        manifestPlaceholders.permission_provider_read = "org.mtransit.android.provider.permission.READ_PROVIDER"
-        manifestPlaceholders.permission_receiver_broadcast = "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER"
         manifestPlaceholders.target_sdk_version = libs.versions.sdk.target.get()
         manifestPlaceholders.pkg_namespace = namespace
 
+        manifestPlaceholders.permission_provider_read = "org.mtransit.android.provider.permission.READ_PROVIDER"
+        manifestPlaceholders.permission_receiver_broadcast = "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER"
+        setupResValues(it, projectPkg)
     }
 
     signingConfigs {
@@ -203,8 +204,10 @@ android {
         debug {
             versionNameSuffix = "_DEBUG"
             applicationIdSuffix = ".debug"
+
             manifestPlaceholders.permission_provider_read = "org.mtransit.android.debug.provider.permission.READ_PROVIDER"
             manifestPlaceholders.permission_receiver_broadcast = "org.mtransit.android.debug.receiver.permission.BROADCAST_RECEIVER"
+            setupResValues(it, projectPkg + applicationIdSuffix)
 
             // testCoverageEnabled false // DEBUG skip coverage report
             shrinkResources = false
@@ -358,4 +361,35 @@ play {
     releaseStatus.set(ReleaseStatus.DRAFT) // ReleaseStatus.[COMPLETED/DRAFT/HALTED/IN_PROGRESS]
     userFraction.set(0.01d) // 0.00 - 0.10 - 0.33 - 0.50 - 1.00 WHEN releaseStatus=[inProgress/halted]
     updatePriority.set(4) // 0-5, 0=default, 5=highest priority
+}
+
+def setupResValues(buildType, appId) {
+    println "> Resource values set for: " + appId
+
+    buildType.resValue("string", "bike_station_authority", "${appId}.bike")
+    buildType.resValue("string", "gtfs_rts_authority", "${appId}.gtfs")
+    buildType.resValue("string", "gtfs_real_time_authority", "${appId}.gtfs.realtime")
+
+    buildType.resValue("string", "rss_authority", "${appId}.news.rss")
+    buildType.resValue("string", "twitter_authority", "${appId}.news.twitter")
+    buildType.resValue("string", "youtube_authority", "${appId}.news.youtube")
+    buildType.resValue("string", "instagram_authority", "${appId}.news.instagram")
+
+    buildType.resValue("string", "clever_devices_authority", "${appId}.clever_devices")
+    buildType.resValue("string", "next_bus_authority", "${appId}.nextbus")
+    buildType.resValue("string", "one_bus_away_authority", "${appId}.oba")
+    buildType.resValue("string", "strategic_mapping_authority", "${appId}.strategic_mapping")
+
+    buildType.resValue("string", "ca_edmonton_authority", "${appId}.etslive")
+    buildType.resValue("string", "ca_ltconline_authority", "${appId}.ltconline")
+    buildType.resValue("string", "ca_sto_authority", "${appId}.ca_sto")
+    buildType.resValue("string", "ca_translink_authority", "${appId}.ca_translink")
+    buildType.resValue("string", "grand_river_transit_authority", "${appId}.ca_grt")
+    buildType.resValue("string", "greater_sudbury_authority", "${appId}.mybus")
+    buildType.resValue("string", "oc_transpo_authority", "${appId}.octranspo")
+    buildType.resValue("string", "regina_transit_authority", "${appId}.transitlive_com")
+    buildType.resValue("string", "rtc_quebec_authority", "${appId}.rtcquebec")
+    buildType.resValue("string", "stm_info_authority", "${appId}.stminfo")
+    buildType.resValue("string", "stm_info_api_authority", "${appId}.stminfoapi")
+    buildType.resValue("string", "winnipeg_transit_authority", "${appId}.winnipeg_transit")
 }
