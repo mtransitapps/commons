@@ -317,6 +317,13 @@ dependencies {
         implementation(libs.bundles.billingClient)
         implementation(libs.bundles.fb)
         implementation(libs.bundles.appLovin)
+        implementation(libs.bundles.retrofit)
+        implementation(platform(libs.okhttp.bom))
+        implementation(libs.bundles.okHttp)
+        implementation(libs.bundles.gson)
+        //noinspection DependencyNotationArgument // fixed in AGP 8.3.0 https://issuetracker.google.com/issues/295282939
+        debugImplementation(libs.chucker)
+        releaseImplementation(libs.chucker.noop)
 
         if (!isDevLeakCanaryOff) {
             debugImplementation(libs.leakcanary)

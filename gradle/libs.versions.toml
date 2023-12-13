@@ -186,6 +186,7 @@ chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "ch
 chucker-noop = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-okhttp = { module = "com.github.bumptech.glide:okhttp3-integration", version.ref = "glide" }
 glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
 android-svg = { module = "com.caverock:androidsvg-aar", version.ref = "android-svg" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -279,6 +280,7 @@ gson = [
 img = [
     "android-svg",
     "glide",
+    "glide-okhttp",
 ]
 test-unit = [
     "junit",
