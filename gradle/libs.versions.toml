@@ -156,7 +156,7 @@ androidx-viewmodel-state = { module = "androidx.lifecycle:lifecycle-viewmodel-sa
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager2" }
 androidx-workManager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-workManager" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
-# mediationTestSuite = { module = "com.google.android.ads:mediation-test-suite", version.ref = "adsMediationTestSuite"} # adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
+mediationTestSuite = { module = "com.google.android.ads:mediation-test-suite", version.ref = "adsMediationTestSuite" } # adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
 gps-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "gps-ads" }
 gps-basement = { module = "com.google.android.gms:play-services-basement", version.ref = "gps-basement" }
 gps-location = { module = "com.google.android.gms:play-services-location", version.ref = "gps-location" }
