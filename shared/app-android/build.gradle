@@ -153,7 +153,7 @@ android {
 
         manifestPlaceholders.permission_provider_read = "org.mtransit.android.provider.permission.READ_PROVIDER"
         manifestPlaceholders.permission_receiver_broadcast = "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER"
-        setupResValues(it, projectPkg, false)
+        setupResValues(it, projectPkg)
     }
 
     signingConfigs {
@@ -207,7 +207,7 @@ android {
 
             manifestPlaceholders.permission_provider_read = "org.mtransit.android.debug.provider.permission.READ_PROVIDER"
             manifestPlaceholders.permission_receiver_broadcast = "org.mtransit.android.debug.receiver.permission.BROADCAST_RECEIVER"
-            setupResValues(it, projectPkg + applicationIdSuffix, true)
+            setupResValues(it, projectPkg + applicationIdSuffix)
 
             // testCoverageEnabled false // DEBUG skip coverage report
             shrinkResources = false
@@ -370,10 +370,14 @@ play {
     updatePriority.set(4) // 0-5, 0=default, 5=highest priority
 }
 
-def setupResValues(buildType, appId, isDebug) {
-    println "> Resource values set for: " + appId + " (DEBUG: " + isDebug + ")"
+def setupResValues(buildType, appId) {
+    println "> Resource values set for: " + appId
 
-    if (isDebug) {
+    if (buildType.name == "debug") {
+        // does NOT work because we can't overwrite a resource defined in XML
+        // -> it would require:
+        // - moving RELEASE app name to a config file (& remove from XML file)
+        // - setting DEBUG & RELEASE @string/app_name from Gradle build file
         def appName = "MT " + appId
                 .replaceAll("org.mtransit.android.", "")
                 .replaceAll(".debug", "")
