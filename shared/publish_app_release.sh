@@ -64,12 +64,24 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
 
   # TAG RELEASE ON GITHUB
   # Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/build.gradle
-  MT_SHARED_VERSION_NAME=$(grep "version.name=" commons-android/version.properties | cut -d "=" -f 2);
-  # App version code also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/build.gradle
-  APP_VERSION_CODE_INT=$(git -C ./ rev-list HEAD --count);
-  APP_VERSION_CODE_INT=$(($APP_VERSION_CODE_INT + 1000));
-  # App version name also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/build.gradle
-  APP_VERSION_NAME="${MT_SHARED_VERSION_NAME}r${APP_VERSION_CODE_INT}";
+  APK_PATH="./app-android/build/outputs/apk/release/*.apk";
+  APK_PATH_APP_ANDROID="./build/outputs/apk/release/*.apk";
+  APK_FILES=($APK_PATH);
+  AAB_PATH="./app-android/build/outputs/bundle/release/*.aab";
+  AAB_PATH_APP_ANDROID="./build/outputs/bundle/release/*.aab";
+  AAB_FILES=($AAB_PATH);
+  if [ -e "${APK_FILES[0]}" ]; then
+    APK_FILE_NAME=$(basename "$APK_FILES");
+    echo "APK_FILE_NAME: $APK_FILE_NAME.";
+    APP_VERSION_NAME=$(echo "$APK_FILE_NAME" | sed 's/.*_v\([0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}_r[0-9]\+\).*/\1/');
+  elif [ -e "${AAB_FILES[0]}" ]; then
+    ABB_FILE_NAME=$(basename "$AAB_FILES");
+    echo "ABB_FILE_NAME: $ABB_FILE_NAME.";
+    APP_VERSION_NAME=$(echo "$ABB_FILE_NAME" | sed 's/.*_v\([0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}_r[0-9]\+\).*/\1/');
+  else
+    echo "Cannot find app version name w/o APK or ABB!";
+    exit 1;
+  fi
   if [[ -z "${APP_VERSION_NAME}" ]]; then
     echo "APP_VERSION_NAME empty!";
     exit 1;
@@ -78,12 +90,6 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
     echo "> GitHub > publishing release '$APP_VERSION_NAME'...";
     GH_FILES="";
     GH_FILES_APP_ANDROID="";
-    APK_PATH="./app-android/build/outputs/apk/release/*.apk";
-    APK_PATH_APP_ANDROID="./build/outputs/apk/release/*.apk";
-    APK_FILES=($APK_PATH);
-    AAB_PATH="./app-android/build/outputs/bundle/release/*.aab";
-    AAB_PATH_APP_ANDROID="./build/outputs/bundle/release/*.aab";
-    AAB_FILES=($AAB_PATH);
     if [ -e "${APK_FILES[0]}" ]; then
         GH_FILES+=" $APK_PATH";
         GH_FILES_APP_ANDROID+=" $APK_PATH_APP_ANDROID";

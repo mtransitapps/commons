@@ -65,9 +65,11 @@ android {
     }
 
     // Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
-    Properties versionProperties = new Properties()
-    versionProperties.load(new FileInputStream(file("${project.rootDir}/commons-android/version.properties")))
-    def sharedVersionName = versionProperties["version.name"]
+    def now = new Date()
+    def year = now.format('yyyy').toInteger() - 2000
+    def month = now.format('MM')
+    def dayOfMonth = now.format('dd')
+    def sharedVersionName = "" + year + "." + month + "." + dayOfMonth
     println "> Shared version name: " + sharedVersionName
 
     // App version code also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
