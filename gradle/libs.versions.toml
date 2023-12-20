@@ -16,7 +16,7 @@ kotlin = "1.9.21"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.7.3"
 # https://github.com/google/ksp/releases/latest
-ksp = "1.9.21-1.0.15"
+ksp = "1.9.21-1.0.16"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.4.1.3373"
 # https://developer.android.com/studio/releases/gradle-plugin
@@ -28,11 +28,11 @@ benmanes-versions = "0.50.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
 littlerobots-versioncatalog = "0.8.1"
 # https://github.com/google/dagger/releases/latest
-hilt = "2.49"
+hilt = "2.50"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
-androidx-activity = "1.8.1"
-androidx-annotation = "1.7.0"
+androidx-activity = "1.8.2"
+androidx-annotation = "1.7.1"
 androidx-appCompat = "1.6.1"
 androidx-browser = "1.7.0"
 androidx-cardview = "1.0.0"
@@ -42,7 +42,7 @@ androidx-core = "1.12.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.6.2"
 androidx-lifecycle = "2.6.2"
-androidx-nav = "2.7.5"
+androidx-nav = "2.7.6"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.3.2"
 androidx-room = "2.6.1"
@@ -58,7 +58,7 @@ material = "1.10.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.8.0"
+maps-utils = "3.8.2"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "5.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
@@ -82,7 +82,7 @@ play-appUpdate = "2.1.0"
 fbAudienceNetwork-mediation = "6.16.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
-appLovin-mediation = "11.11.3.0"
+appLovin-mediation = "12.1.0.0"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.12"
 # https://github.com/protocolbuffers/protobuf/releases/latest
@@ -156,7 +156,8 @@ androidx-viewmodel-state = { module = "androidx.lifecycle:lifecycle-viewmodel-sa
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager2" }
 androidx-workManager-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-workManager" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
-mediationTestSuite = { module = "com.google.android.ads:mediation-test-suite", version.ref = "adsMediationTestSuite" } # adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
+# adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
+mediationTestSuite = { module = "com.google.android.ads:mediation-test-suite", version.ref = "adsMediationTestSuite" }
 gps-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "gps-ads" }
 gps-basement = { module = "com.google.android.gms:play-services-basement", version.ref = "gps-basement" }
 gps-location = { module = "com.google.android.gms:play-services-location", version.ref = "gps-location" }
