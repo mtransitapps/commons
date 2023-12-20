@@ -12,3 +12,11 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: "mmathieum"
+    groups:
+      kotlin-ksp-compose:
+        patterns:
+          - "org.jetbrains.kotlin:*"
+          - "org.jetbrains.kotlin.jvm"
+          - "com.google.devtools.ksp"
+          - "androidx.compose.compiler:compiler"
+      open-pull-requests-limit: 7
