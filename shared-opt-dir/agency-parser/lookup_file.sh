@@ -12,6 +12,7 @@ CAT_COMMAND="cat";
 if command -v "batcat" &> /dev/null
 then
     CAT_COMMAND="batcat -l csv --file-name $FILE_NAME";
+    # CAT_COMMAND="batcat -l csv --paging never --file-name $FILE_NAME";
 fi
 
 GREP_COMMAND="";
