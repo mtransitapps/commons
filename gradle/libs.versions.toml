@@ -20,7 +20,7 @@ ksp = "1.9.22-1.0.16"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.4.1.3373"
 # https://developer.android.com/studio/releases/gradle-plugin
-android-gradlePlugin = "8.2.0"
+android-gradlePlugin = "8.2.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 triplet-playPublisher = "3.8.6"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
