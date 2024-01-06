@@ -6,6 +6,7 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: "mmathieum"
+    open-pull-requests-limit: 7
   # Gradle in /gradle/libs.versions.toml
   - package-ecosystem: "gradle"
     directory: "/"
@@ -19,4 +20,4 @@ updates:
           - "org.jetbrains.kotlin.jvm"
           - "com.google.devtools.ksp"
           - "androidx.compose.compiler:compiler"
-      open-pull-requests-limit: 7
+    open-pull-requests-limit: 7

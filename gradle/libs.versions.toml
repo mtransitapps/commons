@@ -66,7 +66,7 @@ gps-plugin = "4.4.0"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuite = "3.0.0"
 gps-ads = "22.6.0"
-gps-basement = "18.2.0"
+gps-basement = "18.3.0"
 gps-location = "21.0.1"
 gps-maps = "18.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
@@ -84,7 +84,7 @@ fbAudienceNetwork-mediation = "6.16.0.0"
 # appLovin = "__._._" # included with nediation adapter
 appLovin-mediation = "12.1.0.0"
 # https://github.com/square/leakcanary/releases
-leakcanary = "2.12"
+leakcanary = "2.13"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
