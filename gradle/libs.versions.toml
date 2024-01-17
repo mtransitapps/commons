@@ -2,8 +2,8 @@
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates#gradle
 # https://maven.google.com/
 [versions]
-# Android 5.0 Lollipop
-sdk-min = "21"
+# Android 7.0 Nougat
+sdk-min = "24"
 # Android 14 Upside Down Cake
 sdk-target = "34"
 # Android 14 Upside Down Cake
