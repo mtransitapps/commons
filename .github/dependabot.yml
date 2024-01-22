@@ -65,6 +65,10 @@ updates:
       dev:
         patterns:
           - "com.squareup.leakcanary:*"
+      gradle-updater:
+        patterns:
+          - "com.github.ben-manes.versions"
+          - "nl.littlerobots.version-catalog-update"
       network:
         patterns:
           - "com.squareup.okhttp3:*"
