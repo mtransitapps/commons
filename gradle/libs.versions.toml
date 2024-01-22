@@ -67,7 +67,7 @@ gps-plugin = "4.4.0"
 adsMediationTestSuite = "3.0.0"
 gps-ads = "22.6.0"
 gps-basement = "18.3.0"
-gps-location = "21.0.1"
+gps-location = "21.1.0"
 gps-maps = "18.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
