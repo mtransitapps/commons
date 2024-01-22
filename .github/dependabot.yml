@@ -60,10 +60,10 @@ updates:
         patterns:
           - "org.apache.commons:*"
       di:
-        pattern:
+        patterns:
           - "com.google.dagger:*"
       dev:
-        pattern:
+        patterns:
           - "com.squareup.leakcanary:*"
       network:
         patterns:
