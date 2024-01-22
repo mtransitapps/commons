@@ -18,6 +18,8 @@ updates:
   # Gradle in /gradle/libs.versions.toml
   - package-ecosystem: "gradle"
     directory: "/"
+    registries:
+      - maven-google
     schedule:
       interval: "weekly"
     target-branch: "mmathieum"
