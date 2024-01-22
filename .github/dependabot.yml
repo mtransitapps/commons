@@ -6,6 +6,10 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: "mmathieum"
+    groups:
+      gh-actions:
+        patterns:
+          - "actions/*"
     open-pull-requests-limit: 7
   # Gradle in /gradle/libs.versions.toml
   - package-ecosystem: "gradle"
