@@ -27,7 +27,53 @@ updates:
       kotlin-ksp-compose:
         patterns:
           - "org.jetbrains.kotlin:*"
+          - "org.jetbrains.kotlinx:*"
           - "org.jetbrains.kotlin.jvm"
           - "com.google.devtools.ksp"
           - "androidx.compose.compiler:compiler"
+      androidx:
+        patterns:
+          - "androidx*:*"
+          - "com.google.android.material:material"
+      androidx:
+        patterns:
+          - "androidx*:*"
+      gms:
+        patterns:
+          - "com.google.android.gms:*"
+          - "com.google.firebase:*"
+      play:
+        patterns:
+          - "com.android.billingclient:*"
+          - "com.google.android.play:*"
+      ads:
+        patterns:
+          - "com.google.android.ads:*"
+          - "com.google.ads.mediation:*"
+      maps:
+        patterns:
+          - "com.google.maps.android:*"
+      protobuf:
+        patterns:
+          - "com.google.protobuf:*"
+      apache-commons:
+        patterns:
+          - "org.apache.commons:*"
+      di:
+        pattern:
+          - "com.google.dagger:*"
+      dev:
+        pattern:
+          - "com.squareup.leakcanary:*"
+      network:
+        patterns:
+          - "com.squareup.okhttp3:*"
+          - "com.github.chuckerteam.chucker:*"
+          - "com.google.code.gson:gson"
+          - "com.github.bumptech.glide:*"
+          - "com.caverock:androidsvg-aar"
+      test:
+        patterns:
+          - "junit:*"
+          - "org.mockito:*"
     open-pull-requests-limit: 7
