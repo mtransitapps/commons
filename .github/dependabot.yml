@@ -2,7 +2,8 @@ version: 2
 registries:
   maven-google:
     type: maven-repository
-    url: "https://dl.google.com/dl/android/maven2/"
+    url: "https://maven.google.com"
+    replaces-base: true
 updates:
   # GitHub Actions in /shared-overwrite/.github/workflows/
   - package-ecosystem: "github-actions"
