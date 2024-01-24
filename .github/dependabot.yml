@@ -36,9 +36,6 @@ updates:
         patterns:
           - "androidx*:*"
           - "com.google.android.material:material"
-      androidx:
-        patterns:
-          - "androidx*:*"
       gms:
         patterns:
           - "com.google.android.gms:*"
