@@ -71,7 +71,7 @@ gps-location = "21.1.0"
 gps-maps = "18.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "32.7.1"
+firebase-bom = "32.7.2"
 firebase-crashlytics-plugin = "2.9.9"
 play-billing = "6.1.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
