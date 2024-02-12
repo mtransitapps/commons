@@ -62,7 +62,7 @@ maps-utils = "3.8.2"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "5.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
-gps-plugin = "4.4.0"
+gps-plugin = "4.4.1"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuite = "3.0.0"
 gps-ads = "22.6.0"
