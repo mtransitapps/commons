@@ -36,6 +36,7 @@ androidx-annotation = "1.7.1"
 androidx-appCompat = "1.6.1"
 androidx-browser = "1.7.0"
 androidx-cardview = "1.0.0"
+androidx-collection = "1.4.0"
 androidx-coordinator = "1.2.0"
 androidx-constraint = "2.1.4"
 androidx-core = "1.12.0"
@@ -132,6 +133,7 @@ androidx-annotation = { module = "androidx.annotation:annotation", version.ref =
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appCompat" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidx-browser" }
 androidx-cardView = { module = "androidx.cardview:cardview", version.ref = "androidx-cardview" }
+androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
 androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "androidx-coordinator" }
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraint" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
@@ -212,6 +214,7 @@ androidx = [
     "androidx-appCompat",
     "androidx-browser",
     "androidx-cardView",
+    "androidx-collection",
     "androidx-constraintLayout",
     "androidx-coordinatorlayout",
     "androidx-core",
