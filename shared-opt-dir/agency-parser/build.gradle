@@ -8,6 +8,10 @@ application {
     applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
 }
 
+run {
+    standardInput = System.in
+}
+
 java {
     sourceCompatibility = rootProject.javaVersion
     targetCompatibility = rootProject.javaVersion
