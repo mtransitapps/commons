@@ -314,7 +314,7 @@ function checkResult() {
 		CONFIRM=$2;
 	fi
 	if [[ ${RESULT} != 0 ]]; then
-		echo "> FAILED, AGAIN AND AGAIN, FAILED, AGAIN AND AGAIN, FAILED, AGAIN AND AGAIN";
+		echo "> ---------- COMMAND FAILED! ---------- <";
 		exit ${RESULT};
 	else
 		if [[ "$CONFIRM" == true ]]; then
