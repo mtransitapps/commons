@@ -317,6 +317,7 @@ dependencies {
         implementation(platform(libs.firebase.bom))
         implementation(libs.bundles.gps)
         implementation(libs.bundles.billingClient)
+        implementation(libs.play.review)
         implementation(libs.bundles.fb)
         implementation(libs.bundles.appLovin)
         implementation(libs.bundles.retrofit)

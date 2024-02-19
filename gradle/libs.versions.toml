@@ -78,6 +78,7 @@ play-billing = "6.1.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 play-appUpdate = "2.1.0"
+play-review = "2.0.1"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
 fbAudienceNetwork-mediation = "6.16.0.0"
@@ -125,6 +126,7 @@ xerial-SQLiteJDBC = "3.45.1.0"
 [libraries]
 kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
@@ -172,6 +174,7 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 play-billing = { module = "com.android.billingclient:billing-ktx", version.ref = "play-billing" }
 play-appUpdate = { module = "com.google.android.play:app-update-ktx", version.ref = "play-appUpdate" }
+play-review = { module = "com.google.android.play:review-ktx", version.ref = "play-review" }
 # fbAudienceNetwork = { module = "com.facebook.android:audience-network-sdk", version.ref = "fbAudienceNetwork" } # included with nediation adapter
 fbAudienceNetwork-mediation = { module = "com.google.ads.mediation:facebook", version.ref = "fbAudienceNetwork-mediation" }
 # appLovin = { module = "com.applovin:applovin-sdk", version.ref = "appLovin" } # included with nediation adapter
@@ -289,6 +292,7 @@ img = [
 test-unit = [
     "junit",
     "mockito-core",
+    "kotlinx-coroutines-test",
 ]
 commons = [
     "commons-csv",
