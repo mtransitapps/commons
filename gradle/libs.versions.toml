@@ -14,7 +14,7 @@ buildTools = "34.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "1.9.22"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-kotlinx-coroutines = "1.7.3"
+kotlinx-coroutines = "1.8.0"
 # https://github.com/google/ksp/releases/latest
 ksp = "1.9.22-1.0.17"
 # https://plugins.gradle.org/plugin/org.sonarqube
