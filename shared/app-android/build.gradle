@@ -44,6 +44,7 @@ if (isMainApp) {
     apply plugin: libs.plugins.hilt.get().pluginId
     apply plugin: libs.plugins.gms.get().pluginId
     apply plugin: libs.plugins.firebase.crashlytics.get().pluginId
+    apply plugin: libs.plugins.firebase.perf.get().pluginId
     // apply plugin: libs.plugins.sonar.get().pluginId
 }
 
