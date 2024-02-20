@@ -74,6 +74,7 @@ gps-maps = "18.2.0"
 # ALL: https://firebase.google.com/support/releases
 firebase-bom = "32.7.2"
 firebase-crashlytics-plugin = "2.9.9"
+firebase-perf-plugin = "1.4.2"
 play-billing = "6.1.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
@@ -171,6 +172,7 @@ maps-utils = { module = "com.google.maps.android:android-maps-utils", version.re
 maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "maps-ktx" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-perf = { module = "com.google.firebase:firebase-perf" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 play-billing = { module = "com.android.billingclient:billing-ktx", version.ref = "play-billing" }
 play-appUpdate = { module = "com.google.android.play:app-update-ktx", version.ref = "play-appUpdate" }
@@ -306,6 +308,7 @@ android-application = { id = "com.android.application", version.ref = "android-g
 android-library = { id = "com.android.library", version.ref = "android-gradlePlugin" }
 android-lint = { id = "com.android.lint", version.ref = "android-gradlePlugin" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
+firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebase-perf-plugin" }
 gms = { id = "com.google.gms.google-services", version.ref = "gps-plugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

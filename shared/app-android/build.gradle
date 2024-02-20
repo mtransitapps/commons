@@ -222,6 +222,10 @@ android {
                     // https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?platform=android#keep_obfuscated_build_variants
                     mappingFileUploadEnabled = false
                 }
+                FirebasePerformance {
+                    // https://firebase.google.com/docs/perf-mon/disable-sdk?platform=android#disable-gradle-plugin
+                    instrumentationEnabled false
+                }
             } else {
                 minifyEnabled = false
             }
