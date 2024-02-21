@@ -249,6 +249,7 @@ dagger = [
 gps = [
     "firebase-analytics",
     "firebase-crashlytics",
+    "firebase-perf",
     "gps-ads",
     "gps-basement",
     "gps-location",
