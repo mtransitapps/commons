@@ -317,7 +317,6 @@ gms = { id = "com.google.gms.google-services", version.ref = "gps-plugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 triplet-playPublisher = { id = "com.github.triplet.play", version.ref = "triplet-playPublisher" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }

@@ -1,5 +1,4 @@
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
-import org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs
 
 plugins {
     alias(libs.plugins.android.application)
@@ -39,7 +38,6 @@ if (devPropertiesFile.exists()) {
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
 if (isMainApp) {
-    apply plugin: libs.plugins.kotlin.kapt.get().pluginId
     apply plugin: libs.plugins.google.ksp.get().pluginId
     apply plugin: libs.plugins.hilt.get().pluginId
     apply plugin: libs.plugins.gms.get().pluginId
@@ -322,7 +320,7 @@ dependencies {
         implementation(libs.bundles.kotlin)
         implementation(libs.bundles.kotlin.android)
         implementation(libs.bundles.dagger)
-        kapt(libs.hilt.compiler) // 2023-08-30: not compatible with KSP https://github.com/google/dagger/issues/2349
+        ksp(libs.hilt.compiler)
         implementation(libs.bundles.androidx)
         implementation(libs.material)
         ksp(libs.androidx.room.compiler)
@@ -360,16 +358,6 @@ dependencies {
 }
 
 if (isMainApp) {
-    tasks.withType(KaptGenerateStubs).configureEach {
-        //noinspection GrDeprecatedAPIUsage // TODO use compilerOptions.jvmTarget.set()
-        kotlinOptions {
-            jvmTarget = rootProject.javaVersion
-        }
-    }
-
-    kapt {
-        correctErrorTypes = true // allow references to generated code
-    }
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
         arg("room.incremental", "true")
