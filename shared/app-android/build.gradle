@@ -262,6 +262,15 @@ android {
         if (isMainApp) {
             abortOnError = true // do fail CI on main app
             warningsAsErrors = true
+            informational "DoNotMockPlatformTypes", // Platform types should not be mocked #SlackLint
+                    "DenyListedApi", // Deny-listed API #SlackLint
+                    "DeprecatedCall", // This class or method is deprecated; consider using an alternative. #SlackLint
+                    "KotlinPairNotCreated" // Use Kotlin's kotlin.Pair instead of other Pair types from other libraries #SlackLint
+            disable "InjectInJava", // Only Kotlin classes should be injected in order for Anvil to work. #SlackLint
+                    "DeprecatedSqlUsage", // Use SqlDelight! #SlackLint
+                    "RawDispatchersUse", // Use SlackDispatchers. #SlackLint
+                    "ArgInFormattedQuantityStringRes", // Count value in formatted string resource. #SlackLint
+                    "FragmentFieldInjection" // Fragment dependencies should be injected using the Fragment's constructor. #SlackLint
             // https://developer.android.com/studio/write/lint#snapshot
             baseline file("lint-baseline.xml")
         } else {
@@ -336,6 +345,8 @@ dependencies {
         if (!isDevLeakCanaryOff) {
             debugImplementation(libs.leakcanary)
         }
+
+        lintChecks(libs.slackLint)
 
         testImplementation(libs.bundles.test.unit)
     } else {
