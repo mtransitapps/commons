@@ -28,7 +28,7 @@ benmanes-versions = "0.51.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
 littlerobots-versioncatalog = "0.8.4"
 # https://github.com/google/dagger/releases/latest
-hilt = "2.50"
+hilt = "2.51"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.8.2"
