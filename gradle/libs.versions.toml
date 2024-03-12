@@ -12,11 +12,11 @@ sdk-compile = "34"
 # Android 14 Upside Down Cake
 buildTools = "34.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.8.0"
 # https://github.com/google/ksp/releases/latest
-ksp = "1.9.22-1.0.18"
+ksp = "1.9.23-1.0.19"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "4.4.1.3373"
 # https://developer.android.com/studio/releases/gradle-plugin
