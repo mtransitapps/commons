@@ -98,7 +98,7 @@ protobuf = "3.25.3"
 protobuf-plugin = "0.9.4"
 # https://github.com/square/retrofit/tags
 # https://github.com/square/retrofit/releases/latest
-retrofit = "2.9.0"
+retrofit = "2.10.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
