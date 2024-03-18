@@ -22,7 +22,7 @@ sonar = "4.4.1.3373"
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradlePlugin = "8.3.0"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
-triplet-playPublisher = "3.9.0"
+triplet-playPublisher = "3.9.1"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
 benmanes-versions = "0.51.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
