@@ -120,7 +120,7 @@ junit = "4.13.2"
 mockito = "5.11.0"
 # https://commons.apache.org/
 commons-csv = "1.10.0"
-commons-io = "2.15.1"
+commons-io = "2.16.0"
 commons-lang3 = "3.14.0"
 commons-text = "1.11.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
