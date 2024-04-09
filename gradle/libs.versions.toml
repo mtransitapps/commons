@@ -16,7 +16,7 @@ kotlin = "1.9.23"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.8.0"
 # https://github.com/google/ksp/releases/latest
-ksp = "1.9.23-1.0.19"
+ksp = "1.9.23-1.0.20"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "5.0.0.4638"
 # https://developer.android.com/studio/releases/gradle-plugin
