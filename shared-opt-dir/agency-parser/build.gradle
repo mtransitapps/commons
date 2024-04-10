@@ -30,6 +30,8 @@ compileTestKotlin {
 }
 
 dependencies {
+    implementation(platform(libs.kotlin.bom))
+    implementation(platform(libs.kotlinx.coroutines.bom))
     implementation(libs.bundles.kotlin)
 
     implementation(project(":parser"))

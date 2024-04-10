@@ -20,7 +20,7 @@ ksp = "1.9.23-1.0.20"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "5.0.0.4638"
 # https://developer.android.com/studio/releases/gradle-plugin
-android-gradlePlugin = "8.3.1"
+android-gradlePlugin = "8.3.2"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 triplet-playPublisher = "3.9.1"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
@@ -127,10 +127,12 @@ commons-text = "1.11.0"
 xerial-SQLiteJDBC = "3.45.2.0"
 
 [libraries]
-kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
+kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
+kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
@@ -172,10 +174,10 @@ gps-maps = { module = "com.google.android.gms:play-services-maps", version.ref =
 maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "maps-ktx" }
 maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "maps-utils" }
 maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "maps-ktx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-perf = { module = "com.google.firebase:firebase-perf" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 play-billing = { module = "com.android.billingclient:billing-ktx", version.ref = "play-billing" }
 play-appUpdate = { module = "com.google.android.play:app-update-ktx", version.ref = "play-appUpdate" }
 play-review = { module = "com.google.android.play:review-ktx", version.ref = "play-review" }

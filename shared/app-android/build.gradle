@@ -316,6 +316,8 @@ dependencies {
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
             exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
         }
+        implementation(platform(libs.kotlin.bom))
+        implementation(platform(libs.kotlinx.coroutines.bom))
         implementation(libs.bundles.kotlin)
         implementation(libs.bundles.kotlin.android)
         implementation(libs.bundles.dagger)
@@ -347,6 +349,8 @@ dependencies {
         testImplementation(libs.bundles.test.unit)
     } else {
         implementation(project(":commons-android"))
+        implementation(platform(libs.kotlin.bom))
+        implementation(platform(libs.kotlinx.coroutines.bom))
         implementation(libs.bundles.kotlin)
         implementation(libs.bundles.kotlin.android)
         implementation(libs.androidx.core)
