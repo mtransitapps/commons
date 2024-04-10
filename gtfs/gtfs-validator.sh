@@ -35,7 +35,7 @@ echo "> GTFS Validator JAR file: '$JAR_FILE'.";
 echo "> Launching GTFS Validator...";
 # https://github.com/MobilityData/gtfs-validator#using-the-command-line
 # https://github.com/MobilityData/gtfs-validator/releases/latest/
-# https://github.com/MobilityData/gtfs-validator/releases/latest/download/gtfs-validator-4.2.0-cli.jar
+# https://github.com/MobilityData/gtfs-validator/releases/latest/download/gtfs-validator-5.0.1-cli.jar
 # --url $(cat $FILE_PATH/input_url) --storage_directory "$GTFS_ZIP_FILE"
 # --country_code ca
 java \
