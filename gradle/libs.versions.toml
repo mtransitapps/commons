@@ -204,6 +204,7 @@ glide-okhttp = { module = "com.github.bumptech.glide:okhttp3-integration", versi
 glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
 android-svg = { module = "com.caverock:androidsvg-aar", version.ref = "android-svg" }
 junit = { module = "junit:junit", version.ref = "junit" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 commons-csv = { module = "org.apache.commons:commons-csv", version.ref = "commons-csv" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
@@ -300,6 +301,7 @@ img = [
 ]
 test-unit = [
     "junit",
+    "kotlin-test-junit",
     "mockito-core",
     "kotlinx-coroutines-test",
 ]
