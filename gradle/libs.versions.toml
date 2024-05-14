@@ -32,7 +32,7 @@ hilt = "2.51.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.9.0"
-androidx-annotation = "1.7.1"
+androidx-annotation = "1.8.0"
 androidx-appCompat = "1.6.1"
 androidx-browser = "1.8.0"
 androidx-cardview = "1.0.0"
@@ -41,8 +41,8 @@ androidx-coordinator = "1.2.0"
 androidx-constraint = "2.1.4"
 androidx-core = "1.13.1"
 androidx-core-splashscreen = "1.0.1"
-androidx-fragment = "1.7.0"
-androidx-lifecycle = "2.7.0"
+androidx-fragment = "1.7.1"
+androidx-lifecycle = "2.8.0"
 androidx-nav = "2.7.7"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.3.2"
@@ -52,7 +52,7 @@ androidx-sqlite = "2.4.0"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.2.0"
 # @pin 1.1.0-beta02
-androidx-viewpager2 = "1.0.0"
+androidx-viewpager2 = "1.1.0"
 androidx-workManager = "2.9.0"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.12.0"
@@ -73,10 +73,9 @@ gps-maps = "18.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
 firebase-bom = "33.0.0"
-#noinspection GradleDependency // TODO: update to 3.0.0 https://firebase.google.com/docs/crashlytics/upgrade-to-crashlytics-gradle-plugin-v3
-firebase-crashlytics-plugin = "2.9.9"
+firebase-crashlytics-plugin = "3.0.1"
 firebase-perf-plugin = "1.4.2"
-play-billing = "6.2.1"
+play-billing = "7.0.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 play-appUpdate = "2.1.0"
