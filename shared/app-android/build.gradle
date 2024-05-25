@@ -7,11 +7,18 @@ plugins {
 }
 
 Properties projectNameProperties = new Properties()
-projectNameProperties.load(new FileInputStream(file("project_name.properties")))
+def projectNamePropertiesFile = file("../project_name.properties")
+if (!projectNamePropertiesFile.exists()) {
+    projectNamePropertiesFile = file("project_name.properties")
+}
+projectNameProperties.load(new FileInputStream(projectNamePropertiesFile))
 def projectName = projectNameProperties["project.name"]
 println "> App project name: " + projectName
 
-File pkgConfigFile = file("${project.rootDir}/app-android/config/pkg")
+File pkgConfigFile = file("${project.rootDir}/config/pkg")
+if (!projectNamePropertiesFile.exists()) {
+    projectNamePropertiesFile = file("${project.rootDir}/app-android/config/pkg")
+}
 def projectPkg = ""
 if (pkgConfigFile.exists()) {
     projectPkg = pkgConfigFile.text.trim()

@@ -16,6 +16,8 @@ setIsGHEnabled;
 
 setGitBranch;
 
+setGitProjectName;
+
 setGradleArgs;
 
 setGitCommitEnabled;
@@ -52,15 +54,15 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
   # PUSH CODE TO MASTER BRANCH ON GITHUB
   MAIN_BRANCH_NAME="master"; #TODO master->main
 
-  echo "> GIT submodule > push origin mmathieum:$MAIN_BRANCH_NAME...";
-  git submodule foreach git push origin mmathieum:$MAIN_BRANCH_NAME; # git push fails if there are new changes on remote
+  echo "> GIT submodule > push origin $GIT_BRANCH:$MAIN_BRANCH_NAME...";
+  git submodule foreach git push origin $GIT_BRANCH:$MAIN_BRANCH_NAME; # git push fails if there are new changes on remote
   checkResult $?;
-  echo "> GIT submodule > push origin mmathieum:$MAIN_BRANCH_NAME... DONE";
+  echo "> GIT submodule > push origin $GIT_BRANCH:$MAIN_BRANCH_NAME... DONE";
 
-  echo "> GIT > push origin mmathieum:$MAIN_BRANCH_NAME...";
-  git push origin mmathieum:$MAIN_BRANCH_NAME; # git push fails if there are new changes on remote
+  echo "> GIT > push origin $GIT_BRANCH:$MAIN_BRANCH_NAME...";
+  git push origin $GIT_BRANCH:$MAIN_BRANCH_NAME; # git push fails if there are new changes on remote
   checkResult $?;
-  echo "> GIT > push origin mmathieum:$MAIN_BRANCH_NAME... DONE";
+  echo "> GIT > push origin $GIT_BRANCH:$MAIN_BRANCH_NAME... DONE";
 
   # TAG RELEASE ON GITHUB
   # Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/build.gradle
@@ -100,13 +102,16 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
         echo "No APK/AAB";
     fi
     echo "GH_FILES: $GH_FILES.";
-    gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes $GH_FILES;
+    gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES;
     checkResult $?;
-    if [[ -d "app-android" ]]; then
-      cd app-android || exit 1; # >>
-      gh release create $APP_VERSION_NAME --target mmathieum --latest --generate-notes $GH_FILES_APP_ANDROID;
-      checkResult $?;
-      cd ../; # <<
+    # OLD REPO
+    if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then
+      if [[ -d "app-android" ]]; then
+        cd app-android || exit 1; # >>
+        gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES_APP_ANDROID;
+        checkResult $?;
+        cd ../; # <<
+      fi
     fi
     echo "> GitHub > publishing release '$APP_VERSION_NAME'... DONE";
   else

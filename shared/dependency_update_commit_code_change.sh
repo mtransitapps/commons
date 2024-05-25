@@ -26,19 +26,12 @@ if [[ ${MT_GIT_COMMIT_ENABLED} != true && ${MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENAB
 fi
 echo "> Git commit enabled ...";
 
-echo "> Cleaning GIT repo...";
-
 cd app-android || exit;
-DIRECTORY=$(basename ${PWD});
-
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
 echo "RESULT: $? (fail ok/expected)";
 echo ">> Cleaning keys... DONE";
-
 cd ..;
-
-echo "> Cleaning GIT repo... DONE";
 
 setGitUser;
 

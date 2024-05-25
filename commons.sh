@@ -171,6 +171,20 @@ function setGitUser() {
 	fi
 }
 
+function setGitProjectName() {
+	GIT_URL=$(git config --get remote.origin.url);
+	echo "GIT_URL: '$GIT_URL'.";
+	GIT_PROJECT_NAME=$(basename -- ${GIT_URL});
+	GIT_PROJECT_NAME="${GIT_PROJECT_NAME%.*}" # remove ".git" extension
+	echo "GIT_PROJECT_NAME: '$GIT_PROJECT_NAME'.";
+	if [[ -z "${GIT_PROJECT_NAME}" ]]; then
+		echo "GIT_PROJECT_NAME not found!";
+		exit 1;
+	fi
+	PROJECT_NAME="${GIT_PROJECT_NAME%-gradle}";
+	echo "PROJECT_NAME: '$PROJECT_NAME'.";
+}
+
 function setGitBranch() {
 	GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
 	if [[ "$GIT_BRANCH" = "HEAD" ]]; then

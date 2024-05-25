@@ -14,6 +14,8 @@ setIsCI;
 
 setGradleArgs;
 
+setGitProjectName;
+
 setGitCommitEnabled;
 
 if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
@@ -22,60 +24,64 @@ if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
 fi
 echo "> Git commit enabled ...";
 
-
-# ./gradlew androidDependencies ${GRADLE_ARGS};
-# checkResult $?;
-
-echo "> Cleaning GIT repo...";
-
 cd app-android || exit;
-
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
 echo "RESULT: $? (fail ok/expected)";
 echo ">> Cleaning keys... DONE";
-
 cd ..;
-
-echo "> Cleaning GIT repo... DONE";
 
 setGitUser;
 
 GIT_MSG="CI: $(date +'%-B %-d update')";
 echo "GIT_MSG: $GIT_MSG";
 
-echo "> GIT app-android > add...";
-git -C app-android add -v -A src/main/play; # release notes...
+
+APP_ANDROID_PATH="."; # "-C ."
+if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then
+  APP_ANDROID_PATH="app-android"; # OLD REPO
+fi
+
+SRC_PATH="app-android/src";
+if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then
+  SRC_PATH="src"; # OLD REPO
+fi
+
+
+echo "> GIT $APP_ANDROID_PATH > add...";
+git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/play; # release notes...
 checkResult $?;
-git -C app-android add -v -A src/main/res/value*; # values, values-fr...
+git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/res/value*; # values, values-fr...
 checkResult $?;
 if [[ -d "app-android/src/main/res-current" ]]; then # not in main app
-  git -C app-android add -v -A src/main/res-current; # main static schedule # required for non-bike agency modules
+  git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/res-current; # main static schedule # required for non-bike agency modules
   checkResult $?;
   if [[ -d "app-android/src/main/res-next" ]]; then
-      git -C app-android add -v -A src/main/res-next; # next static schedule # optional
+      git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/res-next; # next static schedule # optional
       checkResult $?;
   fi
 fi
-echo "> GIT app-android > add... DONE";
-echo "> GIT app-android > commit '$GIT_MSG'...";
-# git -C app-android git commit -q -m "$GIT_MSG";
-# git -C app-android git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-git -C app-android diff --staged --quiet || git -C app-android commit -m "$GIT_MSG";
+echo "> GIT $APP_ANDROID_PATH > add... DONE";
+echo "> GIT $APP_ANDROID_PATH > commit '$GIT_MSG'...";
+# git -C $APP_ANDROID_PATH git commit -q -m "$GIT_MSG";
+# git -C $APP_ANDROID_PATH git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
+git -C $APP_ANDROID_PATH diff --staged --quiet || git -C $APP_ANDROID_PATH commit -m "$GIT_MSG";
 checkResult $?;
-echo "> GIT app-android > commit '$GIT_MSG'... DONE";
-# TODO ? git -C app-android git push;
+echo "> GIT $APP_ANDROID_PATH > commit '$GIT_MSG'... DONE";
+# TODO ? git -C $APP_ANDROID_PATH git push;
 
-echo "> GIT > add...";
-git add -v -A;
-checkResult $?;
-echo "> GIT > add... DONE";
-echo "> GIT > commit '$GIT_MSG'...";
-# git commit -q -m "$GIT_MSG";
-git diff --staged --quiet || git commit -m "$GIT_MSG";
-checkResult $?;
-echo "> GIT > commit '$GIT_MSG'... DONE";
-# TODO ? git push;
+if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then # OLD REPO
+  echo "> GIT > add...";
+  git add -v -A;
+  checkResult $?;
+  echo "> GIT > add... DONE";
+  echo "> GIT > commit '$GIT_MSG'...";
+  # git commit -q -m "$GIT_MSG";
+  git diff --staged --quiet || git commit -m "$GIT_MSG";
+  checkResult $?;
+  echo "> GIT > commit '$GIT_MSG'... DONE";
+  # TODO ? git push;
+fi
 
 printGitStatus;
 

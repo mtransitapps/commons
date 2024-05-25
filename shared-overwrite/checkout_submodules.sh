@@ -18,15 +18,22 @@ else
 	echo "> Not a shallow GIT repo.";
 fi
 
+GIT_REPO_URL=$(git config --get remote.origin.url);
+echo "> Git repo URL: '$GIT_REPO_URL'.";
+
 declare -a SUBMODULES=(
 	"commons"
 	"commons-java"
 	"commons-android"
-	"app-android"
 );
+if [[ $GIT_REPO_URL == *"android-gradle"* ]]; then
+	SUBMODULES+=('app-android'); # OLD REPO
+fi
 if [[ -d "parser" ]]; then
     SUBMODULES+=('parser');
-    SUBMODULES+=('agency-parser');
+	if [[ $GIT_REPO_URL == *"android-gradle"* ]]; then
+		SUBMODULES+=('agency-parser'); # OLD REPO
+	fi
 fi
 echo "Submodules:";
 printf '* "%s"\n' "${SUBMODULES[@]}";

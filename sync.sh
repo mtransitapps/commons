@@ -5,6 +5,7 @@ source ${SCRIPT_DIR}/commons.sh;
 echo "================================================================================";
 echo "> SYNC...";
 echo "--------------------------------------------------------------------------------";
+# TODO REMOVE (DEPRECATED, USE code_setup.sh)
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
@@ -15,15 +16,7 @@ echo "Current directory: '$CURRENT_DIRECTORY'";
 
 # GIT SUBMODULEs
 
-GIT_URL=$(git config --get remote.origin.url); # remote get-url origin
-echo "> Git URL: '$GIT_URL'.";
-GIT_PROJECT_NAME=$(basename -- ${GIT_URL});
-GIT_PROJECT_NAME="${GIT_PROJECT_NAME%.*}"
-echo "> Git project name: '$GIT_PROJECT_NAME'.";
-if [[ -z "${GIT_PROJECT_NAME}" ]]; then
-	echo "GIT_PROJECT_NAME not found!";
-	exit 1;
-fi
+setGitProjectName;
 
 setGitBranch;
 
@@ -51,23 +44,29 @@ else
 	INIT_SUBMODULE=true;
 fi
 
+# SHARED SUBMODULES
 declare -a SUBMODULES=(
 	"commons"
 	"commons-java"
 	"commons-android"
-	"app-android"
 );
-PROJECT_NAME="${GIT_PROJECT_NAME:0:$((${#GIT_PROJECT_NAME} - 7))}";
 declare -a SUBMODULES_REPO=(
 	"commons"
 	"commons-java"
 	"commons-android"
 );
-if [[ $PROJECT_NAME == *android ]]; then
-	SUBMODULES_REPO+=($PROJECT_NAME);
-else
-	SUBMODULES_REPO+=("$PROJECT_NAME-android");
+
+# APP-ANDROID (OLD REPO)
+if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then
+	SUBMODULES+=('app-android');
+	if [[ $PROJECT_NAME == *android ]]; then
+		SUBMODULES_REPO+=($PROJECT_NAME);
+	else
+		SUBMODULES_REPO+=("$PROJECT_NAME-android");
+	fi
 fi
+
+# PARSER
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo "> Main android app: '$PROJECT_NAME' > parser NOT required";
 elif [[ $PROJECT_NAME == *bike ]]; then
@@ -76,8 +75,10 @@ else
 	echo "> Bus/Train/... android app: '$PROJECT_NAME' > parser required";
 	SUBMODULES+=('parser');
 	SUBMODULES_REPO+=('parser');
-	SUBMODULES+=('agency-parser');
-	SUBMODULES_REPO+=("${PROJECT_NAME}-parser");
+	if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then # OLD REPO
+		SUBMODULES+=('agency-parser');
+		SUBMODULES_REPO+=("${PROJECT_NAME}-parser");
+	fi
 fi
 echo "> Submodules:";
 printf '> - "%s"\n' "${SUBMODULES[@]}";

@@ -5,6 +5,7 @@ source ${SCRIPT_DIR}/commons.sh;
 echo "================================================================================";
 echo "> CODE SYNC...";
 echo "--------------------------------------------------------------------------------";
+# TODO rename "git repo sync"
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
@@ -15,15 +16,7 @@ echo "Current directory: '$CURRENT_DIRECTORY'";
 
 # GIT SUBMODULEs
 
-GIT_URL=$(git config --get remote.origin.url); # remote get-url origin
-echo "> Git URL: '$GIT_URL'.";
-GIT_PROJECT_NAME=$(basename -- ${GIT_URL});
-GIT_PROJECT_NAME="${GIT_PROJECT_NAME%.*}"
-echo "> Git project name: '$GIT_PROJECT_NAME'.";
-if [[ -z "${GIT_PROJECT_NAME}" ]]; then
-	echo "GIT_PROJECT_NAME not found!";
-	exit 1;
-fi
+setGitProjectName;
 
 setGitBranch;
 

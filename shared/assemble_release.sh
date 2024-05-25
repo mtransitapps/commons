@@ -29,7 +29,6 @@ else
 fi
 
 cd app-android || exit;
-DIRECTORY=$(basename ${PWD});
 
 # ----------------------------------------
 
@@ -39,7 +38,7 @@ checkResult $?;
 echo ">> Setup-ing keys... DONE";
 
 echo ">> Running bundle release AAB...";
-../gradlew :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
+../gradlew :app-android:bundleRelease ${GRADLE_ARGS};
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 
@@ -60,7 +59,7 @@ if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 	echo ">> Setup-ing keys... DONE";
 
 	echo ">> Running assemble release APK..."; # for GH release
-	../gradlew :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
+	../gradlew :app-android:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
 	RESULT=$?;
 	echo ">> Running assemble release APK... DONE";
 
