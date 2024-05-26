@@ -16,8 +16,8 @@ def projectName = projectNameProperties["project.name"]
 println "> App project name: " + projectName
 
 File pkgConfigFile = file("${project.rootDir}/config/pkg")
-if (!projectNamePropertiesFile.exists()) {
-    projectNamePropertiesFile = file("${project.rootDir}/app-android/config/pkg")
+if (!pkgConfigFile.exists()) {
+    pkgConfigFile = file("${project.rootDir}/app-android/config/pkg")
 }
 def projectPkg = ""
 if (pkgConfigFile.exists()) {
