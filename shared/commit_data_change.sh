@@ -36,7 +36,6 @@ setGitUser;
 GIT_MSG="CI: $(date +'%-B %-d update')";
 echo "GIT_MSG: $GIT_MSG";
 
-
 APP_ANDROID_PATH="."; # "-C ."
 if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
   APP_ANDROID_PATH="app-android";
@@ -46,7 +45,6 @@ SRC_PATH="app-android/src";
 if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
   SRC_PATH="src";
 fi
-
 
 echo "> GIT $APP_ANDROID_PATH > add...";
 git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/play; # release notes...
