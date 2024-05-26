@@ -8,7 +8,7 @@ orbs:
 workflows:
   workflow:
     jobs:
-      - job:
+      - mt-job:
           context:
             - MT_shared_context
 jobs:
@@ -25,12 +25,11 @@ jobs:
     executor:
       name: android/android-machine
       tag: default
-      resource-class: large
-      # https://circleci.com/docs/configuration-reference/#x86
-      # resource_class: medium # small, medium (default), medium+, large, xlarge
-      # resource_class: medium # (vCPU: 2 | RAM: 4GB) (DEFAULT)
-      resource_class: medium+ # (vCPU: 3 | RAM: 6GB)
-      # resource_class: large # (vCPU: 4 | RAM: 8GB) (large is maxiumum for free plan)
+      # https://circleci.com/docs/configuration-reference/#linuxvm-execution-environment
+      # resource-class: medium # small, medium (default), medium+, large, xlarge
+      # resource-class: medium # (vCPU: 2 | RAM: 4GB) (DEFAULT)
+      resource-class: medium # (vCPU: 2 | RAM: 7.5GB)
+      # resource-class: large # (vCPU: 4 | RAM: 8GB) (large is maxiumum for free plan)
     environment: # https://circleci.com/docs/2.0/java-oom/ (-XX:MaxRAMPercentage=90.0 )
       JAVA_TOOL_OPTIONS: -Xmx5432m
       JVM_OPTS: -Xmx5432m
