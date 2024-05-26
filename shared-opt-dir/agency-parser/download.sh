@@ -4,9 +4,12 @@ source ${SCRIPT_DIR}/../commons/commons.sh
 echo ">> Downloading..."
 
 FILE_PATH="${SCRIPT_DIR}";
-if [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then
+if [[ -d "${SCRIPT_DIR}/../config" ]]; then
+	FILE_PATH="${SCRIPT_DIR}/../config";
+elif [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then # OLD REPO
 	FILE_PATH="${SCRIPT_DIR}/../app-android/config";
 fi
+
 
 URL=`cat $FILE_PATH/input_url`;
 INPUT_DIR="${SCRIPT_DIR}/input";
