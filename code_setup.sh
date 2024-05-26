@@ -58,7 +58,7 @@ declare -a SUBMODULES_REPO=(
 );
 
 # APP-ANDROID (OLD REPO)
-if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then
+if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
 	SUBMODULES+=('app-android');
 	if [[ $PROJECT_NAME == *android ]]; then
 		SUBMODULES_REPO+=($PROJECT_NAME);
@@ -76,7 +76,7 @@ else
 	echo "> Bus/Train/... android app: '$PROJECT_NAME' > parser required";
 	SUBMODULES+=('parser');
 	SUBMODULES_REPO+=('parser');
-	if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then # OLD REPO
+	if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
 		SUBMODULES+=('agency-parser');
 		SUBMODULES_REPO+=("${PROJECT_NAME}-parser");
 	fi

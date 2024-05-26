@@ -105,7 +105,7 @@ elif [[ "$GIT_BRANCH" = "mmathieum" ]]; then #LEGACY
     gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES;
     checkResult $?;
     # OLD REPO
-    if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then
+    if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
       if [[ -d "app-android" ]]; then
         cd app-android || exit 1; # >>
         gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES_APP_ANDROID;

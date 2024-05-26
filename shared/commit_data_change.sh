@@ -38,13 +38,13 @@ echo "GIT_MSG: $GIT_MSG";
 
 
 APP_ANDROID_PATH="."; # "-C ."
-if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then
-  APP_ANDROID_PATH="app-android"; # OLD REPO
+if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
+  APP_ANDROID_PATH="app-android";
 fi
 
 SRC_PATH="app-android/src";
-if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then
-  SRC_PATH="src"; # OLD REPO
+if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
+  SRC_PATH="src";
 fi
 
 
@@ -70,7 +70,7 @@ checkResult $?;
 echo "> GIT $APP_ANDROID_PATH > commit '$GIT_MSG'... DONE";
 # TODO ? git -C $APP_ANDROID_PATH git push;
 
-if [[ $GIT_PROJECT_NAME == *"android-gradle"* ]]; then # OLD REPO
+if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
   echo "> GIT > add...";
   git add -v -A;
   checkResult $?;
