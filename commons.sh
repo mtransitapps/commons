@@ -172,7 +172,11 @@ function setGitUser() {
 }
 
 function setGitProjectName() {
-	GIT_URL=$(git config --get remote.origin.url);
+	local DIR=$1;
+	if [[ -z "${DIR}" ]]; then
+		DIR=".";
+	fi
+	GIT_URL=$(git -C $DIR config --get remote.origin.url);
 	echo "GIT_URL: '$GIT_URL'.";
 	GIT_PROJECT_NAME=$(basename -- ${GIT_URL});
 	GIT_PROJECT_NAME="${GIT_PROJECT_NAME%.*}" # remove ".git" extension
