@@ -1,5 +1,6 @@
 #!/bin/bash
-source ../commons/commons.sh;
+SCRIPT_DIR="$(dirname "$0")";
+source "${SCRIPT_DIR}"/../commons/commons.sh;
 
 setPushToStoreEnabled;
 if [[ ${MT_PUSH_STORE_ENABLED} != true ]]; then
@@ -15,7 +16,13 @@ if [[ ${MT_PUSH_STORE_ALPHA_ENABLED} != true ]]; then
 fi
 echo "> Push to Store Alpha enabled...";
 
-if [[ ! -f "./config/store/alpha" ]]; then
+setGitProjectName $SCRIPT_DIR/../;
+CONFIG_PATH="$SCRIPT_DIR/../config";
+if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
+  CONFIG_PATH="$SCRIPT_DIR/config";
+fi
+
+if [[ ! -f "$CONFIG_PATH/store/alpha" ]]; then
     echo "> Publish to alpha NOT authorized!";
     exit 1; # error
 fi
