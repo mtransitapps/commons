@@ -80,12 +80,12 @@ android {
 
     // App version code also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
     def commitCountS = providers.exec {
-        commandLine("git", "-C", "${project.rootDir}", "rev-list", "HEAD", "--count")
+        commandLine("git", "-C", "${project.rootDir}/app-android", "rev-list", "HEAD", "--count")
     }.standardOutput.asText.get().trim()
     def appVersionCode = 1
     if (!commitCountS.empty) {
         def commitCount = commitCountS.toInteger()
-        appVersionCode = 1000 + commitCount
+        appVersionCode = 2000 + commitCount
     }
     println "> App version code: " + appVersionCode
 
