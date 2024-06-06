@@ -263,23 +263,14 @@ gps = [
     "maps-utils",
     "maps-utils-ktx",
 ]
-gpsPlatform = [
-    "firebase-bom",
-]
 billingClient = [
     "play-billing",
-]
-googlePlay = [
-    "play-appUpdate",
 ]
 fb = [
     "fbAudienceNetwork-mediation",
 ]
 appLovin = [
     "appLovin-mediation",
-]
-leakCanary = [
-    "leakcanary",
 ]
 retrofit = [
     "retrofit",

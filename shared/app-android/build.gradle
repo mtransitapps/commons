@@ -200,6 +200,7 @@ android {
         aidl = false
         buildConfig = true
         compose = false
+        prefab = false
         dataBinding = false
         renderScript = false
         resValues = true
