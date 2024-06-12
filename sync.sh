@@ -68,8 +68,10 @@ fi
 
 # PARSER
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
-	echo "> Main android app: '$PROJECT_NAME' > parser NOT required";
-elif [[ $PROJECT_NAME == *bike ]]; then
+	echo "> Main android app: '$PROJECT_NAME' > parser required";
+	SUBMODULES+=('parser');
+	SUBMODULES_REPO+=('parser');
+elif [[ $PROJECT_NAME == *"-bike"* ]]; then
 	echo "> Bike android app: '$PROJECT_NAME' > parser NOT required";
 else
 	echo "> Bus/Train/... android app: '$PROJECT_NAME' > parser required";

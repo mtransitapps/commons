@@ -69,7 +69,9 @@ fi
 
 # PARSER
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
-	echo "> Main android app: '$PROJECT_NAME' > parser NOT required"; # FIXME add parser to main app git repo
+	echo "> Main android app: '$PROJECT_NAME' > parser required";
+	SUBMODULES+=('parser');
+	SUBMODULES_REPO+=('parser');
 elif [[ $PROJECT_NAME == *"-bike"* ]]; then
 	echo "> Bike android app: '$PROJECT_NAME' > parser NOT required";
 else
