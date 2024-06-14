@@ -38,8 +38,10 @@ IFS=$'\n'; # work w/ file name with spaces
 for DIR in `find ${RELEASE_NOTES_DIR} -maxdepth 1 -type d ! -path ${RELEASE_NOTES_DIR}` ; do
   echo ">> Directory: '$DIR'.";
 	for FILE_NAME in `find ${DIR} -maxdepth 1 -type f -name "*.txt"` ; do
+    # DEFAULT
 		if [[ "${FILE_NAME}" == "${DIR}/default.txt" ]]; then
 		  echo ">> - Default release note found.";
+    # PRODUCTION
 		elif [[ "${FILE_NAME}" == "${DIR}/production.txt" ]]; then
       if [[ ! -f "${DIR}/default.txt" ]]; then
         cp "${DIR}/production.txt" "${DIR}/default.txt";
@@ -49,6 +51,27 @@ for DIR in `find ${RELEASE_NOTES_DIR} -maxdepth 1 -type d ! -path ${RELEASE_NOTE
       rm "${FILE_NAME}";
       checkResult $?;
       echo ">> - File '${FILE_NAME}' deleted.";
+    # BETA (Private)
+		elif [[ "${FILE_NAME}" == "${DIR}/Beta\ \(Private\).txt" ]]; then
+      if [[ ! -f "${DIR}/default.txt" ]]; then
+        cp "${DIR}/Beta\ \(Private\).txt" "${DIR}/default.txt";
+        checkResult $?;
+        echo ">> - Beta (Private) release note used for default.";
+      fi
+      rm "${FILE_NAME}";
+      checkResult $?;
+      echo ">> - File '${FILE_NAME}' deleted.";
+    # ALPHA
+    elif [[ "${FILE_NAME}" == "${DIR}/alpha.txt" ]]; then
+      if [[ ! -f "${DIR}/default.txt" ]]; then
+        cp "${DIR}/alpha.txt" "${DIR}/default.txt";
+        checkResult $?;
+        echo ">> - Alpha release note used for default.";
+      fi
+      rm "${FILE_NAME}";
+      checkResult $?;
+      echo ">> - File '${FILE_NAME}' deleted.";
+    # OTHER
     else
       rm "${FILE_NAME}";
       checkResult $?;
