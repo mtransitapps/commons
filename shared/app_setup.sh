@@ -7,7 +7,7 @@ else
   DEBUG=false;
 fi
 
-APP_ANDROID_DIR="${SCRIPT_DIR}/app-android";
+APP_ANDROID_DIR="${SCRIPT_DIR}/";
 CONFIG_DIR="${APP_ANDROID_DIR}/config";
 CONFIG_PKG_FILE="${CONFIG_DIR}/pkg";
 APP_PKG=""
