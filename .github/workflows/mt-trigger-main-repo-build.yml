@@ -12,3 +12,5 @@ jobs:
     steps:
       - name: "MT Trigger main repo build"
         run: gh workflow run mt-sync-code-data.yml --ref mmathieum --repo mtransitapps/mtransit-for-android
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }}
