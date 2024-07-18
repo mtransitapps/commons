@@ -23,4 +23,4 @@ jobs:
       - name: "MT move gradle files to default location"
         run: |
           cp -R shared/gradl* .
-      - uses: gradle/wrapper-validation-action@v1
+      - uses: gradle/wrapper-validation-action@v3
