@@ -2,7 +2,17 @@ name: "MT Validate Gradle Wrapper"
 on:
   workflow_dispatch: # manual
   push:
+    paths:
+      - "shared/gradle/wrapper/**"
+      - "shared/gradlew"
+      - "shared/gradlew.bat"
+      - "shared/gradle.properties"
   pull_request:
+    paths:
+      - "shared/gradle/wrapper/**"
+      - "shared/gradlew"
+      - "shared/gradlew.bat"
+      - "shared/gradle.properties"
 
 jobs:
   MT-GRADLE_WRAPPER-VALIDATION:
