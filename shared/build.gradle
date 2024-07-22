@@ -19,6 +19,7 @@ plugins {
 
     alias(libs.plugins.triplet.playPublisher) apply false
 
+    alias(libs.plugins.dependency.guard) apply false
     alias(libs.plugins.benmanes.versions)
     alias(libs.plugins.littlerobots.versioncatalog)
 

@@ -45,6 +45,7 @@ if (devPropertiesFile.exists()) {
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 
 if (isMainApp) {
+    apply plugin: libs.plugins.dependency.guard.get().pluginId
     apply plugin: libs.plugins.google.ksp.get().pluginId
     apply plugin: libs.plugins.hilt.get().pluginId
     apply plugin: libs.plugins.gms.get().pluginId
@@ -318,6 +319,16 @@ android {
 if (isMainApp) {
     hilt {
         enableAggregatingTask = true
+    }
+
+    dependencyGuard {
+        // release
+        configuration("releaseCompileClasspath")
+        configuration("releaseRuntimeClasspath")
+        // unit tests
+        configuration("debugUnitTestCompileClasspath")
+        configuration("debugUnitTestRuntimeClasspath")
+        // later android tests?
     }
 }
 
