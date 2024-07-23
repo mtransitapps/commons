@@ -46,6 +46,12 @@ RESULT=$?;
 checkResult ${RESULT};
 echo ">> Running test... DONE";
 
+echo ">> Running dependency guard...";
+../gradlew :app-android:dependencyGuard :parser:dependencyGuard ${GRADLE_ARGS};
+RESULT=$?;
+checkResult ${RESULT};
+echo ">> Running dependency guard... DONE";
+
 echo ">> Running lint...";
 ../gradlew :app-android:lintDebug ${GRADLE_ARGS};
 RESULT=$?;
