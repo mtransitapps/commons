@@ -16,6 +16,8 @@ setIsCI;
 
 setGradleArgs;
 
+setGitProjectName;
+
 echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... ";
 ./gradlew :commons-java:test ${GRADLE_ARGS}; # build includes test
 checkResult $? ${CONFIRM};
@@ -46,11 +48,13 @@ RESULT=$?;
 checkResult ${RESULT};
 echo ">> Running test... DONE";
 
-echo ">> Running dependency guard...";
-../gradlew :app-android:dependencyGuard :parser:dependencyGuard ${GRADLE_ARGS};
-RESULT=$?;
-checkResult ${RESULT};
-echo ">> Running dependency guard... DONE";
+if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
+	echo ">> Running dependency guard...";
+	../gradlew :app-android:dependencyGuard :parser:dependencyGuard ${GRADLE_ARGS};
+	RESULT=$?;
+	checkResult ${RESULT};
+	echo ">> Running dependency guard... DONE";
+fi
 
 echo ">> Running lint...";
 ../gradlew :app-android:lintDebug ${GRADLE_ARGS};
