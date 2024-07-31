@@ -1,37 +1,30 @@
 #!/bin/bash
-source ../commons/commons.sh
+SCRIPT_DIR="$(dirname "$0")";
+source ${SCRIPT_DIR}/../commons/commons.sh
 echo ">> Pulling listing from Google Play Console...";
 
 # LINKS:
 # https://github.com/Triple-T/gradle-play-publisher#quickstart
 # gradlew help --task bootstrapListing
 
-CURRENT_DIRECTORY_PATH="$(realpath "$PWD")";
-SCRIPT_DIRECTORY_PATH="$(realpath $(dirname "$0"))";
-
-if [[ "${CURRENT_DIRECTORY_PATH}" != "${SCRIPT_DIRECTORY_PATH}" ]]; then
-	echo ">> Script needs to be executed from '$SCRIPT_DIRECTORY_PATH' instead of '${CURRENT_DIRECTORY_PATH}'!";
-	exit 1;
-fi
-
 echo ">> Setup-ing keys...";
-./keys_setup.sh;
+${SCRIPT_DIR}/keys_setup.sh;
 checkResult $?;
 echo ">> Setup-ing keys... DONE";
 
 setGradleArgs;
 
-../gradlew bootstrapListing ${GRADLE_ARGS};
+${SCRIPT_DIR}/../gradlew bootstrapListing ${GRADLE_ARGS};
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
 echo ">> Cleaning keys...";
-./keys_cleanup.sh;
+${SCRIPT_DIR}/keys_cleanup.sh;
 checkResult $?;
 echo ">> Cleaning keys... DONE";
 
 checkResult $COMMAND_RESULT; # check command result after keys cleanup
 
-RELEASE_NOTES_DIR="src/main/play/release-notes";
+RELEASE_NOTES_DIR="${SCRIPT_DIR}/src/main/play/release-notes";
 
 OLD_IFS="$IFS"; # work w/ file name with spaces
 IFS=$'\n'; # work w/ file name with spaces
