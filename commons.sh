@@ -237,15 +237,15 @@ function printGitStatus() {
 	echo "'$(basename $PWD)'"
 	git config --get remote.origin.url;
 	git status -sb;
-	STATGED_DIFF=$(git diff --cached | head -n $DIFF_LIMIT);
-	if [ ! -z "$STATGED_DIFF" ]; then
+	STAGED_DIFF=$(git diff --cached | head -n $DIFF_LIMIT);
+	if [ ! -z "$STAGED_DIFF" ]; then
 		echo "> staged:";
-		echo "$STATGED_DIFF";
+		echo "$STAGED_DIFF";
 	fi
-	NOT_STATGED_DIFF=$(git diff | head -n $DIFF_LIMIT);
-	if [ ! -z "$NOT_STATGED_DIFF" ]; then
+	NOT_STAGED_DIFF=$(git diff | head -n $DIFF_LIMIT);
+	if [ ! -z "$NOT_STAGED_DIFF" ]; then
 		echo "> not staged:";
-		echo "$NOT_STATGED_DIFF";
+		echo "$NOT_STAGED_DIFF";
 	fi
 	LOG=$(git log --since="$GIT_LOG_SINCE_DATE" --pretty=format:"${GIT_LOG_FORMAT}" $GIT_LOG_SINCE_OTHER_ARGS);
 	if [ -z "$LOG" ]; then
@@ -259,15 +259,15 @@ function printGitStatus() {
 	git submodule foreach "
 		git status -sb;
 		git config --get remote.origin.url;
-		STATGED_DIFF=\$(git diff --cached | head -n $DIFF_LIMIT);
-		if [ ! -z \"\$STATGED_DIFF\" ]; then
+		STAGED_DIFF=\$(git diff --cached | head -n $DIFF_LIMIT);
+		if [ ! -z \"\$STAGED_DIFF\" ]; then
 			echo \"> staged:\";
-			echo \"\$STATGED_DIFF\";
+			echo \"\$STAGED_DIFF\";
 		fi
-		NOT_STATGED_DIFF=\$(git diff | head -n $DIFF_LIMIT);
-		if [ ! -z \"\$NOT_STATGED_DIFF\" ]; then
+		NOT_STAGED_DIFF=\$(git diff | head -n $DIFF_LIMIT);
+		if [ ! -z \"\$NOT_STAGED_DIFF\" ]; then
 			echo \"> not staged:\";
-			echo \"\$NOT_STATGED_DIFF\";
+			echo \"\$NOT_STAGED_DIFF\";
 		fi
 		LOG=\$(git log --since=\"$GIT_LOG_SINCE_DATE\" --pretty=format:\"${GIT_LOG_FORMAT}\" $GIT_LOG_SINCE_OTHER_ARGS);
 		if [ -z \"\$LOG\" ]; then
@@ -394,7 +394,7 @@ function download() {
 				local RESULT=$?;
 				if [[ ${RESULT} != 0 ]]; then
 					echo "> download() > Downloading from '$URL' with WGET... FAILED";
-					echo "> download() > Downloading from '$URL' with CURL & curstom OPENSSL_CONF='$OPENSSL_CONF_FILE'...";
+					echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF='$OPENSSL_CONF_FILE'...";
 					OPENSSL_CONF="${OPENSSL_CONF_FILE}" $CURL_ --insecure --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
 				fi
 			fi
@@ -416,7 +416,7 @@ function download() {
 				local RESULT=$?;
 				if [[ ${RESULT} != 0 ]]; then
 					echo "> download() > Downloading from '$URL' with WGET... FAILED";
-					echo "> download() > Downloading from '$URL' with CURL & curstom OPENSSL_CONF='$OPENSSL_CONF_FILE'...";
+					echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF='$OPENSSL_CONF_FILE'...";
 					OPENSSL_CONF="${OPENSSL_CONF_FILE}" $CURL_ --insecure --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
 				fi
 			fi
@@ -446,6 +446,19 @@ function download() {
 		return 1; # DID NOT DOWNLOAD
 	fi;
 	return 0; # DOWNLOADED SUCCESSFULLY
+}
+
+function getArrayIndex() {
+  local -n ARRAY=$1 # use -n for a reference to the array
+  local KEY=$2
+  for i in "${!ARRAY[@]}"; do
+    if [[ ${ARRAY[i]} = "$KEY" ]]; then
+      printf '%s\n' "$i"
+      return
+    fi
+  done
+  echo "> getArrayIndex() > Failed to find '$KEY' in array!";
+  exit 1
 }
 
 # COMMONS_AFTER_DATE=$(date +%D-%X);
