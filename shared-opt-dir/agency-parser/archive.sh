@@ -25,32 +25,51 @@ fi
 
 START_DATE=""
 END_DATE=""
-if [[ -f "${FILES_DIR}/calendars.txt" ]]; then
-  echo "TODO: Using calendars.txt";
-  exit 1
-elif [[ -f "${FILES_DIR}/calendar_dates.txt" ]]; then
-  echo "- Using calendar_dates.txt";
-  HEADERS=$(head -n 1 "${FILES_DIR}/calendar_dates.txt")
+FILE_CALENDAR="${FILES_DIR}/calendar.txt";
+FILE_CALENDAR_DATES="${FILES_DIR}/calendar_dates.txt";
+if [[ -f "$FILE_CALENDAR" ]]; then
+  echo "Using $FILE_CALENDAR...";
+  HEADERS=$(head -n 1 "$FILE_CALENDAR" | tr -d '\r')
+  IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
+  START_DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "start_date")
+  checkResult $?;
+  END_DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "end_date")
+  checkResult $?;
+  CUT_START_DATE_INDEX=$((START_DATE_INDEX+1))
+  CUT_END_DATE_INDEX=$((END_DATE_INDEX+1))
+  mapfile -t START_DATES < <(tail -n +2 "${FILE_CALENDAR}" | tr -d '\r' | cut -d ',' -f $CUT_START_DATE_INDEX)
+  mapfile -t END_DATES < <(tail -n +2 "${FILE_CALENDAR}" | tr -d '\r' | cut -d ',' -f $CUT_END_DATE_INDEX)
+  readarray -t START_DATES_SORTED < <(printf '%s\n' "${START_DATES[@]}" | sort)
+  readarray -t END_DATES_SORTED < <(printf '%s\n' "${END_DATES[@]}" | sort)
+  START_DATE=${START_DATES_SORTED[0]}
+  echo "- start date: ${START_DATE}"
+  END_DATE=${END_DATES_SORTED[-1]}
+  echo "- end date: ${END_DATE}"
+elif [[ -f "$FILE_CALENDAR_DATES" ]]; then
+  echo "- Using $FILE_CALENDAR_DATES...";
+  HEADERS=$(head -n 1 "$FILE_CALENDAR_DATES" | tr -d '\r')
   IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
   DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "date")
   checkResult $?;
   CUT_INDEX=$((DATE_INDEX+1))
-  mapfile -t DATES < <(tail -n +2 "${FILES_DIR}/calendar_dates.txt" | cut -d ',' -f $CUT_INDEX)
+  mapfile -t DATES < <(tail -n +2 "${FILE_CALENDAR_DATES}" | tr -d '\r' | cut -d ',' -f $CUT_INDEX)
   readarray -t DATES_SORTED < <(printf '%s\n' "${DATES[@]}" | sort)
   START_DATE=${DATES_SORTED[0]}
-  echo "- start date: ${START_DATE}"
+  echo "- start date: '${START_DATE}'"
   END_DATE=${DATES_SORTED[-1]}
-  echo "- end date: ${END_DATE}"
+  echo "- end date: '${END_DATE}'"
 else
   echo "ERROR: GTFS files not found in ${FILES_DIR}";
   exit 1;
 fi
 
 ARCHIVE_DIR="${SCRIPT_DIR}/archive";
-echo "- Archive dir: $ARCHIVE_DIR";
+echo "- archive dir: $ARCHIVE_DIR";
+
+mkdir -p "$ARCHIVE_DIR";
 
 YESTERDAY=$(date -d "yesterday" +%Y%m%d); # service can start yesterday and finish today
-echo "- Yesterday: $YESTERDAY";
+echo "- yesterday: $YESTERDAY";
 
 for ZIP_FILE in $(ls -a ${ARCHIVE_DIR}/*.zip) ; do
   echo "--------------------"
@@ -81,8 +100,6 @@ for ZIP_FILE in $(ls -a ${ARCHIVE_DIR}/*.zip) ; do
   fi
   echo "--------------------"
 done
-
-mkdir -p "$ARCHIVE_DIR";
 
 ARCHIVE_FILE="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}.zip";
 cp "$GTFS_FILE" "$ARCHIVE_FILE";
