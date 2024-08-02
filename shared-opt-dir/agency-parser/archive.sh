@@ -2,15 +2,24 @@
 SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/../commons/commons.sh
 
-echo ">> Archiving..."
+echo ">> Archiving GTFS... '$*'"
+GTFS_FILE=$1;
+FILES_DIR=$2;
 
-# GTFS
-echo "> Archiving GTFS..."
-GTFS_FILE="${SCRIPT_DIR}/input/gtfs.zip";
-FILES_DIR="${SCRIPT_DIR}/input/gtfs";
+if [[ ! -f "${GTFS_FILE}" ]]; then
+  echo "ERROR: GTFS file not found in ${FILES_DIR}";
+  exit 1;
+fi
+
+if [[ -d ${FILES_DIR} ]]; then
+	rm -r ${FILES_DIR};
+	checkResult $? false;
+fi
+unzip -j ${GTFS_FILE} -d ${FILES_DIR};
+checkResult $? false;
 
 if [[ ! -d "${FILES_DIR}" ]]; then
-  echo "ERROR: GTFS files not found in ${FILES_DIR}";
+  echo "ERROR: GTFS files directory not found in ${FILES_DIR}";
   exit 1;
 fi
 
@@ -37,14 +46,46 @@ else
   exit 1;
 fi
 
-mkdir -p "${SCRIPT_DIR}/archive";
+ARCHIVE_DIR="${SCRIPT_DIR}/archive";
+echo "- Archive dir: $ARCHIVE_DIR";
 
-ARCHIVE_FILE="${SCRIPT_DIR}/archive/${START_DATE}-${END_DATE}.zip";
+YESTERDAY=$(date -d "yesterday" +%Y%m%d); # service can start yesterday and finish today
+echo "- Yesterday: $YESTERDAY";
+
+for ZIP_FILE in $(ls -a ${ARCHIVE_DIR}/*.zip) ; do
+  echo "--------------------"
+  echo "- ZIP file: $ZIP_FILE";
+  ZIP_FILE_BASENAME=$(basename "$ZIP_FILE");
+  ZIP_FILE_BASENAME_NO_EXT="${ZIP_FILE_BASENAME%.*}";
+  ZIP_FILE_BASENAME_NO_EXT_PARTS=(${ZIP_FILE_BASENAME_NO_EXT//-/ });
+  ZIP_FILE_START_DATE=${ZIP_FILE_BASENAME_NO_EXT_PARTS[0]};
+  ZIP_FILE_END_DATE=${ZIP_FILE_BASENAME_NO_EXT_PARTS[1]};
+  echo "- ZIP start date: $ZIP_FILE_START_DATE";
+  if [[ "$ZIP_FILE_START_DATE" -lt "$YESTERDAY" && "$ZIP_FILE_END_DATE" -ge "$YESTERDAY" ]]; then
+    ZIP_FILE_START_DATE=$YESTERDAY;
+    echo "- ZIP start date (yesterday): $ZIP_FILE_START_DATE";
+  fi
+  echo "- ZIP end date: $ZIP_FILE_END_DATE";
+  if [[ "$ZIP_FILE_END_DATE" -lt "$YESTERDAY" && "$ZIP_FILE_END_DATE" -le "$START_DATE" ]]; then
+    echo "- ZIP file is entirely in the past and older than new ZIP > REMOVE";
+    rm "$ZIP_FILE";
+    checkResult $?;
+  elif [[ "$ZIP_FILE_START_DATE" -ge "$START_DATE" && "$ZIP_FILE_END_DATE" -le "$END_DATE" ]]; then
+    echo "- ZIP file is entirely inside the new ZIP > REMOVE";
+    rm "$ZIP_FILE";
+    checkResult $?;
+  elif [[ "$ZIP_FILE_START_DATE" -gt "$END_DATE" && "$ZIP_FILE_END_DATE" -gt "$YESTERDAY" ]]; then
+    echo "- ZIP file is entirely in the future and newer than new ZIP > KEEP";
+  else
+    echo "TODO handle this case";
+  fi
+  echo "--------------------"
+done
+
+mkdir -p "$ARCHIVE_DIR";
+
+ARCHIVE_FILE="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}.zip";
 cp "$GTFS_FILE" "$ARCHIVE_FILE";
 checkResult $?;
 
 echo ">> Archiving GTFS... DONE ($ARCHIVE_FILE)"
-
-# TODO next GTFS
-
-echo "> Archiving... DONE"
