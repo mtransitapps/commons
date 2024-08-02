@@ -22,12 +22,14 @@ mkdir -p "${INPUT_DIR}";
 download "${URL}" "${INPUT_DIR}/gtfs.zip";
 checkResult $?;
 ${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs.zip" "${INPUT_DIR}/gtfs";
+checkResult $?;
 
 if [[ -e "$FILE_PATH/input_url_next" ]]; then
 	URL=`cat $FILE_PATH/input_url_next`;
 	download "${URL}" "${INPUT_DIR}/gtfs_next.zip";
 	checkResult $?;
 	${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs_next.zip" "${INPUT_DIR}/gtfs_next";
+	checkResult $?;
 fi
 
 ARCHIVE_DIR="${SCRIPT_DIR}/archive";
