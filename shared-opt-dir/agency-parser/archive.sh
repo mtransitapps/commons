@@ -81,35 +81,38 @@ mkdir -p "$ARCHIVE_DIR";
 YESTERDAY=$(date -d "yesterday" +%Y%m%d); # service can start yesterday and finish today
 echo "- yesterday: $YESTERDAY";
 
-for ZIP_FILE in $(ls -a ${ARCHIVE_DIR}/*.zip) ; do
-  echo "--------------------"
-  echo "- ZIP file: $ZIP_FILE";
-  ZIP_FILE_BASENAME=$(basename "$ZIP_FILE");
-  ZIP_FILE_BASENAME_NO_EXT="${ZIP_FILE_BASENAME%.*}";
-  ZIP_FILE_BASENAME_NO_EXT_PARTS=(${ZIP_FILE_BASENAME_NO_EXT//-/ });
-  ZIP_FILE_START_DATE=${ZIP_FILE_BASENAME_NO_EXT_PARTS[0]};
-  ZIP_FILE_END_DATE=${ZIP_FILE_BASENAME_NO_EXT_PARTS[1]};
-  echo "- ZIP start date: $ZIP_FILE_START_DATE";
-  if [[ "$ZIP_FILE_START_DATE" -lt "$YESTERDAY" && "$ZIP_FILE_END_DATE" -ge "$YESTERDAY" ]]; then
-    ZIP_FILE_START_DATE=$YESTERDAY;
-    echo "- ZIP start date (yesterday): $ZIP_FILE_START_DATE";
-  fi
-  echo "- ZIP end date: $ZIP_FILE_END_DATE";
-  if [[ "$ZIP_FILE_END_DATE" -lt "$YESTERDAY" && "$ZIP_FILE_END_DATE" -le "$START_DATE" ]]; then
-    echo "- ZIP file is entirely in the past and older than new ZIP > REMOVE";
-    rm "$ZIP_FILE";
-    checkResult $?;
-  elif [[ "$ZIP_FILE_START_DATE" -ge "$START_DATE" && "$ZIP_FILE_END_DATE" -le "$END_DATE" ]]; then
-    echo "- ZIP file is entirely inside the new ZIP > REMOVE";
-    rm "$ZIP_FILE";
-    checkResult $?;
-  elif [[ "$ZIP_FILE_START_DATE" -gt "$END_DATE" && "$ZIP_FILE_END_DATE" -gt "$YESTERDAY" ]]; then
-    echo "- ZIP file is entirely in the future and newer than new ZIP > KEEP";
-  else
-    echo "TODO handle this case";
-  fi
-  echo "--------------------"
-done
+ZIP_FILE_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
+if [[ "$ZIP_FILE_COUNT" -gt 0 ]]; then
+  for ZIP_FILE in $(ls -a ${ARCHIVE_DIR}/*.zip) ; do
+    echo "--------------------"
+    echo "- ZIP file: $ZIP_FILE";
+    ZIP_FILE_BASENAME=$(basename "$ZIP_FILE");
+    ZIP_FILE_BASENAME_NO_EXT="${ZIP_FILE_BASENAME%.*}";
+    ZIP_FILE_BASENAME_NO_EXT_PARTS=(${ZIP_FILE_BASENAME_NO_EXT//-/ });
+    ZIP_FILE_START_DATE=${ZIP_FILE_BASENAME_NO_EXT_PARTS[0]};
+    ZIP_FILE_END_DATE=${ZIP_FILE_BASENAME_NO_EXT_PARTS[1]};
+    echo "- ZIP start date: $ZIP_FILE_START_DATE";
+    if [[ "$ZIP_FILE_START_DATE" -lt "$YESTERDAY" && "$ZIP_FILE_END_DATE" -ge "$YESTERDAY" ]]; then
+      ZIP_FILE_START_DATE=$YESTERDAY;
+      echo "- ZIP start date (yesterday): $ZIP_FILE_START_DATE";
+    fi
+    echo "- ZIP end date: $ZIP_FILE_END_DATE";
+    if [[ "$ZIP_FILE_END_DATE" -lt "$YESTERDAY" && "$ZIP_FILE_END_DATE" -le "$START_DATE" ]]; then
+      echo "- ZIP file is entirely in the past and older than new ZIP > REMOVE";
+      rm "$ZIP_FILE";
+      checkResult $?;
+    elif [[ "$ZIP_FILE_START_DATE" -ge "$START_DATE" && "$ZIP_FILE_END_DATE" -le "$END_DATE" ]]; then
+      echo "- ZIP file is entirely inside the new ZIP > REMOVE";
+      rm "$ZIP_FILE";
+      checkResult $?;
+    elif [[ "$ZIP_FILE_START_DATE" -gt "$END_DATE" && "$ZIP_FILE_END_DATE" -gt "$YESTERDAY" ]]; then
+      echo "- ZIP file is entirely in the future and newer than new ZIP > KEEP";
+    else
+      echo "TODO handle this case";
+    fi
+    echo "--------------------"
+  done
+fi
 
 ARCHIVE_FILE="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}.zip";
 cp "$GTFS_FILE" "$ARCHIVE_FILE";
