@@ -42,9 +42,10 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet || git -C "$ARCHIVE_DIR" commit -m "Update GTFS archives";
   checkResult $?;
   git -C "$ARCHIVE_DIR" status -sb;
-  echo "> Pushing ZIP archives changes to git...";
-  git -C "$ARCHIVE_DIR" push; # git push fails if there are new changes on remote
-  checkResult $?;
+  # TODO git push? will happens at the end of the workflow
+  # echo "> Pushing ZIP archives changes to git...";
+  # git -C "$ARCHIVE_DIR" push; # git push fails if there are new changes on remote
+  # checkResult $?;
 else
   echo ">> Git commit NOT enabled.. SKIP";
 fi
