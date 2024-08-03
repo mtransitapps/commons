@@ -461,6 +461,17 @@ function getArrayIndex() {
   exit 1
 }
 
+function cleanArray() {
+  local -n ARRAY=$1 # use -n for a reference to the array
+  ARRAY=("${ARRAY[@]/#\"}") # remove leading quotes
+  ARRAY=("${ARRAY[@]/%\"}") # remove trailing quotes
+  for i in "${!ARRAY[@]}"; do
+	if [ -z "${ARRAY[i]}" ]; then
+	  unset "ARRAY[i]"
+	fi
+  done
+}
+
 # COMMONS_AFTER_DATE=$(date +%D-%X);
 # COMMONS_AFTER_DATE_SEC=$(date +%s);
 # COMMONS_DURATION_SEC=$(($COMMONS_AFTER_DATE_SEC-$COMMONS_BEFORE_DATE_SEC));

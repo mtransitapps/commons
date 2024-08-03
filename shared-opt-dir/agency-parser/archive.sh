@@ -31,6 +31,7 @@ if [[ -f "$FILE_CALENDAR" ]]; then
   echo "Using $FILE_CALENDAR...";
   HEADERS=$(head -n 1 "$FILE_CALENDAR" | tr -d '\r')
   IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
+  cleanArray HEADERS_ARRAY
   START_DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "start_date")
   checkResult $?;
   END_DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "end_date")
@@ -38,7 +39,9 @@ if [[ -f "$FILE_CALENDAR" ]]; then
   CUT_START_DATE_INDEX=$((START_DATE_INDEX+1))
   CUT_END_DATE_INDEX=$((END_DATE_INDEX+1))
   mapfile -t START_DATES < <(tail -n +2 "${FILE_CALENDAR}" | tr -d '\r' | cut -d ',' -f $CUT_START_DATE_INDEX)
+  cleanArray START_DATES
   mapfile -t END_DATES < <(tail -n +2 "${FILE_CALENDAR}" | tr -d '\r' | cut -d ',' -f $CUT_END_DATE_INDEX)
+  cleanArray END_DATES
   readarray -t START_DATES_SORTED < <(printf '%s\n' "${START_DATES[@]}" | sort)
   readarray -t END_DATES_SORTED < <(printf '%s\n' "${END_DATES[@]}" | sort)
   START_DATE=${START_DATES_SORTED[0]}
@@ -49,10 +52,12 @@ elif [[ -f "$FILE_CALENDAR_DATES" ]]; then
   echo "- Using $FILE_CALENDAR_DATES...";
   HEADERS=$(head -n 1 "$FILE_CALENDAR_DATES" | tr -d '\r')
   IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
+  cleanArray HEADERS_ARRAY
   DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "date")
   checkResult $?;
   CUT_INDEX=$((DATE_INDEX+1))
   mapfile -t DATES < <(tail -n +2 "${FILE_CALENDAR_DATES}" | tr -d '\r' | cut -d ',' -f $CUT_INDEX)
+  cleanArray DATES
   readarray -t DATES_SORTED < <(printf '%s\n' "${DATES[@]}" | sort)
   START_DATE=${DATES_SORTED[0]}
   echo "- start date: '${START_DATE}'"
@@ -60,6 +65,11 @@ elif [[ -f "$FILE_CALENDAR_DATES" ]]; then
   echo "- end date: '${END_DATE}'"
 else
   echo "ERROR: GTFS files not found in ${FILES_DIR}";
+  exit 1;
+fi
+
+if [[ -z "$START_DATE" || -z "$END_DATE" ]]; then
+  echo "ERROR: GTFS start '$START_DATE' | end '$END_DATE' dates not found!";
   exit 1;
 fi
 
