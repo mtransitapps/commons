@@ -81,52 +81,56 @@ echo "- archive dir: '$ARCHIVE_DIR'";
 
 mkdir -p "$ARCHIVE_DIR";
 
-rm -f "${ARCHIVE_DIR}/*.zip"; # delete old GTFS ZIP archives
+# rm -f "${ARCHIVE_DIR}/*.zip"; # delete old GTFS ZIP archives
+rm -r -f "${ARCHIVE_DIR}/*/"; # delete old GTFS directories
 checkResult $?;
 
-GTFS_DIR_COUNT=$(find $ARCHIVE_DIR/* -maxdepth 0 -type d | wc -l);
-if [[ "$GTFS_DIR_COUNT" -gt 0 ]]; then
-  for GTFS_DIR in $(find $ARCHIVE_DIR/* -maxdepth 0 -type d) ; do
+# ARCHIVES_COUNT=$(find $ARCHIVE_DIR/* -maxdepth 0 -type d | wc -l);
+ARCHIVES_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
+if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
+  for ARCHIVE in $(find $ARCHIVE_DIR -name "*.zip" -type f) ; do
     echo "--------------------"
-    echo "- GTFS: $GTFS_DIR";
-    GTFS_DIR_BASENAME=$(basename "$GTFS_DIR");
-    GTFS_DIR_BASENAME_NO_EXT="${GTFS_DIR_BASENAME%.*}";
-    GTFS_DIR_BASENAME_NO_EXT_PARTS=(${GTFS_DIR_BASENAME_NO_EXT//-/ });
-    GTFS_DIR_START_DATE=${GTFS_DIR_BASENAME_NO_EXT_PARTS[0]};
-    GTFS_DIR_END_DATE=${GTFS_DIR_BASENAME_NO_EXT_PARTS[1]};
-    echo "- GTFS start date: '$GTFS_DIR_START_DATE'";
-    echo "- GTFS end date: '$GTFS_DIR_END_DATE'";
-    if [[ "$GTFS_DIR_END_DATE" -lt "$YESTERDAY" && "$GTFS_DIR_END_DATE" -lt "$START_DATE" ]]; then
-      echo "- GTFS is entirely in the past & older than new one > REMOVE";
-      rm -r "$GTFS_DIR";
+    echo "- archive: $ARCHIVE";
+    ARCHIVE_BASENAME=$(basename "$ARCHIVE");
+    ARCHIVE_BASENAME_NO_EXT="${ARCHIVE_BASENAME%.*}";
+    ARCHIVE_BASENAME_NO_EXT_PARTS=(${ARCHIVE_BASENAME_NO_EXT//-/ });
+    ARCHIVE_START_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[0]};
+    ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[1]};
+    echo "- archive start date: '$ARCHIVE_START_DATE'";
+    echo "- archive end date: '$ARCHIVE_END_DATE'";
+    if [[ "$ARCHIVE_END_DATE" -lt "$YESTERDAY" && "$ARCHIVE_END_DATE" -lt "$START_DATE" ]]; then
+      echo "- archive is entirely in the past & older than new one > REMOVE";
+      rm -r "$ARCHIVE";
       checkResult $?;
-    elif [[ "$GTFS_DIR_START_DATE" -eq "$START_DATE" && "$GTFS_DIR_END_DATE" -eq "$END_DATE" ]]; then
-      echo "- GTFS is the same as the new one > REMOVE";
-      rm -r "$GTFS_DIR";
+    elif [[ "$ARCHIVE_START_DATE" -eq "$START_DATE" && "$ARCHIVE_END_DATE" -eq "$END_DATE" ]]; then
+      echo "- archive is the same as the new one > REMOVE";
+      rm -r "$ARCHIVE";
       checkResult $?;
-    elif [[ "$GTFS_DIR_START_DATE" -ge "$START_DATE" && "$GTFS_DIR_END_DATE" -le "$END_DATE" ]]; then
-      echo "- GTFS is entirely inside the new ZIP > REMOVE";
-      rm -r "$GTFS_DIR";
+    elif [[ "$ARCHIVE_START_DATE" -ge "$START_DATE" && "$ARCHIVE_END_DATE" -le "$END_DATE" ]]; then
+      echo "- archive is entirely inside the new ZIP > REMOVE";
+      rm -r "$ARCHIVE";
       checkResult $?;
-    elif [[ "$GTFS_DIR_START_DATE" -lt "$YESTERDAY" && "$START_DATE" -le "$YESTERDAY" && "$GTFS_DIR_END_DATE" -le "$END_DATE" ]]; then
-      echo "- GTFS (after $YESTERDAY) is entirely inside the new (in-progress) one > REMOVE";
-      rm -r "$GTFS_DIR";
+    elif [[ "$ARCHIVE_START_DATE" -lt "$YESTERDAY" && "$START_DATE" -le "$YESTERDAY" && "$ARCHIVE_END_DATE" -le "$END_DATE" ]]; then
+      echo "- archive (after $YESTERDAY) is entirely inside the new (in-progress) one > REMOVE";
+      rm -r "$ARCHIVE";
       checkResult $?;
-    elif [[ "$GTFS_DIR_START_DATE" -gt "$END_DATE" && "$GTFS_DIR_END_DATE" -gt "$YESTERDAY" ]]; then
-      echo "- GTFS is entirely in the future & newer than new ZIP > KEEP";
-    elif [[ "$GTFS_DIR_END_DATE" -ge "$YESTERDAY" && "$GTFS_DIR_END_DATE" -lt "$START_DATE" ]]; then
-       echo "- GTFS is in-progress & older than new ZIP > KEEP";
+    elif [[ "$ARCHIVE_START_DATE" -gt "$END_DATE" && "$ARCHIVE_END_DATE" -gt "$YESTERDAY" ]]; then
+      echo "- archive is entirely in the future & newer than new ZIP > KEEP";
+    elif [[ "$ARCHIVE_END_DATE" -ge "$YESTERDAY" && "$ARCHIVE_END_DATE" -lt "$START_DATE" ]]; then
+       echo "- archive is in-progress & older than new ZIP > KEEP";
     else
       echo "- TODO handle this case?";
-      # - new ZIP file (future) is entirely inside archive ZIP file (current)
+      # - new one (future) is entirely inside archive (current)
       # TODO ? exit 1;
     fi
     echo "--------------------"
   done
 fi
 
-NEW_ARCHIVE_DIR="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}";
-cp -R "$FILES_DIR/." "$NEW_ARCHIVE_DIR";
+# NEW_ARCHIVE="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}";
+NEW_ARCHIVE="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}.zip";
+# cp -R "$FILES_DIR/." "$NEW_ARCHIVE";
+cp "$GTFS_FILE" "$NEW_ARCHIVE";
 checkResult $?;
 
-echo ">> Archiving GTFS... DONE ($NEW_ARCHIVE_DIR)"
+echo ">> Archiving GTFS... DONE ($NEW_ARCHIVE)"
