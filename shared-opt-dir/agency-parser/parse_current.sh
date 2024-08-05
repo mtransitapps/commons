@@ -10,9 +10,9 @@ if [[ -f "${SCRIPT_DIR}/generate_stop_times_from_frequencies" ]]; then
 	GENERATE_STOP_TIMES_FROM_FREQUENCIES=$(cat "${SCRIPT_DIR}/generate_stop_times_from_frequencies");
 fi
 
-GTFS_ZIP="input/gtfs.zip";
+GTFS_DIR="input/gtfs";
 
-ARGS="$GTFS_ZIP unused current_ $GENERATE_STOP_TIMES_FROM_FREQUENCIES";
+ARGS="$GTFS_DIR unused current_ $GENERATE_STOP_TIMES_FROM_FREQUENCIES";
 
 ${SCRIPT_DIR}/../gradlew run \
 --args="${ARGS}" \

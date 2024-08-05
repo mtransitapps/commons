@@ -15,15 +15,15 @@ if [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then
 	FILE_PATH="${SCRIPT_DIR}/../app-android/config";
 fi
 
-GTFS_ZIP="input/gtfs_next.zip";
+GTFS_DIR="input/gtfs_next";
 if ! [[ -e "$FILE_PATH/input_url_next" ]]; then
-	GTFS_ZIP="input/gtfs.zip";
+	GTFS_DIR="input/gtfs";
 fi
 if ! [[ -e "${SCRIPT_DIR}/input/gtfs_next/agency.txt" ]]; then
-	GTFS_ZIP="input/gtfs.zip";
+	GTFS_DIR="input/gtfs";
 fi
 
-ARGS="$GTFS_ZIP unused next_ $GENERATE_STOP_TIMES_FROM_FREQUENCIES";
+ARGS="$GTFS_DIR unused next_ $GENERATE_STOP_TIMES_FROM_FREQUENCIES";
 
 ${SCRIPT_DIR}/../gradlew run \
 --args="${ARGS}" \
