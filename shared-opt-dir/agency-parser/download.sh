@@ -35,7 +35,7 @@ fi
 ARCHIVE_DIR="${SCRIPT_DIR}/archive";
 if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   echo "> Adding ZIP archives changes to git...";
-  git -C "$ARCHIVE_DIR" add "*.zip";
+  git add -v "$ARCHIVE_DIR/.";
   checkResult $? false;
   git -C "$ARCHIVE_DIR" status -sb;
   echo "> Commiting ZIP archives changes to git...";

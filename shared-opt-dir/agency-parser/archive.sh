@@ -7,7 +7,7 @@ GTFS_FILE=$1;
 FILES_DIR=$2;
 
 if [[ ! -f "${GTFS_FILE}" ]]; then
-  echo "ERROR: GTFS file not found in ${FILES_DIR}";
+  echo "ERROR: GTFS file '$GTFS_FILE' not found !";
   exit 1;
 fi
 
@@ -81,37 +81,39 @@ echo "- archive dir: '$ARCHIVE_DIR'";
 
 mkdir -p "$ARCHIVE_DIR";
 
+rm -f "${ARCHIVE_DIR}/*.zip"; # delete old GTFS ZIP archives
+checkResult $?;
 
-ZIP_FILE_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
-if [[ "$ZIP_FILE_COUNT" -gt 0 ]]; then
-  for ZIP_FILE in $(ls -a ${ARCHIVE_DIR}/*.zip) ; do
+GTFS_DIR_COUNT=$(find $ARCHIVE_DIR/* -maxdepth 0 -type d | wc -l);
+if [[ "$GTFS_DIR_COUNT" -gt 0 ]]; then
+  for GTFS_DIR in $(find $ARCHIVE_DIR/* -maxdepth 0 -type d) ; do
     echo "--------------------"
-    echo "- ZIP file: $ZIP_FILE";
-    ZIP_FILE_BASENAME=$(basename "$ZIP_FILE");
-    ZIP_FILE_BASENAME_NO_EXT="${ZIP_FILE_BASENAME%.*}";
-    ZIP_FILE_BASENAME_NO_EXT_PARTS=(${ZIP_FILE_BASENAME_NO_EXT//-/ });
-    ZIP_FILE_START_DATE=${ZIP_FILE_BASENAME_NO_EXT_PARTS[0]};
-    ZIP_FILE_END_DATE=${ZIP_FILE_BASENAME_NO_EXT_PARTS[1]};
-    echo "- ZIP start date: '$ZIP_FILE_START_DATE'";
-    echo "- ZIP end date: '$ZIP_FILE_END_DATE'";
-    if [[ "$ZIP_FILE_END_DATE" -lt "$YESTERDAY" && "$ZIP_FILE_END_DATE" -lt "$START_DATE" ]]; then
-      echo "- ZIP file is entirely in the past and older than new ZIP > REMOVE";
-      rm "$ZIP_FILE";
+    echo "- GTFS: $GTFS_DIR";
+    GTFS_DIR_BASENAME=$(basename "$GTFS_DIR");
+    GTFS_DIR_BASENAME_NO_EXT="${GTFS_DIR_BASENAME%.*}";
+    GTFS_DIR_BASENAME_NO_EXT_PARTS=(${GTFS_DIR_BASENAME_NO_EXT//-/ });
+    GTFS_DIR_START_DATE=${GTFS_DIR_BASENAME_NO_EXT_PARTS[0]};
+    GTFS_DIR_END_DATE=${GTFS_DIR_BASENAME_NO_EXT_PARTS[1]};
+    echo "- GTFS start date: '$GTFS_DIR_START_DATE'";
+    echo "- GTFS end date: '$GTFS_DIR_END_DATE'";
+    if [[ "$GTFS_DIR_END_DATE" -lt "$YESTERDAY" && "$GTFS_DIR_END_DATE" -lt "$START_DATE" ]]; then
+      echo "- GTFS is entirely in the past & older than new one > REMOVE";
+      rm -r "$GTFS_DIR";
       checkResult $?;
-    elif [[ "$ZIP_FILE_START_DATE" -eq "$START_DATE" && "$ZIP_FILE_END_DATE" -eq "$END_DATE" ]]; then
-      echo "- ZIP file is the same as the new ZIP > REMOVE";
-      rm "$ZIP_FILE";
+    elif [[ "$GTFS_DIR_START_DATE" -eq "$START_DATE" && "$GTFS_DIR_END_DATE" -eq "$END_DATE" ]]; then
+      echo "- GTFS is the same as the new one > REMOVE";
+      rm -r "$GTFS_DIR";
       checkResult $?;
-    elif [[ "$ZIP_FILE_START_DATE" -ge "$START_DATE" && "$ZIP_FILE_END_DATE" -le "$END_DATE" ]]; then
-      echo "- ZIP file is entirely inside the new ZIP > REMOVE";
-      rm "$ZIP_FILE";
+    elif [[ "$GTFS_DIR_START_DATE" -ge "$START_DATE" && "$GTFS_DIR_END_DATE" -le "$END_DATE" ]]; then
+      echo "- GTFS is entirely inside the new ZIP > REMOVE";
+      rm -r "$GTFS_DIR";
       checkResult $?;
-    elif [[ "$ZIP_FILE_START_DATE" -lt "$YESTERDAY" && "$ZIP_FILE_END_DATE" -le "$END_DATE" ]]; then
-      echo "- ZIP file (after $YESTERDAY) is entirely inside the new ZIP > REMOVE";
-      rm "$ZIP_FILE";
+    elif [[ "$GTFS_DIR_START_DATE" -lt "$YESTERDAY" && "$GTFS_DIR_END_DATE" -le "$END_DATE" ]]; then
+      echo "- GTFS (after $YESTERDAY) is entirely inside the new one > REMOVE";
+      rm -r "$GTFS_DIR";
       checkResult $?;
-    elif [[ "$ZIP_FILE_START_DATE" -gt "$END_DATE" && "$ZIP_FILE_END_DATE" -gt "$YESTERDAY" ]]; then
-      echo "- ZIP file is entirely in the future and newer than new ZIP > KEEP";
+    elif [[ "$GTFS_DIR_START_DATE" -gt "$END_DATE" && "$GTFS_DIR_END_DATE" -gt "$YESTERDAY" ]]; then
+      echo "- GTFS is entirely in the future & newer than new ZIP > KEEP";
     else
       echo "- TODO handle this case?";
       # - new ZIP file (future) is entirely inside archive ZIP file (current)
@@ -121,8 +123,8 @@ if [[ "$ZIP_FILE_COUNT" -gt 0 ]]; then
   done
 fi
 
-ARCHIVE_FILE="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}.zip";
-cp "$GTFS_FILE" "$ARCHIVE_FILE";
+NEW_ARCHIVE_DIR="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}";
+cp -R "$FILES_DIR/." "$NEW_ARCHIVE_DIR";
 checkResult $?;
 
 echo ">> Archiving GTFS... DONE ($ARCHIVE_FILE)"
