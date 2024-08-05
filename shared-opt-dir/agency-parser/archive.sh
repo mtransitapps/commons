@@ -108,12 +108,14 @@ if [[ "$GTFS_DIR_COUNT" -gt 0 ]]; then
       echo "- GTFS is entirely inside the new ZIP > REMOVE";
       rm -r "$GTFS_DIR";
       checkResult $?;
-    elif [[ "$GTFS_DIR_START_DATE" -lt "$YESTERDAY" && "$GTFS_DIR_END_DATE" -le "$END_DATE" ]]; then
-      echo "- GTFS (after $YESTERDAY) is entirely inside the new one > REMOVE";
+    elif [[ "$GTFS_DIR_START_DATE" -lt "$YESTERDAY" && "$START_DATE" -le "$YESTERDAY" && "$GTFS_DIR_END_DATE" -le "$END_DATE" ]]; then
+      echo "- GTFS (after $YESTERDAY) is entirely inside the new (in-progress) one > REMOVE";
       rm -r "$GTFS_DIR";
       checkResult $?;
     elif [[ "$GTFS_DIR_START_DATE" -gt "$END_DATE" && "$GTFS_DIR_END_DATE" -gt "$YESTERDAY" ]]; then
       echo "- GTFS is entirely in the future & newer than new ZIP > KEEP";
+    elif [[ "$GTFS_DIR_END_DATE" -ge "$YESTERDAY" && "$GTFS_DIR_END_DATE" -lt "$START_DATE" ]]; then
+       echo "- GTFS is in-progress & older than new ZIP > KEEP";
     else
       echo "- TODO handle this case?";
       # - new ZIP file (future) is entirely inside archive ZIP file (current)
@@ -127,4 +129,4 @@ NEW_ARCHIVE_DIR="${ARCHIVE_DIR}/${START_DATE}-${END_DATE}";
 cp -R "$FILES_DIR/." "$NEW_ARCHIVE_DIR";
 checkResult $?;
 
-echo ">> Archiving GTFS... DONE ($ARCHIVE_FILE)"
+echo ">> Archiving GTFS... DONE ($NEW_ARCHIVE_DIR)"
