@@ -30,7 +30,11 @@ START_DATE=""
 END_DATE=""
 FILE_CALENDAR="${FILES_DIR}/calendar.txt";
 FILE_CALENDAR_DATES="${FILES_DIR}/calendar_dates.txt";
+FILE_CALENDAR_LINE=0
 if [[ -f "$FILE_CALENDAR" ]]; then
+  FILE_CALENDAR_LINE=$(cat $FILE_CALENDAR | sed '/^\s*$/d' | wc -l)
+fi
+if [[ $FILE_CALENDAR_LINE -gt 1 ]]; then
   echo "Using $FILE_CALENDAR...";
   HEADERS=$(head -n 1 "$FILE_CALENDAR" | tr -d '\r')
   IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
