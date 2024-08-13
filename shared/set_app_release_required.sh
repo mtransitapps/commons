@@ -69,6 +69,16 @@ echo "> App release required: $MT_APP_RELEASE_REQUIRED.";
 echo "$MT_APP_RELEASE_REQUIRED" > $MT_APP_RELEASE_REQUIRED_FILE;
 checkResult $?;
 
+if [[ ${MT_APP_RELEASE_REQUIRED} == true ]]; then
+  MT_SKIP_PUSH_COMMIT=false;
+  echo "MT_SKIP_PUSH_COMMIT: $MT_SKIP_PUSH_COMMIT";
+  if [[ ${GITHUB_ACTIONS} = true ]]; then
+    echo "MT_SKIP_PUSH_COMMIT=$MT_SKIP_PUSH_COMMIT" >> "$GITHUB_ENV"
+  else
+    export MT_SKIP_PUSH_COMMIT="$MT_SKIP_PUSH_COMMIT"
+  fi
+fi
+
 echo "--------------------------------------------------------------------------------";
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
