@@ -38,16 +38,26 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git add -v "$ARCHIVE_DIR/.";
   checkResult $? false;
   git -C "$ARCHIVE_DIR" status -sb;
+
   echo "> Commiting ZIP archives changes to git...";
-  git -C "$ARCHIVE_DIR" diff --staged --quiet || git -C "$ARCHIVE_DIR" commit -m "Update GTFS archives";
-  checkResult $?;
+  MT_SKIP_PUSH_COMMIT=true
+  git -C "$ARCHIVE_DIR" diff --staged --quiet;
+  GTFS_ARCHIVE_UPDATED=$?; # 0 if no changes
+  if [[ $GTFS_ARCHIVE_UPDATED -gt 0 ]]; then
+    git -C "$ARCHIVE_DIR" commit -m "Update GTFS archives"
+    checkResult $?;
+    MT_SKIP_PUSH_COMMIT=false
+  fi
   git -C "$ARCHIVE_DIR" status -sb;
-  # TODO git push? will happens at the end of the workflow
-  # echo "> Pushing ZIP archives changes to git...";
-  # git -C "$ARCHIVE_DIR" push; # git push fails if there are new changes on remote
-  # checkResult $?;
 else
   echo ">> Git commit NOT enabled.. SKIP";
+fi
+
+echo "MT_SKIP_PUSH_COMMIT: $MT_SKIP_PUSH_COMMIT";
+if [[ ${GITHUB_ACTIONS} = true ]]; then
+  echo "MT_SKIP_PUSH_COMMIT=$MT_SKIP_PUSH_COMMIT" >> "$GITHUB_ENV"
+else
+  export MT_SKIP_PUSH_COMMIT="$MT_SKIP_PUSH_COMMIT"
 fi
 
 echo ">> Downloading... DONE"

@@ -22,6 +22,11 @@ if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
 fi
 echo "> Git commit enabled ...";
 
+if [[ ${MT_SKIP_PUSH_COMMIT} == true ]]; then
+  echo "> MT_SKIP_PUSH_COMMIT=$MT_SKIP_PUSH_COMMIT... SKIP";
+  exit 0 # success
+fi
+
 cd app-android || exit;
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
