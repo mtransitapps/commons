@@ -67,7 +67,7 @@ maps-ktx = "5.1.1"
 gps-plugin = "4.4.2"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuite = "3.0.0"
-gps-ads = "23.2.0"
+gps-ads = "23.3.0"
 gps-basement = "18.4.0"
 gps-location = "21.3.0"
 gps-maps = "19.0.0"
