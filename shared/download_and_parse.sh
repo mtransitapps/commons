@@ -22,22 +22,26 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'...";
 	cd ${SCRIPT_DIR}/agency-parser || exit; # >>
 
-	./download.sh;
+	AGENCY_PARSER_DIR=".";
+	echo "> AGENCY_PARSER_DIR: $AGENCY_PARSER_DIR";
+
+	$AGENCY_PARSER_DIR/download.sh;
 	RESULT=$?;
 	echo "> Download result: $RESULT";
 
 	if [[ $RESULT -eq 0 ]]; then
-		./unzip_gtfs.sh;
+		$AGENCY_PARSER_DIR/unzip_gtfs.sh;
 		RESULT=$?;
 		echo " > Unzip result: $RESULT";
 	fi
 
 	if [[ $RESULT -ne 0 ]]; then
 		echo "> Try using archive...";
-		ARCHIVE_DIR="archive";
-		INPUT_DIR="input";
+		ARCHIVE_DIR="$AGENCY_PARSER_DIR/archive";
+		INPUT_DIR="$AGENCY_PARSER_DIR/input";
+		GTFS_ZIP="$INPUT_DIR/gtfs.zip";
 		echo ">> current file:";
-		ls -l "$INPUT_DIR/gtfs.zip";
+		ls -l "$GTFS_ZIP";
 		ARCHIVES_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
 		echo "> Archives count: $ARCHIVES_COUNT";
 		ls -l $ARCHIVE_DIR;
@@ -46,10 +50,17 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 			echo ">> Using the only 1 archive...";
 			ARCHIVE=$(find $ARCHIVE_DIR -name "*.zip" -type f);
 			echo ">> - Archive: '$ARCHIVE'.";
-			cp $ARCHIVE "$INPUT_DIR/gtfs.zip";
+			echo ">> - Loading archive from LFS...";
+			git lfs pull -I "$ARCHIVE";
 			checkResult $?;
+			echo ">> - Loading archive from LFS... DONE";
+			ls -l $ARCHIVE_DIR;
+			echo ">> - Copying '$ARCHIVE' to '$GTFS_ZIP'...";
+			cp $ARCHIVE "$GTFS_ZIP";
+			checkResult $?;
+			echo ">> - Copying '$ARCHIVE' to '$GTFS_ZIP'... DONE";
 			echo ">> new file:";
-			ls -l "$INPUT_DIR/gtfs.zip";
+			ls -l "$GTFS_ZIP";
 		else
 			echo ">> Too many ($ARCHIVES_COUNT) archives to choose from!";
 			exit $RESULT;
@@ -57,23 +68,31 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 		# 2 - for next if exists
 		if [[ -e "../config/input_url_next" ]]; then
 			echo ">> Try using archive for next URL...";
+			GTFS_NEXT_ZIP="$INPUT_DIR/gtfs_next.zip";
 			echo ">> current file:";
-			ls -l "$INPUT_DIR/gtfs_next.zip";
+			ls -l "$GTFS_NEXT_ZIP";
 			if [[ "$ARCHIVES_COUNT" -eq 1 ]]; then
 				echo ">> Using the only 1 archive for next URL...";
 				ARCHIVE=$(find $ARCHIVE_DIR -name "*.zip" -type f);
 				echo ">> - Archive: '$ARCHIVE'.";
-				cp $ARCHIVE "$INPUT_DIR/gtfs_next.zip";
+				echo ">> - Loading archive from LFS...";
+				git lfs pull -I "$ARCHIVE";
 				checkResult $?;
+				echo ">> - Loading archive from LFS... DONE";
+				ls -l $ARCHIVE_DIR;
+				echo ">> - Copying '$ARCHIVE' to '$GTFS_NEXT_ZIP'...";
+				cp $ARCHIVE "$GTFS_NEXT_ZIP";
+				checkResult $?;
+				echo ">> - Copying '$ARCHIVE' to '$GTFS_NEXT_ZIP'... DONE";
 				echo ">> new file:";
-				ls -l "$INPUT_DIR/gtfs_next.zip";
+				ls -l "$GTFS_NEXT_ZIP";
 			else
 				echo ">> Too many ($ARCHIVES_COUNT) next archives to choose from!";
 				# TODO? exit $RESULT;
 			fi
 		fi
 		# 3 - unzip archive(s)
-		./unzip_gtfs.sh;
+		$AGENCY_PARSER_DIR/unzip_gtfs.sh;
 		checkResult $?;
 	fi
 
@@ -81,11 +100,11 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 
 	echo "> VALIDATING DATA FOR '$AGENCY_ID'...";
 
-	../commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs.zip" "output/current";
+	$AGENCY_PARSER_DIR/../commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs.zip" "output/current";
 	# checkResult $?; # too many errors for now
 
 	if [[ -e "../config/input_url_next" ]]; then
-		../commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs_next.zip" "output/next";
+		$AGENCY_PARSER_DIR/../commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs_next.zip" "output/next";
 		# checkResult $?; # too many errors for now
 	fi
 
@@ -94,16 +113,16 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 	echo "> PARSING DATA FOR '$AGENCY_ID'...";
 
 	# CURRENT...
-	./parse_current.sh;
+	$AGENCY_PARSER_DIR//parse_current.sh;
 	checkResult $?;
 	# CURRENT... DONE
 
 	# NEXT...
-	./parse_next.sh;
+	$AGENCY_PARSER_DIR//parse_next.sh;
 	checkResult $?;
 	# NEXT... DONE
 
-	./list_change.sh;
+	$AGENCY_PARSER_DIR//list_change.sh;
 	RESULT=$?;
 	if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
 		echo "RESULT: $RESULT (fail ok/expected)"; # will auto commit
