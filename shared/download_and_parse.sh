@@ -51,7 +51,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 			ARCHIVE=$(find $ARCHIVE_DIR -name "*.zip" -type f);
 			echo ">> - Archive: '$ARCHIVE'.";
 			echo ">> - Loading archive from LFS...";
-			git lfs pull -I "$ARCHIVE";
+			git lfs pull;
 			checkResult $?;
 			echo ">> - Loading archive from LFS... DONE";
 			ls -l $ARCHIVE_DIR;
@@ -76,7 +76,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 				ARCHIVE=$(find $ARCHIVE_DIR -name "*.zip" -type f);
 				echo ">> - Archive: '$ARCHIVE'.";
 				echo ">> - Loading archive from LFS...";
-				git lfs pull -I "$ARCHIVE";
+				git lfs pull;
 				checkResult $?;
 				echo ">> - Loading archive from LFS... DONE";
 				ls -l $ARCHIVE_DIR;
