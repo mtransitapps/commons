@@ -40,6 +40,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 		ls -l "$INPUT_DIR/gtfs.zip";
 		ARCHIVES_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
 		echo "> Archives count: $ARCHIVES_COUNT";
+		ls -l $ARCHIVE_DIR;
 		# 1 - for current
 		if [[ "$ARCHIVES_COUNT" -eq 1 ]]; then
 			echo ">> Using the only 1 archive...";
