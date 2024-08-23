@@ -26,14 +26,6 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 	RESULT=$?;
 	echo "> Download result: $RESULT";
 
-	../commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
-	# checkResult $?; # too many errors for now
-
-	if [[ -e "$FILE_PATH/input_url_next" ]]; then
-		../commons/gtfs/gtfs-validator.sh "input/gtfs_next.zip" "output/next";
-		# checkResult $?; # too many errors for now
-	fi
-
 	if [[ $RESULT -eq 0 ]]; then
 		./unzip_gtfs.sh;
 		RESULT=$?;
@@ -49,6 +41,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 		# 1 - for current
 		if [[ "$ARCHIVES_COUNT" -eq 1 ]]; then
 			echo ">> Using the only 1 archive...";
+			echo ">> - '$(find $ARCHIVE_DIR -name "*.zip" -type f)'.";
 			cp $(find $ARCHIVE_DIR -name "*.zip" -type f) "$INPUT_DIR/gtfs.zip";
 			checkResult $?;
 		else
@@ -60,6 +53,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 			echo ">> Try using archive for next URL...";
 			if [[ "$ARCHIVES_COUNT" -eq 1 ]]; then
 				echo ">> Using the only 1 archive for next URL...";
+				echo ">> - '$(find $ARCHIVE_DIR -name "*.zip" -type f)'.";
 				cp $(find $ARCHIVE_DIR -name "*.zip" -type f) "$INPUT_DIR/gtfs_next.zip";
 				checkResult $?;
 			else
@@ -73,6 +67,18 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 	fi
 
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
+
+	echo "> VALIDATING DATA FOR '$AGENCY_ID'...";
+
+	../commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs.zip" "output/current";
+	# checkResult $?; # too many errors for now
+
+	if [[ -e "../config/input_url_next" ]]; then
+		../commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs_next.zip" "output/next";
+		# checkResult $?; # too many errors for now
+	fi
+
+	echo "> VALIDATING DATA FOR '$AGENCY_ID'... DONE";
 
 	echo "> PARSING DATA FOR '$AGENCY_ID'...";
 

@@ -12,11 +12,14 @@ if [[ ! -f "${GTFS_FILE}" ]]; then
 fi
 
 if [[ -d ${FILES_DIR} ]]; then
+  echo ">> Removing existing GTFS files in '$FILES_DIR'...";
 	rm -r ${FILES_DIR};
-	checkResult $? false;
+	checkResult $?;
 fi
+echo ">> Unzip '$GTFS_FILE' in '$FILES_DIR'...";
 unzip -j ${GTFS_FILE} -d ${FILES_DIR};
-checkResult $? false;
+checkResult $?;
+echo ">> Unzip '$GTFS_FILE' in '$FILES_DIR'... DONE";
 
 if [[ ! -d "${FILES_DIR}" ]]; then
   echo "ERROR: GTFS files directory not found in ${FILES_DIR}";
