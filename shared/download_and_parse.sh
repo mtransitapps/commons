@@ -36,14 +36,19 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 		echo "> Try using archive...";
 		ARCHIVE_DIR="archive";
 		INPUT_DIR="input";
+		echo ">> current file:";
+		ls -l "$INPUT_DIR/gtfs.zip";
 		ARCHIVES_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
 		echo "> Archives count: $ARCHIVES_COUNT";
 		# 1 - for current
 		if [[ "$ARCHIVES_COUNT" -eq 1 ]]; then
 			echo ">> Using the only 1 archive...";
-			echo ">> - '$(find $ARCHIVE_DIR -name "*.zip" -type f)'.";
-			cp $(find $ARCHIVE_DIR -name "*.zip" -type f) "$INPUT_DIR/gtfs.zip";
+			ARCHIVE=$(find $ARCHIVE_DIR -name "*.zip" -type f);
+			echo ">> - Archive: '$ARCHIVE'.";
+			cp $ARCHIVE "$INPUT_DIR/gtfs.zip";
 			checkResult $?;
+			echo ">> new file:";
+			ls -l "$INPUT_DIR/gtfs.zip";
 		else
 			echo ">> Too many ($ARCHIVES_COUNT) archives to choose from!";
 			exit $RESULT;
@@ -51,11 +56,16 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 		# 2 - for next if exists
 		if [[ -e "../config/input_url_next" ]]; then
 			echo ">> Try using archive for next URL...";
+			echo ">> current file:";
+			ls -l "$INPUT_DIR/gtfs_next.zip";
 			if [[ "$ARCHIVES_COUNT" -eq 1 ]]; then
 				echo ">> Using the only 1 archive for next URL...";
-				echo ">> - '$(find $ARCHIVE_DIR -name "*.zip" -type f)'.";
-				cp $(find $ARCHIVE_DIR -name "*.zip" -type f) "$INPUT_DIR/gtfs_next.zip";
+				ARCHIVE=$(find $ARCHIVE_DIR -name "*.zip" -type f);
+				echo ">> - Archive: '$ARCHIVE'.";
+				cp $ARCHIVE "$INPUT_DIR/gtfs_next.zip";
 				checkResult $?;
+				echo ">> new file:";
+				ls -l "$INPUT_DIR/gtfs_next.zip";
 			else
 				echo ">> Too many ($ARCHIVES_COUNT) next archives to choose from!";
 				# TODO? exit $RESULT;
