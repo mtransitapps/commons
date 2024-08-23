@@ -1,5 +1,6 @@
 #!/bin/bash
-source commons/commons.sh;
+SCRIPT_DIR="$(dirname "$0")";
+source ${SCRIPT_DIR}/commons/commons.sh
 echo "================================================================================";
 echo "> DOWNLOAD & PARSE...";
 echo "--------------------------------------------------------------------------------";
@@ -16,13 +17,14 @@ setGradleArgs;
 
 setGitCommitEnabled;
 
-if [[ -d "agency-parser" ]]; then
+if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'...";
-	cd agency-parser || exit; # >>
+	cd ${SCRIPT_DIR}/agency-parser || exit; # >>
 
 	./download.sh;
-	checkResult $?;
+	RESULT=$?;
+	echo "> Download result: $RESULT";
 
 	../commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
 	# checkResult $?; # too many errors for now
@@ -32,8 +34,43 @@ if [[ -d "agency-parser" ]]; then
 		# checkResult $?; # too many errors for now
 	fi
 
-	./unzip_gtfs.sh;
-	checkResult $?;
+	if [[ $RESULT -eq 0 ]]; then
+		./unzip_gtfs.sh;
+		RESULT=$?;
+		echo " > Unzip result: $RESULT";
+	fi
+
+	if [[ $RESULT -ne 0 ]]; then
+		echo "> Try using archive...";
+		ARCHIVE_DIR="archive";
+		INPUT_DIR="input";
+		ARCHIVES_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
+		echo "> Archives count: $ARCHIVES_COUNT";
+		# 1 - for current
+		if [[ "$ARCHIVES_COUNT" -eq 1 ]]; then
+			echo ">> Using the only 1 archive...";
+			cp $(find $ARCHIVE_DIR -name "*.zip" -type f) "$INPUT_DIR/gtfs.zip";
+			checkResult $?;
+		else
+			echo ">> Too many ($ARCHIVES_COUNT) archives to choose from!";
+			exit $RESULT;
+		fi
+		# 2 - for next if exists
+		if [[ -e "../config/input_url_next" ]]; then
+			echo ">> Try using archive for next URL...";
+			if [[ "$ARCHIVES_COUNT" -eq 1 ]]; then
+				echo ">> Using the only 1 archive for next URL...";
+				cp $(find $ARCHIVE_DIR -name "*.zip" -type f) "$INPUT_DIR/gtfs_next.zip";
+				checkResult $?;
+			else
+				echo ">> Too many ($ARCHIVES_COUNT) next archives to choose from!";
+				# TODO? exit $RESULT;
+			fi
+		fi
+		# 3 - unzip archive(s)
+		./unzip_gtfs.sh;
+		checkResult $?;
+	fi
 
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
 

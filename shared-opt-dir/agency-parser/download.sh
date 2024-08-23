@@ -16,6 +16,8 @@ elif [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then # OLD REPO
 	FILE_PATH="${SCRIPT_DIR}/../app-android/config";
 fi
 
+ARCHIVE_DIR="${SCRIPT_DIR}/archive";
+
 URL=`cat $FILE_PATH/input_url`;
 INPUT_DIR="${SCRIPT_DIR}/input";
 mkdir -p "${INPUT_DIR}";
@@ -32,7 +34,6 @@ if [[ -e "$FILE_PATH/input_url_next" ]]; then
 	checkResult $?;
 fi
 
-ARCHIVE_DIR="${SCRIPT_DIR}/archive";
 if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   echo "> Adding ZIP archives changes to git...";
   git add -v "$ARCHIVE_DIR/.";
@@ -44,9 +45,10 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GTFS_ARCHIVE_UPDATED=$?; # 0 if no changes
   if [[ $GTFS_ARCHIVE_UPDATED -gt 0 ]]; then
-    git -C "$ARCHIVE_DIR" commit -m "Update GTFS archives"
+    git -C "$ARCHIVE_DIR" commit -m "CI: Update GTFS archives"
     checkResult $?;
     MT_SKIP_PUSH_COMMIT=false
+    # TODO push now?
   fi
   git -C "$ARCHIVE_DIR" status -sb;
 else
