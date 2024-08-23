@@ -35,10 +35,11 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 		echo " > Unzip result: $RESULT";
 	fi
 
+	INPUT_DIR="$AGENCY_PARSER_DIR/input";
+
 	if [[ $RESULT -ne 0 ]]; then
 		echo "> Try using archive...";
 		ARCHIVE_DIR="$AGENCY_PARSER_DIR/archive";
-		INPUT_DIR="$AGENCY_PARSER_DIR/input";
 		GTFS_ZIP="$INPUT_DIR/gtfs.zip";
 		echo ">> current file:";
 		ls -l "$GTFS_ZIP";
