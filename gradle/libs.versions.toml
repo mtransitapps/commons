@@ -87,6 +87,10 @@ fbAudienceNetwork-mediation = "6.17.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
 appLovin-mediation = "12.6.0.0"
+# https://github.com/xdevplatform/twitter-api-java-sdk/tags
+twitterApi = "2.0.3"
+# https://github.com/google/guava/releases/latest
+guava = "33.3.0-android"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.14"
 # https://github.com/slackhq/slack-lints/releases
@@ -187,6 +191,8 @@ play-review = { module = "com.google.android.play:review-ktx", version.ref = "pl
 fbAudienceNetwork-mediation = { module = "com.google.ads.mediation:facebook", version.ref = "fbAudienceNetwork-mediation" }
 # appLovin = { module = "com.applovin:applovin-sdk", version.ref = "appLovin" } # included with nediation adapter
 appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovin-mediation" }
+twitterApi = { module = "com.twitter:twitter-api-java-sdk", version.ref = "twitterApi" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 slackLint = { module = "com.slack.lint:slack-lint-checks", version.ref = "slackLint" }
 protobuf-compiler = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
@@ -275,6 +281,11 @@ fb = [
 ]
 appLovin = [
     "appLovin-mediation",
+]
+twitter = [
+    "twitterApi",
+    "guava",
+    "commons-lang3"
 ]
 retrofit = [
     "retrofit",
