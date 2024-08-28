@@ -284,8 +284,6 @@ appLovin = [
 ]
 twitter = [
     "twitterApi",
-    "guava",
-    "commons-lang3"
 ]
 retrofit = [
     "retrofit",
