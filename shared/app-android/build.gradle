@@ -276,6 +276,7 @@ android {
             informational "DoNotMockPlatformTypes", // Platform types should not be mocked #SlackLint
                     "DenyListedApi", // Deny-listed API #SlackLint
                     "DeprecatedCall", // This class or method is deprecated; consider using an alternative. #SlackLint
+                    "WrongConstant", // seems to be broken (Java<>Kotlin) in AGP 8.6.0 // TODO re-enable later
                     "KotlinPairNotCreated" // Use Kotlin's kotlin.Pair instead of other Pair types from other libraries #SlackLint
             disable "InjectInJava", // Only Kotlin classes should be injected in order for Anvil to work. #SlackLint
                     "DeprecatedSqlUsage", // Use SqlDelight! #SlackLint
