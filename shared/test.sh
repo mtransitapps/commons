@@ -18,7 +18,7 @@ setGradleArgs;
 
 setGitProjectName;
 
-echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... ";
+echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... ";
 ./gradlew :commons-java:test ${GRADLE_ARGS}; # build includes test
 checkResult $? ${CONFIRM};
 
@@ -32,9 +32,9 @@ if [[ -d "agency-parser" ]]; then
 	checkResult $? ${CONFIRM};
 fi
 
-echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
+echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 
-echo "> BUILDING ANDROID APP FOR '$AGENCY_ID'...";
+echo "> TESTS ANDROID APP FOR '$AGENCY_ID'...";
 cd app-android || exit;
 
 echo ">> Setup-ing keys...";
@@ -54,21 +54,23 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running dependency guard... DONE";
-fi
 
-echo ">> Running lint...";
-../gradlew :app-android:lintDebug ${GRADLE_ARGS};
-RESULT=$?;
-checkResult ${RESULT};
-echo ">> Running lint... DONE";
+	echo ">> Running lint...";
+	../gradlew :app-android:lintDebug ${GRADLE_ARGS};
+	RESULT=$?;
+	checkResult ${RESULT};
+	echo ">> Running lint... DONE";
+fi
 
 echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
 checkResult $?;
 echo ">> Cleaning keys... DONE";
 
+checkResult ${RESULT};
+
 cd ..;
-echo "> BUILDING ANDROID APP FOR '$AGENCY_ID'... DONE";
+echo "> TESTS ANDROID APP FOR '$AGENCY_ID'... DONE";
 echo "--------------------------------------------------------------------------------";
 
 AFTER_DATE=$(date +%D-%X);
