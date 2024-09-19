@@ -268,7 +268,7 @@ android {
     }
 
     // https://developer.android.com/studio/write/lint
-    // https://developer.android.com/reference/tools/gradle-api/8.0/com/android/build/api/dsl/Lint
+    // https://developer.android.com/reference/tools/gradle-api/com/android/build/api/dsl/Lint
     lint {
         if (isMainApp) {
             abortOnError = true // do fail CI on main app
@@ -284,6 +284,7 @@ android {
                     "ArgInFormattedQuantityStringRes", // Count value in formatted string resource. #SlackLint
                     "FragmentFieldInjection" // Fragment dependencies should be injected using the Fragment's constructor. #SlackLint
             // https://developer.android.com/studio/write/lint#snapshot
+            // update with: ./gradlew :app-android:updateLintBaseline
             baseline file("lint-baseline.xml")
         } else {
             abortOnError = false // do not fail CI on module apps
