@@ -130,7 +130,7 @@ commons-io = "2.16.1"
 commons-lang3 = "3.17.0"
 commons-text = "1.12.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.46.1.0"
+xerial-SQLiteJDBC = "3.46.1.2"
 
 [libraries]
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
