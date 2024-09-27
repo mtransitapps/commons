@@ -370,10 +370,12 @@ function download() {
 	if [[ "$NEW_FILE" == "$LAST_FILE" ]]; then
 		NEW_FILE="NEW_${NEW_FILE}"
 	fi
-	local CURL_="curl";
-	# local CURL_="curl --verbose"; #DEBUG
-	local WGET_="wget";
-	# local WGET_="wget --verbose"; #DEBUG
+	curl --version;
+	wget --version;
+	# local CURL_="curl";
+	local CURL_="curl --verbose"; #DEBUG
+	# local WGET_="wget";
+	local WGET_="wget --verbose"; #DEBUG
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
 		echo "> download() > (using last file '${LAST_FILE}')";
