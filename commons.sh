@@ -372,10 +372,11 @@ function download() {
 	fi
 	curl --version;
 	wget --version;
-	# local CURL_="curl";
-	local CURL_="curl --verbose"; #DEBUG
-	# local WGET_="wget";
-	local WGET_="wget --verbose"; #DEBUG
+	local CURL_="curl";
+	# local CURL_="curl --verbose"; #DEBUG
+	local WGET_="wget";
+	# local WGET_="wget --verbose"; #DEBUG
+	local CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION="openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation";
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
 		echo "> download() > (using last file '${LAST_FILE}')";
@@ -397,7 +398,7 @@ function download() {
 				if [[ ${RESULT} != 0 ]]; then
 					echo "> download() > Downloading from '$URL' with WGET... FAILED";
 					echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF='$OPENSSL_CONF_FILE'...";
-					echo -e "openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation" | OPENSSL_CONF=/dev/stdin curl --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
+					echo -e $CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION | OPENSSL_CONF=/dev/stdin curl --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 240 --retry 3 "$URL";
 				fi
 			fi
 		fi
@@ -419,7 +420,7 @@ function download() {
 				if [[ ${RESULT} != 0 ]]; then
 					echo "> download() > Downloading from '$URL' with WGET... FAILED";
 					echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF='$OPENSSL_CONF_FILE'...";
-					echo -e "openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation" | OPENSSL_CONF=/dev/stdin curl --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
+					echo -e $CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION | OPENSSL_CONF=/dev/stdin curl --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 240 --retry 3 "$URL";
 				fi
 			fi
 		fi
