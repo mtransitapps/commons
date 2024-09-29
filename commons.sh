@@ -370,8 +370,8 @@ function download() {
 	if [[ "$NEW_FILE" == "$LAST_FILE" ]]; then
 		NEW_FILE="NEW_${NEW_FILE}"
 	fi
-	curl --version;
-	wget --version;
+	# curl --version;
+	# wget --version;
 	local CURL_="curl";
 	# local CURL_="curl --verbose"; #DEBUG
 	local WGET_="wget";
