@@ -67,13 +67,13 @@ maps-ktx = "5.1.1"
 gps-plugin = "4.4.2"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuite = "3.0.0"
-gps-ads = "23.3.0"
+gps-ads = "23.4.0"
 gps-basement = "18.4.0"
 gps-location = "21.3.0"
 gps-maps = "19.0.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "33.3.0"
+firebase-bom = "33.4.0"
 firebase-crashlytics-plugin = "3.0.2"
 firebase-perf-plugin = "1.4.2"
 play-billing = "7.1.0"
