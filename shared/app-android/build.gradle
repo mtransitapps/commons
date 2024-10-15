@@ -54,13 +54,15 @@ if (isMainApp) {
     // apply plugin: libs.plugins.sonar.get().pluginId
 }
 
+java.toolchain.languageVersion = JavaLanguageVersion.of(rootProject.javaToolchainVersion.toString())
+
 android {
     compileSdk = libs.versions.sdk.compile.get().toInteger()
     buildToolsVersion = libs.versions.buildTools.get()
 
     compileOptions {
-        sourceCompatibility rootProject.javaVersion
-        targetCompatibility rootProject.javaVersion
+        sourceCompatibility = rootProject.javaVersion
+        targetCompatibility = rootProject.javaVersion
     }
     kotlinOptions {
         jvmTarget = rootProject.javaVersion
@@ -275,12 +277,12 @@ android {
             warningsAsErrors = true
             informational "DoNotMockPlatformTypes", // Platform types should not be mocked #SlackLint
                     "DenyListedApi", // Deny-listed API #SlackLint
-                    "DeprecatedCall", // This class or method is deprecated; consider using an alternative. #SlackLint
-                    "WrongConstant", // seems to be broken (Java<>Kotlin) in AGP 8.6.0 // TODO re-enable later
                     "KotlinPairNotCreated" // Use Kotlin's kotlin.Pair instead of other Pair types from other libraries #SlackLint
             disable "InjectInJava", // Only Kotlin classes should be injected in order for Anvil to work. #SlackLint
                     "DeprecatedSqlUsage", // Use SqlDelight! #SlackLint
                     "RawDispatchersUse", // Use SlackDispatchers. #SlackLint
+                    "DeprecatedCall", // This class or method is deprecated; consider using an alternative. #SlackLint
+                    "WrongConstant", // seems to be broken (Java<>Kotlin) in AGP 8.6.0 // TODO re-enable later
                     "ArgInFormattedQuantityStringRes", // Count value in formatted string resource. #SlackLint
                     "FragmentFieldInjection" // Fragment dependencies should be injected using the Fragment's constructor. #SlackLint
             // https://developer.android.com/studio/write/lint#snapshot

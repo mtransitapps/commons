@@ -15,6 +15,7 @@ run {
 java {
     sourceCompatibility = rootProject.javaVersion
     targetCompatibility = rootProject.javaVersion
+    toolchain.languageVersion = JavaLanguageVersion.of(rootProject.javaToolchainVersion)
 }
 compileKotlin {
     kotlinOptions {
