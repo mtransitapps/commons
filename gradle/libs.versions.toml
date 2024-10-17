@@ -122,7 +122,7 @@ android-svg = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 junit = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockito = "5.14.1"
+mockito = "5.14.2"
 mockito-kotlin = "4.1.0"
 # https://commons.apache.org/
 commons-csv = "1.12.0"
