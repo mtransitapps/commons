@@ -34,6 +34,7 @@ updates:
           - "org.jetbrains.kotlin:*"
           - "org.jetbrains.kotlinx:*"
           - "org.jetbrains.kotlin.jvm"
+          - "org.jetbrains.kotlin.android"
           - "com.google.devtools.ksp"
           - "androidx.compose.compiler:compiler"
       androidx:
