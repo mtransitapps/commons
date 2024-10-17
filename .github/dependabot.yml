@@ -13,6 +13,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
+      time: "16:00"
+      timezone: "America/Montreal"
     target-branch: "mmathieum"
     groups:
       gh-actions:
@@ -27,6 +29,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
+      time: "16:00"
+      timezone: "America/Montreal"
     target-branch: "mmathieum"
     groups:
       kotlin-ksp-compose:
