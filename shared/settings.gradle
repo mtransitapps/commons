@@ -13,15 +13,12 @@ pluginManagement {
                 includeGroupByRegex("com\\.google\\.test.*")
             }
         }
-        gradlePluginPortal {
-            content {
-                includeGroupByRegex("com\\.github\\.ben\\-manes.*")
-                includeGroupByRegex("com\\.github\\.triplet.*")
-                includeGroupByRegex("com\\.google\\.protobuf.*")
-            }
-        }
-        mavenCentral()
+        gradlePluginPortal {}
     }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
 // https://developer.android.com/build/dependencies#remote-repositories
@@ -38,7 +35,7 @@ dependencyResolutionManagement {
                 includeGroupByRegex("com\\.google\\.firebase.*")
             }
         }
-        mavenCentral()
+        mavenCentral {}
     }
     versionCatalogs {
         libs {
