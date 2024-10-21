@@ -80,7 +80,7 @@ play-billing = "7.1.1"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 play-appUpdate = "2.1.0"
-play-review = "2.0.1"
+play-review = "2.0.2"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
 fbAudienceNetwork-mediation = "6.18.0.0"
