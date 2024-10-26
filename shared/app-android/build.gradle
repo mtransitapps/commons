@@ -54,6 +54,7 @@ if (isMainApp) {
     // apply plugin: libs.plugins.sonar.get().pluginId
 }
 
+kotlin.jvmToolchain(JavaLanguageVersion.of(rootProject.javaToolchainVersion.toString()).asInt())
 java.toolchain.languageVersion = JavaLanguageVersion.of(rootProject.javaToolchainVersion.toString())
 
 android {
@@ -329,9 +330,6 @@ if (isMainApp) {
         // release
         configuration("releaseCompileClasspath")
         configuration("releaseRuntimeClasspath")
-        // unit tests
-        configuration("debugUnitTestCompileClasspath")
-        configuration("debugUnitTestRuntimeClasspath")
         // later android tests?
     }
 }
