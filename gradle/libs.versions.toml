@@ -28,7 +28,7 @@ dependency-guard = "0.5.0"
 # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
 benmanes-versions = "0.51.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
-littlerobots-versioncatalog = "0.8.4"
+littlerobots-versioncatalog = "0.8.5"
 # https://github.com/google/dagger/releases/latest
 hilt = "2.52"
 # ALL: https://developer.android.com/jetpack/androidx/versions
