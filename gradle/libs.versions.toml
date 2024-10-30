@@ -41,7 +41,8 @@ androidx-cardview = "1.0.0"
 androidx-collection = "1.4.5"
 androidx-coordinator = "1.2.0"
 androidx-constraint = "2.2.0"
-androidx-core = "1.15.0"
+#noinspection GradleDependency // required sdk-compile = API Level 35
+androidx-core = "1.13.1"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.8.5"
 androidx-lifecycle = "2.8.7"
@@ -54,7 +55,8 @@ androidx-sqlite = "2.4.0"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
-androidx-workManager = "2.10.0"
+#noinspection GradleDependency // required sdk-compile = API Level 35
+androidx-workManager = "2.9.1"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.12.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
