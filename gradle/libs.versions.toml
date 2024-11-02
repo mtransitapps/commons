@@ -6,11 +6,11 @@
 sdk-min = "24"
 # Android 14 Upside Down Cake
 sdk-target = "34"
-# Android 14 Upside Down Cake
-sdk-compile = "34"
+# Android 15 Vanilla Ice Cream
+sdk-compile = "35"
 # https://developer.android.com/tools/releases/build-tools
-# Android 14 Upside Down Cake
-buildTools = "34.0.0"
+# Android 15 Vanilla Ice Cream
+buildTools = "35.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "2.0.21"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
@@ -41,8 +41,7 @@ androidx-cardview = "1.0.0"
 androidx-collection = "1.4.5"
 androidx-coordinator = "1.2.0"
 androidx-constraint = "2.2.0"
-#noinspection GradleDependency // required sdk-compile = API Level 35
-androidx-core = "1.13.1"
+androidx-core = "1.15.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.8.5"
 androidx-lifecycle = "2.8.7"
@@ -55,8 +54,7 @@ androidx-sqlite = "2.4.0"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
-#noinspection GradleDependency // required sdk-compile = API Level 35
-androidx-workManager = "2.9.1"
+androidx-workManager = "2.10.0"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.12.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
