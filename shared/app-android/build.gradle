@@ -67,7 +67,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = rootProject.javaVersion
-        allWarningsAsErrors = true
+        // allWarningsAsErrors = true // replaced by "DeprecatedCall" in lint
     }
 
     if (!projectPkg.empty) {
@@ -276,13 +276,14 @@ android {
         if (isMainApp) {
             abortOnError = true // do fail CI on main app
             warningsAsErrors = true
+            error "DeprecatedCall" // replaces "allWarningsAsErrors" in Kotlin compiler
             informational "DoNotMockPlatformTypes", // Platform types should not be mocked #SlackLint
                     "DenyListedApi", // Deny-listed API #SlackLint
                     "KotlinPairNotCreated" // Use Kotlin's kotlin.Pair instead of other Pair types from other libraries #SlackLint
             disable "InjectInJava", // Only Kotlin classes should be injected in order for Anvil to work. #SlackLint
+                    "ObsoleteLintCustomCheck", // un-actionable #SlackLint
                     "DeprecatedSqlUsage", // Use SqlDelight! #SlackLint
                     "RawDispatchersUse", // Use SlackDispatchers. #SlackLint
-                    "DeprecatedCall", // This class or method is deprecated; consider using an alternative. #SlackLint
                     "WrongConstant", // seems to be broken (Java<>Kotlin) in AGP 8.6.0 // TODO re-enable later
                     "ArgInFormattedQuantityStringRes", // Count value in formatted string resource. #SlackLint
                     "FragmentFieldInjection" // Fragment dependencies should be injected using the Fragment's constructor. #SlackLint
@@ -326,11 +327,11 @@ if (isMainApp) {
         enableAggregatingTask = true
     }
 
+    // update baseline with: ./gradlew :app-android:dependencyGuardBaseline
     dependencyGuard {
         // release
         configuration("releaseCompileClasspath")
         configuration("releaseRuntimeClasspath")
-        // later android tests?
     }
 }
 
