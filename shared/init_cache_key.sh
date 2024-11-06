@@ -21,6 +21,8 @@ checksum_file app-android/build.gradle >> ${RESULT_FILE}
 
 if [[ -d "parser" ]]; then
     checksum_file parser/build.gradle >> ${RESULT_FILE}
+fi
+if [[ -d "agency-parser" ]]; then
     checksum_file agency-parser/build.gradle >> ${RESULT_FILE}
 fi
 
