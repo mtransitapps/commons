@@ -114,16 +114,16 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 	echo "> PARSING DATA FOR '$AGENCY_ID'...";
 
 	# CURRENT...
-	$AGENCY_PARSER_DIR//parse_current.sh;
+	$AGENCY_PARSER_DIR/parse_current.sh;
 	checkResult $?;
 	# CURRENT... DONE
 
 	# NEXT...
-	$AGENCY_PARSER_DIR//parse_next.sh;
+	$AGENCY_PARSER_DIR/parse_next.sh;
 	checkResult $?;
 	# NEXT... DONE
 
-	$AGENCY_PARSER_DIR//list_change.sh;
+	$AGENCY_PARSER_DIR/list_change.sh;
 	RESULT=$?;
 	if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
 		echo "RESULT: $RESULT (fail ok/expected)"; # will auto commit
