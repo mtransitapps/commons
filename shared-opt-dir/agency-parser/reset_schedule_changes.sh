@@ -11,9 +11,10 @@ function resetDirectory() {
   if [[ -d $DIR ]]; then
     echo "> Reset schedule changes... '$DIR'";
     # git restore --source=HEAD --staged --worktree -- $DIR;
-    git  checkout -- $DIR;
-    checkResult $?;
+    git checkout -- $DIR;
+    # checkResult $?; # expected (files not known to git)
     git clean -fd -- $DIR;
+    checkResult $?;
     echo "> Reset schedule changes... '$DIR' DONE";
   fi
 }
