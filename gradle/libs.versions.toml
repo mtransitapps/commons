@@ -89,7 +89,7 @@ fbAudienceNetwork-mediation = "6.18.0.0"
 appLovin-mediation = "13.0.1.0"
 # Liftoff = Vungle
 #vungle = "7.4.0" # included with nediation adapter
-vungle-mediation = "7.4.1.0"
+vungle-mediation = "7.4.2.0"
 # https://github.com/xdevplatform/twitter-api-java-sdk/tags
 twitterApi = "2.0.3"
 # https://github.com/google/guava/releases/latest
