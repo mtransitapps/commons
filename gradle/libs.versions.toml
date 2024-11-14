@@ -4,10 +4,10 @@
 [versions]
 # Android 7.0 Nougat
 sdk-min = "24"
-# Android 14 Upside Down Cake
-sdk-target = "34"
-# Android 15 Vanilla Ice Cream
+# Android 15 Vanilla Ice Cream (update 1st)
 sdk-compile = "35"
+# Android 14 Upside Down Cake (update 2nd)
+sdk-target = "34"
 # https://developer.android.com/tools/releases/build-tools
 # Android 15 Vanilla Ice Cream
 buildTools = "35.0.0"
