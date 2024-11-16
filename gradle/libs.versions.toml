@@ -54,6 +54,7 @@ androidx-sqlite = "2.4.0"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
+androidx-webkit = "1.12.1"
 androidx-workManager = "2.10.0"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.12.0"
@@ -73,7 +74,7 @@ gps-location = "21.3.0"
 gps-maps = "19.0.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "33.5.1"
+firebase-bom = "33.6.0"
 firebase-crashlytics-plugin = "3.0.2"
 firebase-perf-plugin = "1.4.2"
 play-billing = "7.1.1"
@@ -172,6 +173,7 @@ androidx-vectordrawable = { module = "androidx.vectordrawable:vectordrawable", v
 androidx-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-viewmodel-state = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager2" }
+androix-webkit = { module = "androidx.webkit:webkit", version.ref = "androidx-webkit" }
 androidx-workManager-runtime = { module = "androidx.work:work-runtime", version.ref = "androidx-workManager" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 # adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
@@ -259,6 +261,7 @@ androidx = [
     "androidx-viewmodel",
     "androidx-viewmodel-state",
     "androidx-viewpager2",
+    "androix-webkit",
 ]
 workManager = [
     "androidx-workManager-runtime",
