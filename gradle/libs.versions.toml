@@ -130,7 +130,7 @@ mockito = "5.14.2"
 mockito-kotlin = "4.1.0"
 # https://commons.apache.org/
 commons-csv = "1.12.0"
-commons-io = "2.17.0"
+commons-io = "2.18.0"
 commons-lang3 = "3.17.0"
 commons-text = "1.12.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
