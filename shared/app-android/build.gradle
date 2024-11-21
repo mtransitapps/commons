@@ -47,6 +47,7 @@ println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
 if (isMainApp) {
     apply plugin: libs.plugins.dependency.guard.get().pluginId
     apply plugin: libs.plugins.google.ksp.get().pluginId
+    apply plugin: libs.plugins.androidx.room.get().pluginId
     apply plugin: libs.plugins.hilt.get().pluginId
     apply plugin: libs.plugins.gms.get().pluginId
     apply plugin: libs.plugins.firebase.crashlytics.get().pluginId
@@ -323,6 +324,12 @@ android {
 }
 
 if (isMainApp) {
+    ksp {
+        arg("room.incremental", "true") // not supported by Room Gradle plugin (yet)
+    }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
     hilt {
         enableAggregatingTask = true
     }
@@ -381,13 +388,6 @@ dependencies {
         implementation(libs.bundles.kotlin)
         implementation(libs.bundles.kotlin.android)
         implementation(libs.androidx.core)
-    }
-}
-
-if (isMainApp) {
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
-        arg("room.incremental", "true")
     }
 }
 
