@@ -12,10 +12,12 @@ sdk-target = "34"
 # Android 15 Vanilla Ice Cream
 buildTools = "35.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "2.1.0"
+#noinspection GradleDependency Kotlin 2.1.0 requires new hilt version https://github.com/google/dagger/issues/4451
+kotlin = "2.0.21"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.9.0"
 # https://github.com/google/ksp/releases/latest
+#noinspection GradleDependency Kotlin 2.1.0 requires new hilt version https://github.com/google/dagger/issues/4451
 ksp = "2.0.21-1.0.28"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "6.0.1.5171"
