@@ -19,4 +19,7 @@
         <!-- Maciej Górski's Android Maps Extensions library // TODO update to official Maps SDK for Android Utility Library -->
         <ignore path="src/main/java/org/mtransit/android/ui/view/map/" />
     </issue>
+    <issue id="TrustAllX509TrustManager">
+        <ignore path="*/com.google.http-client/google-http-client/*" />
+    </issue>
 </lint>
