@@ -321,6 +321,12 @@ android {
             }
         }
     }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/INDEX.LIST']
+        }
+    }
 }
 
 if (isMainApp) {
