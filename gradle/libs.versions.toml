@@ -95,7 +95,7 @@ vungle-mediation = "7.4.2.0"
 twitterApi = "2.0.3"
 # https://cloud.google.com/java/docs/reference/google-api-client/latest/history
 # googleApiClient = "2.7.0"
-youTubeGoogleApiClient = "v3-rev20241117-2.0.0"
+youTubeGoogleApiClient = "v3-rev20241203-2.0.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.3.1-android"
 # https://github.com/square/leakcanary/releases
