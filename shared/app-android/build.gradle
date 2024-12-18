@@ -283,6 +283,7 @@ android {
                     "KotlinPairNotCreated" // Use Kotlin's kotlin.Pair instead of other Pair types from other libraries #SlackLint
             disable "InjectInJava", // Only Kotlin classes should be injected in order for Anvil to work. #SlackLint
                     "ObsoleteLintCustomCheck", // un-actionable #SlackLint
+                    "MainScopeUsage", // #SlackLint
                     "DeprecatedSqlUsage", // Use SqlDelight! #SlackLint
                     "RawDispatchersUse", // Use SlackDispatchers. #SlackLint
                     "WrongConstant", // seems to be broken (Java<>Kotlin) in AGP 8.6.0 // TODO re-enable later
