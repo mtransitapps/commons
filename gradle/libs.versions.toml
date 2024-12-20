@@ -69,6 +69,7 @@ gps-plugin = "4.4.2"
 # LATEST: https://developers.google.com/android/guides/releases
 adsMediationTestSuite = "3.0.0"
 gps-ads = "23.6.0"
+gps-ump = "3.1.0"
 gps-basement = "18.5.0"
 gps-location = "21.3.0"
 gps-maps = "19.0.0"
@@ -182,6 +183,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 # adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
 mediationTestSuite = { module = "com.google.android.ads:mediation-test-suite", version.ref = "adsMediationTestSuite" }
 gps-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "gps-ads" }
+gps-ump = { module = "com.google.android.ump:user-messaging-platform", version.ref = "gps-ump" }
 gps-basement = { module = "com.google.android.gms:play-services-basement", version.ref = "gps-basement" }
 gps-location = { module = "com.google.android.gms:play-services-location", version.ref = "gps-location" }
 gps-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gps-maps" }
@@ -279,6 +281,7 @@ gps = [
     "firebase-crashlytics",
     "firebase-perf",
     "gps-ads",
+    "gps-ump",
     "gps-basement",
     "gps-location",
     "gps-maps",
