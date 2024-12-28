@@ -71,6 +71,14 @@ ls -l ${SCRIPT_DIR}/input/;
 if [[ -n "$CURRENT_ARCHIVE" ]]; then
   echo ">> Using current archive...";
   echo "- Archive: '$CURRENT_ARCHIVE'.";
+  CURRENT_FILE_SIZE=$(stat -c %s "$CURRENT_ARCHIVE");
+  echo "- Archive size: $CURRENT_FILE_SIZE";
+  if [[ $CURRENT_FILE_SIZE -lt 1000 ]]; then
+    echo "- Loading archive from LFS...";
+    git lfs pull;
+    checkResult $?;
+    echo "- Loading archive from LFS... DONE";
+  fi
   echo "- Copying '$CURRENT_ARCHIVE' to '$GTFS_FILE'...";
   cp "$CURRENT_ARCHIVE" "$GTFS_FILE";
   checkResult $?;
@@ -81,6 +89,14 @@ fi
 if [[ -n "$NEXT_ARCHIVE" ]]; then
   echo ">> Using next archive...";
   echo "- Archive: '$NEXT_ARCHIVE'.";
+  NEXT_ARCHIVE_SIZE=$(stat -c %s "$NEXT_ARCHIVE");
+  echo "- Archive size: $NEXT_ARCHIVE_SIZE";
+  if [[ $NEXT_ARCHIVE_SIZE -lt 1000 ]]; then
+    echo "- Loading archive from LFS...";
+    git lfs pull;
+    checkResult $?;
+    echo "- Loading archive from LFS... DONE";
+  fi
   echo "- Copying '$NEXT_ARCHIVE' to '$GTFS_NEXT_FILE'...";
   cp "$NEXT_ARCHIVE" "$GTFS_NEXT_FILE";
   checkResult $?;
