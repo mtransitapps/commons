@@ -115,7 +115,7 @@ if [[ -d "agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	../commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
   # checkResult $?; # too many errors for now
 
-  if [[ -e "$FILE_PATH/input_url_next" ]]; then
+  if [[ -e "input/gtfs_next.zip" ]]; then
     ../commons/gtfs/gtfs-validator.sh "input/gtfs_next.zip" "output/next";
     # checkResult $?; # too many errors for now
   fi

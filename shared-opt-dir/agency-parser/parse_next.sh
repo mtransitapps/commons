@@ -28,7 +28,7 @@ if [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then
 fi
 
 GTFS_DIR="input/gtfs_next";
-if ! [[ -e "$FILE_PATH/input_url_next" ]]; then
+if ! [[ -e "input/gtfs_next" ]]; then
 	GTFS_DIR="input/gtfs";
 fi
 if ! [[ -e "${SCRIPT_DIR}/input/gtfs_next/agency.txt" ]]; then
