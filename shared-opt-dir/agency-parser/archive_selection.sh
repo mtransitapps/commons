@@ -66,6 +66,8 @@ fi
 GTFS_FILE="${SCRIPT_DIR}/input/gtfs.zip";
 GTFS_NEXT_FILE="${SCRIPT_DIR}/input/gtfs_next.zip";
 
+ls -l ${SCRIPT_DIR}/input/;
+
 if [[ -n "$CURRENT_ARCHIVE" ]]; then
   echo ">> Using current archive...";
   echo "- Archive: '$CURRENT_ARCHIVE'.";
@@ -85,5 +87,7 @@ if [[ -n "$NEXT_ARCHIVE" ]]; then
   echo "- Copying '$NEXT_ARCHIVE' to '$GTFS_NEXT_FILE'... DONE";
   echo ">> Using next archive... DONE";
 fi
+
+ls -l ${SCRIPT_DIR}/input/;
 
 echo ">> Selecting archive GTFS... DONE"
