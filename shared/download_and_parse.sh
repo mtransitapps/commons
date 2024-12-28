@@ -25,21 +25,24 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 	AGENCY_PARSER_DIR=".";
 	echo "> AGENCY_PARSER_DIR: $AGENCY_PARSER_DIR";
 
-  # DOWNLOAD ALL AVAILABLE FEEDS URLS
+	# DOWNLOAD ALL AVAILABLE FEEDS URLS
 	$AGENCY_PARSER_DIR/download.sh;
 	RESULT=$?;
+	checkResult $RESULT;
 	echo "> Download result: $RESULT";
 
 	# PICK ZIP FILES FROM ARCHIVE
 	$AGENCY_PARSER_DIR/archive_selection.sh;
 	RESULT=$?;
+	checkResult $RESULT;
 	echo "> Select archive result: $RESULT";
 
-	if [[ $RESULT -eq 0 ]]; then
-		$AGENCY_PARSER_DIR/unzip_gtfs.sh;
-		RESULT=$?;
-		echo " > Unzip result: $RESULT";
-	fi
+	# if [[ $RESULT -eq 0 ]]; then
+	$AGENCY_PARSER_DIR/unzip_gtfs.sh;
+	RESULT=$?;
+	checkResult $RESULT;
+	echo " > Unzip result: $RESULT";
+	# fi
 
 	INPUT_DIR="$AGENCY_PARSER_DIR/input";
 

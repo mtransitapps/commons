@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/../commons/commons.sh
 
-echo ">> Selecting archive GTFS... '$*'"
+echo ">> Selecting archive GTFS..."
 
 YESTERDAY=$(date -d "yesterday" +%Y%m%d); # service can start yesterday and finish today
 echo "> Yesterday: '$YESTERDAY'";
@@ -86,4 +86,4 @@ if [[ -n "$NEXT_ARCHIVE" ]]; then
   echo ">> Using next archive... DONE";
 fi
 
-echo ">> Selecting archive GTFS... DONE ($NEW_ARCHIVE)"
+echo ">> Selecting archive GTFS... DONE"
