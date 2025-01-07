@@ -26,10 +26,9 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 	AGENCY_PARSER_DIR=".";
 	echo "> AGENCY_PARSER_DIR: $AGENCY_PARSER_DIR";
 
-	# DOWNLOAD ALL AVAILABLE FEEDS URLS
-	$AGENCY_PARSER_DIR/download.sh;
-	RESULT=$?;
-	checkResult $RESULT;
+	# DOWNLOAD ALL AVAILABLE FEEDS URLS & ARCHIVE ZIP FILES
+	$AGENCY_PARSER_DIR/download.sh; # and archive
+	RESULT=$?; # failure is fine: will use last successful archive(s)
 	echo "> Download result: $RESULT";
 
 	# PICK ZIP FILES FROM ARCHIVE
