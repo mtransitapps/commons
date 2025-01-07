@@ -21,6 +21,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
   cd ${SCRIPT_DIR}/agency-parser || exit; # >>
   AGENCY_PARSER_DIR=".";
   echo "> AGENCY_PARSER_DIR: $AGENCY_PARSER_DIR";
+  INPUT_DIR="$AGENCY_PARSER_DIR/input";
 
 	echo "> VALIDATING DATA FOR '$AGENCY_ID'...";
 
