@@ -43,9 +43,9 @@ androidx-coordinator = "1.2.0"
 androidx-constraint = "2.2.0"
 androidx-core = "1.15.0"
 androidx-core-splashscreen = "1.0.1"
-androidx-fragment = "1.8.5"
+androidx-fragment = "1.8.6"
 androidx-lifecycle = "2.8.7"
-androidx-nav = "2.8.6"
+androidx-nav = "2.8.7"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
 androidx-room = "2.6.1"
@@ -76,7 +76,7 @@ gps-maps = "19.0.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
 firebase-bom = "33.9.0"
-firebase-crashlytics-plugin = "3.0.2"
+firebase-crashlytics-plugin = "3.0.3"
 firebase-perf-plugin = "1.4.2"
 play-billing = "7.1.1"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
@@ -138,7 +138,7 @@ commons-io = "2.18.0"
 commons-lang3 = "3.17.0"
 commons-text = "1.13.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.48.0.0"
+xerial-SQLiteJDBC = "3.49.0.0"
 
 [libraries]
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
