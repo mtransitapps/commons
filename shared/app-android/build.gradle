@@ -279,10 +279,10 @@ android {
             warningsAsErrors = true
             error "DeprecatedCall" // replaces "allWarningsAsErrors" in Kotlin compiler
             informational "DoNotMockPlatformTypes", // Platform types should not be mocked #SlackLint
-                    "DenyListedApi", // Deny-listed API #SlackLint
                     "KotlinPairNotCreated" // Use Kotlin's kotlin.Pair instead of other Pair types from other libraries #SlackLint
             disable "InjectInJava", // Only Kotlin classes should be injected in order for Anvil to work. #SlackLint
                     "ObsoleteLintCustomCheck", // un-actionable #SlackLint
+                    "DenyListedApi", // Deny-listed API #SlackLint
                     "MainScopeUsage", // #SlackLint
                     "DeprecatedSqlUsage", // Use SqlDelight! #SlackLint
                     "RawDispatchersUse", // Use SlackDispatchers. #SlackLint
