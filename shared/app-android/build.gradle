@@ -163,11 +163,7 @@ android {
         // resourceConfigurations "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
         minSdk = libs.versions.sdk.min.get().toInteger()
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
-        if (isMainApp) {
-            targetSdk = 34 // Android 14
-        } else {
-            targetSdk = libs.versions.sdk.target.get().toInteger()
-        }
+        targetSdk = libs.versions.sdk.target.get().toInteger()
         buildConfigField "int", "TARGET_SDK_VERSION", "$targetSdkVersion.apiLevel"
 
         manifestPlaceholders.target_sdk_version = libs.versions.sdk.target.get()
