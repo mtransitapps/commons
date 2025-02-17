@@ -71,6 +71,7 @@ adsMediationTestSuite = "3.0.0"
 gps-ads = "23.6.0"
 gps-ump = "3.1.0"
 gps-basement = "18.5.0"
+gps-time = "16.0.1"
 gps-location = "21.3.0"
 gps-maps = "19.0.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
@@ -185,6 +186,7 @@ mediationTestSuite = { module = "com.google.android.ads:mediation-test-suite", v
 gps-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "gps-ads" }
 gps-ump = { module = "com.google.android.ump:user-messaging-platform", version.ref = "gps-ump" }
 gps-basement = { module = "com.google.android.gms:play-services-basement", version.ref = "gps-basement" }
+gps-time = { module = "com.google.android.gms:play-services-time", version.ref = "gps-time" }
 gps-location = { module = "com.google.android.gms:play-services-location", version.ref = "gps-location" }
 gps-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gps-maps" }
 maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "maps-ktx" }
