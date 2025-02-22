@@ -15,6 +15,8 @@ echo "Current directory: $CURRENT_DIRECTORY";
 
 setGradleArgs;
 
+setGitProjectName;
+
 if [[ -f "./gradlew" ]]; then
 	./gradlew clean ${GRADLE_ARGS};
 	checkResult $?;
@@ -157,6 +159,29 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
+
+if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
+  SRC_DIR_PATH="commons/shared-main";
+  for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
+    SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
+    if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
+      continue;
+    fi
+    FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+    DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST"
+    if [[ -f ${SRC_FILE_PATH} ]]; then
+      cleanupFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+      checkResult $?;
+    elif [[ -d "$SRC_FILE_PATH" ]]; then
+      cleanupDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+      checkResult $?;
+    else #WTF
+      echo "> File to cleanup '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
+      ls -l ${FILENAME};
+      exit 1;
+    fi
+  done
+fi
 
 echo "--------------------------------------------------------------------------------";
 AFTER_DATE=$(date +%D-%X);

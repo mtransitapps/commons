@@ -324,6 +324,33 @@ done
 echo "> Deploying optional shared files... DONE";
 echo "--------------------------------------------------------------------------------";
 
+if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
+  echo "--------------------------------------------------------------------------------";
+  echo "> Deploying main shared files...";
+  SRC_DIR_PATH="commons/shared-main";
+  for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
+    SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
+    if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
+      continue;
+    fi
+    FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+    DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST"
+    if [[ -f $SRC_FILE_PATH ]]; then
+      deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+      checkResult $?;
+    elif [[ -d "$SRC_FILE_PATH" ]]; then
+      deployDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+      checkResult $?;
+    else #WTF
+      echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
+      ls -l $FILENAME;
+      exit 1;
+    fi
+  done
+  echo "> Deploying main shared files... DONE";
+  echo "--------------------------------------------------------------------------------";
+fi
+
 echo "--------------------------------------------------------------------------------";
 echo "> Deploying overwritten shared files...";
 SRC_DIR_PATH="commons/shared-overwrite";
