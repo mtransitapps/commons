@@ -29,6 +29,8 @@ dependency-guard = "0.5.0"
 benmanes-versions = "0.52.0"
 # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
 littlerobots-versioncatalog = "0.8.5"
+# https://runningcode.github.io/gradle-doctor/
+gradle-doctor = "0.10.0"
 # https://github.com/google/dagger/releases/latest
 hilt = "2.55"
 # ALL: https://developer.android.com/jetpack/androidx/versions
@@ -354,4 +356,5 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependency-guard" }
 benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }
 littlerobots-versioncatalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "littlerobots-versioncatalog" }
+gradle-doctor = { id = "com.osacky.doctor", version.ref = "gradle-doctor" }
 sonar = { id = "org.sonarqube", version.ref = "sonar" }
