@@ -93,6 +93,7 @@ androidx.window:window:1.0.0
 androidx.work:work-runtime:2.10.0
 com.android.billingclient:billing-ktx:7.1.1
 com.android.billingclient:billing:7.1.1
+com.android.volley:volley:1.2.1
 com.applovin:applovin-sdk:13.1.0
 com.caverock:androidsvg-aar:1.4
 com.facebook.android:audience-network-sdk:6.19.0
@@ -133,6 +134,7 @@ com.google.android.gms:play-services-measurement:22.2.0
 com.google.android.gms:play-services-stats:17.0.2
 com.google.android.gms:play-services-tasks:18.2.0
 com.google.android.gms:play-services-time:16.0.1
+com.google.android.libraries.places:places:3.5.0
 com.google.android.material:material:1.12.0
 com.google.android.play:app-update-ktx:2.1.0
 com.google.android.play:app-update:2.1.0
@@ -144,6 +146,7 @@ com.google.api-client:google-api-client:2.7.2
 com.google.apis:google-api-services-youtube:v3-rev20250224-2.0.0
 com.google.auth:google-auth-library-credentials:1.30.0
 com.google.auth:google-auth-library-oauth2-http:1.30.0
+com.google.auto.value:auto-value-annotations:1.6.2
 com.google.code.findbugs:jsr305:3.0.2
 com.google.code.gson:gson:2.12.1
 com.google.dagger:dagger-lint-aar:2.55
@@ -185,6 +188,7 @@ com.google.protobuf:protobuf-javalite:3.25.5
 com.squareup.okhttp3:logging-interceptor:4.12.0
 com.squareup.okhttp3:okhttp-bom:4.12.0
 com.squareup.okhttp3:okhttp:4.12.0
+com.squareup.okhttp:okhttp:2.7.2
 com.squareup.okio:okio-jvm:3.6.0
 com.squareup.okio:okio:3.6.0
 com.squareup.retrofit2:converter-gson:2.11.0
