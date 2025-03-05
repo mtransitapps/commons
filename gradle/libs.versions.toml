@@ -111,7 +111,7 @@ slackLint = "0.8.2"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobuf = "4.29.3"
+protobuf = "4.30.0"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.4"
 # https://github.com/square/retrofit/tags
