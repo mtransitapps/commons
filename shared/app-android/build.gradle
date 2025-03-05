@@ -155,12 +155,6 @@ android {
         } else {
             base.archivesName = "${projectName}_v${sharedVersionName}_r${appVersionCode}"
         }
-        resourceConfigurations += ["en"]
-        if (resValueFr.exists()) {
-            resourceConfigurations += ["fr"]
-        }
-        // resourceConfigurations "en", "xxxhdpi" // DEBUG xxxhdpi = Pixel 2 XL
-        // resourceConfigurations "fr", "xxhdpi" // DEBUG xxhdpi = Nexus 5
         minSdk = libs.versions.sdk.min.get().toInteger()
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdk = libs.versions.sdk.target.get().toInteger()
@@ -172,6 +166,13 @@ android {
         manifestPlaceholders.permission_provider_read = "org.mtransit.android.provider.permission.READ_PROVIDER"
         manifestPlaceholders.permission_receiver_broadcast = "org.mtransit.android.receiver.permission.BROADCAST_RECEIVER"
         setupResValues(it, projectPkg)
+    }
+
+    androidResources {
+        localeFilters = ["en"]
+        if (resValueFr.exists()) {
+            localeFilters += ["fr"]
+        }
     }
 
     bundle {
