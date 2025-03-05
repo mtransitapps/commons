@@ -68,7 +68,7 @@ maps-utils = "3.11.0"
 maps-ktx = "5.1.1"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
 #noinspection GradleDependency // 4.0.0+ requires minSDK 23 instead of 21
-places-sdk = "3.5.0"
+places-sdk = "4.1.0"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.4.2"
 # LATEST: https://developers.google.com/android/guides/releases
