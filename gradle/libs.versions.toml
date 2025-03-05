@@ -80,7 +80,7 @@ gps-location = "21.3.0"
 gps-maps = "19.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "33.9.0"
+firebase-bom = "33.10.0"
 firebase-crashlytics-plugin = "3.0.3"
 firebase-perf-plugin = "1.4.2"
 play-billing = "7.1.1"
