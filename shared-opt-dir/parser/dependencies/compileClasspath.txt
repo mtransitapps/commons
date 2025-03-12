@@ -1,7 +1,7 @@
-androidx.annotation:annotation-jvm:1.9.0
-androidx.annotation:annotation:1.9.0
-androidx.collection:collection-jvm:1.4.5
-androidx.collection:collection:1.4.5
+androidx.annotation:annotation-jvm:1.9.1
+androidx.annotation:annotation:1.9.1
+androidx.collection:collection-jvm:1.5.0
+androidx.collection:collection:1.5.0
 commons-codec:commons-codec:1.17.2
 commons-io:commons-io:2.18.0
 org.apache.commons:commons-csv:1.13.0
