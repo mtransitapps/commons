@@ -3,6 +3,7 @@ import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.triplet.playPublisher)
 }
 
@@ -366,6 +367,7 @@ dependencies {
         }
         implementation(platform(libs.kotlin.bom))
         implementation(platform(libs.kotlinx.coroutines.bom))
+        implementation(platform(libs.kotlinx.serialization.bom))
         implementation(libs.bundles.kotlin)
         implementation(libs.bundles.kotlin.android)
         implementation(libs.bundles.dagger)
@@ -400,6 +402,7 @@ dependencies {
         implementation(project(":commons-android"))
         implementation(platform(libs.kotlin.bom))
         implementation(platform(libs.kotlinx.coroutines.bom))
+        implementation(platform(libs.kotlinx.serialization.bom))
         implementation(libs.bundles.kotlin)
         implementation(libs.bundles.kotlin.android)
         implementation(libs.androidx.core)

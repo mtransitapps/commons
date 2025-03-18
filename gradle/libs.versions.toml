@@ -15,6 +15,8 @@ buildTools = "35.0.1"
 kotlin = "2.1.10"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.1"
+# https://github.com/Kotlin/kotlinx.serialization/releases/latest
+kotlinx-serialization="1.8.0"
 # https://github.com/google/ksp/releases/latest
 ksp = "2.1.10-1.0.31"
 # https://plugins.gradle.org/plugin/org.sonarqube
@@ -152,6 +154,8 @@ kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bo
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
+kotlinx-serialization-bom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version.ref = "kotlinx-serialization" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
@@ -245,6 +249,7 @@ xerial-SQLiteJDBC = { module = "org.xerial:sqlite-jdbc", version.ref = "xerial-S
 kotlin = [
     "kotlin-stblib",
     "kotlinx-coroutines",
+    "kotlinx-serialization",
 ]
 kotlin-android = [
     "kotlinx-coroutines-android",
@@ -357,6 +362,7 @@ androidx-room = { id = "androidx.room", version.ref = "androidx-room" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinx-serialization" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 triplet-playPublisher = { id = "com.github.triplet.play", version.ref = "triplet-playPublisher" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
