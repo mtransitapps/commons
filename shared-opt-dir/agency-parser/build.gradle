@@ -5,7 +5,12 @@ plugins {
 }
 
 application {
-    mainClass = file("parser_class").text
+    def parserClassFile = file("parser_class")
+    if (parserClassFile.exists()) {
+        mainClass = parserClassFile.text
+    } else {
+        mainClass = "org.mtransit.parser.DefaultAgencyTools"
+    }
     applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
 }
 
