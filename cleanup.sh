@@ -45,6 +45,24 @@ function cleanupFile() {
 	local SRC_FILE_PATH=$1;
 	local DEST_FILE_PATH=$2;
 	local FILE_NAME=$(basename ${SRC_FILE_PATH});
+	if [[ $FILE_NAME == *.MT.sh ]]; then
+		REAL_DEST_FILE_PATH=${DEST_FILE_PATH%.MT.sh};
+		git ls-files --error-unmatch ${REAL_DEST_FILE_PATH} &> /dev/null;
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
+			echo -n "> Cleaning-up file '$REAL_DEST_FILE_PATH'...";
+			rm ${REAL_DEST_FILE_PATH};
+			RESULT=$?;
+			if [[ ${RESULT} -ne 0 ]]; then
+				echo " ERROR !";
+				exit ${RESULT};
+			fi
+			echo " DONE ✓";
+		else
+			echo "> Cleaning-up file '$REAL_DEST_FILE_PATH'... SKIP ✓ (tracked file could be generated)";
+		fi
+		return; # no need to validate generated file content
+	fi
 	if [[ $FILE_NAME == ".gitignore" || $FILE_NAME == "MT.gitignore" ]]; then
 		return; # keep .gitignore files, even if modified
 	fi
@@ -162,6 +180,27 @@ done
 
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
   SRC_DIR_PATH="commons/shared-main";
+  for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
+    SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
+    if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
+      continue;
+    fi
+    FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+    DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST"
+    if [[ -f ${SRC_FILE_PATH} ]]; then
+      cleanupFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+      checkResult $?;
+    elif [[ -d "$SRC_FILE_PATH" ]]; then
+      cleanupDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+      checkResult $?;
+    else #WTF
+      echo "> File to cleanup '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
+      ls -l ${FILENAME};
+      exit 1;
+    fi
+  done
+else # modules
+  SRC_DIR_PATH="commons/shared-modules";
   for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
     SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
     if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then

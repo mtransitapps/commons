@@ -180,6 +180,17 @@ function deployFile() {
 	if [[ "$#" -ge 3 ]]; then
 		OVER_WRITE=$3;
 	fi
+	if [[ $SRC_FILE_PATH == *.MT.sh ]]; then
+		echo "> Running file '$SRC_FILE_PATH'...";
+		./"$SRC_FILE_PATH";
+		local RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "> Error while running file '$SRC_FILE_PATH'!";
+			exit ${RESULT};
+		fi
+		echo "> Running file '$SRC_FILE_PATH'... DONE";
+		exit ${RESULT};
+	fi
 	if [[ "$OVER_WRITE" == true ]]; then
 		if [[ -f "${DEST_FILE_PATH}" ]]; then
 			rm ${DEST_FILE_PATH};
@@ -351,10 +362,32 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
     fi
   done
   echo "> Deploying main shared files... DONE ✓";
-
-  echo "--------------------------------------------------------------------------------";
-
+else
+  echo "> Deploying modules shared files...";
+  SRC_DIR_PATH="commons/shared-modules";
+  for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
+    SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
+    if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
+      continue;
+    fi
+    FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+    DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST"
+    if [[ -f $SRC_FILE_PATH ]]; then
+      deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+      checkResult $?;
+    elif [[ -d "$SRC_FILE_PATH" ]]; then
+      deployDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH};
+      checkResult $?;
+    else #WTF
+      echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
+      ls -l $FILENAME;
+      exit 1;
+    fi
+  done
+  echo "> Deploying main modules files... DONE ✓";
 fi
+
+echo "--------------------------------------------------------------------------------";
 
 echo "> Deploying overwritten shared files...";
 SRC_DIR_PATH="commons/shared-overwrite";
