@@ -40,4 +40,8 @@ echo "Contact webste URL: '$CONTACT_WEBITE_URL'.";
 echo "$CONTACT_WEBITE_URL" > "${CONTACT_WEBSITE_FILE}";
 checkResult $?;
 
+# echo "---------------------------------------------------------------------------------------------------------------"
+# cat "${CONTACT_WEBSITE_FILE}"; #DEBUG
+# echo "---------------------------------------------------------------------------------------------------------------"
+
 echo "Generating contact-website.txt... DONE";

@@ -188,7 +188,7 @@ function deployFile() {
 			exit ${RESULT};
 		fi
 		echo "> Running file '$SRC_FILE_PATH'... DONE";
-		exit ${RESULT};
+		return;
 	fi
 	if [[ "$OVER_WRITE" == true ]]; then
 		if [[ -f "${DEST_FILE_PATH}" ]]; then

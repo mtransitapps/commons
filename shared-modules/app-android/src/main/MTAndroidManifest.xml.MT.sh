@@ -14,11 +14,10 @@ DEBUG_DIR="${SRC_DIR}/debug";
 ANDROID_MANIFEST_DIR="${MAIN_DIR}";
 # ANDROID_MANIFEST_DIR="${DEBUG_DIR}"; #DEBUG
 ANDROID_MANIFEST_FILE="${ANDROID_MANIFEST_DIR}/AndroidManifest.xml";
-echo "ANDROID_MANIFEST_FILE: '$ANDROID_MANIFEST_FILE'";
 mkdir -p "${ANDROID_MANIFEST_DIR}";
 checkResult $?;
 if [ -f "${ANDROID_MANIFEST_FILE}" ]; then
-  echo "File already exist."; # compat with existing AndroidManifest.xml
+  echo "File '$ANDROID_MANIFEST_FILE' already exist."; # compat with existing AndroidManifest.xml
   exit 0;
 fi
 rm -f "${ANDROID_MANIFEST_FILE}";
