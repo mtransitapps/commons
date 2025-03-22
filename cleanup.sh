@@ -47,19 +47,24 @@ function cleanupFile() {
 	local FILE_NAME=$(basename ${SRC_FILE_PATH});
 	if [[ $FILE_NAME == *.MT.sh ]]; then
 		REAL_DEST_FILE_PATH=${DEST_FILE_PATH%.MT.sh};
-		git ls-files --error-unmatch ${REAL_DEST_FILE_PATH} &> /dev/null;
-		RESULT=$?;
-		if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
-			echo -n "> Cleaning-up file '$REAL_DEST_FILE_PATH'...";
-			rm ${REAL_DEST_FILE_PATH};
+		echo "REAL_DEST_FILE_PATH: '$REAL_DEST_FILE_PATH'.";
+		if [[ -f "$REAL_DEST_FILE_PATH" ]]; then
+			git ls-files --error-unmatch ${REAL_DEST_FILE_PATH} &> /dev/null;
 			RESULT=$?;
-			if [[ ${RESULT} -ne 0 ]]; then
-				echo " ERROR !";
-				exit ${RESULT};
+			if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
+				echo -n "> Cleaning-up file '$REAL_DEST_FILE_PATH'...";
+				rm ${REAL_DEST_FILE_PATH};
+				RESULT=$?;
+				if [[ ${RESULT} -ne 0 ]]; then
+					echo " ERROR !";
+					exit ${RESULT};
+				fi
+				echo " DONE ✓";
+			else
+				echo "> Cleaning-up file '$REAL_DEST_FILE_PATH'... SKIP ✓ (tracked file could be generated)";
 			fi
-			echo " DONE ✓";
 		else
-			echo "> Cleaning-up file '$REAL_DEST_FILE_PATH'... SKIP ✓ (tracked file could be generated)";
+			echo "> Ignoring missing file '$REAL_DEST_FILE_PATH'...";
 		fi
 		return; # no need to validate generated file content
 	fi
