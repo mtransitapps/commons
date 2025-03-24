@@ -47,7 +47,6 @@ function cleanupFile() {
 	local FILE_NAME=$(basename ${SRC_FILE_PATH});
 	if [[ $FILE_NAME == *.MT.sh ]]; then
 		REAL_DEST_FILE_PATH=${DEST_FILE_PATH%.MT.sh};
-		echo "REAL_DEST_FILE_PATH: '$REAL_DEST_FILE_PATH'.";
 		if [[ -f "$REAL_DEST_FILE_PATH" ]]; then
 			git ls-files --error-unmatch ${REAL_DEST_FILE_PATH} &> /dev/null;
 			RESULT=$?;
