@@ -5,7 +5,7 @@ ROOT_DIR="$SCRIPT_DIR/../../../../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
 
-echo "Generating title.txt...";
+echo "Generating short-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
@@ -13,17 +13,17 @@ MAIN_DIR="${SRC_DIR}/main";
 PLAY_DIR="${MAIN_DIR}/play";
 LISTINGS_DIR="${PLAY_DIR}/listings";
 EN_US_DIR="${LISTINGS_DIR}/en-US";
-TITLE_FILE="${EN_US_DIR}/title.txt";
+SHORT_DESCRIPTION_FILE="${EN_US_DIR}/short-description.txt";
 mkdir -p "${EN_US_DIR}";
 checkResult $?;
-if [ -f "${TITLE_FILE}" ]; then
-  echo "'$TITLE_FILE' already exist."; # compat with existing title.txt
+if [ -f "${SHORT_DESCRIPTION_FILE}" ]; then
+  echo "'$SHORT_DESCRIPTION_FILE' already exist."; # compat with existing short-description.txt
   exit 0;
 fi
 
-rm -f "${TITLE_FILE}";
+rm -f "${SHORT_DESCRIPTION_FILE}";
 checkResult $?;
-touch "${TITLE_FILE}";
+touch "${SHORT_DESCRIPTION_FILE}";
 checkResult $?;
 
 CONFIG_DIR="${ROOT_DIR}/config";
@@ -38,17 +38,13 @@ if [ ! -f "$AGENCY_NAME_FILE" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_COUNT=$(grep -c ^ $AGENCY_NAME_FILE);
-if [ $AGENCY_NAME_COUNT -eq 0 ]; then
-    echo "$AGENCY_NAME_FILE is empty!";
+AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
+if [ -z "$AGENCY_NAME_LONG" ]; then
+    echo "$AGENCY_NAME_LONG is empty!";
     exit 1;
 fi
 
-AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
-if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
-    exit 1;
-fi
+AGENCY_LABEL=$AGENCY_NAME_LONG;
 
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";
@@ -67,30 +63,48 @@ fi
 echo "type: $TYPE";
 TYPE_LABEL="";
 if [ "$TYPE" -eq 0 ]; then # LIGHT_RAIL
-    TYPE_LABEL="Light Rail";
+    TYPE_LABEL="light rail"; # TODO?
 elif [ "$TYPE" -eq 1 ]; then # SUBWAY
-    TYPE_LABEL="Subway";
+    TYPE_LABEL="subways";
 elif [ "$TYPE" -eq 2 ]; then # TRAIN
-    TYPE_LABEL="Train";
+    TYPE_LABEL="trains";
 elif [ "$TYPE" -eq 3 ]; then # BUS
-    TYPE_LABEL="Bus";
+    TYPE_LABEL="buses";
 elif [ "$TYPE" -eq 4 ]; then # FERRY
-    TYPE_LABEL="Ferry";
+    TYPE_LABEL="ferries";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
-    TYPE_LABEL="Bike";
+    TYPE_LABEL="bike sharing";
 else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error
 fi
 
-TITLE="$AGENCY_NAME_SHORT $TYPE_LABEL - MonTransit";
+SHORT_DESC="$AGENCY_NAME_LONG $TYPE_LABEL for MonTransit.";
 
-MAX_LENGTH=30;
+RES_VALUES_DIR="${MAIN_DIR}/res/values";
+GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml";
+if [ -f "$GTFS_FILE" ]; then
+  SHORT_DESC="${SHORT_DESC} Schedule.";
+fi
+GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
+if [ -f "${GTFS_RT_FILE}" ]; then
+  SHORT_DESC="${SHORT_DESC} Alerts.";
+fi
 
-echo $TITLE | awk -v len=$MAX_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }' >> "${TITLE_FILE}"
+RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
+TWITTER_FILE="${RES_VALUES_DIR}/twitter_values.xml";
+YOUTUBE_FILE="${RES_VALUES_DIR}/youtube_values.xml";
+# INSTAGRAM_FILE="${RES_VALUES_DIR}/instagram_values.xml"; # NOT WORKING
+if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
+  SHORT_DESC="${SHORT_DESC} News.";
+fi
+
+MAX_LENGTH=80;
+
+echo $SHORT_DESC | awk -v len=$MAX_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }' >> "${SHORT_DESCRIPTION_FILE}"
 
 # echo "---------------------------------------------------------------------------------------------------------------";
-# cat "${TITLE_FILE}"; #DEBUG
+# cat "${SHORT_DESCRIPTION_FILE}"; #DEBUG
 # echo "---------------------------------------------------------------------------------------------------------------";
 
-echo "Generating title.txt... DONE";
+echo "Generating short-description.txt... DONE";
