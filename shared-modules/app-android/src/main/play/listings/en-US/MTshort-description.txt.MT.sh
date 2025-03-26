@@ -60,7 +60,6 @@ else
   echo " > No agency file! (rts:$BIKE_STATION_VALUES_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
-echo "type: $TYPE";
 TYPE_LABEL="";
 if [ "$TYPE" -eq 0 ]; then # LIGHT_RAIL
     TYPE_LABEL="light rail"; # TODO?

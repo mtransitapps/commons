@@ -32,12 +32,6 @@ if [ ! -f "$AGENCY_NAME_FILE" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_COUNT=$(grep -c ^ $AGENCY_NAME_FILE);
-if [ $AGENCY_NAME_COUNT -eq 0 ]; then
-    echo "$AGENCY_NAME_FILE is empty!";
-    exit 1;
-fi
-
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
     echo "$AGENCY_NAME_LONG is empty!";
