@@ -12,13 +12,13 @@ sdk-target = "35"
 # Android 15 Vanilla Ice Cream
 buildTools = "35.0.1"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "2.1.10"
+kotlin = "2.1.20"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.1"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization="1.8.0"
 # https://github.com/google/ksp/releases/latest
-ksp = "2.1.10-1.0.31"
+ksp = "2.1.20-1.0.32"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "6.0.1.5171"
 # https://developer.android.com/build/releases/gradle-plugin
