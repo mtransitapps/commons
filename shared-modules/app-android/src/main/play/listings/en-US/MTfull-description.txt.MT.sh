@@ -5,6 +5,8 @@ ROOT_DIR="$SCRIPT_DIR/../../../../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
 
+setGitProjectName;
+
 echo "Generating full-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -72,6 +74,7 @@ if [ -z "$GIT_OWNER_REPO" ]; then
     exit 1;
 fi
 CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER_REPO";
+echo "CONTACT_WEBITE_URL: '$CONTACT_WEBITE_URL'."; #DEBUG
 
 SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 if [ ! -f "$SOURCE_URL_FILE" ]; then
@@ -101,8 +104,7 @@ if [ -f "$STATE_FILE" ]; then
     STATE_LABEL_LONG=$(tail -n 1 $STATE_FILE);
 fi
 
-COUNTRY_CODE=$(echo "$GIT_REMOTE_URL" | cut -d/ -f2 | cut -d. -f1 | cut -d- -f1);
-
+COUNTRY_CODE=$(echo "$PROJECT_NAME" | cut -d- -f1);
 if [ "$COUNTRY_CODE" = "ca" ]; then
     COUNTRY_LABEL="Canada";
 elif [ "$COUNTRY_CODE" = "us" ]; then
