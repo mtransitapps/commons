@@ -7,6 +7,8 @@ source ${COMMONS_DIR}/commons.sh;
 
 setGitProjectName;
 
+setIsCI;
+
 echo "Generating contact-website.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -32,8 +34,10 @@ CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 echo "$CONTACT_WEBITE_URL" > "${CONTACT_WEBSITE_FILE}";
 checkResult $?;
 
-# echo "---------------------------------------------------------------------------------------------------------------"
-# cat "${CONTACT_WEBSITE_FILE}"; #DEBUG
-# echo "---------------------------------------------------------------------------------------------------------------"
+if [[ ${IS_CI} = true ]]; then
+  echo "---------------------------------------------------------------------------------------------------------------"
+  cat "${CONTACT_WEBSITE_FILE}"; #DEBUG
+  echo "---------------------------------------------------------------------------------------------------------------"
+fi
 
 echo "Generating contact-website.txt... DONE";

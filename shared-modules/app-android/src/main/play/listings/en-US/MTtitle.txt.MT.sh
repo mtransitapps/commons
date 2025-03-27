@@ -5,6 +5,8 @@ ROOT_DIR="$SCRIPT_DIR/../../../../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
 
+setIsCI;
+
 echo "Generating title.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -88,8 +90,10 @@ MAX_LENGTH=30;
 
 echo $TITLE | awk -v len=$MAX_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }' >> "${TITLE_FILE}"
 
-# echo "---------------------------------------------------------------------------------------------------------------";
-# cat "${TITLE_FILE}"; #DEBUG
-# echo "---------------------------------------------------------------------------------------------------------------";
+if [[ ${IS_CI} = true ]]; then
+  echo "---------------------------------------------------------------------------------------------------------------";
+  cat "${TITLE_FILE}"; #DEBUG
+  echo "---------------------------------------------------------------------------------------------------------------";
+fi
 
 echo "Generating title.txt... DONE";

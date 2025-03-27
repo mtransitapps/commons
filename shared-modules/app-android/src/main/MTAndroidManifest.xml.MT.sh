@@ -5,6 +5,8 @@ ROOT_DIR="$SCRIPT_DIR/../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
 
+setIsCI;
+
 echo "Generating AndroidManifest.xml...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -183,8 +185,10 @@ cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
 </manifest>
 EOL
 
-# echo "---------------------------------------------------------------------------------------------------------------"
-# cat "${ANDROID_MANIFEST_FILE}"; #DEBUG
-# echo "---------------------------------------------------------------------------------------------------------------"
+if [[ ${IS_CI} = true ]]; then
+    echo "---------------------------------------------------------------------------------------------------------------"
+    cat "${ANDROID_MANIFEST_FILE}"; #DEBUG
+    echo "---------------------------------------------------------------------------------------------------------------"
+fi
 
 echo "Generating AndroidManifest.xml... DONE";

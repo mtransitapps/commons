@@ -7,6 +7,8 @@ source ${COMMONS_DIR}/commons.sh;
 
 setGitProjectName;
 
+setIsCI;
+
 echo "Generating full-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -300,8 +302,10 @@ fi
 echo "$PERMISSIONS_LINE" >> "${FULL_DESCRIPTION_FILE}";
 checkResult $?;
 
-# echo "---------------------------------------------------------------------------------------------------------------";
-# cat "${FULL_DESCRIPTION_FILE}"; #DEBUG
-# echo "---------------------------------------------------------------------------------------------------------------";
+if [[ ${IS_CI} = true ]]; then
+  echo "---------------------------------------------------------------------------------------------------------------";
+  cat "${FULL_DESCRIPTION_FILE}"; #DEBUG
+  echo "---------------------------------------------------------------------------------------------------------------";
+fi
 
 echo "Generating full-description.txt... DONE";

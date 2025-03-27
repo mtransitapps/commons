@@ -5,6 +5,8 @@ ROOT_DIR="$SCRIPT_DIR/../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
 
+setIsCI;
+
 echo "Generating README.md...";
 
 README_FILE="${ROOT_DIR}/README.md";
@@ -93,8 +95,10 @@ Learn more about the BETA program [here](https://github.com/mtransitapps/mtransi
 * [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 EOL
 
-# echo "---------------------------------------------------------------------------------------------------------------";
-# cat "${README_FILE}"; #DEBUG
-# echo "---------------------------------------------------------------------------------------------------------------";
+if [[ ${IS_CI} = true ]]; then
+    echo "---------------------------------------------------------------------------------------------------------------";
+    cat "${README_FILE}"; #DEBUG
+    echo "---------------------------------------------------------------------------------------------------------------";
+fi
 
 echo "Generating README.md... DONE";
