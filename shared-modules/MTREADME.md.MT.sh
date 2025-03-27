@@ -7,12 +7,12 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo "Generating README.md...";
+echo ">> Generating README.md...";
 
 README_FILE="${ROOT_DIR}/README.md";
 
 if [ -f "${README_FILE}" ]; then
-  echo "File '$README_FILE' already exist."; # compat with existing README.md
+  echo ">> File '$README_FILE' already exist."; # compat with existing README.md
   exit 0;
 fi
 
@@ -101,4 +101,4 @@ if [[ ${IS_CI} = true ]]; then
     echo "---------------------------------------------------------------------------------------------------------------";
 fi
 
-echo "Generating README.md... DONE";
+echo ">> Generating README.md... DONE";

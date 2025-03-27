@@ -7,7 +7,7 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo "Generating AndroidManifest.xml...";
+echo ">> Generating AndroidManifest.xml...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
@@ -19,7 +19,7 @@ ANDROID_MANIFEST_FILE="${ANDROID_MANIFEST_DIR}/AndroidManifest.xml";
 mkdir -p "${ANDROID_MANIFEST_DIR}";
 checkResult $?;
 if [ -f "${ANDROID_MANIFEST_FILE}" ]; then
-  echo "File '$ANDROID_MANIFEST_FILE' already exist."; # compat with existing AndroidManifest.xml
+  echo ">> File '$ANDROID_MANIFEST_FILE' already exist."; # compat with existing AndroidManifest.xml
   exit 0;
 fi
 rm -f "${ANDROID_MANIFEST_FILE}";
@@ -191,4 +191,4 @@ if [[ ${IS_CI} = true ]]; then
     echo "---------------------------------------------------------------------------------------------------------------"
 fi
 
-echo "Generating AndroidManifest.xml... DONE";
+echo ">> Generating AndroidManifest.xml... DONE";

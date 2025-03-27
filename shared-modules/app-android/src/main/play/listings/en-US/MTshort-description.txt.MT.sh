@@ -7,7 +7,7 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo "Generating short-description.txt...";
+echo ">> Generating short-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
@@ -19,7 +19,7 @@ SHORT_DESCRIPTION_FILE="${EN_US_DIR}/short-description.txt";
 mkdir -p "${EN_US_DIR}";
 checkResult $?;
 if [ -f "${SHORT_DESCRIPTION_FILE}" ]; then
-  echo "'$SHORT_DESCRIPTION_FILE' already exist."; # compat with existing short-description.txt
+  echo ">> File '$SHORT_DESCRIPTION_FILE' already exist."; # compat with existing short-description.txt
   exit 0;
 fi
 
@@ -110,4 +110,4 @@ if [[ ${IS_CI} = true ]]; then
   echo "---------------------------------------------------------------------------------------------------------------";
 fi
 
-echo "Generating short-description.txt... DONE";
+echo ">> Generating short-description.txt... DONE";

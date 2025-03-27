@@ -177,16 +177,17 @@ function setGitProjectName() {
 		DIR=".";
 	fi
 	GIT_URL=$(git -C $DIR config --get remote.origin.url);
-	echo "GIT_URL: '$GIT_URL'.";
 	GIT_PROJECT_NAME=$(basename -- ${GIT_URL});
 	GIT_PROJECT_NAME="${GIT_PROJECT_NAME%.*}" # remove ".git" extension
-	echo "GIT_PROJECT_NAME: '$GIT_PROJECT_NAME'.";
 	if [[ -z "${GIT_PROJECT_NAME}" ]]; then
 		echo "GIT_PROJECT_NAME not found!";
 		exit 1;
 	fi
 	PROJECT_NAME="${GIT_PROJECT_NAME%-gradle}";
-	echo "PROJECT_NAME: '$PROJECT_NAME'.";
+	if [[ -z "${PROJECT_NAME}" ]]; then
+		echo "PROJECT_NAME not found!";
+		exit 1;
+	fi
 }
 
 function setGitBranch() {

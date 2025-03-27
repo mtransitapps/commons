@@ -181,14 +181,14 @@ function deployFile() {
 		OVER_WRITE=$3;
 	fi
 	if [[ $SRC_FILE_PATH == *.MT.sh ]]; then
-		echo "> Running file '$SRC_FILE_PATH'...";
+		echo "> Deploying '$SRC_FILE_PATH'...";
 		./"$SRC_FILE_PATH";
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while running file '$SRC_FILE_PATH'!";
 			exit ${RESULT};
 		fi
-		echo "> Running file '$SRC_FILE_PATH'... DONE";
+		echo "> Deploying '$SRC_FILE_PATH'... DONE";
 		exit ${RESULT};
 	fi
 	if [[ "$OVER_WRITE" == true ]]; then
@@ -200,7 +200,7 @@ function deployFile() {
 		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
 	fi
-	echo -n ">>> Deploying file '$SRC_FILE_PATH' to '${DEST_FILE_PATH}'...";
+	echo -n ">>> Deploying '$SRC_FILE_PATH' to '${DEST_FILE_PATH}'...";
 	# cp -n -p does NOT work on OS X => rm 1st
 	if [[ -f "${DEST_FILE_PATH}" ]]; then
 		rm ${DEST_FILE_PATH};
@@ -251,10 +251,10 @@ function deployDirectory() {
 	if [[ "$#" -ge 4 ]]; then
 		OPT_DIR=$4;
 	fi
-	echo ">> Deploying directory '${SRC_FILE_PATH}'...";
+	echo ">> Deploying '${SRC_FILE_PATH}/'...";
 	if ! [[ -d "$DEST_FILE_PATH" ]]; then
 		if [[ "$OPT_DIR" == true ]]; then
-			echo ">> Deploying directory '${SRC_FILE_PATH}'... SKIP (optional)";
+			echo ">> Deploying '${SRC_FILE_PATH}'... SKIP (optional)";
 			return;
 		fi
 		mkdir $DEST_FILE_PATH;
@@ -284,7 +284,7 @@ function deployDirectory() {
 			exit 1;
 		fi
 	done
-	echo ">> Deploying directory '${SRC_FILE_PATH}'... DONE ✓";
+	echo ">> Deploying '${SRC_FILE_PATH}/'... DONE ✓";
 }
 
 echo "--------------------------------------------------------------------------------";

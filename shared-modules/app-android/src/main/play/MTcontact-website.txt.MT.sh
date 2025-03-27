@@ -9,7 +9,7 @@ setGitProjectName;
 
 setIsCI;
 
-echo "Generating contact-website.txt...";
+echo ">> Generating contact-website.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
@@ -19,7 +19,7 @@ CONTACT_WEBSITE_FILE="${PLAY_DIR}/contact-website.txt";
 mkdir -p "${PLAY_DIR}";
 checkResult $?;
 if [ -f "${CONTACT_WEBSITE_FILE}" ]; then
-  echo "File '$CONTACT_WEBSITE_FILE' already exist."; # compat with existing contact-website.txt
+  echo ">> File '$CONTACT_WEBSITE_FILE' already exist."; # compat with existing contact-website.txt
   exit 0;
 fi
 
@@ -40,4 +40,4 @@ if [[ ${IS_CI} = true ]]; then
   echo "---------------------------------------------------------------------------------------------------------------"
 fi
 
-echo "Generating contact-website.txt... DONE";
+echo ">> Generating contact-website.txt... DONE";

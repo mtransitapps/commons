@@ -9,7 +9,7 @@ setGitProjectName;
 
 setIsCI;
 
-echo "Generating full-description.txt...";
+echo ">> Generating full-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
@@ -21,7 +21,7 @@ FULL_DESCRIPTION_FILE="${EN_US_DIR}/full-description.txt";
 mkdir -p "${EN_US_DIR}";
 checkResult $?;
 if [ -f "${FULL_DESCRIPTION_FILE}" ]; then
-  echo "'$FULL_DESCRIPTION_FILE' already exist."; # compat with existing full-description.txt
+  echo ">> File '$FULL_DESCRIPTION_FILE' already exist."; # compat with existing full-description.txt
   exit 0;
 fi
 
@@ -308,4 +308,4 @@ if [[ ${IS_CI} = true ]]; then
   echo "---------------------------------------------------------------------------------------------------------------";
 fi
 
-echo "Generating full-description.txt... DONE";
+echo ">> Generating full-description.txt... DONE";

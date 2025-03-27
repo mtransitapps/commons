@@ -51,7 +51,7 @@ function cleanupFile() {
 			git ls-files --error-unmatch ${REAL_DEST_FILE_PATH} &> /dev/null;
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
-				echo -n "> Cleaning-up file '$REAL_DEST_FILE_PATH'...";
+				echo -n "> Cleaning-up '$REAL_DEST_FILE_PATH'...";
 				rm ${REAL_DEST_FILE_PATH};
 				RESULT=$?;
 				if [[ ${RESULT} -ne 0 ]]; then
@@ -60,10 +60,10 @@ function cleanupFile() {
 				fi
 				echo " DONE ✓";
 			else
-				echo "> Cleaning-up file '$REAL_DEST_FILE_PATH'... SKIP ✓ (tracked file could be generated)";
+				echo "> Cleaning-up '$REAL_DEST_FILE_PATH'... SKIP ✓ (tracked file could be generated)";
 			fi
 		else
-			echo "> Ignoring missing file '$REAL_DEST_FILE_PATH'...";
+			echo "> Cleaning-up '$REAL_DEST_FILE_PATH'... SKIP ✓ (missing)";
 		fi
 		return; # no need to validate generated file content
 	fi
@@ -80,7 +80,7 @@ function cleanupFile() {
 			diff --color ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 			exit ${RESULT};
 		fi
-		echo -n "> Cleaning-up file '$DEST_FILE_PATH'...";
+		echo -n "> Cleaning-up '$DEST_FILE_PATH'...";
 		rm ${DEST_FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
@@ -89,7 +89,7 @@ function cleanupFile() {
 		fi
 		echo " DONE ✓";
 	else
-		echo "> Ignoring missing file '$DEST_FILE_PATH'...";
+		echo "> Cleaning-up '$DEST_FILE_PATH/'... SKIP ✓ (missing)";
 	fi
 }
 
@@ -124,17 +124,17 @@ function cleanupDirectory() {
 			fi
 		done
 		if ! [[ "$(ls -A ${DEST_FILE_PATH})" ]]; then
-			echo -n "> Deleting empty directory '$DEST_FILE_PATH'...";
+			echo -n "> Cleaning-up '$DEST_FILE_PATH/' (empty)...";
 			rm -r ${DEST_FILE_PATH};
 			local RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
 				echo " ERROR !";
 				exit ${RESULT};
 			fi
-			echo "DONE ✓";
+			echo " DONE ✓";
 		fi
 	else
-		echo "> Ignoring missing directory '$DEST_FILE_PATH'.";
+		echo "> Cleaning-up '$DEST_FILE_PATH/'... SKIP ✓ (missing)";
 	fi
 }
 

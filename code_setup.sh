@@ -33,7 +33,7 @@ if [[ "$IS_SHALLOW" == true && "${GITHUB_ACTIONS}" == false ]]; then
 		echo "> Error while fetching unshallow GIT repository!";
 		exit ${RESULT};
 	fi
-	echo "> Fetching unshallow GIT repo... DONE";
+	echo "> Fetching unshallow GIT repo... DONE ✓";
 else
 	echo "> Not a shallow GIT repo.";
 fi
@@ -107,7 +107,7 @@ for S in "${!SUBMODULES[@]}"; do
 			echo "> Error while cloning '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
 			exit ${RESULT};
 		fi
-		echo "> Adding submodule '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
+		echo "> Adding submodule '$SUBMODULE_REPO' in '$SUBMODULE'... DONE ✓";
 	fi
 	if ! [[ -d "$CURRENT_PATH/$SUBMODULE" ]]; then
 		echo "> Submodule directory '$CURRENT_PATH/$SUBMODULE' does NOT exist!";
@@ -122,7 +122,7 @@ for S in "${!SUBMODULES[@]}"; do
 			echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
 			exit ${RESULT};
 		fi
-		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
+		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE ✓";
 	elif [[ "$GITHUB_ACTIONS" == true ]]; then
 		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'...";
 		# git remote -v set-url origin https://github.com/mtransitapps/$SUBMODULE_REPO.git;
@@ -132,7 +132,7 @@ for S in "${!SUBMODULES[@]}"; do
 			echo "> Error while setting remote URL for '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
 			exit ${RESULT};
 		fi
-		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE";
+		echo "> Setting submodule remote URL '$SUBMODULE_REPO' in '$SUBMODULE'... DONE ✓";
 	fi
 	cd $CURRENT_PATH || exit; # <<
 	echo "--------------------------------------------------------------------------------";
@@ -178,16 +178,16 @@ function deployFile() {
 	if [[ "$#" -ge 3 ]]; then
 		OVER_WRITE=$3;
 	fi
-	echo "--------------------------------------------------------------------------------";
+	# echo "--------------------------------------------------------------------------------";
 	if [[ $SRC_FILE_PATH == *.MT.sh ]]; then
-		echo "> Running file '$SRC_FILE_PATH'...";
+		echo "> Deploying '$SRC_FILE_PATH'...";
 		./"$SRC_FILE_PATH";
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while running file '$SRC_FILE_PATH'!";
+			echo "> Error while deploying file '$SRC_FILE_PATH'!";
 			exit ${RESULT};
 		fi
-		echo "> Running file '$SRC_FILE_PATH'... DONE";
+		echo "> Deploying '$SRC_FILE_PATH'... DONE ✓";
 		return;
 	fi
 	if [[ "$OVER_WRITE" == true ]]; then
@@ -199,15 +199,15 @@ function deployFile() {
 		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
 	fi
-	echo "> Deploying file '$SRC_FILE_PATH'...";
+	echo "> Deploying '$SRC_FILE_PATH'...";
 	cp -n -p $SRC_FILE_PATH $DEST_FILE_PATH;
 	local RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while deploying file '$SRC_FILE_PATH'!";
 		exit ${RESULT};
 	fi
-	echo "> Deploying file '$SRC_FILE_PATH'... DONE";
-	echo "--------------------------------------------------------------------------------";
+	echo "> Deploying '$SRC_FILE_PATH'... DONE ✓";
+	# echo "--------------------------------------------------------------------------------";
 }
 
 function canOverwriteDirectory() {
@@ -246,8 +246,8 @@ function deployDirectory() {
 	if [[ "$#" -ge 4 ]]; then
 		OPT_DIR=$4;
 	fi
-	echo "--------------------------------------------------------------------------------";
-	echo "> Deploying directory '${SRC_FILE_PATH}'...";
+	# echo "--------------------------------------------------------------------------------";
+	echo "> Deploying '${SRC_FILE_PATH}/'...";
 	if ! [[ -d "$DEST_FILE_PATH" ]]; then
 		if [[ "$OPT_DIR" == true ]]; then
 			echo "> Skip optional directory '$DEST_FILE_PATH' in target directory.";
@@ -275,14 +275,14 @@ function deployDirectory() {
 			deployDirectory ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH} ${OVER_WRITE}; # ${OPT_DIR} only for 1st level
 			checkResult $?;
 		else #WTF
-			echo "--------------------------------------------------------------------------------";
+			# echo "--------------------------------------------------------------------------------";
 			echo "> File to deploy '$S_FILE_NAME' ($S_SRC_FILE_PATH) is neither a directory or a file!";
 			ls -l ${S_FILE_NAME};
 			exit 1;
 		fi
 	done
-	echo "> Deploying directory '${SRC_FILE_PATH}'... DONE";
-	echo "--------------------------------------------------------------------------------";
+	echo "> Deploying '${SRC_FILE_PATH}/'... DONE ✓";
+	# echo "--------------------------------------------------------------------------------";
 }
 
 echo "--------------------------------------------------------------------------------";
@@ -307,7 +307,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying shared files... DONE";
+echo "> Deploying shared files... DONE ✓";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
@@ -332,7 +332,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying optional shared files... DONE";
+echo "> Deploying optional shared files... DONE ✓";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
@@ -358,7 +358,7 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
       exit 1;
     fi
   done
-  echo "> Deploying main shared files... DONE";
+  echo "> Deploying main shared files... DONE ✓";
 else
   echo "> Deploying modules shared files...";
   SRC_DIR_PATH="commons/shared-modules";
@@ -381,7 +381,7 @@ else
       exit 1;
     fi
   done
-  echo "> Deploying modules shared files... DONE";
+  echo "> Deploying modules shared files... DONE ✓";
 fi
 echo "--------------------------------------------------------------------------------";
 
@@ -407,7 +407,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying overwritten shared files... DONE";
+echo "> Deploying overwritten shared files... DONE ✓";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
@@ -415,5 +415,5 @@ AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> CODE SETUP... DONE";
+echo "> CODE SETUP... DONE ✓";
 echo "================================================================================";

@@ -7,7 +7,7 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo "Generating title.txt...";
+echo ">> Generating title.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
@@ -19,7 +19,7 @@ TITLE_FILE="${EN_US_DIR}/title.txt";
 mkdir -p "${EN_US_DIR}";
 checkResult $?;
 if [ -f "${TITLE_FILE}" ]; then
-  echo "'$TITLE_FILE' already exist."; # compat with existing title.txt
+  echo ">> File '$TITLE_FILE' already exist."; # compat with existing title.txt
   exit 0;
 fi
 
@@ -96,4 +96,4 @@ if [[ ${IS_CI} = true ]]; then
   echo "---------------------------------------------------------------------------------------------------------------";
 fi
 
-echo "Generating title.txt... DONE";
+echo ">> Generating title.txt... DONE";
