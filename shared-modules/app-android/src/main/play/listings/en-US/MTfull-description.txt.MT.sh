@@ -61,6 +61,7 @@ if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
 fi
 
 GIT_REMOTE_URL=$(git config --get remote.origin.url); # git@github.com:owner/repo.git
+echo "GIT_REMOTE_URL: '$GIT_REMOTE_URL'."; #DEBUG
 if [ -z "$GIT_REMOTE_URL" ]; then
     echo "No remote git URL available!";
     exit 1;
