@@ -62,19 +62,8 @@ if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
     fi
 fi
 
-GIT_REMOTE_URL=$(git config --get remote.origin.url); # git@github.com:owner/repo.git
-echo "GIT_REMOTE_URL: '$GIT_REMOTE_URL'."; #DEBUG
-if [ -z "$GIT_REMOTE_URL" ]; then
-    echo "No remote git URL available!";
-    exit 1;
-fi
-GIT_OWNER_REPO=$(echo "$GIT_REMOTE_URL" | cut -d: -f2 | cut -d. -f1);
-if [ -z "$GIT_OWNER_REPO" ]; then
-    echo "Remote git URL '$GIT_REMOTE_URL' format unexpected!";
-    exit 1;
-fi
-CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER_REPO";
-echo "CONTACT_WEBITE_URL: '$CONTACT_WEBITE_URL'."; #DEBUG
+GIT_OWNER="mtransitapps"; #TODO extract from GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
+CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
 SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 if [ ! -f "$SOURCE_URL_FILE" ]; then
@@ -177,6 +166,8 @@ if [ -f "$GTFS_FILE" ]; then
   fi
   INFORMATION_LIST="${INFORMATION_LIST}schedule";
 fi
+
+xmllint --version || sudo apt install -y libxml2-utils;
 
 PROVIDES_LINE_END="";
 
