@@ -38,10 +38,14 @@ if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
       CURRENT_ARCHIVE_START_DATE=$ARCHIVE_START_DATE;
       CURRENT_ARCHIVE_END_DATE=$ARCHIVE_END_DATE;
     elif [[ "$ARCHIVE_START_DATE" -lt "$YESTERDAY" && "$ARCHIVE_END_DATE" -gt "$YESTERDAY" ]]; then
-      echo "- archive starts before $YESTERDAY and ends after > KEEP as CURRENT";
-      CURRENT_ARCHIVE="$ARCHIVE";
-      CURRENT_ARCHIVE_START_DATE=$ARCHIVE_START_DATE;
-      CURRENT_ARCHIVE_END_DATE=$ARCHIVE_END_DATE;
+      if [[ "$ARCHIVE_END_DATE" -gt "$CURRENT_ARCHIVE_END_DATE" ]]; then
+        echo "- archive starts before $YESTERDAY and ends after > KEEP as CURRENT";
+        CURRENT_ARCHIVE="$ARCHIVE";
+        CURRENT_ARCHIVE_START_DATE=$ARCHIVE_START_DATE;
+        CURRENT_ARCHIVE_END_DATE=$ARCHIVE_END_DATE;
+      else
+        echo "- archive starts before $YESTERDAY and ends after > IGNORE (ends sooner than current: '$ARCHIVE_END_DATE' before '$CURRENT_ARCHIVE_END_DATE')";
+      fi
     elif [[ "$ARCHIVE_START_DATE" -gt "$YESTERDAY" ]]; then
       echo "- archive is in the future";
       if [[ -z "$NEXT_ARCHIVE_START_DATE" && "$ARCHIVE_START_DATE" -lt "$NEXT_ARCHIVE_START_DATE" ]]; then
