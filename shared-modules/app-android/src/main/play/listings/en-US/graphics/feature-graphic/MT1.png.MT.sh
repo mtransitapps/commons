@@ -9,7 +9,7 @@ setIsCI;
 
 setGitProjectName;
 
-echo ">> Generating feature-graphic/1.txt...";
+echo ">> Generating feature-graphic/1.png...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
@@ -23,7 +23,7 @@ FILE_1_PNG="${FEATURE_GRAPHIC_DIR}/1.png";
 mkdir -p "${FEATURE_GRAPHIC_DIR}";
 checkResult $?;
 if [ -f "${FILE_1_PNG}" ]; then
-  echo ">> File '$FILE_1_PNG' already exist."; # compat with existing feature-graphic/1.txt
+  echo ">> File '$FILE_1_PNG' already exist."; # compat with existing feature-graphic/1.png
   exit 0;
 fi
 
@@ -111,4 +111,4 @@ else
   checkResult $?;
 fi
 
-echo ">> Generating feature-graphic/1.txt... DONE";
+echo ">> Generating feature-graphic/1.png... DONE";

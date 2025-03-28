@@ -109,19 +109,27 @@ function cleanupDirectory() {
 				continue;
 			fi
 			local S_FILE_NAME_DEST=${S_FILE_NAME#"MT"}; # MT+filename used to ignore ".gitignore"
-			local S_DEST_FILE_PATH="$DEST_FILE_PATH/$S_FILE_NAME_DEST";
-			if [[ -f "$S_SRC_FILE_PATH" ]]; then
-				cleanupFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
-				checkResult $?;
-			elif [[ -d "$S_SRC_FILE_PATH" ]]; then
-				cleanupDirectory ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
-				checkResult $?;
-			else #WTF
-				echo "--------------------------------------------------------------------------------";
-				echo "> File to cleanup '$S_FILENAME' ($S_SRC_FILE_PATH) is neither a directory or a file!";
-				ls -l ${S_FILENAME};
-				exit 1;
+			if [[ "$S_FILE_NAME_DEST" == *MTSTAR ]]; then
+				S_FILE_NAME_DEST_STARTS_WITH=${S_FILE_NAME_DEST%MTSTAR};
+				S_FILE_NAME_DEST_LIST=$(find ${DEST_FILE_PATH}/ -mindepth 1 -maxdepth 1 -name "$S_FILE_NAME_DEST_STARTS_WITH*" -exec basename {} \; | xargs);
+			else # just use file name
+				S_FILE_NAME_DEST_LIST="$S_FILE_NAME_DEST";
 			fi
+			for S_FILE_NAME_DEST in $S_FILE_NAME_DEST_LIST ; do
+				local S_DEST_FILE_PATH="$DEST_FILE_PATH/$S_FILE_NAME_DEST";
+				if [[ -f "$S_SRC_FILE_PATH" ]]; then
+					cleanupFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
+					checkResult $?;
+				elif [[ -d "$S_SRC_FILE_PATH" ]]; then
+					cleanupDirectory ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH};
+					checkResult $?;
+				else #WTF
+					echo "--------------------------------------------------------------------------------";
+					echo "> File to cleanup '$S_FILENAME' ($S_SRC_FILE_PATH) is neither a directory or a file!";
+					ls -l ${S_FILENAME};
+					exit 1;
+				fi
+			done
 		done
 		if ! [[ "$(ls -A ${DEST_FILE_PATH})" ]]; then
 			echo -n "> Cleaning-up '$DEST_FILE_PATH/' (empty)...";

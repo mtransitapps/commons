@@ -248,7 +248,9 @@ function deployDirectory() {
 	fi
 	# echo "--------------------------------------------------------------------------------";
 	echo "> Deploying '${SRC_FILE_PATH}/'...";
-	if ! [[ -d "$DEST_FILE_PATH" ]]; then
+	if [[ "$SRC_FILE_PATH" == *MTSTAR ]]; then
+		echo "> Skip fake directory '$DEST_FILE_PATH' in target directory.";
+	elif ! [[ -d "$DEST_FILE_PATH" ]]; then
 		if [[ "$OPT_DIR" == true ]]; then
 			echo "> Skip optional directory '$DEST_FILE_PATH' in target directory.";
 			return;
