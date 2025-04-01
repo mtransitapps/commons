@@ -81,6 +81,8 @@ else
 	if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
 		SUBMODULES+=('agency-parser');
 		SUBMODULES_REPO+=("${PROJECT_NAME}-parser");
+	else
+		mkdir -p agency-parser; # needed for shared-opt-dir #InitRepo
 	fi
 fi
 
