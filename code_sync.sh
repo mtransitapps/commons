@@ -9,11 +9,6 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
-
-echo "Current directory: '$CURRENT_DIRECTORY'";
-
 # GIT SUBMODULEs
 
 setGitProjectName;

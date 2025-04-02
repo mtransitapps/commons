@@ -82,7 +82,10 @@ else
 		SUBMODULES+=('agency-parser');
 		SUBMODULES_REPO+=("${PROJECT_NAME}-parser");
 	else
-		mkdir -p agency-parser; # needed for shared-opt-dir #InitRepo
+		mkdir -p agency-parser/archive; # needed for shared-opt-dir #InitRepo
+		if [[ "$INIT_SUBMODULE" == true ]]; then
+			git lfs track agency-parser/archive/*;
+		fi
 	fi
 fi
 
