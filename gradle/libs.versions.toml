@@ -105,7 +105,7 @@ twitterApi = "2.0.3"
 # googleApiClient = "2.7.0"
 youTubeGoogleApiClient = "v3-rev20250224-2.0.0"
 # https://github.com/google/guava/releases/latest
-guava = "33.4.0-android"
+guava = "33.4.6-android"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.14"
 # https://github.com/slackhq/slack-lints/releases
