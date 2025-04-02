@@ -109,7 +109,7 @@ guava = "33.4.6-android"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.14"
 # https://github.com/slackhq/slack-lints/releases
-slackLint = "0.8.2"
+slackLint = "0.9.0"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
