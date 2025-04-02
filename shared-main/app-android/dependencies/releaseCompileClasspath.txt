@@ -127,7 +127,7 @@ com.google.errorprone:error_prone_annotations:2.36.0
 com.google.firebase:firebase-abt:21.1.1
 com.google.firebase:firebase-analytics:22.4.0
 com.google.firebase:firebase-annotations:16.2.0
-com.google.firebase:firebase-bom:33.11.0
+com.google.firebase:firebase-bom:33.12.0
 com.google.firebase:firebase-common-ktx:21.0.0
 com.google.firebase:firebase-common:21.0.0
 com.google.firebase:firebase-components:18.0.0
@@ -143,8 +143,8 @@ com.google.firebase:firebase-measurement-connector:20.0.1
 com.google.firebase:firebase-perf:21.0.5
 com.google.firebase:firebase-sessions:2.1.0
 com.google.firebase:protolite-well-known-types:18.0.1
-com.google.guava:failureaccess:1.0.2
-com.google.guava:guava:33.4.0-android
+com.google.guava:failureaccess:1.0.3
+com.google.guava:guava:33.4.6-android
 com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
 com.google.j2objc:j2objc-annotations:3.0.0
 com.google.maps.android:android-maps-utils:3.11.2
@@ -162,7 +162,6 @@ com.squareup.retrofit2:retrofit:2.11.0
 com.vungle:vungle-ads:7.4.3
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
-org.checkerframework:checker-qual:3.43.0
 org.jacoco:org.jacoco.core:0.8.8
 org.jetbrains.kotlin:kotlin-bom:2.1.20
 org.jetbrains.kotlin:kotlin-stdlib-common:2.1.20

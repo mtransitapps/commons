@@ -27,10 +27,10 @@ android-gradlePlugin = "8.9.1"
 triplet-playPublisher = "3.12.1"
 # https://github.com/dropbox/dependency-guard/releases/latest
 dependency-guard = "0.5.0"
-# https://github.com/ben-manes/gradle-versions-plugin/releases/latest
-benmanes-versions = "0.52.0"
-# https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
-littlerobots-versioncatalog = "1.0.0"
+# # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
+# benmanes-versions = "0.52.0"
+# # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
+# littlerobots-versioncatalog = "1.0.0"
 # https://runningcode.github.io/gradle-doctor/
 gradle-doctor = "0.10.0"
 # https://github.com/google/dagger/releases/latest
@@ -367,7 +367,7 @@ google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 triplet-playPublisher = { id = "com.github.triplet.play", version.ref = "triplet-playPublisher" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependency-guard" }
-benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }
-littlerobots-versioncatalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "littlerobots-versioncatalog" }
+# benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }
+# littlerobots-versioncatalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "littlerobots-versioncatalog" }
 gradle-doctor = { id = "com.osacky.doctor", version.ref = "gradle-doctor" }
 sonar = { id = "org.sonarqube", version.ref = "sonar" }
