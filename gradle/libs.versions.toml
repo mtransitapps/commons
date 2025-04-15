@@ -16,9 +16,9 @@ kotlin = "2.1.20"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
-kotlinx-serialization="1.8.1"
+kotlinx-serialization = "1.8.1"
 # same as kotlin?
-kotlinx-serialization-plugin="2.1.20"
+kotlinx-serialization-plugin = "2.1.20"
 # https://github.com/google/ksp/releases/latest
 #noinspection GradleDependency required KSP2
 ksp = "2.1.20-1.0.32"
@@ -26,6 +26,8 @@ ksp = "2.1.20-1.0.32"
 sonar = "6.1.0.5360"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "8.9.1"
+# https://developer.android.com/studio/write/java8-support#library-desugaring
+android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
 triplet-playPublisher = "3.12.1"
 # https://github.com/dropbox/dependency-guard/releases/latest
@@ -79,10 +81,10 @@ gps-plugin = "4.4.2"
 # LATEST: https://developers.google.com/android/guides/releases
 gps-ads = "24.2.0"
 gps-ump = "3.2.0"
-gps-basement = "18.6.0"
+gps-basement = "18.7.0"
 gps-time = "16.0.1"
 gps-location = "21.3.0"
-gps-maps = "19.1.0"
+gps-maps = "19.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
 firebase-bom = "33.12.0"
@@ -108,8 +110,7 @@ twitterApi = "2.0.3"
 # googleApiClient = "2.7.0"
 youTubeGoogleApiClient = "v3-rev20250224-2.0.0"
 # https://github.com/google/guava/releases/latest
-#noinspection GradleDependency # will be fixed soon in 33.4.8+ https://github.com/google/guava/issues/7769
-guava = "33.4.6-android"
+guava = "33.4.8-android"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.14"
 # https://github.com/slackhq/slack-lints/releases
@@ -160,6 +161,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
 kotlinx-serialization-bom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version.ref = "kotlinx-serialization" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
+android-desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "android-desugarJdkLibs" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }

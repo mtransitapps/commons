@@ -64,6 +64,7 @@ android {
     buildToolsVersion = libs.versions.buildTools.get()
 
     compileOptions {
+        coreLibraryDesugaringEnabled = true // required for Google Play Services https://developers.google.com/android/guides/releases#april_14_2025
         sourceCompatibility = rootProject.javaVersion
         targetCompatibility = rootProject.javaVersion
     }
@@ -359,17 +360,19 @@ if (isMainApp) {
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.android.desugarJdkLibs) // required for Google Play Services https://developers.google.com/android/guides/releases#april_14_2025
+
+    implementation(platform(libs.kotlin.bom))
+    implementation(platform(libs.kotlinx.coroutines.bom))
+    implementation(libs.bundles.kotlin)
+    implementation(libs.bundles.kotlin.android)
+
     if (isMainApp) {
         implementation(project(":commons-android")) {
             exclude group: 'com.google.protobuf', module: 'protoc'
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
             exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
         }
-        implementation(platform(libs.kotlin.bom))
-        implementation(platform(libs.kotlinx.coroutines.bom))
-        implementation(platform(libs.kotlinx.serialization.bom))
-        implementation(libs.bundles.kotlin)
-        implementation(libs.bundles.kotlin.android)
         implementation(libs.bundles.dagger)
         ksp(libs.hilt.compiler)
         implementation(libs.bundles.androidx)
@@ -400,11 +403,6 @@ dependencies {
         testImplementation(libs.bundles.test.unit)
     } else {
         implementation(project(":commons-android"))
-        implementation(platform(libs.kotlin.bom))
-        implementation(platform(libs.kotlinx.coroutines.bom))
-        implementation(platform(libs.kotlinx.serialization.bom))
-        implementation(libs.bundles.kotlin)
-        implementation(libs.bundles.kotlin.android)
         implementation(libs.androidx.core)
     }
 }
