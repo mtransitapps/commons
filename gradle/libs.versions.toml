@@ -70,9 +70,9 @@ material = "1.12.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.11.2"
+maps-utils = "3.12.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
-maps-ktx = "5.1.1"
+maps-ktx = "5.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
 #noinspection GradleDependency // 4.0.0+ requires minSDK 23 instead of 21
 places-sdk = "3.5.0"
