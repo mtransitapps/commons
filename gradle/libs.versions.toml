@@ -100,7 +100,7 @@ play-review = "2.0.2"
 fbAudienceNetwork-mediation = "6.19.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
-appLovin-mediation = "13.2.0.0"
+appLovin-mediation = "13.2.0.1"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
 vungle-mediation = "7.4.3.1"
