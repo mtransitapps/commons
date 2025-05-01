@@ -25,7 +25,7 @@ ksp = "2.1.20-1.0.32"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "6.1.0.5360"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "8.9.1"
+android-gradlePlugin = "8.9.2"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
@@ -57,22 +57,22 @@ androidx-lifecycle = "2.8.7"
 androidx-nav = "2.8.9"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
-androidx-room = "2.7.0"
+androidx-room = "2.7.1"
 androidx-slidingpanelayout = "1.2.0"
 androidx-sqlite = "2.5.0"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
 androidx-webkit = "1.13.0"
-androidx-workManager = "2.10.0"
+androidx-workManager = "2.10.1"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.12.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.11.2"
+maps-utils = "3.12.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
-maps-ktx = "5.1.1"
+maps-ktx = "5.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
 #noinspection GradleDependency // 4.0.0+ requires minSDK 23 instead of 21
 places-sdk = "3.5.0"
@@ -87,7 +87,7 @@ gps-location = "21.3.0"
 gps-maps = "19.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "33.12.0"
+firebase-bom = "33.13.0"
 firebase-crashlytics-plugin = "3.0.3"
 firebase-perf-plugin = "1.4.2"
 play-billing = "7.1.1"
@@ -100,10 +100,10 @@ play-review = "2.0.2"
 fbAudienceNetwork-mediation = "6.19.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
-appLovin-mediation = "13.2.0.0"
+appLovin-mediation = "13.2.0.1"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
-vungle-mediation = "7.4.3.1"
+vungle-mediation = "7.5.0.0"
 # https://github.com/xdevplatform/twitter-api-java-sdk/tags
 twitterApi = "2.0.3"
 # https://cloud.google.com/java/docs/reference/google-api-client/latest/history
@@ -133,7 +133,7 @@ okhttp = "4.12.0"
 chucker = "4.1.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/master/CHANGELOG.md
-gson = "2.12.1"
+gson = "2.13.0"
 # https://github.com/bumptech/glide/releases/latest
 glide = "4.16.0"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
@@ -146,9 +146,9 @@ mockito = "5.17.0"
 mockito-kotlin = "4.1.0"
 # https://commons.apache.org/
 commons-csv = "1.14.0"
-commons-io = "2.18.0"
+commons-io = "2.19.0"
 commons-lang3 = "3.17.0"
-commons-text = "1.13.0"
+commons-text = "1.13.1"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
 xerial-SQLiteJDBC = "3.49.1.0"
 
