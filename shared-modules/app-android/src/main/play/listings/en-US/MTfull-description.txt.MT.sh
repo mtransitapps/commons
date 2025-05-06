@@ -169,7 +169,7 @@ if [ -f "$GTFS_FILE" ]; then
   INFORMATION_LIST="${INFORMATION_LIST}schedule";
 fi
 
-xmllint --version || sudo apt install -y libxml2-utils;
+xmllint --version || sudo apt-get update && sudo apt-get install -y libxml2-utils;
 
 PROVIDES_LINE_END="";
 
