@@ -305,6 +305,7 @@ android {
         } else {
             abortOnError = false // do not fail CI on module apps
         }
+        checkReleaseBuilds = false // lint check started independently
         checkDependencies = true // also check leaf modules
         // checkAllWarnings true // too slow for CI, can be enabled locally
     }
