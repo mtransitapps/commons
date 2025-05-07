@@ -298,6 +298,7 @@ android {
                     "RawDispatchersUse", // Use SlackDispatchers. #SlackLint
                     "WrongConstant", // seems to be broken (Java<>Kotlin) in AGP 8.6.0 // TODO re-enable later
                     "ArgInFormattedQuantityStringRes", // Count value in formatted string resource. #SlackLint
+                    "AndroidGradlePluginVersion", // Android Gradle Wrapper manually updated
                     "FragmentFieldInjection" // Fragment dependencies should be injected using the Fragment's constructor. #SlackLint
             // https://developer.android.com/studio/write/lint#snapshot
             // update with: ./gradlew :app-android:updateLintBaseline
