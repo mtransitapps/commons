@@ -17,11 +17,6 @@ if [[ -f ${CUSTOM_SETTINGS_GRADLE_FILE} ]]; then
 	SETTINGS_FILE_ARGS=" -c $CUSTOM_SETTINGS_GRADLE_FILE"; #--settings-file
 fi
 
-echo ">> Setup-ing keys...";
-./keys_setup.sh;
-checkResult $?;
-echo ">> Setup-ing keys... DONE";
-
 echo ">> Gradle cleaning...";
 ../gradlew ${SETTINGS_FILE_ARGS} clean ${GRADLE_ARGS};
 RESULT=$?;
@@ -99,6 +94,11 @@ if [[ ${IS_CI} = true ]]; then
 	checkResult ${RESULT};
 	echo ">> Running assemble & bundle... DONE";
 fi
+
+echo ">> Setup-ing keys...";
+./keys_setup.sh;
+checkResult $?;
+echo ">> Setup-ing keys... DONE";
 
 echo ">> Running bundle release AAB...";
 ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};

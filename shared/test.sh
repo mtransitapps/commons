@@ -37,11 +37,6 @@ echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 echo "> TESTS ANDROID APP FOR '$AGENCY_ID'...";
 cd app-android || exit;
 
-echo ">> Setup-ing keys...";
-./keys_setup.sh;
-checkResult $?;
-echo ">> Setup-ing keys... DONE";
-
 echo ">> Running test...";
 ../gradlew :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
 RESULT=$?;
@@ -61,11 +56,6 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	checkResult ${RESULT};
 	echo ">> Running lint... DONE";
 fi
-
-echo ">> Cleaning keys...";
-./keys_cleanup.sh;
-checkResult $?;
-echo ">> Cleaning keys... DONE";
 
 checkResult ${RESULT};
 
