@@ -9,7 +9,7 @@ setGitProjectName;
 
 setIsCI;
 
-GTFS_FILE="${ROOT_DIR}/app-android/src/main/res/values/gtfs_rts_values_gen.xml";
+GTFS_FILE="${ROOT_DIR}/app-android/src/main/res/values/gtfs_rts_values.xml";
 if [ ! -f "${GTFS_FILE}" ]; then
     echo ">> Generating gtfs_rts_strings.xml... SKIP (not an RTS agency)";
     exit 0; # ok
