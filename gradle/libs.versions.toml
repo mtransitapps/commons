@@ -18,7 +18,7 @@ kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization = "1.8.1"
 # https://github.com/google/ksp/releases/latest
-ksp = "2.1.20-2.0.1" # ksp.useKSP2=false in gradle.properties
+ksp = "2.1.21-2.0.1" # ksp.useKSP2=false in gradle.properties
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "6.1.0.5360"
 # https://developer.android.com/build/releases/gradle-plugin
