@@ -329,7 +329,11 @@ android {
             tasks.withType(Test).configureEach {
                 jvmArgs "-noverify"
                 testLogging {
-                    events("passed", "skipped", "failed")
+                    if (isCI) {
+                        events("started", "passed", "skipped", "failed", "standard_out", "standard_error")
+                    } else {
+                        events("failed")
+                    }
                 }
             }
         }
