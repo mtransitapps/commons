@@ -120,7 +120,7 @@ protobuf = "4.31.0"
 protobuf-plugin = "0.9.5"
 # https://github.com/square/retrofit/tags
 # https://github.com/square/retrofit/releases/latest
-retrofit = "2.11.0"
+retrofit = "3.0.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
