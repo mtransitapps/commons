@@ -7,19 +7,25 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo ">> Generating short-description.txt...";
+LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
+if [ ! -f "$LANG_FR_FILE" ]; then
+    echo ">> Generating fr-FR/short-description.txt... SKIP (FR lang not supported)";
+    exit 0; # ok
+fi
+
+echo ">> Generating fr-FR/short-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
 PLAY_DIR="${MAIN_DIR}/play";
 LISTINGS_DIR="${PLAY_DIR}/listings";
-EN_US_DIR="${LISTINGS_DIR}/en-US";
-SHORT_DESCRIPTION_FILE="${EN_US_DIR}/short-description.txt";
-mkdir -p "${EN_US_DIR}";
+FR_FR_DIR="${LISTINGS_DIR}/fr-FR";
+SHORT_DESCRIPTION_FILE="${FR_FR_DIR}/short-description.txt";
+mkdir -p "${FR_FR_DIR}";
 checkResult $?;
 if [ -f "${SHORT_DESCRIPTION_FILE}" ]; then
-  echo ">> File '$SHORT_DESCRIPTION_FILE' already exist."; # compat with existing short-description.txt
+  echo ">> File '$SHORT_DESCRIPTION_FILE' already exist."; # compat with existing fr-FR/short-description.txt
   exit 0;
 fi
 
@@ -74,40 +80,41 @@ else
 fi
 TYPE_LABEL="";
 if [ "$TYPE" -eq 0 ]; then # LIGHT_RAIL
-    TYPE_LABEL="light rail"; # TODO?
+    TYPE_LABEL="Trains légers"; # TODO?
 elif [ "$TYPE" -eq 1 ]; then # SUBWAY
-    TYPE_LABEL="subways";
+    TYPE_LABEL="Métros";
 elif [ "$TYPE" -eq 2 ]; then # TRAIN
-    TYPE_LABEL="trains";
+    TYPE_LABEL="Trains";
 elif [ "$TYPE" -eq 3 ]; then # BUS
-    TYPE_LABEL="buses";
+    TYPE_LABEL="Bus"; # TODO Autobus?
 elif [ "$TYPE" -eq 4 ]; then # FERRY
-    TYPE_LABEL="ferries";
+    TYPE_LABEL="Bateaux";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
-    TYPE_LABEL="bike sharing";
+    TYPE_LABEL="Vélos partagés";
 else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error
 fi
 
-SHORT_DESC="$AGENCY_NAME_LONG $TYPE_LABEL for MonTransit.";
-
+AGENCY_LABEL=$AGENCY_NAME_LONG;
 if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
-  SHORT_DESC="$AGENCY_LOCATION_SHORT $SHORT_DESC"
+  AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
+
+SHORT_DESC="$TYPE_LABEL $AGENCY_LABEL pour MonTransit.";
 
 RES_VALUES_DIR="${MAIN_DIR}/res/values";
 BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
 if [ -f "$BIKE_STATION_FILE" ]; then
-  SHORT_DESC="${SHORT_DESC} Availability.";
+  SHORT_DESC="${SHORT_DESC} Disponibilité.";
 fi
 GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml";
 if [ -f "$GTFS_FILE" ]; then
-  SHORT_DESC="${SHORT_DESC} Schedule.";
+  SHORT_DESC="${SHORT_DESC} Horaire.";
 fi
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
-  SHORT_DESC="${SHORT_DESC} Alerts.";
+  SHORT_DESC="${SHORT_DESC} Alertes.";
 fi
 
 RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
@@ -115,7 +122,7 @@ TWITTER_FILE="${RES_VALUES_DIR}/twitter_values.xml";
 YOUTUBE_FILE="${RES_VALUES_DIR}/youtube_values.xml";
 # INSTAGRAM_FILE="${RES_VALUES_DIR}/instagram_values.xml"; # NOT WORKING
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
-  SHORT_DESC="${SHORT_DESC} News.";
+  SHORT_DESC="${SHORT_DESC} Nouvelles.";
 fi
 
 MAX_LENGTH=80;
@@ -128,4 +135,4 @@ if [[ ${IS_CI} = true ]]; then
   echo "---------------------------------------------------------------------------------------------------------------";
 fi
 
-echo ">> Generating short-description.txt... DONE";
+echo ">> Generating fr-FR/short-description.txt... DONE";

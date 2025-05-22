@@ -9,19 +9,25 @@ setGitProjectName;
 
 setIsCI;
 
-echo ">> Generating full-description.txt...";
+LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
+if [ ! -f "$LANG_FR_FILE" ]; then
+    echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
+    exit 0; # ok
+fi
+
+echo ">> Generating fr-FR/full-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
 PLAY_DIR="${MAIN_DIR}/play";
 LISTINGS_DIR="${PLAY_DIR}/listings";
-EN_US_DIR="${LISTINGS_DIR}/en-US";
-FULL_DESCRIPTION_FILE="${EN_US_DIR}/full-description.txt";
-mkdir -p "${EN_US_DIR}";
+FR_FR_DIR="${LISTINGS_DIR}/fr-FR";
+FULL_DESCRIPTION_FILE="${FR_FR_DIR}/full-description.txt";
+mkdir -p "${FR_FR_DIR}";
 checkResult $?;
 if [ -f "${FULL_DESCRIPTION_FILE}" ]; then
-  echo ">> File '$FULL_DESCRIPTION_FILE' already exist."; # compat with existing full-description.txt
+  echo ">> File '$FULL_DESCRIPTION_FILE' already exist."; # compat with existing fr-FR/full-description.txt
   exit 0;
 fi
 
@@ -76,13 +82,16 @@ if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
 fi
 
 if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
-  AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
+  AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
 
-GIT_OWNER="mtransitapps"; #TODO extract from GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
+GIT_OWNER="mtransitapps"; #TODO extract de GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
 CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
-SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
+SOURCE_URL_FILE="${CONFIG_DIR}/source_url_fr";
+if [ ! -f "$SOURCE_URL_FILE" ]; then
+  SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
+fi
 if [ ! -f "$SOURCE_URL_FILE" ]; then
     echo "$SOURCE_URL_FILE doesn't exist!";
     exit 1;
@@ -114,7 +123,7 @@ COUNTRY_CODE=$(echo "$PROJECT_NAME" | cut -d- -f1);
 if [ "$COUNTRY_CODE" = "ca" ]; then
     COUNTRY_LABEL="Canada";
 elif [ "$COUNTRY_CODE" = "us" ]; then
-    COUNTRY_LABEL="United States";
+    COUNTRY_LABEL="États-Unis";
 elif [ "$COUNTRY_CODE" = "fr" ]; then
     COUNTRY_LABEL="France";
 else
@@ -122,7 +131,7 @@ else
   exit 1 # error
 fi
 
-LOCATION_LABEL="$CITIES_LABEL in";
+LOCATION_LABEL="$CITIES_LABEL au";
 if [ ! -z "$STATE_LABEL_LONG" ]; then
     LOCATION_LABEL="$LOCATION_LABEL $STATE_LABEL_LONG,";
 fi
@@ -135,7 +144,7 @@ fi
 
 NOT_RELATED_WITH=$AGENCY_NAME_LONG;
 if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
-    NOT_RELATED_WITH="$NOT_RELATED_WITH and $PARENT_AGENCY_NAME_LONG";
+    NOT_RELATED_WITH="$NOT_RELATED_WITH et $PARENT_AGENCY_NAME_LONG";
 fi
 
 RES_DIR="${MAIN_DIR}/res";
@@ -154,43 +163,45 @@ else
 fi
 TYPE_LABEL="";
 if [ "$TYPE" -eq 0 ]; then # LIGHT_RAIL
-    TYPE_LABEL="light rail"; # TODO?
+    TYPE_LABEL="trains léger"; # TODO?
 elif [ "$TYPE" -eq 1 ]; then # SUBWAY
-    TYPE_LABEL="subways";
+    TYPE_LABEL="métros";
 elif [ "$TYPE" -eq 2 ]; then # TRAIN
     TYPE_LABEL="trains";
 elif [ "$TYPE" -eq 3 ]; then # BUS
-    TYPE_LABEL="buses";
+    TYPE_LABEL="bus";
 elif [ "$TYPE" -eq 4 ]; then # FERRY
-    TYPE_LABEL="ferries";
+    TYPE_LABEL="bateaux";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
-    TYPE_LABEL="bike stations";
+    TYPE_LABEL="vélos";
 else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error
 fi
 
-PROVIDES_LINE="This app provides the $TYPE_LABEL";
+PROVIDES_LINE="Cette application contient";
 
 INFORMATION_LIST="";
 
 RES_VALUES_DIR="${MAIN_DIR}/res/values";
 BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
 if [ -f "$BIKE_STATION_FILE" ]; then
-  PROVIDES_LINE="${PROVIDES_LINE} availability";
+  PROVIDES_LINE="${PROVIDES_LINE} la disponibilité";
   if [ ! -z "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
   fi
-  INFORMATION_LIST="${INFORMATION_LIST}availability";
+  INFORMATION_LIST="${INFORMATION_LIST}disponibilité";
 fi
 GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml";
 if [ -f "$GTFS_FILE" ]; then
-  PROVIDES_LINE="${PROVIDES_LINE} schedule (accessible offline)";
+  PROVIDES_LINE="${PROVIDES_LINE} les horaires (accessible hors-ligne)";
   if [ ! -z "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
   fi
-  INFORMATION_LIST="${INFORMATION_LIST}schedule";
+  INFORMATION_LIST="${INFORMATION_LIST}horaire";
 fi
+
+PROVIDES_LINE="${PROVIDES_LINE} des $TYPE_LABEL";
 
 xmllint --version || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
 
@@ -202,11 +213,11 @@ YOUTUBE_FILE="${RES_VALUES_DIR}/youtube_values.xml";
 # INSTAGRAM_FILE="${RES_VALUES_DIR}/instagram_values.xml"; # NOT WORKING
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
-    PROVIDES_LINE_END="${PROVIDES_LINE_END} and";
+    PROVIDES_LINE_END="${PROVIDES_LINE_END} et";
   else 
     PROVIDES_LINE_END="${PROVIDES_LINE_END},";
   fi
-  PROVIDES_LINE_END="${PROVIDES_LINE_END} news";
+  PROVIDES_LINE_END="${PROVIDES_LINE_END} les nouvelles";
   NEWS_SOURCE_COUNT=0;
   if [[ -f "${RSS_FILE}" ]]; then
     FEEDS_LABEL=$(xmllint --xpath '//resources/string-array[@name="rss_feeds_label"]/item/text()' $RSS_FILE);
@@ -215,7 +226,7 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
     FEEDS_LABEL_ARRAY=(${FEEDS_LABEL//$'\n'/ });
     FEEDS_LABEL_ARRAY_LENGTH=(${#FEEDS_LABEL_ARRAY[@]});
     if [ "${NEWS_SOURCE_COUNT}" -eq 0 ]; then
-      PROVIDES_LINE_END="${PROVIDES_LINE_END} from";
+      PROVIDES_LINE_END="${PROVIDES_LINE_END} de";
     fi
     if [ "${FEEDS_LABEL_ARRAY_LENGTH}" -gt 0 ]; then
       INDEX=1;
@@ -225,7 +236,7 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
         elif [ "${INDEX}" -lt "${FEEDS_LABEL_ARRAY_LENGTH}" ]; then
           PROVIDES_LINE_END="${PROVIDES_LINE_END},";
         else
-          PROVIDES_LINE_END="${PROVIDES_LINE_END} and";
+          PROVIDES_LINE_END="${PROVIDES_LINE_END} et";
         fi
         PROVIDES_LINE_END="${PROVIDES_LINE_END} $FEED_LABEL";
         ((INDEX++))
@@ -239,9 +250,9 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
     SCREEN_NAMES_ARRAY=(${SCREEN_NAMES//$'\n'/ });
     SCREEN_NAMES_ARRAY_LENGTH=(${#SCREEN_NAMES_ARRAY[@]});
     if [ "${NEWS_SOURCE_COUNT}" -eq 0 ]; then
-      PROVIDES_LINE_END="${PROVIDES_LINE_END} from";
+      PROVIDES_LINE_END="${PROVIDES_LINE_END} de";
     else
-      PROVIDES_LINE_END="${PROVIDES_LINE_END} as well as";
+      PROVIDES_LINE_END="${PROVIDES_LINE_END} ainsi que";
     fi
     if [ "${SCREEN_NAMES_ARRAY_LENGTH}" -gt 0 ]; then
       INDEX=1;
@@ -251,27 +262,27 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
         elif [ "${INDEX}" -lt "${SCREEN_NAMES_ARRAY_LENGTH}" ]; then
           PROVIDES_LINE_END="${PROVIDES_LINE_END},";
         else
-          PROVIDES_LINE_END="${PROVIDES_LINE_END} and";
+          PROVIDES_LINE_END="${PROVIDES_LINE_END} et";
         fi
         PROVIDES_LINE_END="${PROVIDES_LINE_END} @${SCREEN_NAME}";
         ((INDEX++))
       done
-      PROVIDES_LINE_END="${PROVIDES_LINE_END} on";
+      PROVIDES_LINE_END="${PROVIDES_LINE_END} sur";
     fi
     PROVIDES_LINE_END="${PROVIDES_LINE_END} Twitter";
     ((NEWS_SOURCE_COUNT++))
   fi
   # if [[ -f "${YOUTUBE_FILE}" ]]; then
-  # YOUTUBE_FILE="${YOUTUBE_FILE} from YouTube"; # Google Play Store doesn´t like it
+  # YOUTUBE_FILE="${YOUTUBE_FILE} de YouTube"; # Google Play Store doesn´t like it
   # fi
 fi
 
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
-    PROVIDES_LINE_END=" and real-time service alerts ${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=" et alertes de service en temps-réel ${PROVIDES_LINE_END}";
   else 
-    PROVIDES_LINE_END=", real-time service alerts ${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=", alertes de service en temps-réel ${PROVIDES_LINE_END}";
   fi
 fi
 
@@ -279,34 +290,34 @@ PROVIDES_LINE="${PROVIDES_LINE}${PROVIDES_LINE_END}";
 
 OPERATE_IN=""
 if [ -f $GTFS_RTS_VALUES_GEN_FILE ]; then
-  OPERATE_IN="serve"
+  OPERATE_IN="desservent"
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
-  OPERATE_IN="are available in"
+  OPERATE_IN="sont disponibles à"
 else
   echo " > No agency file! (rts:$GTFS_RTS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 
 cat >>"${FULL_DESCRIPTION_FILE}" <<EOL
-This app adds $AGENCY_LABEL $TYPE_LABEL information to MonTransit.
+Cette application ajoute les informations des $TYPE_LABEL $AGENCY_LABEL à MonTransit.
 
 $PROVIDES_LINE.
 
-$AGENCY_NAME_SHORT $TYPE_LABEL $OPERATE_IN $LOCATION_LABEL.
+Les $TYPE_LABEL de $AGENCY_NAME_SHORT $OPERATE_IN $LOCATION_LABEL.
 
-Once this application is installed, the MonTransit app will display $TYPE_LABEL information ($INFORMATION_LIST...).
+Une fois cette application installée, l'application MonTransit affichera les informations des $TYPE_LABEL ($INFORMATION_LIST...).
 
-This application only has a temporary icon: download the MonTransit app (free) in the "More ..." section bellow or by following this Google Play link https://bit.ly/MonTransitPlay
+Cette application a seulement une icône temporaire : télécharger l'app MonTransit (gratuit) dans la section "Autres ..." ci-dessous ou en cliquant sur ce lien Google Play https://bit.ly/MonTransitPlay
 
-You can install this application on the SD card but it is not recommended.
+Vous pouvez installer cette application sur la carte SD mais ce n'est pas recommandé.
 
-The information comes from the data published by $SOURCE_PROVIDER:
+Les informations viennent des données publiées par $SOURCE_PROVIDER:
 $SOURCE_URL
 
-This application is free and open-source:
+Cette application est gratuite et open-source :
 $CONTACT_WEBITE_URL
 
-This app is not related with $NOT_RELATED_WITH.
+Cette application n'est pas associée à $NOT_RELATED_WITH.
 EOL
 
 PERMISSIONS_LINE="";
@@ -314,36 +325,36 @@ PERMISSIONS_LINE="";
 if [ -f "${BIKE_STATION_FILE}" ]; then
   if [ -z "$PERMISSIONS_LINES" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
-    echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
+    echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
-    PERMISSIONS_LINE="- Other: required to download";
+    PERMISSIONS_LINE="- Autres : requis pour le téléchargement des";
   else
-    PERMISSIONS_LINE="${PERMISSIONS_LINE} and";
+    PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
-  PERMISSIONS_LINE="${PERMISSIONS_LINE} bike stations information";
+  PERMISSIONS_LINE="${PERMISSIONS_LINE} informations des stations vélos";
 fi
 
 if [ -f "${GTFS_RT_FILE}" ]; then
   if [ -z "$PERMISSIONS_LINES" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
-    echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
+    echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
-    PERMISSIONS_LINE="- Other: required to download";
+    PERMISSIONS_LINE="- Autres : requis pour le téléchargement des";
   else 
-    PERMISSIONS_LINE="${PERMISSIONS_LINE} and";
+    PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
-  PERMISSIONS_LINE="${PERMISSIONS_LINE} real-time service alerts";
+  PERMISSIONS_LINE="${PERMISSIONS_LINE} alertes de service en temps-réel";
 fi
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
-    echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
+    echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
-    PERMISSIONS_LINE="- Other: required to download";
+    PERMISSIONS_LINE="- Autres : requis pour le téléchargement des";
   else 
-    PERMISSIONS_LINE="${PERMISSIONS_LINE} and";
+    PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
-  PERMISSIONS_LINE="${PERMISSIONS_LINE} news";
+  PERMISSIONS_LINE="${PERMISSIONS_LINE} nouvelles";
 fi
 
 echo "$PERMISSIONS_LINE" >> "${FULL_DESCRIPTION_FILE}";
@@ -355,4 +366,4 @@ if [[ ${IS_CI} = true ]]; then
   echo "---------------------------------------------------------------------------------------------------------------";
 fi
 
-echo ">> Generating full-description.txt... DONE";
+echo ">> Generating fr-FR/full-description.txt... DONE";

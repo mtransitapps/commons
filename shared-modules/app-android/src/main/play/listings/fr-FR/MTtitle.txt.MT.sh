@@ -7,25 +7,31 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo ">> Generating short-description.txt...";
+LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
+if [ ! -f "$LANG_FR_FILE" ]; then
+    echo ">> Generating fr-FR/title.txt... SKIP (FR lang not supported)";
+    exit 0; # ok
+fi
+
+echo ">> Generating fr-FR/title.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
 PLAY_DIR="${MAIN_DIR}/play";
 LISTINGS_DIR="${PLAY_DIR}/listings";
-EN_US_DIR="${LISTINGS_DIR}/en-US";
-SHORT_DESCRIPTION_FILE="${EN_US_DIR}/short-description.txt";
-mkdir -p "${EN_US_DIR}";
+FR_FR_DIR="${LISTINGS_DIR}/fr-FR";
+TITLE_FILE="${FR_FR_DIR}/title.txt";
+mkdir -p "${FR_FR_DIR}";
 checkResult $?;
-if [ -f "${SHORT_DESCRIPTION_FILE}" ]; then
-  echo ">> File '$SHORT_DESCRIPTION_FILE' already exist."; # compat with existing short-description.txt
+if [ -f "${TITLE_FILE}" ]; then
+  echo ">> File '$TITLE_FILE' already exist."; # compat with existing fr-FR/title.txt
   exit 0;
 fi
 
-rm -f "${SHORT_DESCRIPTION_FILE}";
+rm -f "${TITLE_FILE}";
 checkResult $?;
-touch "${SHORT_DESCRIPTION_FILE}";
+touch "${TITLE_FILE}";
 checkResult $?;
 
 CONFIG_DIR="${ROOT_DIR}/config";
@@ -40,9 +46,15 @@ if [ ! -f "$AGENCY_NAME_FILE" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
-if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+AGENCY_NAME_COUNT=$(grep -c ^ $AGENCY_NAME_FILE);
+if [ $AGENCY_NAME_COUNT -eq 0 ]; then
+    echo "$AGENCY_NAME_FILE is empty!";
+    exit 1;
+fi
+
+AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
+if [ -z "$AGENCY_NAME_SHORT" ]; then
+    echo "$AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
@@ -55,8 +67,6 @@ if [ -f "$AGENCY_LOCATION_FILE" ]; then
         exit 1;
     fi
 fi
-
-AGENCY_LABEL=$AGENCY_NAME_LONG;
 
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";
@@ -74,58 +84,37 @@ else
 fi
 TYPE_LABEL="";
 if [ "$TYPE" -eq 0 ]; then # LIGHT_RAIL
-    TYPE_LABEL="light rail"; # TODO?
+    TYPE_LABEL="Train Léger";
 elif [ "$TYPE" -eq 1 ]; then # SUBWAY
-    TYPE_LABEL="subways";
+    TYPE_LABEL="Métro";
 elif [ "$TYPE" -eq 2 ]; then # TRAIN
-    TYPE_LABEL="trains";
+    TYPE_LABEL="Train";
 elif [ "$TYPE" -eq 3 ]; then # BUS
-    TYPE_LABEL="buses";
+    TYPE_LABEL="Bus";
 elif [ "$TYPE" -eq 4 ]; then # FERRY
-    TYPE_LABEL="ferries";
+    TYPE_LABEL="Bateau";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
-    TYPE_LABEL="bike sharing";
+    TYPE_LABEL="Vélo";
 else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error
 fi
 
-SHORT_DESC="$AGENCY_NAME_LONG $TYPE_LABEL for MonTransit.";
-
+AGENCY_LABEL=$AGENCY_NAME_SHORT
 if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
-  SHORT_DESC="$AGENCY_LOCATION_SHORT $SHORT_DESC"
+  AGENCY_LABEL="$AGENCY_LABEL $AGENCY_LOCATION_SHORT"
 fi
 
-RES_VALUES_DIR="${MAIN_DIR}/res/values";
-BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
-if [ -f "$BIKE_STATION_FILE" ]; then
-  SHORT_DESC="${SHORT_DESC} Availability.";
-fi
-GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml";
-if [ -f "$GTFS_FILE" ]; then
-  SHORT_DESC="${SHORT_DESC} Schedule.";
-fi
-GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
-if [ -f "${GTFS_RT_FILE}" ]; then
-  SHORT_DESC="${SHORT_DESC} Alerts.";
-fi
+TITLE="$TYPE_LABEL $AGENCY_LABEL - MonTransit";
 
-RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
-TWITTER_FILE="${RES_VALUES_DIR}/twitter_values.xml";
-YOUTUBE_FILE="${RES_VALUES_DIR}/youtube_values.xml";
-# INSTAGRAM_FILE="${RES_VALUES_DIR}/instagram_values.xml"; # NOT WORKING
-if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
-  SHORT_DESC="${SHORT_DESC} News.";
-fi
+MAX_LENGTH=30;
 
-MAX_LENGTH=80;
-
-echo $SHORT_DESC | awk -v len=$MAX_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }' >> "${SHORT_DESCRIPTION_FILE}"
+echo $TITLE | awk -v len=$MAX_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }' >> "${TITLE_FILE}"
 
 if [[ ${IS_CI} = true ]]; then
   echo "---------------------------------------------------------------------------------------------------------------";
-  cat "${SHORT_DESCRIPTION_FILE}"; #DEBUG
+  cat "${TITLE_FILE}"; #DEBUG
   echo "---------------------------------------------------------------------------------------------------------------";
 fi
 
-echo ">> Generating short-description.txt... DONE";
+echo ">> Generating fr-FR/title.txt... DONE";

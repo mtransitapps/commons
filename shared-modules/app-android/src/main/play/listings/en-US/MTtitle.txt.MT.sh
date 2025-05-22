@@ -52,6 +52,16 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
+AGENCY_LOCATION_SHORT="" # optional
+AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
+if [ -f "$AGENCY_LOCATION_FILE" ]; then
+    AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
+    if [ -z "$AGENCY_LOCATION_SHORT" ]; then
+        echo "$AGENCY_LOCATION_SHORT is empty!";
+        exit 1;
+    fi
+fi
+
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";
 GTFS_RTS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml";
@@ -63,7 +73,7 @@ if [ -f $GTFS_RTS_VALUES_GEN_FILE ]; then
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   TYPE=$(grep -E "<integer name=\"bike_station_agency_type\">[0-9]+</integer>$" $BIKE_STATION_VALUES_FILE | tr -dc '0-9')
 else
-  echo " > No agency file! (rts:$BIKE_STATION_VALUES_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo " > No agency file! (rts:$GTFS_RTS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";
@@ -84,7 +94,12 @@ else
   exit 1 # error
 fi
 
-TITLE="$AGENCY_NAME_SHORT $TYPE_LABEL - MonTransit";
+AGENCY_LABEL=$AGENCY_NAME_SHORT
+if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+  AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
+fi
+
+TITLE="$AGENCY_LABEL $TYPE_LABEL - MonTransit";
 
 MAX_LENGTH=30;
 
