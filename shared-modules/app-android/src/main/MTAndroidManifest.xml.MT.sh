@@ -12,7 +12,7 @@ echo ">> Generating AndroidManifest.xml...";
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
-DEBUG_DIR="${SRC_DIR}/debug";
+#DEBUG_DIR="${SRC_DIR}/debug";
 ANDROID_MANIFEST_DIR="${MAIN_DIR}";
 # ANDROID_MANIFEST_DIR="${DEBUG_DIR}"; #DEBUG
 ANDROID_MANIFEST_FILE="${ANDROID_MANIFEST_DIR}/AndroidManifest.xml";
@@ -42,6 +42,36 @@ cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
 EOL
 
 RES_VALUES_DIR="${MAIN_DIR}/res/values";
+
+BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
+if [ -f "${BIKE_STATION_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- BIKE STATIONS PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.GBFSProvider"
+            android:authorities="@string/bike_station_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/agency_provider"
+                android:value="@string/agency_provider" />
+            <meta-data
+                android:name="@string/agency_provider_type"
+                android:value="@integer/bike_station_agency_type" />
+            <meta-data
+                android:name="@string/poi_provider"
+                android:value="@string/poi_provider" />
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/bike_station_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
 GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml";
 if [ -f "${GTFS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
