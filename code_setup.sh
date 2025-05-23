@@ -204,6 +204,9 @@ function deployFile() {
 		canOverwriteFile ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 		checkResult $?;
 	fi
+	DEST_DIR=$(dirname ${DEST_FILE_PATH});
+	mkdir -p ${DEST_DIR};
+	checkResult $?;
 	echo "> Deploying '$SRC_FILE_PATH'...";
 	cp -n -p $SRC_FILE_PATH $DEST_FILE_PATH;
 	local RESULT=$?;
