@@ -260,12 +260,6 @@ function deployDirectory() {
 			echo "> Skip optional directory '$DEST_FILE_PATH' in target directory.";
 			return;
 		fi
-		mkdir $DEST_FILE_PATH;
-		local RESULT=$?;
-		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while creating directory '$DEST_FILE_PATH' in target directory!";
-			exit ${RESULT};
-		fi
 	fi
 	local S_FILE_NAME;
 	for S_FILE_NAME in $(ls -a ${SRC_FILE_PATH}/) ; do
