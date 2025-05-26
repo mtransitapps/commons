@@ -18,7 +18,7 @@ MT_TEMP_DIR=".mt";
 mkdir -p $MT_TEMP_DIR;
 checkResult $?;
 MT_APP_RELEASE_REQUIRED_FILE="$MT_TEMP_DIR/mt_app_release_required";
-MT_APP_RELEASE_REQUIRED=false;
+MT_APP_RELEASE_REQUIRED=unknown;
 if [[ -f ${MT_APP_RELEASE_REQUIRED_FILE} ]]; then
   MT_APP_RELEASE_REQUIRED=$(cat $MT_APP_RELEASE_REQUIRED_FILE);
 fi
