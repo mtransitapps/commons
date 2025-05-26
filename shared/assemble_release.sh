@@ -22,8 +22,8 @@ MT_APP_RELEASE_REQUIRED=false;
 if [[ -f ${MT_APP_RELEASE_REQUIRED_FILE} ]]; then
   MT_APP_RELEASE_REQUIRED=$(cat $MT_APP_RELEASE_REQUIRED_FILE);
 fi
-if [[ "$MT_APP_RELEASE_REQUIRED" != "true" ]]; then
-  echo "> App release NOT required > SKIP assemble";
+if [[ "$MT_APP_RELEASE_REQUIRED" == "false" ]]; then
+  echo "> App release NOT required ($MT_APP_RELEASE_REQUIRED) > SKIP assemble";
   exit 0; # ok
 fi
 
