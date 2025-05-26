@@ -30,40 +30,38 @@ echo "> Data changed: $MT_DATA_CHANGED.";
 
 if [[ "$MT_DATA_CHANGED" == "true" ]]; then
   MT_APP_RELEASE_REQUIRED=true; # new data
-elif [[ "$GIT_BRANCH" == "mmathieum" ]]; then #LEGACY
+else
   git fetch -v;
   RESULT=$?;
   if [[ ${RESULT} -ne 0 ]]; then
     echo "> Error while fetching GIT repository log!";
     exit ${RESULT};
   fi
-  MAIN_BRANCH_NAME="master"; #TODO master->main
-  MAIN_LAST_HASH=$(git log origin/$MAIN_BRANCH_NAME --max-count 1 --pretty=format:"%h");
+
+  LAST_GIT_TAG_HASH=$(git rev-list --tags --max-count=1);
+  LAST_GIT_TAG_NAME=$(git describe --tags $LAST_GIT_TAG_HASH)
+  LAST_GIT_TAG_TIMESTAMP_SEC=$(git log -1 --pretty=format:"%at" $LAST_GIT_TAG_NAME);
+  LAST_GIT_TAG_DATE_TIME=$(date --date='@'"$LAST_GIT_TAG_TIMESTAMP_SEC"'');
+
+  echo "> Last release '$LAST_GIT_TAG_NAME' on '$LAST_GIT_TAG_DATE_TIME'.";
+
   LOCAL_LAST_HASH=$(git log --max-count 1 --pretty=format:"%h");
 
-  MAIN_LAST_TIMESTAMP_SEC=$(git log origin/$MAIN_BRANCH_NAME --max-count 1 --pretty=format:"%at");
-  MAIN_LAST_RELEASE_DATE_TIME=$(date --date='@'"$MAIN_LAST_TIMESTAMP_SEC"'');
-  echo "> Last release date: $MAIN_LAST_RELEASE_DATE_TIME.";
-
-  # LOCAL_LAST_TIMESTAMP_SEC=$(git log --max-count 1 --pretty=format:"%at");
   NOW_TIMESTAMP_SEC=$(date +%s);
-  DIFF_SEC=$(($NOW_TIMESTAMP_SEC-$MAIN_LAST_TIMESTAMP_SEC));
+  DIFF_SEC=$(($NOW_TIMESTAMP_SEC-$LAST_GIT_TAG_TIMESTAMP_SEC));
   DIFF_DAYS=$(($DIFF_SEC/86400));
   MIN_DIFF_FOR_RELEASE_SEC=4233600; # 7 weeks
-  NEXT_RELEASE_REQUIRED_SEC=$(($MAIN_LAST_TIMESTAMP_SEC+$MIN_DIFF_FOR_RELEASE_SEC));
+  NEXT_RELEASE_REQUIRED_SEC=$(($LAST_GIT_TAG_TIMESTAMP_SEC+$MIN_DIFF_FOR_RELEASE_SEC));
   NEXT_RELEASE_DATE_TIME=$(date --date='@'$NEXT_RELEASE_REQUIRED_SEC'');
-  if [[ "${MAIN_LAST_HASH}" != "${LOCAL_LAST_HASH}" ]]; then
+  if [[ "${LAST_GIT_TAG_HASH}" != "${LOCAL_LAST_HASH}" ]]; then
     if [[ $NOW_TIMESTAMP_SEC -gt $NEXT_RELEASE_REQUIRED_SEC ]]; then
       MT_APP_RELEASE_REQUIRED=true; # release code change
     else
       echo "> Last release was only $DIFF_DAYS days ago > no need to release (next release: $NEXT_RELEASE_DATE_TIME).";
     fi
   else
-    echo "> Same code hash $MAIN_LAST_HASH > no need to release.";
+    echo "> Same code hash '$LAST_GIT_TAG_HASH' > no need to release.";
   fi
-else
-  echo "> Use case not supported yet!"; #TODO GH release?
-  MT_APP_RELEASE_REQUIRED=false;
 fi
 echo "> App release required: $MT_APP_RELEASE_REQUIRED.";
 echo "$MT_APP_RELEASE_REQUIRED" > $MT_APP_RELEASE_REQUIRED_FILE;
