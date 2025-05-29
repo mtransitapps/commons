@@ -22,7 +22,7 @@ kotlinx-serialization = "1.8.1"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "6.2.0.5505"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "8.10.0"
+android-gradlePlugin = "8.10.1"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
