@@ -15,7 +15,6 @@ updates:
       day: "wednesday"
       time: "16:00"
       timezone: "America/Montreal"
-    target-branch: "mmathieum"
     groups:
       gh-actions:
         patterns:
@@ -31,7 +30,6 @@ updates:
       day: "wednesday"
       time: "16:00"
       timezone: "America/Montreal"
-    target-branch: "mmathieum"
     groups:
       kotlin-ksp-compose:
         patterns:
