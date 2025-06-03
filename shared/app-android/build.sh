@@ -65,7 +65,7 @@ if [[ ${IS_CI} = true ]]; then
 # SONAR_PR_ARGS="";
 # if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
 # # https://docs.sonarqube.org/latest/analysis/pull-request/
-# TARGET_BRANCH="mmathieum"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
+# TARGET_BRANCH="TODO"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
 # # TO DO IF hotfix/... || develop -> master ELSE feature/... -> develop
 # PR_NUMBER=${CIRCLE_PULL_REQUEST##*/};
 # echo ">> Git PR number: '$PR_NUMBER'.";

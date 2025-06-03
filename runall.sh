@@ -24,8 +24,8 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -f \"agency-parser/input/gtfs.zip\" ] && rm -r agency-parser/input/gtfs.zip || echo \"> SKIP\"; "
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d \".gradle\" ] && rm -r .gradle || echo \"> SKIP\"; "
 # PUSH TO MASTER
-# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && git -C agency-parser push origin mmathieum:master || echo \"> SKIP\"; ";
-# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d app-android ] && git -C app-android push origin mmathieum:master || echo \"> SKIP\"; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && git -C agency-parser push origin mybranch:master || echo \"> SKIP\"; ";
+# - ./mtransit-for-android-gradle/commons/runall.sh "[ -d app-android ] && git -C app-android push origin mybranch:master || echo \"> SKIP\"; ";
 # SEARCH
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && grep --color=auto --include=\*.{java,kt} -rnw 'agency-parser' -e \"SEARCH\" || echo \"> SKIP\"; ";
 # - ./mtransit-for-android-gradle/commons/runall.sh "[ -d agency-parser ] && grep --color=auto --include=\*.{java,kt} -r -i \"SEARCH\" agency-parser || echo \"> SKIP\"; ";
