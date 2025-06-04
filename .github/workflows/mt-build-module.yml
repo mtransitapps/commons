@@ -34,8 +34,10 @@ jobs:
           DEFAULT_PR_BRANCH="master" # TO BE DELETED
           echo "Default PR branch: '$DEFAULT_PR_BRANCH'."
           # Branch with same name?
+          echo "Before git ls-remote."
           git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME > /dev/null
           RESULT=$?;
+          echo "After git ls-remote."
           echo "RESULT: $RESULT"
           if [ $RESULT -eq 0 ]; then
             CHECKOUT_BRANCH=$MT_BRANCH_NAME
