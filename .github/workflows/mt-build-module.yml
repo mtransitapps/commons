@@ -4,7 +4,8 @@ on:
   pull_request:
   push:
     branches:
-      - '**' # ALL
+      # - '**' # ALL
+      - 'master'
 # gh workflow run mt-build-module.yml --ref <branch>
 # gh run list --workflow=mt-build-module.yml
 env:
@@ -22,6 +23,10 @@ jobs:
         id: determine-branches
         run: |
           MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android"
+          echo "github.base_ref: '${{ github.base_ref }}'"
+          echo "github.head_ref: '${{ github.head_ref }}'"
+          echo "github.ref: '${{ github.ref }}'"
+          echo "github.ref_name: '${{ github.ref_name }}'"
           echo "Branch name: '$MT_BRANCH_NAME'."
           echo "Target branch name: '$MT_TARGET_BRANCH_NAME'."
           DEFAULT_PR_BRANCH="master" # TO BE DELETED
@@ -56,6 +61,7 @@ jobs:
           REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
           echo "Repository owner and name: '$REPOSITORY_OWNER_AND_NAME"
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
+          echo "Repository name: '$REPOSITORY_NAME'."
           GIT_SHA=${{ github.sha }};
           echo "git sha: '$GIT_SHA'."
           git -C $REPOSITORY_NAME checkout $GIT_SHA; 
@@ -113,6 +119,7 @@ jobs:
             */build/reports/
             !**/*.xml
       - name: MT assemble release (APK & ABB)
+        if: github.event_name != 'pull_request'
         run: ./assemble_release.sh
         env:
           MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
