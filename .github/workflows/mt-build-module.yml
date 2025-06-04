@@ -53,7 +53,7 @@ jobs:
         run: |
           REPOSITORY_OWNER=${{ env.repository_owner }};
           REPOSITORY_OWNER_AND_NAME=${{ env.repository }};
-          REPOSITORY_NAME=$REPOSITORY_OWNER_AND_NAME.split('/')[1];
+          REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
           GIT_SHA=${{ github.sha }};
           echo "git sha: '$GIT_SHA'."
           git -C $REPOSITORY_NAME checkout $GIT_SHA; 
