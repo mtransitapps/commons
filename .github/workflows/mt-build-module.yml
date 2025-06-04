@@ -52,7 +52,9 @@ jobs:
       - name: MT check out this repository module with this PR
         run: |
           REPOSITORY_OWNER=${{ env.repository_owner }};
+          echo "Repository owner: '$REPOSITORY_OWNER'."
           REPOSITORY_OWNER_AND_NAME=${{ env.repository }};
+          echo "Repository owner and name: '$REPOSITORY_OWNER_AND_NAME"
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
           GIT_SHA=${{ github.sha }};
           echo "git sha: '$GIT_SHA'."
