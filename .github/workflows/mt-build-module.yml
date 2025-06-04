@@ -34,12 +34,16 @@ jobs:
           DEFAULT_PR_BRANCH="master" # TO BE DELETED
           # Branch with same name?
           git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME > /dev/null
-          if [ $? -eq 0 ]; then
+          RESULT=$?;
+          echo "RESULT: $RESULT"
+          if [ $RESULT -eq 0 ]; then
             CHECKOUT_BRANCH=$MT_BRANCH_NAME
           else
             # Pull request target branch with same name?
             git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME > /dev/null
-            if [ $? -eq 0 ]; then
+            RESULT=$?;
+            echo "RESULT: $RESULT"
+            if [ $RESULT -eq 0 ]; then
               CHECKOUT_BRANCH=$MT_TARGET_BRANCH_NAME
             else
               echo "WARNING: no match for current or target branch!!!"
