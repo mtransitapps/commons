@@ -8,9 +8,9 @@ on:
       - 'master'
 # gh workflow run mt-build-module.yml --ref <branch>
 # gh run list --workflow=mt-build-module.yml
-env:
-  MT_BRANCH_NAME: ${{ github.ref_name }}
-  MT_TARGET_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+# env:
+#   MT_BRANCH_NAME: ${{ github.ref_name }}
+#   MT_TARGET_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
@@ -19,7 +19,7 @@ jobs:
     name: "MT Build git submodule"
     runs-on: ubuntu-latest
     steps:
-      - name: MT select right ref with same branch name of target branch name
+      - name: MT select main repo branch
         id: determine-branches
         run: |
           MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android"
@@ -27,6 +27,8 @@ jobs:
           echo "github.head_ref: '${{ github.head_ref }}'"
           echo "github.ref: '${{ github.ref }}'"
           echo "github.ref_name: '${{ github.ref_name }}'"
+          MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+          MT_TARGET_BRANCH_NAME=${{ github.base_ref || github.ref_name }}
           echo "Branch name: '$MT_BRANCH_NAME'."
           echo "Target branch name: '$MT_TARGET_BRANCH_NAME'."
           DEFAULT_PR_BRANCH="master" # TO BE DELETED
@@ -38,14 +40,15 @@ jobs:
             # Pull request target branch with same name?
             git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME > /dev/null
             if [ $? -eq 0 ]; then
-                CHECKOUT_BRANCH=$MT_TARGET_BRANCH_NAME
+              CHECKOUT_BRANCH=$MT_TARGET_BRANCH_NAME
             else
-                CHECKOUT_BRANCH=$DEFAULT_PR_BRANCH
+              echo "WARNING: no match for current or target branch!!!"
+              CHECKOUT_BRANCH=$DEFAULT_PR_BRANCH
             fi
           fi
           echo "Checkout branch: '$CHECKOUT_BRANCH'."
           echo "mt_checkout_branch=$CHECKOUT_BRANCH" >> "$GITHUB_OUTPUT"
-      - name: MT check out main repository code (no submodules)
+      - name: MT check out main repo
         uses: actions/checkout@v4
         with:
           repository: mtransitapps/mtransit-for-android
@@ -54,7 +57,7 @@ jobs:
           fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
         run: ./checkout_submodules.sh
-      - name: MT check out this repository module with this PR
+      - name: MT check out this module repo build SHA
         run: |
           REPOSITORY_OWNER=${{ github.repository_owner }};
           echo "Repository owner: '$REPOSITORY_OWNER'."
