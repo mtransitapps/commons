@@ -32,6 +32,7 @@ jobs:
           echo "Branch name: '$MT_BRANCH_NAME'."
           echo "Target branch name: '$MT_TARGET_BRANCH_NAME'."
           DEFAULT_PR_BRANCH="master" # TO BE DELETED
+          echo "Default PR branch: '$DEFAULT_PR_BRANCH'."
           # Branch with same name?
           git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME > /dev/null
           RESULT=$?;
