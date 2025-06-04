@@ -35,7 +35,8 @@ jobs:
           echo "Default PR branch: '$DEFAULT_PR_BRANCH'."
           # Branch with same name?
           echo "Before git ls-remote."
-          git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME > /dev/null
+          #  > /dev/null
+          git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME
           RESULT=$?;
           echo "After git ls-remote."
           echo "RESULT: $RESULT"
@@ -43,7 +44,8 @@ jobs:
             CHECKOUT_BRANCH=$MT_BRANCH_NAME
           else
             # Pull request target branch with same name?
-            git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME > /dev/null
+            #  > /dev/null
+            git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME
             RESULT=$?;
             echo "RESULT: $RESULT"
             if [ $RESULT -eq 0 ]; then
