@@ -97,7 +97,10 @@ jobs:
           echo "Repository name: '$REPOSITORY_NAME'."
           GIT_SHA=${{ github.sha }};
           echo "git sha: '$GIT_SHA'."
-          git -C $REPOSITORY_NAME checkout $GIT_SHA; 
+          echo "git PR: ${{ github.event.pull_request.head.sha }}"
+          SHA=${{ github.event.pull_request.head.sha || github.sha }};
+          echo "Sha: '$SHA'."
+          git -C $REPOSITORY_NAME checkout $SHA; 
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |
