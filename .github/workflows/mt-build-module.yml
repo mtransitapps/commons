@@ -44,6 +44,8 @@ jobs:
           git ls-remote --exit-code --heads $MAIN_REPO_URL master
           echo "Before simple git ls-remote 2.0"
           git ls-remote --heads $MAIN_REPO_URL mm/ci-build
+          RESULT=$?;
+          echo "RESULT: $RESULT"
           echo "Before simple git ls-remote 2.1"
           git ls-remote --exit-code --heads $MAIN_REPO_URL mm/ci-build >> /dev/null
           RESULT=$?;
