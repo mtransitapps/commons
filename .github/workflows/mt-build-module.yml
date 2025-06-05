@@ -40,8 +40,12 @@ jobs:
           git ls-remote $MAIN_REPO_URL
           echo "Before simple git ls-remote. 1"
           git ls-remote --heads $MAIN_REPO_URL master
+          RESULT=$?;
+          echo "RESULT: $RESULT"
           echo "Before simple git ls-remote 2."
           git ls-remote --exit-code --heads $MAIN_REPO_URL master
+          RESULT=$?;
+          echo "RESULT: $RESULT"
           echo "Before simple git ls-remote 2.0"
           git ls-remote --heads $MAIN_REPO_URL mm/ci-build
           RESULT=$?;
