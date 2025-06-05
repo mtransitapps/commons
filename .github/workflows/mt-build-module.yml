@@ -23,57 +23,23 @@ jobs:
         id: pick-main-repo-branch
         run: |
           MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android.git"
-          echo "github.base_ref: '${{ github.base_ref }}'"
-          echo "github.head_ref: '${{ github.head_ref }}'"
-          echo "github.ref: '${{ github.ref }}'"
-          echo "github.ref_name: '${{ github.ref_name }}'"
           MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
           MT_TARGET_BRANCH_NAME=${{ github.base_ref || github.ref_name }}
-          echo "Branch name: '$MT_BRANCH_NAME'."
-          echo "Target branch name: '$MT_TARGET_BRANCH_NAME'."
-          DEFAULT_PR_BRANCH="master" # TO BE DELETED
-          echo "Default PR branch: '$DEFAULT_PR_BRANCH'."
-          # Branch with same name?
-          # echo "Before simple git ls-remote. 0"
-          # git ls-remote https://github.com/mtransitapps/mtransit-for-android
-          # echo "Before simple git ls-remote. 0.5"
-          # git ls-remote $MAIN_REPO_URL
-          # echo "Before simple git ls-remote. 1"
-          # git ls-remote --heads $MAIN_REPO_URL master
-          # RESULT=$?;
-          # echo "RESULT: $RESULT"
-          # echo "Before simple git ls-remote 2."
-          # git ls-remote --exit-code --heads $MAIN_REPO_URL master
-          # RESULT=$?;
-          # echo "RESULT: $RESULT"
-          # echo "Before simple git ls-remote 2.0"
-          # git ls-remote --heads $MAIN_REPO_URL mm/ci-build
-          # RESULT=$?;
-          # echo "RESULT: $RESULT"
-          # echo "Before simple git ls-remote 2.1"
-          # git ls-remote --exit-code --heads $MAIN_REPO_URL mm/ci-build &> /dev/null
-          # RESULT=$?;
-          # echo "RESULT: $RESULT"
-          # echo "Before git ls-remote."
-          #  > /dev/null
+          # DEFAULT_PR_BRANCH="master" # TO BE DELETED
+          DEFAULT_REPO_BRANCH=$(gh api repos/mtransitapps/mtransit-for-android --jq '.default_branch'); # TO BE DELETED
+          echo "Default repo branch: '$DEFAULT_REPO_BRANCH'."
           BRANCH_EXISTS=$(git ls-remote --heads $MAIN_REPO_URL $MT_BRANCH_NAME | wc -l);
-          # RESULT=$?;
-          echo "After git ls-remote."
-          # echo "RESULT: $RESULT"
           if [ $BRANCH_EXISTS -eq 1 ]; then
             CHECKOUT_BRANCH=$MT_BRANCH_NAME
           else
             # Pull request target branch with same name?
-            #  > /dev/null
-            # git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME
             BRANCH_EXISTS=$(git ls-remote --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME | wc -l);
-            RESULT=$?;
-            echo "RESULT: $RESULT"
             if [ $BRANCH_EXISTS -eq 1 ]; then
               CHECKOUT_BRANCH=$MT_TARGET_BRANCH_NAME
             else
               echo "WARNING: no match for current or target branch!!!"
-              CHECKOUT_BRANCH=$DEFAULT_PR_BRANCH
+              DEFAULT_REPO_BRANCH=$(gh api repos/mtransitapps/mtransit-for-android --jq '.default_branch');
+              CHECKOUT_BRANCH=$DEFAULT_REPO_BRANCH
             fi
           fi
           echo "Checkout branch: '$CHECKOUT_BRANCH'."
@@ -89,17 +55,10 @@ jobs:
         run: ./checkout_submodules.sh
       - name: MT check out this module repo build SHA
         run: |
-          REPOSITORY_OWNER=${{ github.repository_owner }};
-          echo "Repository owner: '$REPOSITORY_OWNER'."
           REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
-          echo "Repository owner and name: '$REPOSITORY_OWNER_AND_NAME"
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
-          echo "Repository name: '$REPOSITORY_NAME'."
-          GIT_SHA=${{ github.sha }};
-          echo "git sha: '$GIT_SHA'."
-          echo "git PR: ${{ github.event.pull_request.head.sha }}"
           SHA=${{ github.event.pull_request.head.sha || github.sha }};
-          echo "Sha: '$SHA'."
+          echo "Checking our this repo '$REPOSITORY_NAME' workflow sha '$SHA':"
           git -C $REPOSITORY_NAME checkout $SHA; 
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
