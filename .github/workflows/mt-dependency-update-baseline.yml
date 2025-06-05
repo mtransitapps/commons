@@ -88,10 +88,12 @@ jobs:
         run: ./dependency_update_baseline.sh
       - name: MT commit new baseline
         run: |
+          git config --global user.name 'MonTransit Bot';
+          git config --global user.email '84137772+montransit@users.noreply.github.com';
           git -C commons add shared-main/app-android/dependencies/*.txt;
           git -C commons add shared-opt-dir/parser/dependencies/*.txt;
-          git commit -m "Update dependencies baseline";
-          git push;
+          git -C commons commit -m "Update dependencies baseline";
+          git -C commons push;
       # - name: MT test
       #   run: ./test.sh
       # - name: MT artifact > unit tests XML results
