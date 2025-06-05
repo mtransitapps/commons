@@ -62,7 +62,7 @@ jobs:
           echo "- commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt:"
           cat commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt;
           echo "- commons/gradle/libs.versions.toml:"
-          cat gradle/libs.versions.toml;
+          cat commons/gradle/libs.versions.toml;
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |
