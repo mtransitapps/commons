@@ -36,39 +36,40 @@ jobs:
           # Branch with same name?
           # echo "Before simple git ls-remote. 0"
           # git ls-remote https://github.com/mtransitapps/mtransit-for-android
-          echo "Before simple git ls-remote. 0.5"
-          git ls-remote $MAIN_REPO_URL
-          echo "Before simple git ls-remote. 1"
-          git ls-remote --heads $MAIN_REPO_URL master
-          RESULT=$?;
-          echo "RESULT: $RESULT"
-          echo "Before simple git ls-remote 2."
-          git ls-remote --exit-code --heads $MAIN_REPO_URL master
-          RESULT=$?;
-          echo "RESULT: $RESULT"
-          echo "Before simple git ls-remote 2.0"
-          git ls-remote --heads $MAIN_REPO_URL mm/ci-build
-          RESULT=$?;
-          echo "RESULT: $RESULT"
-          echo "Before simple git ls-remote 2.1"
-          git ls-remote --exit-code --heads $MAIN_REPO_URL mm/ci-build >> /dev/null
-          RESULT=$?;
-          echo "RESULT: $RESULT"
-          echo "Before git ls-remote."
+          # echo "Before simple git ls-remote. 0.5"
+          # git ls-remote $MAIN_REPO_URL
+          # echo "Before simple git ls-remote. 1"
+          # git ls-remote --heads $MAIN_REPO_URL master
+          # RESULT=$?;
+          # echo "RESULT: $RESULT"
+          # echo "Before simple git ls-remote 2."
+          # git ls-remote --exit-code --heads $MAIN_REPO_URL master
+          # RESULT=$?;
+          # echo "RESULT: $RESULT"
+          # echo "Before simple git ls-remote 2.0"
+          # git ls-remote --heads $MAIN_REPO_URL mm/ci-build
+          # RESULT=$?;
+          # echo "RESULT: $RESULT"
+          # echo "Before simple git ls-remote 2.1"
+          # git ls-remote --exit-code --heads $MAIN_REPO_URL mm/ci-build &> /dev/null
+          # RESULT=$?;
+          # echo "RESULT: $RESULT"
+          # echo "Before git ls-remote."
           #  > /dev/null
-          git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME
-          RESULT=$?;
+          BRANCH_EXISTS=$(git ls-remote --heads $MAIN_REPO_URL $MT_BRANCH_NAME | wc -l);
+          # RESULT=$?;
           echo "After git ls-remote."
-          echo "RESULT: $RESULT"
-          if [ $RESULT -eq 0 ]; then
+          # echo "RESULT: $RESULT"
+          if [ $BRANCH_EXISTS -eq 1 ]; then
             CHECKOUT_BRANCH=$MT_BRANCH_NAME
           else
             # Pull request target branch with same name?
             #  > /dev/null
-            git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME
+            # git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME
+            BRANCH_EXISTS=$(git ls-remote --heads $MAIN_REPO_URL $MT_TARGET_BRANCH_NAME | wc -l);
             RESULT=$?;
             echo "RESULT: $RESULT"
-            if [ $RESULT -eq 0 ]; then
+            if [ $BRANCH_EXISTS -eq 1 ]; then
               CHECKOUT_BRANCH=$MT_TARGET_BRANCH_NAME
             else
               echo "WARNING: no match for current or target branch!!!"
