@@ -125,14 +125,22 @@ jobs:
           # cat commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
           # echo "-----"
           # git -C commons diff;
+          echo "1:"
           git -C commons add -v shared-main/app-android/dependencies/*.txt;
+          echo "2:"
           git -C commons add -v shared-opt-dir/parser/dependencies/*.txt;
-          git -C commons diff --staged --quiet;
-          FILE_UPDATED=$?; # 0 if no changes
-          if [[ $FILE_UPDATED -gt 0 ]]; then
-            git -C commons commit -m "Update dependencies baseline";
-            git -C commons push;
-          fi
+          echo "3:"
+          git -C commons diff --staged --quiet || git -C commons commit -m "Update dependencies baseline";
+          # FILE_UPDATED=$?; # 0 if no changes
+          # echo "FILE_UPDATED=$FILE_UPDATED"
+          # if [[ $FILE_UPDATED -gt 0 ]]; then
+          echo "4:"
+          #   git -C commons commit -m "Update dependencies baseline";
+          #   echo "5:"
+          git -C commons push;
+          echo "6:"
+          # fi
+          echo "-----"
       # - name: MT test
       #   run: ./test.sh
       # - name: MT artifact > unit tests XML results
