@@ -45,7 +45,7 @@ jobs:
           fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
         run: ./checkout_submodules.sh
-      - name: MT check out this module repo build SHA
+      - name: MT check out this module repo build branch
         run: |
           REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
@@ -61,28 +61,32 @@ jobs:
           git -C $REPOSITORY_NAME pull -v;
           git -C $REPOSITORY_NAME branch -v -a;
           git -C $REPOSITORY_NAME status;
-          git -C $REPOSITORY_NAME log -n 3;
+          # git -C $REPOSITORY_NAME log -n 3;
           # echo "- app-android/dependencies/releaseCompileClasspath.txt:"
-          # cat app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
-          echo "- commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt:"
-          cat commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
-          echo "- commons/gradle/libs.versions.toml:"
-          cat commons/gradle/libs.versions.toml | grep -i "maps-utils = \"";
+          # # cat app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
+          # echo "- commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt:"
+          # cat commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
+          # echo "- commons/gradle/libs.versions.toml:"
+          # cat commons/gradle/libs.versions.toml | grep -i "maps-utils = \"";
+
+          # TODO HERE NOW:
+          #   - skip git push when no file changed > possible
+          #   - cleanup?
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |
           echo "MT_GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: MT code setup
         run: ./commons/code_setup.sh
-      - name: MT temp TBD
-        run: |
-          REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
-          REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
-          git -C $REPOSITORY_NAME branch -v -a;
-          echo "- app-android/dependencies/releaseCompileClasspath.txt:"
-          cat app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
-          echo "- commons/gradle/libs.versions.toml:"
-          cat commons/gradle/libs.versions.toml | grep -i "maps-utils = \"";
+      # - name: MT temp TBD
+      #   run: |
+      #     REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
+      #     REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
+      #     git -C $REPOSITORY_NAME branch -v -a;
+      #     echo "- app-android/dependencies/releaseCompileClasspath.txt:"
+      #     cat app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
+      #     echo "- commons/gradle/libs.versions.toml:"
+      #     cat commons/gradle/libs.versions.toml | grep -i "maps-utils = \"";
       - name: MT set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -113,19 +117,22 @@ jobs:
         run: |
           git config --global user.name 'MonTransit Bot';
           git config --global user.email '84137772+montransit@users.noreply.github.com';
-          echo "- commons/gradle/libs.versions.toml:"
-          cat commons/gradle/libs.versions.toml | grep -i "maps-utils = \"";
-          echo "- app-android/dependencies/releaseCompileClasspath.txt:"
-          cat app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
-          echo "- commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt:"
-          cat commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
-          echo "-----"
-          git -C commons diff;
-          git -C commons add shared-main/app-android/dependencies/*.txt;
-          git -C commons add shared-opt-dir/parser/dependencies/*.txt;
-          git -C commons diff --staged;
-          git -C commons commit -m "Update dependencies baseline";
-          git -C commons push;
+          # echo "- commons/gradle/libs.versions.toml:"
+          # cat commons/gradle/libs.versions.toml | grep -i "maps-utils = \"";
+          # echo "- app-android/dependencies/releaseCompileClasspath.txt:"
+          # cat app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
+          # echo "- commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt:"
+          # cat commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt | grep -i android-maps-utils;
+          # echo "-----"
+          # git -C commons diff;
+          git -C commons add -v shared-main/app-android/dependencies/*.txt;
+          git -C commons add -v shared-opt-dir/parser/dependencies/*.txt;
+          git -C commons diff --staged --quiet;
+          FILE_UPDATED=$?; # 0 if no changes
+          if [[ $FILE_UPDATED -gt 0 ]]; then
+            git -C commons commit -m "Update dependencies baseline";
+            git -C commons push;
+          fi
       # - name: MT test
       #   run: ./test.sh
       # - name: MT artifact > unit tests XML results
