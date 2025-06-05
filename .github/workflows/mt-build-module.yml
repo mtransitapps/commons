@@ -35,7 +35,9 @@ jobs:
           echo "Default PR branch: '$DEFAULT_PR_BRANCH'."
           # Branch with same name?
           echo "Before simple git ls-remote."
-          git ls-remote https://github.com/mtransitapps/mtransit-for-android
+          git ls-remote --heads master https://github.com/mtransitapps/mtransit-for-android
+          echo "Before simple git ls-remote 2."
+          git ls-remote --exit-code --heads master https://github.com/mtransitapps/mtransit-for-android
           echo "Before git ls-remote."
           #  > /dev/null
           git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME
