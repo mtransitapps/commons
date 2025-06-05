@@ -42,6 +42,8 @@ jobs:
           git ls-remote --heads $MAIN_REPO_URL master
           echo "Before simple git ls-remote 2."
           git ls-remote --exit-code --heads $MAIN_REPO_URL master
+          echo "Before simple git ls-remote 2.1"
+          git ls-remote --exit-code --heads $MAIN_REPO_URL mm/ci-build
           echo "Before git ls-remote."
           #  > /dev/null
           git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME
