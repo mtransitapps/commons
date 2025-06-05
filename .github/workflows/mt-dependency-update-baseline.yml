@@ -52,7 +52,8 @@ jobs:
           MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
           # SHA=${{ github.event.pull_request.head.sha || github.sha }};
           echo "Checking our this repo '$REPOSITORY_NAME' workflow branch '$MT_BRANCH_NAME':"
-          git -C $REPOSITORY_NAME checkout -b $MT_BRANCH_NAME; 
+          git -C $REPOSITORY_NAME checkout -b $MT_BRANCH_NAME;
+          git -C $REPOSITORY_NAME pull;
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |
@@ -91,8 +92,10 @@ jobs:
         run: |
           git config --global user.name 'MonTransit Bot';
           git config --global user.email '84137772+montransit@users.noreply.github.com';
+          git -C commons diff;
           git -C commons add shared-main/app-android/dependencies/*.txt;
           git -C commons add shared-opt-dir/parser/dependencies/*.txt;
+          git -C commons diff --staged;
           git -C commons commit -m "Update dependencies baseline";
           git -C commons push;
       # - name: MT test
