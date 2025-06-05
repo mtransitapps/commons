@@ -49,14 +49,16 @@ jobs:
         run: |
           REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
+          echo "Repostory name: '$REPOSITORY_NAME'."
           MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
           # echo "- commons/gradle/libs.versions.toml:"
           # cat commons/gradle/libs.versions.toml | grep -i "maps-utils = \"";
           git -C $REPOSITORY_NAME fetch -v --all;
           git -C $REPOSITORY_NAME branch -v -a;
           echo "Checking our this repo '$REPOSITORY_NAME' workflow branch '$MT_BRANCH_NAME':"
-          git -C $REPOSITORY_NAME checkout -b $MT_BRANCH_NAME;
+          git -C $REPOSITORY_NAME switch $MT_BRANCH_NAME;
           echo "... DONE"
+          git -C $REPOSITORY_NAME pull -v;
           git -C $REPOSITORY_NAME branch -v -a;
           git -C $REPOSITORY_NAME status;
           git -C $REPOSITORY_NAME log -n 3;
