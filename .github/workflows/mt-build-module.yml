@@ -34,14 +34,14 @@ jobs:
           DEFAULT_PR_BRANCH="master" # TO BE DELETED
           echo "Default PR branch: '$DEFAULT_PR_BRANCH'."
           # Branch with same name?
-          echo "Before simple git ls-remote. 0"
-          git ls-remote https://github.com/mtransitapps/mtransit-for-android
+          # echo "Before simple git ls-remote. 0"
+          # git ls-remote https://github.com/mtransitapps/mtransit-for-android
           echo "Before simple git ls-remote. 0.5"
           git ls-remote $MAIN_REPO_URL
           echo "Before simple git ls-remote. 1"
-          git ls-remote --heads master https://github.com/mtransitapps/mtransit-for-android
+          git ls-remote --heads $MAIN_REPO_URL master
           echo "Before simple git ls-remote 2."
-          git ls-remote --exit-code --heads master https://github.com/mtransitapps/mtransit-for-android
+          git ls-remote --exit-code --heads $MAIN_REPO_URL master
           echo "Before git ls-remote."
           #  > /dev/null
           git ls-remote --exit-code --heads $MAIN_REPO_URL $MT_BRANCH_NAME
