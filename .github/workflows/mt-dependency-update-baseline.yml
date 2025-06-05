@@ -51,7 +51,7 @@ jobs:
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
           MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
           echo "- commons/gradle/libs.versions.toml:"
-          cat gradle/libs.versions.toml;
+          cat commons/gradle/libs.versions.toml;
           echo "Checking our this repo '$REPOSITORY_NAME' workflow branch '$MT_BRANCH_NAME':"
           git -C $REPOSITORY_NAME checkout -b $MT_BRANCH_NAME;
           git -C $REPOSITORY_NAME fetch;
