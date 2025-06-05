@@ -55,8 +55,8 @@ jobs:
           echo "Checking our this repo '$REPOSITORY_NAME' workflow branch '$MT_BRANCH_NAME':"
           git -C $REPOSITORY_NAME checkout -b $MT_BRANCH_NAME;
           git -C $REPOSITORY_NAME fetch;
-          git -C $REPOSITORY_NAME status -sb;
-          git -C $REPOSITORY_NAME log --oneline -n 10;
+          git -C $REPOSITORY_NAME status;
+          git -C $REPOSITORY_NAME log -n 3;
           # echo "- app-android/dependencies/releaseCompileClasspath.txt:"
           # cat app-android/dependencies/releaseCompileClasspath.txt;
           echo "- commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt:"
