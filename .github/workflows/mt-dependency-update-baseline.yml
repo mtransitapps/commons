@@ -49,9 +49,10 @@ jobs:
         run: |
           REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
-          SHA=${{ github.event.pull_request.head.sha || github.sha }};
-          echo "Checking our this repo '$REPOSITORY_NAME' workflow sha '$SHA':"
-          git -C $REPOSITORY_NAME checkout $SHA; 
+          MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+          # SHA=${{ github.event.pull_request.head.sha || github.sha }};
+          echo "Checking our this repo '$REPOSITORY_NAME' workflow branch '$MT_BRANCH_NAME':"
+          git -C $REPOSITORY_NAME checkout -b $MT_BRANCH_NAME; 
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |
