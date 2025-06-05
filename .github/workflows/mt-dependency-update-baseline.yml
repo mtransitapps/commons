@@ -56,6 +56,10 @@ jobs:
           git -C $REPOSITORY_NAME fetch;
           git -C $REPOSITORY_NAME status -sb;
           git -C $REPOSITORY_NAME log --oneline -n 10;
+          echo "- app-android/dependencies/releaseCompileClasspath.txt:"
+          cat app-android/dependencies/releaseCompileClasspath.txt;
+          echo "- commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt:"
+          cat commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt;
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |
@@ -94,6 +98,11 @@ jobs:
         run: |
           git config --global user.name 'MonTransit Bot';
           git config --global user.email '84137772+montransit@users.noreply.github.com';
+          echo "- app-android/dependencies/releaseCompileClasspath.txt:"
+          cat app-android/dependencies/releaseCompileClasspath.txt;
+          echo "- commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt:"
+          cat commons/shared-main/app-android/dependencies/releaseCompileClasspath.txt;
+          echo "-----"
           git -C commons diff;
           git -C commons add shared-main/app-android/dependencies/*.txt;
           git -C commons add shared-opt-dir/parser/dependencies/*.txt;
