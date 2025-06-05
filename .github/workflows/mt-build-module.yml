@@ -22,7 +22,7 @@ jobs:
       - name: MT select main repo branch
         id: pick-main-repo-branch
         run: |
-          MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android"
+          MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android.git"
           echo "github.base_ref: '${{ github.base_ref }}'"
           echo "github.head_ref: '${{ github.head_ref }}'"
           echo "github.ref: '${{ github.ref }}'"
@@ -36,6 +36,8 @@ jobs:
           # Branch with same name?
           echo "Before simple git ls-remote. 0"
           git ls-remote https://github.com/mtransitapps/mtransit-for-android
+          echo "Before simple git ls-remote. 0.5"
+          git ls-remote $MAIN_REPO_URL
           echo "Before simple git ls-remote. 1"
           git ls-remote --heads master https://github.com/mtransitapps/mtransit-for-android
           echo "Before simple git ls-remote 2."
