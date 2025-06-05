@@ -53,7 +53,7 @@ jobs:
           # SHA=${{ github.event.pull_request.head.sha || github.sha }};
           echo "Checking our this repo '$REPOSITORY_NAME' workflow branch '$MT_BRANCH_NAME':"
           git -C $REPOSITORY_NAME checkout -b $MT_BRANCH_NAME;
-          git -C $REPOSITORY_NAME pull;
+          git -C $REPOSITORY_NAME status -sb;
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |
