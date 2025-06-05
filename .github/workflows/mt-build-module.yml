@@ -1,4 +1,4 @@
-name: MT build git submodule
+name: MT build (git submodule)
 on:
   workflow_dispatch: # manual
   pull_request:
@@ -6,30 +6,25 @@ on:
     branches:
       # - '**' # ALL
       - 'master'
+      # TODO 'develop', 'main'?
 # gh workflow run mt-build-module.yml --ref <branch>
 # gh run list --workflow=mt-build-module.yml
-# env:
-#   MT_BRANCH_NAME: ${{ github.ref_name }}
-#   MT_TARGET_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
 jobs:
   MT-BUILD-JOB:
-    name: "MT Build git submodule"
+    name: "MT Build (git submodule)"
     runs-on: ubuntu-latest
     steps:
-      - name: MT select main repo branch
-        id: pick-main-repo-branch
+      - name: MT select main repo checkout branch
+        id: mt-pick-main-repo-checkout-branch
         env:
           GH_TOKEN: ${{ github.token }} # GitHub CLI in a GitHub Actions workflow
         run: |
           MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android.git"
           MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
           MT_TARGET_BRANCH_NAME=${{ github.base_ref || github.ref_name }}
-          # DEFAULT_PR_BRANCH="master" # TO BE DELETED
-          DEFAULT_REPO_BRANCH=$(gh api repos/mtransitapps/mtransit-for-android --jq '.default_branch'); # TO BE DELETED
-          echo "Default repo branch: '$DEFAULT_REPO_BRANCH'."
           BRANCH_EXISTS=$(git ls-remote --heads $MAIN_REPO_URL $MT_BRANCH_NAME | wc -l);
           if [ $BRANCH_EXISTS -eq 1 ]; then
             CHECKOUT_BRANCH=$MT_BRANCH_NAME
@@ -50,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: mtransitapps/mtransit-for-android
-          ref: ${{ steps.pick-main-repo-branch.outputs.mt_checkout_branch }}
+          ref: ${{ steps.mt-pick-main-repo-checkout-branch.outputs.mt_checkout_branch }}
           submodules: true # required to set right token
           fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
@@ -96,8 +91,6 @@ jobs:
         run: ./download_dependencies.sh
       - name: MT test
         run: ./test.sh
-        # env:
-        #   MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
       - name: MT artifact > unit tests XML results
         uses: actions/upload-artifact@v4
         if: ${{ always() }} # even if tests fails
