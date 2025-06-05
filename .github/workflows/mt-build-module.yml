@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: MT select main repo branch
         id: pick-main-repo-branch
+        env:
+          GH_TOKEN: ${{ github.token }} # GitHub CLI in a GitHub Actions workflow
         run: |
           MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android.git"
           MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
