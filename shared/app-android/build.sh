@@ -95,42 +95,45 @@ if [[ ${IS_CI} = true ]]; then
 	echo ">> Running assemble & bundle... DONE";
 fi
 
-echo ">> Setup-ing keys...";
-./keys_setup.sh;
-checkResult $?;
-echo ">> Setup-ing keys... DONE";
-
-echo ">> Running bundle release AAB...";
-../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
-RESULT=$?;
-checkResult ${RESULT};
-echo ">> Running bundle release AAB... DONE";
-
 if [[ ${IS_CI} = false ]]; then
+
+	echo ">> Setup-ing keys...";
+	./keys_setup.sh;
+	checkResult $?;
+	echo ">> Setup-ing keys... DONE";
+
+	echo ">> Running bundle release AAB...";
+	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
+	RESULT=$?;
+	checkResult ${RESULT};
+	echo ">> Running bundle release AAB... DONE";
+
+
 	echo ">> Running assemble release APK...";
 	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running assemble release APK... DONE";
-fi
 
-if [[ ! -z "${MT_OUTPUT_DIR}" ]]; then
-	echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'...";
-	if ! [[ -d "${MT_OUTPUT_DIR}" ]]; then
-		echo ">> Output release '${MT_OUTPUT_DIR}' not found!";
-		exit 1;
+	if [[ ! -z "${MT_OUTPUT_DIR}" ]]; then
+		echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'...";
+		if ! [[ -d "${MT_OUTPUT_DIR}" ]]; then
+			echo ">> Output release '${MT_OUTPUT_DIR}' not found!";
+			exit 1;
+		fi
+		cp build/outputs/bundle/release/*.aab ${MT_OUTPUT_DIR};
+		checkResult $?;
+		cp build/outputs/apk/release/*.apk ${MT_OUTPUT_DIR};
+		checkResult $?;
+		echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'... DONE";
 	fi
-	cp build/outputs/bundle/release/*.aab ${MT_OUTPUT_DIR};
-	checkResult $?;
-	cp build/outputs/apk/release/*.apk ${MT_OUTPUT_DIR};
-	checkResult $?;
-	echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'... DONE";
-fi
 
-echo ">> Cleaning keys...";
-./keys_cleanup.sh;
-checkResult $?;
-echo ">> Cleaning keys... DONE";
+	echo ">> Cleaning keys...";
+	./keys_cleanup.sh;
+	checkResult $?;
+	echo ">> Cleaning keys... DONE";
+
+fi
 
 echo ">> Building... DONE";
 exit ${RESULT};
