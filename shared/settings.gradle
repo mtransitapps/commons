@@ -33,6 +33,7 @@ dependencyResolutionManagement {
                 includeGroupByRegex("com\\.google\\.android.*")
                 includeGroupByRegex("com\\.google\\.android\\.gms.*")
                 includeGroupByRegex("com\\.google\\.firebase.*")
+                includeGroupByRegex("com\\.google\\.play.*")
             }
         }
         mavenCentral {}

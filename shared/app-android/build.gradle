@@ -406,6 +406,7 @@ dependencies {
         }
 
         lintChecks(libs.slackLint)
+        lintChecks(libs.playInsightLint)
 
         testImplementation(libs.bundles.test.unit)
     } else {
