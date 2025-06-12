@@ -4,9 +4,6 @@ on:
   pull_request:
     paths:
       - 'gradle/libs.versions.toml'
-  push:
-    branches-ignore:
-      - 'master' # TBR main
 permissions:
   contents: write
 concurrency:
