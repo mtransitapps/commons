@@ -92,6 +92,8 @@ jobs:
       - name: MT dependency update baseline
         run: ./dependency_update_baseline.sh
       - name: MT commit new baseline
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }} # use our token to trigger workflow events
         run: |
           cd commons || exit;
           git config user.name 'MonTransit Bot';
