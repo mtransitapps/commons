@@ -4,8 +4,6 @@ on:
   pull_request:
     paths:
       - 'gradle/libs.versions.toml'
-permissions:
-  contents: write
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
@@ -44,6 +42,7 @@ jobs:
           repository: mtransitapps/mtransit-for-android
           ref: ${{ steps.mt-pick-main-repo-checkout-branch.outputs.mt_checkout_branch }}
           submodules: true # required to set right token
+          token: ${{ secrets.MT_PAT }} # use our token to trigger workflow events
           fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
         run: ./checkout_submodules.sh
