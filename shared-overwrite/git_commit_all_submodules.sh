@@ -38,12 +38,12 @@ done
 
 echo "$COMMITS change(s) to commit."
 
-if [ "${COMMITS}" -eq 1 ]; then
+if [[ "${COMMITS}" -eq 1 ]]; then
   echo "--------------------------------------------------------------------------------";
   echo -e "$ONE_COMMIT_MESSAGE";
   echo "--------------------------------------------------------------------------------";
   printf "$ONE_COMMIT_MESSAGE" | git commit -F -
-elif [ "${COMMITS}" -gt 1 ]; then
+elif [[ "${COMMITS}" -gt 1 ]]; then
   COMMIT_MESSAGE="$COMMIT_MESSAGE_TITLE:\n$COMMIT_MESSAGE_BODY";
   echo "--------------------------------------------------------------------------------";
   echo -e "$COMMIT_MESSAGE";
