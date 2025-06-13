@@ -51,6 +51,10 @@ checkResult $?;
 echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
 
+echo "> GIT > add...";
+git add -v -A; # needed for other files than git submodules
+checkResult $?;
+echo "> GIT > add... DONE";
 echo "> GIT > git_commit_all_submodules.sh...";
 ./git_commit_all_submodules.sh;
 checkResult $?;
