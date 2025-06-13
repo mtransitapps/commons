@@ -51,10 +51,10 @@ checkResult $?;
 echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
 
-echo " > GIT > git_commit_all_submodules.sh...";
+echo "> GIT > git_commit_all_submodules.sh...";
 ./git_commit_all_submodules.sh;
 checkResult $?;
-echo " > GIT > git_commit_all_submodules.sh... DONE";
+echo "> GIT > git_commit_all_submodules.sh... DONE";
 # TODO ? git push;
 
 printGitStatus;
