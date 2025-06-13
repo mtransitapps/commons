@@ -33,7 +33,10 @@ cd ..;
 
 setGitUser;
 
-GIT_MSG="CI: sync code";
+GIT_MSG="Sync code";
+if [[ ${IS_CI} = true ]]; then
+  GIT_MSG="CI: sync code";
+fi
 echo "GIT_MSG: $GIT_MSG";
 
 echo "> GIT submodule > add...";
@@ -48,15 +51,10 @@ checkResult $?;
 echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
 
-echo "> GIT > add...";
-git add -v -A;
+echo " > GIT > git_commit_all_submodules.sh...";
+./git_commit_all_submodules.sh;
 checkResult $?;
-echo "> GIT > add... DONE";
-echo "> GIT > commit '$GIT_MSG'...";
-# git commit -q -m "$GIT_MSG";
-git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-checkResult $?;
-echo "> GIT > commit '$GIT_MSG'... DONE";
+echo " > GIT > git_commit_all_submodules.sh... DONE";
 # TODO ? git push;
 
 printGitStatus;
