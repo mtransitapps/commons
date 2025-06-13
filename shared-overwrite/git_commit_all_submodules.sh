@@ -25,7 +25,7 @@ for SUBMODULE in "${SUBMODULES[@]}"; do
       echo "  - '$SUBMODULE_CHANGE'";
       COMMIT_MESSAGE_BODY+="\n- $SUBMODULE: $SUBMODULE_CHANGE";
       ONE_COMMIT_MESSAGE="$COMMIT_MESSAGE_TITLE_START from '$SUBMODULE': $SUBMODULE_CHANGE";
-      ((COMMITS++))
+      ((COMMITS++));
     done
     if [[ -z $COMMIT_MESSAGE_TITLE ]]; then
       COMMIT_MESSAGE_TITLE+="$COMMIT_MESSAGE_TITLE_START from '$SUBMODULE'";
@@ -36,7 +36,7 @@ for SUBMODULE in "${SUBMODULES[@]}"; do
   fi
 done
 
-echo "$COMMITS change(s) to commit."
+echo "$COMMITS change(s) to commit.";
 
 if [[ "${COMMITS}" -eq 1 ]]; then
   echo "--------------------------------------------------------------------------------";
@@ -49,5 +49,6 @@ elif [[ "${COMMITS}" -gt 1 ]]; then
   echo -e "$COMMIT_MESSAGE";
   echo "--------------------------------------------------------------------------------";
   printf "$COMMIT_MESSAGE" | git commit -F -
-# else 0 commit -> do nothing
+# else # 0 commits
+# do nothing
 fi
