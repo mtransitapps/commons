@@ -1,7 +1,7 @@
 #!/bin/bash
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 
-mapfile -t SUBMODULES < <(git submodule foreach --quiet 'basename `pwd`');
+mapfile -t SUBMODULES < <(git submodule foreach --quiet 'basename "$(pwd)"');
 echo "${#SUBMODULES[@]} submodule(s): ";
 
 COMMIT_MESSAGE_TITLE_START="Sync code";
