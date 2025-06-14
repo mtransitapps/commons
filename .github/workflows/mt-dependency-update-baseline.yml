@@ -7,6 +7,9 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
+env:
+  MT_BOT_USER_NAME: ${{ secrets.MT_BOT_USER_NAME }}
+  MT_BOT_USER_EMAIL: ${{ secrets.MT_BOT_USER_EMAIL }}
 jobs:
   MT-DEPENDENCY-UPDATE-BASELINE-JOB:
     name: "MT Dependency update baseline"
@@ -93,8 +96,8 @@ jobs:
       - name: MT commit new baseline
         run: |
           cd commons || exit;
-          git config user.name 'MonTransit Bot';
-          git config user.email '84137772+montransit@users.noreply.github.com';
+          git config user.name "$MT_BOT_USER_NAME";
+          git config user.email "$MT_BOT_USER_EMAIL";
           git add -v shared-main/app-android/dependencies/*.txt;
           git add -v shared-opt-dir/parser/dependencies/*.txt;
           git diff --staged --quiet || git commit -m "Update dependencies baseline";
