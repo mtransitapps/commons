@@ -208,7 +208,7 @@ function deployFile() {
 	mkdir -p ${DEST_DIR};
 	checkResult $?;
 	echo "> Deploying '$SRC_FILE_PATH'...";
-	cp --update=none -p $SRC_FILE_PATH $DEST_FILE_PATH;
+	cp --update=none -p "$SRC_FILE_PATH" "$DEST_FILE_PATH";
 	local RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while deploying file '$SRC_FILE_PATH'!";
