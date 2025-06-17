@@ -28,7 +28,7 @@ jobs:
     #       username: montransit
     #       password: $MT_DOCKER_PASSWORD
     executor:
-      name: android/android-machine
+      name: android/android_machine
       tag: default
       # https://circleci.com/docs/configuration-reference/#linuxvm-execution-environment
       # resource-class: medium # small, medium (default), medium+, large, xlarge
