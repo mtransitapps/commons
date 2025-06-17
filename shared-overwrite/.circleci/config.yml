@@ -51,7 +51,7 @@ jobs:
             sudo apt-get install -y inkscape
             sudo apt-get install -y libxml2-utils
       - android/change_java_version:
-          java-version: 17
+          java_version: 17
       - run:
           name: Update SDK
           command: echo y | sdkmanager "build-tools;34.0.0" "platform-tools" "platforms;android-34"
