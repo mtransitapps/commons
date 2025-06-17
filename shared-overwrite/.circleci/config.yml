@@ -74,11 +74,11 @@ jobs:
       - run:
           name: Sync files
           command: ./commons/code_setup.sh
-      - android/restore-build-cache:
-          cache-prefix: android-build-cache
-      # - android/restore-gradle-cache:
-      # cache-prefix: gradle-cache
-      # find-args: . -type f \( -name "*.gradle" -o -name "gradle-wrapper.properties" \)
+      - android/restore_build_cache:
+          cache_prefix: android-build-cache
+      # - android/restore_gradle_cache:
+      # cache_prefix: gradle-cache
+      # find_args: . -type f \( -name "*.gradle" -o -name "gradle-wrapper.properties" \)
       - restore_cache:
           key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - run:
@@ -102,10 +102,10 @@ jobs:
           paths:
             - ~/.gradle/wrapper/
           key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - android/save-build-cache:
-          cache-prefix: android-build-cache
+      - android/save_gradle_cache:
+          cache_prefix: android-build-cache
       # - android/save-gradle-cache:
-      # cache-prefix: gradle-cache
+      # cache_prefix: gradle-cache
       - store_artifacts:
           path: agency-parser/output/current
           destination: gtfs-validator-results-current
