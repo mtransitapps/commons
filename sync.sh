@@ -201,12 +201,13 @@ function deployFile() {
 		checkResult $?;
 	fi
 	echo -n ">>> Deploying '$SRC_FILE_PATH' to '${DEST_FILE_PATH}'...";
-	# cp --update=none -p does NOT work on OS X => rm 1st
+	# cp --no-clobber -p does NOT work on OS X => rm 1st # Ubuntu 22.04
+	# cp --update=none -p does NOT work on OS X => rm 1st # Ubuntu 24.04
 	if [[ -f "${DEST_FILE_PATH}" ]]; then
 		rm ${DEST_FILE_PATH};
 		checkResult $?;
 	fi
-	cp --update=none -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}";
+	cp --update=none -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}" | cp --no-clobber -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}"; # Ubuntu 22.04 & 24.04 compat
 	local RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo " ERROR!";
