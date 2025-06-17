@@ -4,7 +4,7 @@
 version: 2.1
 orbs:
   # https://circleci.com/developer/orbs/orb/circleci/android
-  android: circleci/android@2.5.0
+  android: circleci/android@3.1.0
 workflows:
   mt-workflow:
     jobs:
