@@ -201,12 +201,12 @@ function deployFile() {
 		checkResult $?;
 	fi
 	echo -n ">>> Deploying '$SRC_FILE_PATH' to '${DEST_FILE_PATH}'...";
-	# cp -n -p does NOT work on OS X => rm 1st
+	# cp --update=none -p does NOT work on OS X => rm 1st
 	if [[ -f "${DEST_FILE_PATH}" ]]; then
 		rm ${DEST_FILE_PATH};
 		checkResult $?;
 	fi
-	cp -n -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}";
+	cp --update=none -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}";
 	local RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo " ERROR!";
