@@ -101,6 +101,9 @@ appLovin-mediation = "13.3.0.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
 vungle-mediation = "7.5.0.0"
+# Pangle
+#pangle = "_._._" # included with nediation adapter
+pangle-mediation = "7.2.0.4.0"
 # https://github.com/xdevplatform/twitter-api-java-sdk/tags
 twitterApi = "2.0.3"
 # https://cloud.google.com/java/docs/reference/google-api-client/latest/history
@@ -217,6 +220,7 @@ fbAudienceNetwork-mediation = { module = "com.google.ads.mediation:facebook", ve
 appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovin-mediation" }
 # vungle = { module = "com.vungle:vungle-ads", version.ref = "vungle" }
 vungle-mediation = { module = "com.google.ads.mediation:vungle", version.ref = "vungle-mediation" }
+pangle-mediation = { module = "com.google.ads.mediation:pangle", version.ref = "pangle-mediation" }
 twitterApi = { module = "com.twitter:twitter-api-java-sdk", version.ref = "twitterApi" }
 # googleApiClient = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClient" }
 youTubeGoogleApiClient = { module = "com.google.apis:google-api-services-youtube", version.ref = "youTubeGoogleApiClient" }
@@ -317,6 +321,9 @@ appLovin = [
 ]
 vungle = [
     "vungle-mediation",
+]
+pangle = [
+    "pangle-mediation",
 ]
 twitter = [
     "twitterApi",
