@@ -50,7 +50,7 @@ jobs:
             sudo apt-get install -y gawk
             sudo apt-get install -y inkscape
             sudo apt-get install -y libxml2-utils
-      - android/change-java-version:
+      - android/change_java_version:
           java-version: 17
       - run:
           name: Update SDK
