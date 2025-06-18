@@ -207,7 +207,7 @@ function deployFile() {
 		rm ${DEST_FILE_PATH};
 		checkResult $?;
 	fi
-	cp --update=none -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}" | cp --no-clobber -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}"; # Ubuntu 22.04 & 24.04 compat
+	cp --update=none -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}" || cp --no-clobber -p "${SRC_FILE_PATH}" "${DEST_FILE_PATH}"; # Ubuntu 22.04 & 24.04 compat
 	local RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo " ERROR!";
