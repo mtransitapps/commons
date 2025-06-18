@@ -23,14 +23,18 @@ FILE_1_PNG="${FEATURE_GRAPHIC_DIR}/1.png";
 mkdir -p "${FEATURE_GRAPHIC_DIR}";
 checkResult $?;
 if [ -f "${FILE_1_PNG}" ]; then
-  echo ">> File '$FILE_1_PNG' already exist."; # compat with existing icon/1.png
-  exit 0;
+  if [[ ${MT_GENERATE_IMAGES} != true ]]; then
+    echo ">> File '$FILE_1_PNG' already exist."; # compat with existing icon/1.png
+    exit 0;
+  else
+    echo ">> File '$FILE_1_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
+  fi
 fi
 
 rm -f "${FILE_1_PNG}";
 checkResult $?;
 
-$ROOT_DIR/commons-android/pub/module-hi-res-app-icon.sh;
+$ROOT_DIR/commons-android/pub/module-hi-res-app-icon.sh; # uses inkscape
 checkResult $?;
 
 echo ">> Generating icon/1.png... DONE";

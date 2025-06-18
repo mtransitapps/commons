@@ -15,7 +15,6 @@ APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
 RES_DIR="${MAIN_DIR}/res";
-echo "RES_DIR: $RES_DIR";
 
 REQUIRED_ICON_FILE="${MAIN_DIR}/play/listings/en-US/graphics/icon/1.png";
 if [ ! -f "$REQUIRED_ICON_FILE" ]; then
