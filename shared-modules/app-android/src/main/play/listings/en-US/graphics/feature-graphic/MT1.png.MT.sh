@@ -23,8 +23,12 @@ FILE_1_PNG="${FEATURE_GRAPHIC_DIR}/1.png";
 mkdir -p "${FEATURE_GRAPHIC_DIR}";
 checkResult $?;
 if [ -f "${FILE_1_PNG}" ]; then
-  echo ">> File '$FILE_1_PNG' already exist."; # compat with existing feature-graphic/1.png
-  exit 0;
+  if [[ ${MT_GENERATE_IMAGES} != true ]]; then
+    echo ">> File '$FILE_1_PNG' already exist."; # compat with existing feature-graphic/1.png
+    exit 0;
+  else
+    echo ">> File '$FILE_1_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
+  fi
 fi
 
 rm -f "${FILE_1_PNG}";
@@ -103,6 +107,7 @@ fi
 MAX_CITY_LENGTH=77 # from module-featured-graphic.sh
 CITIES_LABEL=$(echo $CITIES_LABEL | awk -v len=$MAX_CITY_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }');
 
+# uses inkscape
 if [[ -z "${AGENCY_NAME_2}" ]]; then
   $ROOT_DIR/commons-android/pub/module-featured-graphic.sh "$AGENCY_NAME_1" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
   checkResult $?;
