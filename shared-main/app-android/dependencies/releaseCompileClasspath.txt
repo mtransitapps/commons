@@ -85,7 +85,7 @@ androidx.work:work-runtime:2.10.1
 com.android.billingclient:billing-ktx:7.1.1
 com.android.billingclient:billing:7.1.1
 com.android.volley:volley:1.2.1
-com.applovin:applovin-sdk:13.3.0
+com.applovin:applovin-sdk:13.3.1
 com.caverock:androidsvg-aar:1.4
 com.facebook.android:audience-network-sdk:6.20.0
 com.github.bumptech.glide:annotations:4.16.0
@@ -94,7 +94,7 @@ com.github.bumptech.glide:gifdecoder:4.16.0
 com.github.bumptech.glide:glide:4.16.0
 com.github.bumptech.glide:okhttp3-integration:4.16.0
 com.github.chuckerteam.chucker:library-no-op:4.1.0
-com.google.ads.mediation:applovin:13.3.0.0
+com.google.ads.mediation:applovin:13.3.1.0
 com.google.ads.mediation:facebook:6.20.0.0
 com.google.ads.mediation:vungle:7.5.0.0
 com.google.android.datatransport:transport-api:3.2.0
