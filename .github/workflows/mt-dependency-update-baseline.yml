@@ -8,8 +8,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
 env:
-  MT_BOT_USER_NAME: ${{ secrets.MT_BOT_USER_NAME }}
-  MT_BOT_USER_EMAIL: ${{ secrets.MT_BOT_USER_EMAIL }}
+  MT_BOT_USER_NAME: ${{ secrets.MT_BOT_USER_NAME || vars.MT_BOT_USER_NAME }}
+  MT_BOT_USER_EMAIL: ${{ secrets.MT_BOT_USER_EMAIL || vars.MT_BOT_USER_EMAIL }}
 jobs:
   MT-DEPENDENCY-UPDATE-BASELINE-JOB:
     name: "MT Dependency update baseline"
