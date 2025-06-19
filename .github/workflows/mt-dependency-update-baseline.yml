@@ -14,9 +14,8 @@ permissions:
   attestations: read
   checks: write
 env:
-  MT_BOT_USER_NAME: ${{ secrets.MT_BOT_USER_NAME || vars.MT_BOT_USER_NAME }}
-  MT_BOT_USER_EMAIL: ${{ secrets.MT_BOT_USER_EMAIL || vars.MT_BOT_USER_EMAIL }}
-  MT_PAT: ${{ secrets.MT_PAT }}}
+  MT_BOT_USER_NAME: ${{ vars.MT_BOT_USER_NAME }}
+  MT_BOT_USER_EMAIL: ${{ vars.MT_BOT_USER_EMAIL }}
 jobs:
   MT-DEPENDENCY-UPDATE-BASELINE-JOB:
     name: "MT Dependency update baseline"
@@ -52,7 +51,7 @@ jobs:
           repository: mtransitapps/mtransit-for-android
           ref: ${{ steps.mt-pick-main-repo-checkout-branch.outputs.mt_checkout_branch }}
           submodules: true # required to set right token
-          token: ${{ secrets.MT_PAT || github.token }} # use our token to trigger workflow events, if available
+          token: ${{ secrets.MT_PAT || secrets.MT_DEPENDABOT_PAT }} # use our token to trigger workflow events, if available
           fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
         run: ./checkout_submodules.sh
