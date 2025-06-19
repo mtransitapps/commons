@@ -7,12 +7,8 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
-permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-  attestations: read
-  checks: write
+# Dependenbot triggered Pull Request have their own secrets:
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-access-to-private-registries-for-dependabot#storing-credentials-for-dependabot-to-use
 env:
   MT_BOT_USER_NAME: ${{ vars.MT_BOT_USER_NAME }}
   MT_BOT_USER_EMAIL: ${{ vars.MT_BOT_USER_EMAIL }}
