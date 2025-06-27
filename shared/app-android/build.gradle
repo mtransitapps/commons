@@ -415,6 +415,14 @@ dependencies {
     }
 }
 
+develocity {
+    // Required to use "--scan"
+    buildScan {
+        termsOfUseUrl = "https://gradle.com/help/legal-terms-of-use"
+        termsOfUseAgree = "yes"
+    }
+}
+
 play {
     serviceAccountCredentials.set(file("google-play-auto-publisher.json"))
     defaultToAppBundles.set(true)
