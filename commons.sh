@@ -310,6 +310,7 @@ function setGradleArgs() {
 	if [[ ${IS_CI} = true ]]; then
 		GRADLE_ARGS+=" --warning-mode all"; # print warnings in CI
 	fi
+	echo "GRADLE_ARGS: '$GRADLE_ARGS'.";
 }
 
 # set current working directory to the directory of the script
