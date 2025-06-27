@@ -35,7 +35,7 @@ echo ">> Setup-ing keys... DONE";
 
 setGradleArgs;
 
-../gradlew promoteReleaseArtifact ${GRADLE_ARGS} ${@};
+../gradlew promoteReleaseArtifact ${@}; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
 echo ">> Cleaning keys...";

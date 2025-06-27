@@ -51,7 +51,7 @@ checkResult $?;
 echo ">> Setup-ing keys... DONE";
 
 echo ">> Running bundle release AAB...";
-../gradlew :app-android:bundleRelease ${GRADLE_ARGS};
+../gradlew :app-android:bundleRelease; # no ${GRADLE_ARGS} for release
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 
@@ -72,7 +72,7 @@ if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 	echo ">> Setup-ing keys... DONE";
 
 	echo ">> Running assemble release APK..."; # for GH release
-	../gradlew :app-android:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
+	../gradlew :app-android:assembleRelease -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	echo ">> Running assemble release APK... DONE";
 
