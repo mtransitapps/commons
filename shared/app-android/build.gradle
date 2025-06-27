@@ -250,7 +250,7 @@ android {
                 }
                 FirebasePerformance {
                     // https://firebase.google.com/docs/perf-mon/disable-sdk?platform=android#disable-gradle-plugin
-                    instrumentationEnabled false
+                    instrumentationEnabled = false
                 }
             } else {
                 minifyEnabled = false
@@ -260,11 +260,11 @@ android {
         release {
             if (useGooglePlayUploadKeysProperties) {
                 if (googlePlayUploadKeysPropertiesFile.exists()) {
-                    signingConfig signingConfigs.release
+                    signingConfig = signingConfigs.release
                 }
             } else {
                 if (appSigningKeysPropertiesFile.exists()) {
-                    signingConfig signingConfigs.release
+                    signingConfig = signingConfigs.release
                 }
             }
 
@@ -302,7 +302,7 @@ android {
                     "FragmentFieldInjection" // Fragment dependencies should be injected using the Fragment's constructor. #SlackLint
             // https://developer.android.com/studio/write/lint#snapshot
             // update with: ./gradlew :app-android:updateLintBaseline
-            baseline file("lint-baseline.xml")
+            baseline = file("lint-baseline.xml")
         } else {
             abortOnError = false // do not fail CI on module apps
         }
