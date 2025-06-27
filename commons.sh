@@ -304,6 +304,7 @@ function setGradleArgs() {
 	echo "> GitHub Actions: $GITHUB_ACTIONS.";
 	if [[ ${GITHUB_ACTIONS} = true ]]; then
 		GRADLE_ARGS=""; # use daemon on GitHub
+		GRADLE_ARGS+=" --scan" # works better with "gradle/actions/setup-gradle"
 	fi
 
 	if [[ ${IS_CI} = true ]]; then
