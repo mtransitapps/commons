@@ -14,7 +14,7 @@ echo ">> Setup-ing keys... DONE";
 
 setGradleArgs;
 
-${SCRIPT_DIR}/../gradlew publishListing ${GRADLE_ARGS};
+${SCRIPT_DIR}/../gradlew publishListing; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
 echo ">> Cleaning keys...";
