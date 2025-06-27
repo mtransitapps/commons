@@ -74,25 +74,8 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-      - name: MT cache > Gradle wrapper
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/wrapper
-          key: gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-      - name: MT Gradle cache > Generate key
-        run: ./init_cache_key.sh
-      - name: MT cache > Gradle cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-          key: gradle-cache-${{ hashFiles('gradle_cache_key_checksum.txt') }}
-          restore-keys: |
-            gradle-cache-${{ hashFiles('gradle_cache_key_checksum.txt') }}
-            gradle-cache-
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: MT dependency update baseline
         run: ./dependency_update_baseline.sh
       - name: MT commit new baseline
@@ -105,10 +88,3 @@ jobs:
           git diff --staged --quiet || git commit -m "Update dependencies baseline";
           git push;
           cd .. || exit;
-      - name: DEBUG GIT STATUS
-        run: |
-          git status -sb
-          git submodule foreach git status -sb
-      - name: DEBUG LIST FILES
-        run: |
-          ls ${{ github.workspace }}
