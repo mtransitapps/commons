@@ -301,7 +301,6 @@ function setGradleArgs() {
 		GRADLE_ARGS+=" -Dkotlin.incremental=false";
 	fi
 
-	echo "> GitHub Actions: $GITHUB_ACTIONS.";
 	if [[ ${GITHUB_ACTIONS} = true ]]; then
 		GRADLE_ARGS=""; # use daemon on GitHub
 		GRADLE_ARGS+=" --scan" # works better with "gradle/actions/setup-gradle"
@@ -310,7 +309,6 @@ function setGradleArgs() {
 	if [[ ${IS_CI} = true ]]; then
 		GRADLE_ARGS+=" --warning-mode all"; # print warnings in CI
 	fi
-	echo "GRADLE_ARGS: '$GRADLE_ARGS'.";
 }
 
 # set current working directory to the directory of the script
