@@ -18,4 +18,4 @@ org.jetbrains.kotlinx:kotlinx-serialization-core:1.8.1
 org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.1
 org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1
 org.jetbrains:annotations:23.0.0
-org.xerial:sqlite-jdbc:3.50.1.0
+org.xerial:sqlite-jdbc:3.50.2.0
