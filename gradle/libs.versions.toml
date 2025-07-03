@@ -18,7 +18,7 @@ ksp = "2.2.0-2.0.2" # sync w/ kotlin # ksp.useKSP2=false in gradle.properties
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
-kotlinx-serialization = "1.8.1"
+kotlinx-serialization = "1.9.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "6.2.0.5505"
 # https://developer.android.com/build/releases/gradle-plugin
@@ -51,7 +51,7 @@ androidx-core = "1.16.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.8.8"
 androidx-lifecycle = "2.9.1"
-androidx-nav = "2.9.0"
+androidx-nav = "2.9.1"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
 androidx-room = "2.7.2"
@@ -74,7 +74,7 @@ maps-ktx = "5.2.0"
 #noinspection GradleDependency // 4.0.0+ requires minSDK 23 instead of 21
 places-sdk = "3.5.0"
 # https://developers.google.com/android/guides/google-services-plugin
-gps-plugin = "4.4.2"
+gps-plugin = "4.4.3"
 # LATEST: https://developers.google.com/android/guides/releases
 gps-ads = "24.4.0"
 gps-ump = "3.2.0"
@@ -84,7 +84,7 @@ gps-location = "21.3.0"
 gps-maps = "19.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "33.15.0"
+firebase-bom = "33.16.0"
 firebase-crashlytics-plugin = "3.0.4"
 firebase-perf-plugin = "1.4.2"
 play-billing = "8.0.0"
@@ -148,7 +148,7 @@ commons-io = "2.19.0"
 commons-lang3 = "3.17.0"
 commons-text = "1.13.1"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.50.1.0"
+xerial-SQLiteJDBC = "3.50.2.0"
 
 [libraries]
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
