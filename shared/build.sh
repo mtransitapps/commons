@@ -21,37 +21,41 @@ setGradleArgs;
 declare -a EXCLUDE=(".git" "test" "build" "gen" "gradle");
 
 echo "> CLEANING FOR '$AGENCY_ID'...";
-for d in ${PWD}/* ; do
-	DIRECTORY=$(basename ${d});
-	if ! [[ -d "$d" ]]; then
-		echo "> Skip GIT cleaning (not a directory) '$DIRECTORY'.";
-		echo "--------------------------------------------------------------------------------";
-		continue;
-	fi
-	if contains ${DIRECTORY} ${EXCLUDE[@]}; then
-		echo "> Skip GIT cleaning in excluded directory '$DIRECTORY'.";
-		echo "--------------------------------------------------------------------------------";
-		continue;
-	fi
-	if [[ -d "$d" ]]; then
-		cd ${d} || exit;
-		echo "> GIT cleaning in '$DIRECTORY'...";
-		GIT_REV_PARSE_HEAD=$(git rev-parse HEAD);
-		GIT_REV_PARSE_REMOTE_BRANCH=$(git rev-parse origin/${GIT_BRANCH});
-		if [[ "$GIT_REV_PARSE_HEAD" != "$GIT_REV_PARSE_REMOTE_BRANCH" ]]; then
-			echo "> GIT repo outdated in '$DIRECTORY' (local:$GIT_REV_PARSE_HEAD|origin/$GIT_BRANCH:$GIT_REV_PARSE_REMOTE_BRANCH).";
-			exit 1;
-		else
-			echo "> GIT repo up-to-date in '$DIRECTORY' (local:$GIT_REV_PARSE_HEAD|origin/$GIT_BRANCH:$GIT_REV_PARSE_REMOTE_BRANCH).";
-		fi
 
-		git checkout ${GIT_BRANCH};
-		checkResult $? ${CONFIRM};
-		echo "> GIT cleaning in '$DIRECTORY'... DONE";
-		cd ..;
-		echo "--------------------------------------------------------------------------------";
-	fi
-done
+if [[ $GIT_BRANCH != "master" ]]; then
+	for d in ${PWD}/* ; do
+		DIRECTORY=$(basename ${d});
+		if ! [[ -d "$d" ]]; then
+			echo "> Skip GIT cleaning (not a directory) '$DIRECTORY'.";
+			echo "--------------------------------------------------------------------------------";
+			continue;
+		fi
+		if contains ${DIRECTORY} ${EXCLUDE[@]}; then
+			echo "> Skip GIT cleaning in excluded directory '$DIRECTORY'.";
+			echo "--------------------------------------------------------------------------------";
+			continue;
+		fi
+		if [[ -d "$d" ]]; then
+			# TODO only if not master????
+			cd ${d} || exit;
+			echo "> GIT cleaning in '$DIRECTORY'...";
+			GIT_REV_PARSE_HEAD=$(git rev-parse HEAD);
+			GIT_REV_PARSE_REMOTE_BRANCH=$(git rev-parse origin/${GIT_BRANCH});
+			if [[ "$GIT_REV_PARSE_HEAD" != "$GIT_REV_PARSE_REMOTE_BRANCH" ]]; then
+				echo "> GIT repo outdated in '$DIRECTORY' (local:$GIT_REV_PARSE_HEAD|origin/$GIT_BRANCH:$GIT_REV_PARSE_REMOTE_BRANCH).";
+				exit 1;
+			else
+				echo "> GIT repo up-to-date in '$DIRECTORY' (local:$GIT_REV_PARSE_HEAD|origin/$GIT_BRANCH:$GIT_REV_PARSE_REMOTE_BRANCH).";
+			fi
+
+			git checkout ${GIT_BRANCH};
+			checkResult $? ${CONFIRM};
+			echo "> GIT cleaning in '$DIRECTORY'... DONE";
+			cd ..;
+			echo "--------------------------------------------------------------------------------";
+		fi
+	done
+fi
 
 echo "--------------------------------------------------------------------------------";
 echo "GRADLE VERSION:";
