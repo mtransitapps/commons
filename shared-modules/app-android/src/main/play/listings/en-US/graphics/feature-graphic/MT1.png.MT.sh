@@ -58,7 +58,7 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
-MAX_AGENCY_LENGTH=17 # from module-featured-graphic.sh
+MAX_AGENCY_LENGTH=16 # from module-featured-graphic.sh
 
 AGENCY_NAME_1="";
 AGENCY_NAME_2="";
@@ -66,8 +66,23 @@ AGENCY_NAME_2="";
 if [ "${#AGENCY_NAME_SHORT}" -le "$MAX_AGENCY_LENGTH" ]; then
     AGENCY_NAME_1=$AGENCY_NAME_SHORT;
 else
-  echo "Agency shortest name '$AGENCY_NAME_SHORT' is too long (${#AGENCY_NAME_SHORT} > $MAX_AGENCY_LENGTH)!";
-  exit 1; # error
+  read -ra AGENCY_NAME_SHORT_WORDS <<< "$AGENCY_NAME_SHORT";
+  for WORD in "${AGENCY_NAME_SHORT_WORDS[@]}"; do
+    WORD_LENGTH=${#WORD};
+    MAX_LENGTH=$((MAX_AGENCY_LENGTH - WORD_LENGTH));
+    if [ "${#AGENCY_NAME_1}" -lt "$MAX_LENGTH" ]; then
+      if [ -n "$AGENCY_NAME_1" ]; then
+        AGENCY_NAME_1+=" ";
+      fi
+      AGENCY_NAME_1+="$WORD";
+    else
+      if [ -n "$AGENCY_NAME_2" ]; then
+        AGENCY_NAME_2+=" ";
+      fi
+      AGENCY_NAME_2+="$WORD";
+    fi
+  done
+  # TODO if agency name 2 too long?
 fi
 
 CITIES_FILE="${CONFIG_DIR}/cities";
