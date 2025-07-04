@@ -22,7 +22,7 @@ declare -a EXCLUDE=(".git" "test" "build" "gen" "gradle");
 
 echo "> CLEANING FOR '$AGENCY_ID'...";
 
-if [[ $GIT_BRANCH != "master" ]]; then
+if [[ $CIRCLECI != "true" ]]; then
 	for d in ${PWD}/* ; do
 		DIRECTORY=$(basename ${d});
 		if ! [[ -d "$d" ]]; then
