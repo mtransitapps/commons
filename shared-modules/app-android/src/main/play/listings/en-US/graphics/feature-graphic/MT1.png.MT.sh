@@ -82,6 +82,14 @@ else
       AGENCY_NAME_2+="$WORD";
     fi
   done
+  if [ "${#AGENCY_NAME_1}" -gt "$MAX_AGENCY_LENGTH" ]; then
+    echo "Agency name 1st part '$AGENCY_NAME_1' is too long (${#AGENCY_NAME_1} > $MAX_AGENCY_LENGTH)!";
+    exit 1; # error
+  fi
+  if [ "${#AGENCY_NAME_2}" -gt "$MAX_AGENCY_LENGTH" ]; then
+    echo "Agency name 2nd part '$AGENCY_NAME_2' is too long (${#AGENCY_NAME_2} > $MAX_AGENCY_LENGTH)!";
+    exit 1; # error
+  fi
   # TODO if agency name 2 too long?
 fi
 
