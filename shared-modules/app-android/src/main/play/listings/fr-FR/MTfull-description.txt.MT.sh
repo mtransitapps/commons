@@ -86,7 +86,7 @@ if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
 fi
 
 GIT_OWNER="mtransitapps"; #TODO extract de GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
-CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
+CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
 SOURCE_URL_FILE="${CONFIG_DIR}/source_url_fr";
 if [ ! -f "$SOURCE_URL_FILE" ]; then
@@ -315,7 +315,7 @@ Les informations viennent des données publiées par $SOURCE_PROVIDER:
 $SOURCE_URL
 
 Cette application est gratuite et open-source :
-$CONTACT_WEBITE_URL
+$CONTACT_WEBSITE_URL
 
 Cette application n'est pas associée à $NOT_RELATED_WITH.
 EOL

@@ -29,9 +29,9 @@ touch "${CONTACT_WEBSITE_FILE}";
 checkResult $?;
 
 GIT_OWNER="mtransitapps"; #TODO extract from GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
-CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
+CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
-echo "$CONTACT_WEBITE_URL" > "${CONTACT_WEBSITE_FILE}";
+echo "$CONTACT_WEBSITE_URL" > "${CONTACT_WEBSITE_FILE}";
 checkResult $?;
 
 if [[ ${IS_CI} = true ]]; then
