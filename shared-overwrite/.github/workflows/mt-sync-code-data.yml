@@ -111,7 +111,7 @@ jobs:
       - name: MT set app release required (or not)
         run: ./set_app_release_required.sh
       - name: MT check if force app release
-        if: ${{ github.event_name == 'workflow_dispatch' || github.event.inputs.force-app-release == true }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.force-app-release == true }}
         run: |
           MT_TEMP_DIR=".mt";
           mkdir -p $MT_TEMP_DIR;
