@@ -78,7 +78,7 @@ gps-plugin = "4.4.3"
 # LATEST: https://developers.google.com/android/guides/releases
 gps-ads = "24.4.0"
 gps-ump = "3.2.0"
-gps-basement = "18.7.0"
+gps-basement = "18.7.1"
 gps-time = "16.0.1"
 gps-location = "21.3.0"
 gps-maps = "19.2.0"
