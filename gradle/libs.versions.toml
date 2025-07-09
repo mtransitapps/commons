@@ -125,7 +125,7 @@ retrofit = "3.0.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
-okhttp = "4.12.0"
+okhttp = "5.1.0"
 # https://github.com/ChuckerTeam/chucker/releases/latest
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
 chucker = "4.1.0"

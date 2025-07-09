@@ -93,7 +93,7 @@ androidx.sqlite:sqlite-framework-android:2.5.2
 androidx.sqlite:sqlite-framework:2.5.2
 androidx.sqlite:sqlite-ktx:2.5.2
 androidx.sqlite:sqlite:2.5.2
-androidx.startup:startup-runtime:1.1.1
+androidx.startup:startup-runtime:1.2.0
 androidx.swiperefreshlayout:swiperefreshlayout:1.1.0
 androidx.tracing:tracing-ktx:1.2.0
 androidx.tracing:tracing:1.2.0
@@ -199,12 +199,13 @@ com.google.maps.android:maps-ktx:5.2.0
 com.google.maps.android:maps-utils-ktx:5.2.0
 com.google.oauth-client:google-oauth-client:1.36.0
 com.google.protobuf:protobuf-javalite:3.25.6
-com.squareup.okhttp3:logging-interceptor:4.12.0
-com.squareup.okhttp3:okhttp-bom:4.12.0
-com.squareup.okhttp3:okhttp:4.12.0
+com.squareup.okhttp3:logging-interceptor:5.1.0
+com.squareup.okhttp3:okhttp-android:5.1.0
+com.squareup.okhttp3:okhttp-bom:5.1.0
+com.squareup.okhttp3:okhttp:5.1.0
 com.squareup.okhttp:okhttp:2.7.2
-com.squareup.okio:okio-jvm:3.6.0
-com.squareup.okio:okio:3.6.0
+com.squareup.okio:okio-jvm:3.15.0
+com.squareup.okio:okio:3.15.0
 com.squareup.retrofit2:converter-gson:3.0.0
 com.squareup.retrofit2:retrofit:3.0.0
 com.twitter:joauth:6.0.3
@@ -225,7 +226,6 @@ org.jacoco:org.jacoco.core:0.8.8
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.9.22
 org.jetbrains.kotlin:kotlin-bom:2.2.0
 org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.22
-org.jetbrains.kotlin:kotlin-stdlib-common:2.2.0
 org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.0
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.0
 org.jetbrains.kotlin:kotlin-stdlib:2.2.0
