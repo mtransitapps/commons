@@ -157,7 +157,7 @@ com.google.android.play:review-ktx:2.0.2
 com.google.android.play:review:2.0.2
 com.google.android.ump:user-messaging-platform:3.2.0
 com.google.api-client:google-api-client:2.7.2
-com.google.apis:google-api-services-youtube:v3-rev20250422-2.0.0
+com.google.apis:google-api-services-youtube:v3-rev20250714-2.0.0
 com.google.auth:google-auth-library-credentials:1.30.0
 com.google.auth:google-auth-library-oauth2-http:1.30.0
 com.google.auto.value:auto-value-annotations:1.6.2
