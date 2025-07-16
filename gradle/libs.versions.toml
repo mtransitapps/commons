@@ -50,8 +50,8 @@ androidx-constraint = "2.2.1"
 androidx-core = "1.16.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.8.8"
-androidx-lifecycle = "2.9.1"
-androidx-nav = "2.9.1"
+androidx-lifecycle = "2.9.2"
+androidx-nav = "2.9.2"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
 androidx-room = "2.7.2"
@@ -105,7 +105,7 @@ vungle-mediation = "7.5.0.1"
 twitterApi = "2.0.3"
 # https://cloud.google.com/java/docs/reference/google-api-client/latest/history
 # googleApiClient = "2.7.0"
-youTubeGoogleApiClient = "v3-rev20250422-2.0.0"
+youTubeGoogleApiClient = "v3-rev20250714-2.0.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.4.8-android"
 # https://github.com/square/leakcanary/releases
@@ -128,7 +128,7 @@ retrofit = "3.0.0"
 okhttp = "5.1.0"
 # https://github.com/ChuckerTeam/chucker/releases/latest
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
-chucker = "4.1.0"
+chucker = "4.2.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "2.13.1"
@@ -141,11 +141,11 @@ android-svg = "1.4"
 junit = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
 mockito = "5.18.0"
-mockito-kotlin = "4.1.0"
+mockito-kotlin = "6.0.0"
 # https://commons.apache.org/
 commons-csv = "1.14.0"
 commons-io = "2.19.0"
-commons-lang3 = "3.17.0"
+commons-lang3 = "3.18.0"
 commons-text = "1.13.1"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
 xerial-SQLiteJDBC = "3.50.2.0"
