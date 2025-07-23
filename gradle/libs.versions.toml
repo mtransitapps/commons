@@ -86,7 +86,7 @@ gps-maps = "19.2.0"
 # ALL: https://firebase.google.com/support/releases
 firebase-bom = "34.0.0"
 firebase-crashlytics-plugin = "3.0.5"
-firebase-perf-plugin = "1.4.2"
+firebase-perf-plugin = "2.0.0"
 play-billing = "8.0.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
