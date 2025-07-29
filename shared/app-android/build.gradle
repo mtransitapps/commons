@@ -313,6 +313,7 @@ android {
 
     sourceSets {
         main {
+            res.srcDirs += "src/main/res-cert"
             if (isMainApp) {
                 // NOTHING
             } else {
