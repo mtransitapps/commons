@@ -143,10 +143,10 @@ junit = "4.13.2"
 mockito = "5.18.0"
 mockito-kotlin = "6.0.0"
 # https://commons.apache.org/
-commons-csv = "1.14.0"
+commons-csv = "1.14.1"
 commons-io = "2.20.0"
 commons-lang3 = "3.18.0"
-commons-text = "1.13.1"
+commons-text = "1.14.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
 xerial-SQLiteJDBC = "3.50.3.0"
 
