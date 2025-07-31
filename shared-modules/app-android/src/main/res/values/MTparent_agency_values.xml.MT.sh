@@ -21,7 +21,7 @@ mkdir -p "${VALUES_DIR}";
 checkResult $?;
 if [ -f "${PARENT_AGENCY_VALUES}" ]; then
   echo ">> File '$PARENT_AGENCY_VALUES' already exist."; # compat with existing parent_agency_values.xml
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${PARENT_AGENCY_VALUES}";

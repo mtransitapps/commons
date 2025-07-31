@@ -25,7 +25,7 @@ checkResult $?;
 if [ -f "${FILE_1_PNG}" ]; then
   if [[ ${MT_GENERATE_IMAGES} != true ]]; then
     echo ">> File '$FILE_1_PNG' already exist."; # compat with existing icon/1.png
-    exit 0;
+    exit 0; # compat w/ manually created file
   else
     echo ">> File '$FILE_1_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
   fi

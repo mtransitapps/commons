@@ -26,7 +26,7 @@ mkdir -p "${FR_FR_DIR}";
 checkResult $?;
 if [ -f "${TITLE_FILE}" ]; then
   echo ">> File '$TITLE_FILE' already exist."; # compat with existing fr-FR/title.txt
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${TITLE_FILE}";

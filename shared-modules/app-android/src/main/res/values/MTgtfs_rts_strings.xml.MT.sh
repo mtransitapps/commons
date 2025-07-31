@@ -27,7 +27,7 @@ mkdir -p "${VALUES_DIR}";
 checkResult $?;
 if [ -f "${GTFS_RTS_STRINGS_FILE}" ]; then
   echo ">> File '$GTFS_RTS_STRINGS_FILE' already exist."; # compat with existing gtfs_rts_strings.xml
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${GTFS_RTS_STRINGS_FILE}";

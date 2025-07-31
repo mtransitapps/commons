@@ -20,7 +20,7 @@ mkdir -p "${PLAY_DIR}";
 checkResult $?;
 if [ -f "${CONTACT_WEBSITE_FILE}" ]; then
   echo ">> File '$CONTACT_WEBSITE_FILE' already exist."; # compat with existing contact-website.txt
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${CONTACT_WEBSITE_FILE}";

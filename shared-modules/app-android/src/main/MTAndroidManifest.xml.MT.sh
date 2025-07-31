@@ -20,7 +20,7 @@ mkdir -p "${ANDROID_MANIFEST_DIR}";
 checkResult $?;
 if [ -f "${ANDROID_MANIFEST_FILE}" ]; then
   echo ">> File '$ANDROID_MANIFEST_FILE' already exist."; # compat with existing AndroidManifest.xml
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 rm -f "${ANDROID_MANIFEST_FILE}";
 checkResult $?;
