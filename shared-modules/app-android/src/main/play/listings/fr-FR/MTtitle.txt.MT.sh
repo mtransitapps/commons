@@ -26,7 +26,7 @@ mkdir -p "${FR_FR_DIR}";
 checkResult $?;
 if [ -f "${TITLE_FILE}" ]; then
   echo ">> File '$TITLE_FILE' already exist."; # compat with existing fr-FR/title.txt
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${TITLE_FILE}";
@@ -100,14 +100,17 @@ else
   exit 1 # error
 fi
 
-AGENCY_LABEL=$AGENCY_NAME_SHORT
-if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+MAX_LENGTH=30;
+
+AGENCY_LABEL=$AGENCY_NAME_SHORT;
+
+AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH=$((${#AGENCY_LABEL} + ${#AGENCY_LOCATION_SHORT}));
+
+if [[ ! -z "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH" -lt "$MAX_LENGTH" ]]; then
   AGENCY_LABEL="$AGENCY_LABEL $AGENCY_LOCATION_SHORT"
 fi
 
 TITLE="$TYPE_LABEL $AGENCY_LABEL - MonTransit";
-
-MAX_LENGTH=30;
 
 echo $TITLE | awk -v len=$MAX_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }' >> "${TITLE_FILE}"
 

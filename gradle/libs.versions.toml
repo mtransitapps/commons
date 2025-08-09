@@ -18,11 +18,11 @@ ksp = "2.2.0-2.0.2" # sync w/ kotlin # ksp.useKSP2=false in gradle.properties
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
-kotlinx-serialization = "1.8.1"
+kotlinx-serialization = "1.9.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "6.2.0.5505"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "8.11.0"
+android-gradlePlugin = "8.12.0"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
@@ -36,13 +36,13 @@ dependency-guard = "0.5.0"
 # https://runningcode.github.io/gradle-doctor/
 gradle-doctor = "0.11.0"
 # https://github.com/google/dagger/releases/latest
-hilt = "2.56.2"
+hilt = "2.57"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.10.1"
 androidx-annotation = "1.9.1"
 androidx-appCompat = "1.7.1"
-androidx-browser = "1.8.0"
+androidx-browser = "1.9.0"
 androidx-cardview = "1.0.0"
 androidx-collection = "1.5.0"
 androidx-coordinator = "1.3.0"
@@ -50,8 +50,8 @@ androidx-constraint = "2.2.1"
 androidx-core = "1.16.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.8.8"
-androidx-lifecycle = "2.9.1"
-androidx-nav = "2.9.0"
+androidx-lifecycle = "2.9.2"
+androidx-nav = "2.9.3"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
 androidx-room = "2.7.2"
@@ -61,7 +61,7 @@ androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
 androidx-webkit = "1.14.0"
-androidx-workManager = "2.10.2"
+androidx-workManager = "2.10.3"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.12.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
@@ -74,20 +74,20 @@ maps-ktx = "5.2.0"
 #noinspection GradleDependency // 4.0.0+ requires minSDK 23 instead of 21
 places-sdk = "3.5.0"
 # https://developers.google.com/android/guides/google-services-plugin
-gps-plugin = "4.4.2"
+gps-plugin = "4.4.3"
 # LATEST: https://developers.google.com/android/guides/releases
-gps-ads = "24.4.0"
+gps-ads = "24.5.0"
 gps-ump = "3.2.0"
-gps-basement = "18.7.0"
+gps-basement = "18.7.1"
 gps-time = "16.0.1"
 gps-location = "21.3.0"
 gps-maps = "19.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "33.15.0"
-firebase-crashlytics-plugin = "3.0.4"
-firebase-perf-plugin = "1.4.2"
-play-billing = "7.1.1"
+firebase-bom = "34.0.0"
+firebase-crashlytics-plugin = "3.0.5"
+firebase-perf-plugin = "2.0.0"
+play-billing = "8.0.0"
 # https://developer.android.com/guide/playcore/in-app-updates/kotlin-java#setup
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 play-appUpdate = "2.1.0"
@@ -97,21 +97,21 @@ play-review = "2.0.2"
 fbAudienceNetwork-mediation = "6.20.0.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
-appLovin-mediation = "13.3.1.0"
+appLovin-mediation = "13.3.1.1"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
-vungle-mediation = "7.5.0.0"
+vungle-mediation = "7.5.0.1"
 # https://github.com/xdevplatform/twitter-api-java-sdk/tags
 twitterApi = "2.0.3"
 # https://cloud.google.com/java/docs/reference/google-api-client/latest/history
 # googleApiClient = "2.7.0"
-youTubeGoogleApiClient = "v3-rev20250422-2.0.0"
+youTubeGoogleApiClient = "v3-rev20250714-2.0.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.4.8-android"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.14"
 # https://github.com/slackhq/slack-lints/releases
-slackLint = "0.9.0"
+slackLint = "0.11.0"
 playInsightLint = "0.1.3"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
@@ -125,10 +125,10 @@ retrofit = "3.0.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
-okhttp = "4.12.0"
+okhttp = "5.1.0"
 # https://github.com/ChuckerTeam/chucker/releases/latest
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
-chucker = "4.1.0"
+chucker = "4.2.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "2.13.1"
@@ -141,14 +141,14 @@ android-svg = "1.4"
 junit = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
 mockito = "5.18.0"
-mockito-kotlin = "4.1.0"
+mockito-kotlin = "6.0.0"
 # https://commons.apache.org/
-commons-csv = "1.14.0"
-commons-io = "2.19.0"
-commons-lang3 = "3.17.0"
-commons-text = "1.13.1"
+commons-csv = "1.14.1"
+commons-io = "2.20.0"
+commons-lang3 = "3.18.0"
+commons-text = "1.14.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.50.1.0"
+xerial-SQLiteJDBC = "3.50.3.0"
 
 [libraries]
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }

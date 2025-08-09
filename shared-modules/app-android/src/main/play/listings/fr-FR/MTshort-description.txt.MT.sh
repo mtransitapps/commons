@@ -26,7 +26,7 @@ mkdir -p "${FR_FR_DIR}";
 checkResult $?;
 if [ -f "${SHORT_DESCRIPTION_FILE}" ]; then
   echo ">> File '$SHORT_DESCRIPTION_FILE' already exist."; # compat with existing fr-FR/short-description.txt
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${SHORT_DESCRIPTION_FILE}";
