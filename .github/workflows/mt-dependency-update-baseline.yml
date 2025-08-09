@@ -7,9 +7,11 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
+# Dependenbot triggered Pull Request have their own secrets:
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-access-to-private-registries-for-dependabot#storing-credentials-for-dependabot-to-use
 env:
-  MT_BOT_USER_NAME: ${{ secrets.MT_BOT_USER_NAME }}
-  MT_BOT_USER_EMAIL: ${{ secrets.MT_BOT_USER_EMAIL }}
+  MT_BOT_USER_NAME: ${{ vars.MT_BOT_USER_NAME }}
+  MT_BOT_USER_EMAIL: ${{ vars.MT_BOT_USER_EMAIL }}
 jobs:
   MT-DEPENDENCY-UPDATE-BASELINE-JOB:
     name: "MT Dependency update baseline"
@@ -45,7 +47,7 @@ jobs:
           repository: mtransitapps/mtransit-for-android
           ref: ${{ steps.mt-pick-main-repo-checkout-branch.outputs.mt_checkout_branch }}
           submodules: true # required to set right token
-          token: ${{ secrets.MT_PAT }} # use our token to trigger workflow events
+          token: ${{ secrets.MT_PAT || secrets.MT_DEPENDABOT_PAT }} # use our token to trigger workflow events, if available
           fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
         run: ./checkout_submodules.sh
@@ -72,25 +74,8 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-      - name: MT cache > Gradle wrapper
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/wrapper
-          key: gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-      - name: MT Gradle cache > Generate key
-        run: ./init_cache_key.sh
-      - name: MT cache > Gradle cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-          key: gradle-cache-${{ hashFiles('gradle_cache_key_checksum.txt') }}
-          restore-keys: |
-            gradle-cache-${{ hashFiles('gradle_cache_key_checksum.txt') }}
-            gradle-cache-
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: MT dependency update baseline
         run: ./dependency_update_baseline.sh
       - name: MT commit new baseline
@@ -103,10 +88,3 @@ jobs:
           git diff --staged --quiet || git commit -m "Update dependencies baseline";
           git push;
           cd .. || exit;
-      - name: DEBUG GIT STATUS
-        run: |
-          git status -sb
-          git submodule foreach git status -sb
-      - name: DEBUG LIST FILES
-        run: |
-          ls ${{ github.workspace }}

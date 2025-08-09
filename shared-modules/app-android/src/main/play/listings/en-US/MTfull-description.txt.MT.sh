@@ -22,7 +22,7 @@ mkdir -p "${EN_US_DIR}";
 checkResult $?;
 if [ -f "${FULL_DESCRIPTION_FILE}" ]; then
   echo ">> File '$FULL_DESCRIPTION_FILE' already exist."; # compat with existing full-description.txt
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${FULL_DESCRIPTION_FILE}";
@@ -80,7 +80,7 @@ if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
 fi
 
 GIT_OWNER="mtransitapps"; #TODO extract from GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
-CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
+CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
 SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 if [ ! -f "$SOURCE_URL_FILE" ]; then
@@ -91,6 +91,11 @@ SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
 if [ -z "$SOURCE_URL" ]; then
     echo "$SOURCE_URL is empty!";
     exit 1;
+fi
+
+SOURCE_NAME_FILE="${CONFIG_DIR}/source_name"; #optional
+if [ -f "$SOURCE_NAME_FILE" ]; then
+  SOURCE_NAME=$(head -n 1 $SOURCE_NAME_FILE);
 fi
 
 CITIES_FILE="${CONFIG_DIR}/cities";
@@ -128,14 +133,39 @@ if [ ! -z "$STATE_LABEL_LONG" ]; then
 fi
 LOCATION_LABEL="$LOCATION_LABEL $COUNTRY_LABEL";
 
-SOURCE_PROVIDER=$AGENCY_NAME_LONG;
-if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
-    SOURCE_PROVIDER=$PARENT_AGENCY_NAME_LONG;
+SOURCE_PROVIDER="$SOURCE_NAME";
+if [ -z "$SOURCE_PROVIDER" ]; then
+  SOURCE_PROVIDER="$AGENCY_NAME_SHORT";
+  if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+      SOURCE_PROVIDER=$PARENT_AGENCY_NAME_LONG;
+  fi
 fi
 
-NOT_RELATED_WITH=$AGENCY_NAME_LONG;
+INDEX=1;
+NOT_RELATED_WITH="";
+if [ ! -z "$AGENCY_NAME_LONG" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$AGENCY_NAME_LONG";
+  else
+    NOT_RELATED_WITH+=" or $AGENCY_NAME_LONG";
+  fi
+  ((INDEX++))
+fi
 if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
-    NOT_RELATED_WITH="$NOT_RELATED_WITH and $PARENT_AGENCY_NAME_LONG";
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$PARENT_AGENCY_NAME_LONG";
+  else
+    NOT_RELATED_WITH+=" or $PARENT_AGENCY_NAME_LONG";
+  fi
+  ((INDEX++))
+fi
+if [ ! -z "$SOURCE_NAME" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$SOURCE_NAME";
+  else
+    NOT_RELATED_WITH+=" or $SOURCE_NAME";
+  fi
+  ((INDEX++))
 fi
 
 RES_DIR="${MAIN_DIR}/res";
@@ -304,7 +334,7 @@ The information comes from the data published by $SOURCE_PROVIDER:
 $SOURCE_URL
 
 This application is free and open-source:
-$CONTACT_WEBITE_URL
+$CONTACT_WEBSITE_URL
 
 This app is not related with $NOT_RELATED_WITH.
 EOL

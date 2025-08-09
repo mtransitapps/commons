@@ -30,7 +30,7 @@ mkdir -p "${MIPMAP_MDPI}";
 checkResult $?;
 if [ -f "${FILE_PNG}" ]; then
   echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 rm -f "${FILE_PNG}";
 checkResult $?;
@@ -41,7 +41,7 @@ mkdir -p "${MIPMAP_HDPI}";
 checkResult $?;
 if [ -f "${FILE_PNG}" ]; then
   echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 rm -f "${FILE_PNG}";
 checkResult $?;
@@ -52,7 +52,7 @@ mkdir -p "${MIPMAP_XHDPI}";
 checkResult $?;
 if [ -f "${FILE_PNG}" ]; then
   echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 rm -f "${FILE_PNG}";
 checkResult $?;
@@ -63,7 +63,7 @@ mkdir -p "${MIPMAP_XXHDPI}";
 checkResult $?;
 if [ -f "${FILE_PNG}" ]; then
   echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 rm -f "${FILE_PNG}";
 checkResult $?;
@@ -74,7 +74,7 @@ mkdir -p "${MIPMAP_XXXHDPI}";
 checkResult $?;
 if [ -f "${FILE_PNG}" ]; then
   echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 rm -f "${FILE_PNG}";
 checkResult $?;
