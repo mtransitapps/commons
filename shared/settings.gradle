@@ -36,6 +36,12 @@ dependencyResolutionManagement {
                 includeGroupByRegex("com\\.google\\.play.*")
             }
         }
+        maven {
+            url = 'https://artifact.bytedance.com/repository/pangle'
+            content {
+                includeGroupByRegex("com\\.pangle\\..*")
+            }
+        }
         mavenCentral {}
     }
     versionCatalogs {
