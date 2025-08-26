@@ -100,7 +100,7 @@ fbAudienceNetwork-mediation = "6.20.0.0"
 appLovin-mediation = "13.3.1.1"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
-vungle-mediation = "7.5.0.1"
+vungle-mediation = "7.5.1.0"
 # https://github.com/xdevplatform/twitter-api-java-sdk/tags
 twitterApi = "2.0.3"
 # https://cloud.google.com/java/docs/reference/google-api-client/latest/history
