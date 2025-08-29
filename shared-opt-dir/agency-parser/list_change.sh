@@ -22,7 +22,7 @@ if [[ "$RESULT" -gt 0 ]]; then
 fi
 if [[ ${STATUS} == 1 ]]; then STATUS=0; fi; # grep returns 1 when no result
 checkResult ${STATUS} false;
-git -C ${TARGET} diff res/values/gtfs_rts_values_gen.xml;
+git -C ${TARGET} diff res/values/gtfs_rts_values_gen.xml; # do not change to avoid breaking compat w/ old modules
 checkResult $?;
 RESULT=$(git -C ${TARGET} diff-index --name-only HEAD -- "res/raw" | wc -l);
 if [[ "$RESULT" -gt 0 ]]; then
@@ -32,7 +32,7 @@ if [[ "$RESULT" -gt 0 ]]; then
 	checkResult $?;
 	exit 1;
 fi
-git -C ${TARGET} diff res-current/values/current_gtfs_rts_values_gen.xml;
+git -C ${TARGET} diff res-current/values/current_gtfs_rts_values_gen.xml; # do not change to avoid breaking compat w/ old modules
 checkResult $?;
 RESULT=$(git -C ${TARGET} diff-index --name-only HEAD -- "res-current/raw" | wc -l);
 if [[ "$RESULT" -gt 0 ]]; then
@@ -44,14 +44,15 @@ if [[ "$RESULT" -gt 0 ]]; then
 fi
 if [[ -d ${TARGET}/res-next ]]; then
 	git -C ${TARGET} status | grep "res-next" | head -n 1;
-	if [[ -f ${TARGET}/res-next/values/next_gtfs_rts_values_gen.xml ]]; then
-		git -C ${TARGET} diff res-next/values/next_gtfs_rts_values_gen.xml;
+	NEXT_GEN_VALUES_FILE="res-next/values/next_gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
+	if [[ -f ${TARGET}/$NEXT_GEN_VALUES_FILE ]]; then
+		git -C ${TARGET} diff $NEXT_GEN_VALUES_FILE;
 		checkResult $?;
-		git -C ${TARGET} ls-files --error-unmatch res-next/values/next_gtfs_rts_values_gen.xml &> /dev/null;
+		git -C ${TARGET} ls-files --error-unmatch $NEXT_GEN_VALUES_FILE &> /dev/null;
 		RESULT=$?;
 		if [[ "$RESULT" -gt 0 ]]; then
 			echo "> SCHEDULE CHANGED > MANUAL FIX!";
-			cat ${TARGET}/res-next/values/next_gtfs_rts_values_gen.xml;
+			cat ${TARGET}/$NEXT_GEN_VALUES_FILE;
 			echo "true" > $MT_DATA_CHANGED_FILE;
 			checkResult $?;
 			exit 1;
@@ -68,7 +69,7 @@ if [[ -d ${TARGET}/res-next ]]; then
 		fi
 	fi
 fi
-git -C ${TARGET} checkout res/values/gtfs_rts_values.xml;
+git -C ${TARGET} checkout res/values/gtfs_rts_values.xml; # do not change to avoid breaking compat w/ old modules
 checkResult $?;
 echo "false" > $MT_DATA_CHANGED_FILE;
 checkResult $?;
