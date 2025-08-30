@@ -447,7 +447,7 @@ def setupResValues(buildType, appId) {
     }
 
     buildType.resValue("string", "bike_station_authority", "${appId}.bike")
-    buildType.resValue("string", "gtfs_rts_authority", "${appId}.gtfs")
+    buildType.resValue("string", "gtfs_rts_authority", "${appId}.gtfs") // do not change to avoid breaking compat w/ old modules
     buildType.resValue("string", "gtfs_real_time_authority", "${appId}.gtfs.realtime")
 
     buildType.resValue("string", "rss_authority", "${appId}.news.rss")
