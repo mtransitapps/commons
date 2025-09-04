@@ -133,7 +133,7 @@ chucker = "4.2.0"
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "2.13.1"
 # https://github.com/bumptech/glide/releases/latest
-glide = "4.16.0"
+glide = "5.0.4"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 android-svg = "1.4"
