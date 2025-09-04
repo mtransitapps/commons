@@ -34,7 +34,7 @@ dependency-guard = "0.5.0"
 # # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
 # littlerobots-versioncatalog = "1.0.0"
 # https://runningcode.github.io/gradle-doctor/
-gradle-doctor = "0.12.0"
+gradle-doctor = "0.12.1"
 # https://github.com/google/dagger/releases/latest
 hilt = "2.57.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
@@ -67,7 +67,7 @@ material = "1.12.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.14.0"
+maps-utils = "3.16.1"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "5.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
@@ -133,7 +133,7 @@ chucker = "4.2.0"
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "2.13.1"
 # https://github.com/bumptech/glide/releases/latest
-glide = "4.16.0"
+glide = "5.0.4"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 android-svg = "1.4"
