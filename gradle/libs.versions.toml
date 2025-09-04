@@ -22,7 +22,7 @@ kotlinx-serialization = "1.9.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "6.3.1.5724"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "8.12.1"
+android-gradlePlugin = "8.13.0"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
@@ -34,7 +34,7 @@ dependency-guard = "0.5.0"
 # # https://github.com/littlerobots/version-catalog-update-plugin/releases/latest
 # littlerobots-versioncatalog = "1.0.0"
 # https://runningcode.github.io/gradle-doctor/
-gradle-doctor = "0.12.0"
+gradle-doctor = "0.12.1"
 # https://github.com/google/dagger/releases/latest
 hilt = "2.57.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
@@ -133,7 +133,7 @@ chucker = "4.2.0"
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "2.13.1"
 # https://github.com/bumptech/glide/releases/latest
-glide = "4.16.0"
+glide = "5.0.4"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 android-svg = "1.4"
