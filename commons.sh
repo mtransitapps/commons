@@ -305,7 +305,7 @@ function setGradleArgs() {
 		GRADLE_ARGS=""; # use daemon on GitHub
 		setGitProjectName;
 		if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
-			GRADLE_ARGS+=" --no-configure-on-demand --no-configuration-cache --scan" # works better with "gradle/actions/setup-gradle"
+			GRADLE_ARGS+=" --no-configure-on-demand --scan" # works better with "gradle/actions/setup-gradle"
 		fi
 	fi
 
