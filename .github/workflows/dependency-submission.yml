@@ -1,0 +1,22 @@
+name: MT Dependency Submission
+
+on:
+  push:
+    # branches: ['main'] # testing
+
+permissions:
+  contents: write
+
+jobs:
+  mt-dependency-submission:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    # - name: Setup Java
+    #   uses: actions/setup-java@v4
+    #   with:
+    #     distribution: 'temurin'
+    #     java-version: 17
+    - name: Generate and submit dependency graph
+      uses: gradle/actions/dependency-submission@v4
