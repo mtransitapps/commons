@@ -15,7 +15,7 @@ PROJECT_NAME_FILE="${ROOT_DIR}/project_name.properties";
 
 if [ -f "${PROJECT_NAME_FILE}" ]; then
   echo ">> File '$PROJECT_NAME_FILE' already exist."; # compat with existing project_name.properties
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${PROJECT_NAME_FILE}";

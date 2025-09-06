@@ -20,7 +20,7 @@ mkdir -p "${ANDROID_MANIFEST_DIR}";
 checkResult $?;
 if [ -f "${ANDROID_MANIFEST_FILE}" ]; then
   echo ">> File '$ANDROID_MANIFEST_FILE' already exist."; # compat with existing AndroidManifest.xml
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 rm -f "${ANDROID_MANIFEST_FILE}";
 checkResult $?;
@@ -72,10 +72,10 @@ if [ -f "${BIKE_STATION_FILE}" ]; then
 EOL
 fi
 
-GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml";
+GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "${GTFS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- GTFS ROUTE TRIP STOP & SCHEDULE PROVIDER -->
+        <!-- GTFS ROUTE DIRECTION STOP & SCHEDULE PROVIDER -->
         <provider
             android:name="org.mtransit.android.commons.provider.GTFSProvider"
             android:authorities="@string/gtfs_rts_authority"

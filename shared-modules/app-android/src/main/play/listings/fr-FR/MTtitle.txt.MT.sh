@@ -26,7 +26,7 @@ mkdir -p "${FR_FR_DIR}";
 checkResult $?;
 if [ -f "${TITLE_FILE}" ]; then
   echo ">> File '$TITLE_FILE' already exist."; # compat with existing fr-FR/title.txt
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${TITLE_FILE}";
@@ -70,16 +70,16 @@ fi
 
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";
-GTFS_RTS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml";
+GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml"
 TYPE=-1;
-if [ -f $GTFS_RTS_VALUES_GEN_FILE ]; then
+if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RTS_VALUES_GEN_FILE | tr -dc '0-9')
+  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   TYPE=$(grep -E "<integer name=\"bike_station_agency_type\">[0-9]+</integer>$" $BIKE_STATION_VALUES_FILE | tr -dc '0-9')
 else
-  echo " > No agency file! (rts:$GTFS_RTS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";
@@ -100,14 +100,17 @@ else
   exit 1 # error
 fi
 
-AGENCY_LABEL=$AGENCY_NAME_SHORT
-if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+MAX_LENGTH=30;
+
+AGENCY_LABEL=$AGENCY_NAME_SHORT;
+
+AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH=$((${#AGENCY_LABEL} + ${#AGENCY_LOCATION_SHORT}));
+
+if [[ ! -z "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH" -lt "$MAX_LENGTH" ]]; then
   AGENCY_LABEL="$AGENCY_LABEL $AGENCY_LOCATION_SHORT"
 fi
 
 TITLE="$TYPE_LABEL $AGENCY_LABEL - MonTransit";
-
-MAX_LENGTH=30;
 
 echo $TITLE | awk -v len=$MAX_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }' >> "${TITLE_FILE}"
 

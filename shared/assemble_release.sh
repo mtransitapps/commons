@@ -45,25 +45,6 @@ cd app-android || exit;
 
 # ----------------------------------------
 
-echo ">> Setup-ing keys...";
-./keys_setup.sh;
-checkResult $?;
-echo ">> Setup-ing keys... DONE";
-
-echo ">> Running bundle release AAB...";
-../gradlew :app-android:bundleRelease ${GRADLE_ARGS};
-RESULT=$?;
-echo ">> Running bundle release AAB... DONE";
-
-echo ">> Cleaning keys...";
-./keys_cleanup.sh;
-checkResult $?;
-echo ">> Cleaning keys... DONE";
-
-checkResult $RESULT;
-
-# ----------------------------------------
-
 if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 
 	echo ">> Setup-ing keys...";
@@ -85,6 +66,25 @@ if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 else
   echo ">> Running assemble release APK... SKIP (GH:$IS_GH_ENABLED|PushToStore:$MT_PUSH_STORE_ENABLED)";
 fi
+
+# ----------------------------------------
+
+echo ">> Setup-ing keys...";
+./keys_setup.sh;
+checkResult $?;
+echo ">> Setup-ing keys... DONE";
+
+echo ">> Running bundle release AAB...";
+../gradlew :app-android:bundleRelease ${GRADLE_ARGS};
+RESULT=$?;
+echo ">> Running bundle release AAB... DONE";
+
+echo ">> Cleaning keys...";
+./keys_cleanup.sh;
+checkResult $?;
+echo ">> Cleaning keys... DONE";
+
+checkResult $RESULT;
 
 # ----------------------------------------
 

@@ -22,7 +22,7 @@ mkdir -p "${EN_US_DIR}";
 checkResult $?;
 if [ -f "${FULL_DESCRIPTION_FILE}" ]; then
   echo ">> File '$FULL_DESCRIPTION_FILE' already exist."; # compat with existing full-description.txt
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${FULL_DESCRIPTION_FILE}";
@@ -80,7 +80,7 @@ if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
 fi
 
 GIT_OWNER="mtransitapps"; #TODO extract from GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
-CONTACT_WEBITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
+CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
 SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 if [ ! -f "$SOURCE_URL_FILE" ]; then
@@ -91,6 +91,11 @@ SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
 if [ -z "$SOURCE_URL" ]; then
     echo "$SOURCE_URL is empty!";
     exit 1;
+fi
+
+SOURCE_NAME_FILE="${CONFIG_DIR}/source_name"; #optional
+if [ -f "$SOURCE_NAME_FILE" ]; then
+  SOURCE_NAME=$(head -n 1 $SOURCE_NAME_FILE);
 fi
 
 CITIES_FILE="${CONFIG_DIR}/cities";
@@ -128,28 +133,53 @@ if [ ! -z "$STATE_LABEL_LONG" ]; then
 fi
 LOCATION_LABEL="$LOCATION_LABEL $COUNTRY_LABEL";
 
-SOURCE_PROVIDER=$AGENCY_NAME_LONG;
-if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
-    SOURCE_PROVIDER=$PARENT_AGENCY_NAME_LONG;
+SOURCE_PROVIDER="$SOURCE_NAME";
+if [ -z "$SOURCE_PROVIDER" ]; then
+  SOURCE_PROVIDER="$AGENCY_NAME_SHORT";
+  if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+      SOURCE_PROVIDER=$PARENT_AGENCY_NAME_LONG;
+  fi
 fi
 
-NOT_RELATED_WITH=$AGENCY_NAME_LONG;
+INDEX=1;
+NOT_RELATED_WITH="";
+if [ ! -z "$AGENCY_NAME_LONG" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$AGENCY_NAME_LONG";
+  else
+    NOT_RELATED_WITH+=" or $AGENCY_NAME_LONG";
+  fi
+  ((INDEX++))
+fi
 if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
-    NOT_RELATED_WITH="$NOT_RELATED_WITH and $PARENT_AGENCY_NAME_LONG";
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$PARENT_AGENCY_NAME_LONG";
+  else
+    NOT_RELATED_WITH+=" or $PARENT_AGENCY_NAME_LONG";
+  fi
+  ((INDEX++))
+fi
+if [ ! -z "$SOURCE_NAME" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$SOURCE_NAME";
+  else
+    NOT_RELATED_WITH+=" or $SOURCE_NAME";
+  fi
+  ((INDEX++))
 fi
 
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";
-GTFS_RTS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml";
+GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml"
 TYPE=-1;
-if [ -f $GTFS_RTS_VALUES_GEN_FILE ]; then
+if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RTS_VALUES_GEN_FILE | tr -dc '0-9')
+  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   TYPE=$(grep -E "<integer name=\"bike_station_agency_type\">[0-9]+</integer>$" $BIKE_STATION_VALUES_FILE | tr -dc '0-9')
 else
-  echo " > No agency file! (rts:$GTFS_RTS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";
@@ -183,7 +213,7 @@ if [ -f "$BIKE_STATION_FILE" ]; then
   fi
   INFORMATION_LIST="${INFORMATION_LIST}availability";
 fi
-GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml";
+GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "$GTFS_FILE" ]; then
   PROVIDES_LINE="${PROVIDES_LINE} schedule (accessible offline)";
   if [ ! -z "$INFORMATION_LIST" ]; then
@@ -278,12 +308,12 @@ fi
 PROVIDES_LINE="${PROVIDES_LINE}${PROVIDES_LINE_END}";
 
 OPERATE_IN=""
-if [ -f $GTFS_RTS_VALUES_GEN_FILE ]; then
+if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   OPERATE_IN="serve"
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   OPERATE_IN="are available in"
 else
-  echo " > No agency file! (rts:$GTFS_RTS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 
@@ -304,7 +334,7 @@ The information comes from the data published by $SOURCE_PROVIDER:
 $SOURCE_URL
 
 This application is free and open-source:
-$CONTACT_WEBITE_URL
+$CONTACT_WEBSITE_URL
 
 This app is not related with $NOT_RELATED_WITH.
 EOL

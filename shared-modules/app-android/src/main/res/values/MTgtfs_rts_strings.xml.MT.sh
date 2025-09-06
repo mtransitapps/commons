@@ -9,9 +9,9 @@ setGitProjectName;
 
 setIsCI;
 
-GTFS_FILE="${ROOT_DIR}/app-android/src/main/res/values/gtfs_rts_values.xml";
+GTFS_FILE="${ROOT_DIR}/app-android/src/main/res/values/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
 if [ ! -f "${GTFS_FILE}" ]; then
-    echo ">> Generating gtfs_rts_strings.xml... SKIP (not an RTS agency)";
+    echo ">> Generating gtfs_rts_strings.xml... SKIP (not an rds agency)";
     exit 0; # ok
 fi
 
@@ -27,7 +27,7 @@ mkdir -p "${VALUES_DIR}";
 checkResult $?;
 if [ -f "${GTFS_RTS_STRINGS_FILE}" ]; then
   echo ">> File '$GTFS_RTS_STRINGS_FILE' already exist."; # compat with existing gtfs_rts_strings.xml
-  exit 0;
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${GTFS_RTS_STRINGS_FILE}";
@@ -59,13 +59,13 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
-GTFS_RTS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml";
+GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 TYPE=-1;
-if [ -f $GTFS_RTS_VALUES_GEN_FILE ]; then
+if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RTS_VALUES_GEN_FILE | tr -dc '0-9')
+  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
 else
-  echo " > No agency file! (rts:$GTFS_RTS_VALUES_GEN_FILE)"
+  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";
