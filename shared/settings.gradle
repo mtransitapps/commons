@@ -25,30 +25,30 @@ plugins {
 Properties projectNameProperties = new Properties()
 def projectNamePropertiesFile = file("project_name.properties")
 projectNameProperties.load(new FileInputStream(projectNamePropertiesFile))
-def projectName = projectNameProperties["project.name"]
-println "> App project name: " + projectName
+gradle.ext.projectName = projectNameProperties["project.name"]
+println "> App project name: " + gradle.ext.projectName
 
 File pkgConfigFile = file("config/pkg")
-def projectPkg = ""
+gradle.ext.projectPkg = ""
 if (pkgConfigFile.exists()) {
-    projectPkg = pkgConfigFile.text.trim()
-    println "> App pkg: " + projectPkg
+    gradle.ext.projectPkg = pkgConfigFile.text.trim()
+    println "> App pkg: " + gradle.ext.projectPkg
 }
 
-def isMainApp = projectPkg == "org.mtransit.android"
-println "> Main app? " + isMainApp
+gradle.ext.isMainApp = gradle.ext.projectPkg == "org.mtransit.android"
+println "> Main app? " + gradle.ext.isMainApp
 
 def envCI = System.getenv("CI")
-def isCI = envCI != null && envCI != ""
-println "> CI: " + isCI
+gradle.ext.isCI = envCI != null && envCI != ""
+println "> CI: " + gradle.ext.isCI
 
 
 develocity {
-    projectId = projectName
+    projectId = gradle.ext.projectName
     buildScan {
-        publishing.onlyIf { false }
-        if (isMainApp) {
-            if (isCI) {
+        publishing.onlyIf { false } // only if `--scan` is used
+        if (gradle.ext.isMainApp) {
+            if (gradle.ext.isCI) {
                 // Required to use "--scan" on CI
                 termsOfUseUrl = "https://gradle.com/help/legal-terms-of-use"
                 termsOfUseAgree = "yes"

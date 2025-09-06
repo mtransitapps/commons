@@ -7,30 +7,16 @@ plugins {
     alias(libs.plugins.triplet.playPublisher)
 }
 
-Properties projectNameProperties = new Properties()
-def projectNamePropertiesFile = file("../project_name.properties")
-if (!projectNamePropertiesFile.exists()) {
-    projectNamePropertiesFile = file("project_name.properties")
-}
-projectNameProperties.load(new FileInputStream(projectNamePropertiesFile))
-def projectName = projectNameProperties["project.name"]
+def projectName = gradle.ext.projectName
 println "> App project name: " + projectName
 
-File pkgConfigFile = file("${project.rootDir}/config/pkg")
-if (!pkgConfigFile.exists()) {
-    pkgConfigFile = file("${project.rootDir}/app-android/config/pkg")
-}
-def projectPkg = ""
-if (pkgConfigFile.exists()) {
-    projectPkg = pkgConfigFile.text.trim()
-    println "> App pkg: " + projectPkg
-}
+def projectPkg = gradle.ext.projectPkg
+println "> App pkg: " + projectPkg
 
-def isMainApp = projectPkg == "org.mtransit.android"
+def isMainApp = gradle.ext.isMainApp
 println "> Main app? " + isMainApp
 
-def envCI = System.getenv("CI")
-def isCI = envCI != null && envCI != ""
+def isCI = gradle.ext.isCI
 println "> CI: " + isCI
 
 def isDevLeakCanaryOff = false
