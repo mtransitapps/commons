@@ -18,7 +18,45 @@ pluginManagement {
 }
 
 plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+    id "org.gradle.toolchains.foojay-resolver-convention" version "0.8.0"
+    id "com.gradle.develocity" version "4.1.1"
+}
+
+Properties projectNameProperties = new Properties()
+def projectNamePropertiesFile = file("project_name.properties")
+projectNameProperties.load(new FileInputStream(projectNamePropertiesFile))
+def projectName = projectNameProperties["project.name"]
+println "> App project name: " + projectName
+
+File pkgConfigFile = file("config/pkg")
+def projectPkg = ""
+if (pkgConfigFile.exists()) {
+    projectPkg = pkgConfigFile.text.trim()
+    println "> App pkg: " + projectPkg
+}
+
+def isMainApp = projectPkg == "org.mtransit.android"
+println "> Main app? " + isMainApp
+
+def envCI = System.getenv("CI")
+def isCI = envCI != null && envCI != ""
+println "> CI: " + isCI
+
+
+develocity {
+    projectId = projectName
+    buildScan {
+        publishing.onlyIf { false }
+        if (isMainApp) {
+            if (isCI) {
+                // Required to use "--scan" on CI
+                termsOfUseUrl = "https://gradle.com/help/legal-terms-of-use"
+                termsOfUseAgree = "yes"
+                // Disable async background uploading on CI
+                uploadInBackground = false
+            }
+        }
+    }
 }
 
 // https://developer.android.com/build/dependencies#remote-repositories

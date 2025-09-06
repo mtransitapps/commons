@@ -416,18 +416,6 @@ dependencies {
     }
 }
 
-develocity {
-    projectId = projectName
-    if (isCI) {
-        buildScan {
-            // Required to use "--scan" on CI
-            termsOfUseUrl = "https://gradle.com/help/legal-terms-of-use"
-            termsOfUseAgree = "yes"
-            // Disable async background uploading on CI
-            uploadInBackground = false
-        }
-    }
-}
 
 play {
     serviceAccountCredentials.set(file("google-play-auto-publisher.json"))
