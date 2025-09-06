@@ -301,9 +301,12 @@ function setGradleArgs() {
 		GRADLE_ARGS+=" -Dkotlin.incremental=false";
 	fi
 
-	echo "> GitHub Actions: $GITHUB_ACTIONS.";
 	if [[ ${GITHUB_ACTIONS} = true ]]; then
 		GRADLE_ARGS=""; # use daemon on GitHub
+		setGitProjectName;
+		if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
+			GRADLE_ARGS+=" --no-configure-on-demand --scan" # works better with "gradle/actions/setup-gradle"
+		fi
 	fi
 
 	if [[ ${IS_CI} = true ]]; then

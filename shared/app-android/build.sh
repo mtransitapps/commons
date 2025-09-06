@@ -103,14 +103,14 @@ if [[ ${IS_CI} = false ]]; then
 	echo ">> Setup-ing keys... DONE";
 
 	echo ">> Running bundle release AAB...";
-	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease ${GRADLE_ARGS};
+	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running bundle release AAB... DONE";
 
 
 	echo ">> Running assemble release APK...";
-	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease -PuseGooglePlayUploadKeysProperties=false ${GRADLE_ARGS};
+	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running assemble release APK... DONE";
