@@ -303,7 +303,10 @@ function setGradleArgs() {
 
 	if [[ ${GITHUB_ACTIONS} = true ]]; then
 		GRADLE_ARGS=""; # use daemon on GitHub
-		GRADLE_ARGS+=" --scan" # works better with "gradle/actions/setup-gradle"
+		setGitProjectName;
+		if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
+			GRADLE_ARGS+=" --scan" # works better with "gradle/actions/setup-gradle"
+		fi
 	fi
 
 	if [[ ${IS_CI} = true ]]; then
