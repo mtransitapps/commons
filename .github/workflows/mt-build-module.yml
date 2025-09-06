@@ -42,7 +42,7 @@ jobs:
           echo "Checkout branch: '$CHECKOUT_BRANCH'."
           echo "mt_checkout_branch=$CHECKOUT_BRANCH" >> "$GITHUB_OUTPUT"
       - name: MT check out main repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: mtransitapps/mtransit-for-android
           ref: ${{ steps.mt-pick-main-repo-checkout-branch.outputs.mt_checkout_branch }}
@@ -64,7 +64,7 @@ jobs:
       - name: MT code setup
         run: ./commons/code_setup.sh
       - name: MT set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version: '17'
