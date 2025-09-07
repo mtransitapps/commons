@@ -2,7 +2,7 @@ name: MT Dependency Submission
 
 on:
   push:
-     paths:
+    paths:
       - "shared/gradle/wrapper/**"
       - "shared/gradlew"
       - "shared/gradlew.bat"
