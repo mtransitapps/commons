@@ -4,13 +4,12 @@ on:
   workflow_dispatch: # manual
   push:
     paths:
-      - "shared/gradle/wrapper/**"
-      - "shared/gradlew"
-      - "shared/gradlew.bat"
-      - "shared/gradle.properties"
-      - "gradle/libs.versions.toml"
+      - "shared/*.gradle"
+      - "gradle/*.toml"
+      - ".github/workflows/*.yml" # testing
     branches:
       - 'master'
+      - '*' # testing
 
 permissions:
   contents: write
