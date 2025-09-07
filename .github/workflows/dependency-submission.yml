@@ -1,6 +1,7 @@
 name: MT Dependency Submission
 
 on:
+  workflow_dispatch: # manual
   push:
     paths:
       - "shared/gradle/wrapper/**"
