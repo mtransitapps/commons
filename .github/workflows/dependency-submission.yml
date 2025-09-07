@@ -2,6 +2,13 @@ name: MT Dependency Submission
 
 on:
   push:
+     paths:
+      - "shared/gradle/wrapper/**"
+      - "shared/gradlew"
+      - "shared/gradlew.bat"
+      - "shared/gradle.properties"
+      - "gradle/libs.versions.toml"
+      - ".github/workflows/dependency-submission.yml" # testing
     branches:
         - 'master'
         - 'github_dep_submit' # testing
@@ -13,23 +20,12 @@ jobs:
   mt-dependency-submission:
     runs-on: ubuntu-latest
     steps:
-    # - name: Checkout sources
-    #   uses: actions/checkout@v4
     - name: MT check out main repo
       uses: actions/checkout@v5
       with:
         repository: mtransitapps/mtransit-for-android
-        # ref: ${{ github.head_ref || github.ref_name }}
-        ref: "master"
-        submodules: true # required to set right token
-        fetch-depth: 0 # fetch all (not required util release build)
     - name: MT check out submodules
       run: ./checkout_submodules.sh
-    # - name: Setup Java
-    #   uses: actions/setup-java@v4
-    #   with:
-    #     distribution: 'temurin'
-    #     java-version: 17
     - name: MT code setup
       run: ./commons/code_setup.sh
     - name: MT set up JDK 17
