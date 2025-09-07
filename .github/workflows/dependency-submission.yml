@@ -1,4 +1,5 @@
 name: MT Dependency Submission
+# Generates and submits a dependency graph for a Gradle project, allowing GitHub to alert about reported vulnerabilities in your project dependencies. 
 
 on:
   workflow_dispatch: # manual
@@ -6,10 +7,8 @@ on:
     paths:
       - "shared/*.gradle"
       - "gradle/*.toml"
-      - ".github/workflows/*.yml" # testing
     branches:
       - 'master'
-      - '*' # testing
 
 permissions:
   contents: write
