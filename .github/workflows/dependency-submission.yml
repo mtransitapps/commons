@@ -10,8 +10,8 @@ on:
       - "gradle/libs.versions.toml"
       - ".github/workflows/dependency-submission.yml" # testing
     branches:
-        - 'master'
-        - 'github_dep_submit' # testing
+      - 'master'
+      - 'github_dep_submit' # testing
 
 permissions:
   contents: write
