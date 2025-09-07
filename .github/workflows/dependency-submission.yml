@@ -8,10 +8,8 @@ on:
       - "shared/gradlew.bat"
       - "shared/gradle.properties"
       - "gradle/libs.versions.toml"
-      - ".github/workflows/dependency-submission.yml" # testing
     branches:
       - 'master'
-      - 'github_dep_submit' # testing
 
 permissions:
   contents: write
