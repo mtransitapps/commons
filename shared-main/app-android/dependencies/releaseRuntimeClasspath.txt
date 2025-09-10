@@ -109,7 +109,7 @@ androidx.work:work-runtime:2.10.3
 com.android.billingclient:billing-ktx:8.0.0
 com.android.billingclient:billing:8.0.0
 com.android.volley:volley:1.2.1
-com.applovin:applovin-sdk:13.3.1
+com.applovin:applovin-sdk:13.4.0
 com.caverock:androidsvg-aar:1.4
 com.facebook.android:audience-network-sdk:6.20.0
 com.fasterxml.jackson.core:jackson-annotations:2.12.3
@@ -125,7 +125,7 @@ com.github.chuckerteam.chucker:library-no-op:4.2.0
 com.github.scribejava:scribejava-apis:8.3.1
 com.github.scribejava:scribejava-core:8.3.1
 com.github.scribejava:scribejava-java8:8.3.1
-com.google.ads.mediation:applovin:13.3.1.1
+com.google.ads.mediation:applovin:13.4.0.0
 com.google.ads.mediation:facebook:6.20.0.0
 com.google.ads.mediation:vungle:7.5.1.0
 com.google.android.datatransport:transport-api:3.2.0
