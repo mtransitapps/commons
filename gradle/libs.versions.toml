@@ -39,7 +39,7 @@ gradle-doctor = "0.12.1"
 hilt = "2.57.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
-androidx-activity = "1.10.1"
+androidx-activity = "1.11.0"
 androidx-annotation = "1.9.1"
 androidx-appCompat = "1.7.1"
 androidx-browser = "1.9.0"
@@ -51,19 +51,19 @@ androidx-core = "1.17.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.8.9"
 androidx-lifecycle = "2.9.3"
-androidx-nav = "2.9.3"
+androidx-nav = "2.9.4"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
-androidx-room = "2.7.2"
+androidx-room = "2.8.0"
 androidx-slidingpanelayout = "1.2.0"
-androidx-sqlite = "2.5.2"
+androidx-sqlite = "2.6.0"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
 androidx-webkit = "1.14.0"
-androidx-workManager = "2.10.3"
+androidx-workManager = "2.10.4"
 # https://github.com/material-components/material-components-android/releases/latest
-material = "1.12.0"
+material = "1.13.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
