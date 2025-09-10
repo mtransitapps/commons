@@ -195,7 +195,7 @@ com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
 com.google.http-client:google-http-client-gson:1.45.2
 com.google.http-client:google-http-client:1.45.2
 com.google.j2objc:j2objc-annotations:3.0.0
-com.google.maps.android:android-maps-utils:3.16.1
+com.google.maps.android:android-maps-utils:3.17.0
 com.google.maps.android:maps-ktx:5.2.0
 com.google.maps.android:maps-utils-ktx:5.2.0
 com.google.oauth-client:google-oauth-client:1.36.0
@@ -225,11 +225,11 @@ org.apache.commons:commons-lang3:3.12.0
 org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.1
 org.jacoco:org.jacoco.core:0.8.8
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.9.22
-org.jetbrains.kotlin:kotlin-bom:2.2.10
+org.jetbrains.kotlin:kotlin-bom:2.2.20
 org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.22
-org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.10
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.10
-org.jetbrains.kotlin:kotlin-stdlib:2.2.10
+org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.20
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20
+org.jetbrains.kotlin:kotlin-stdlib:2.2.20
 org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2

@@ -12,9 +12,9 @@ sdk-target = "35"
 # Android 16 Baklava
 buildTools = "36.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "2.2.10" # sync w/ ksp
+kotlin = "2.2.20" # sync w/ ksp
 # https://github.com/google/ksp/releases/latest
-ksp = "2.2.10-2.0.2" # sync w/ kotlin # ksp.useKSP2=false in gradle.properties
+ksp = "2.2.20-2.0.2" # sync w/ kotlin # ksp.useKSP2=false in gradle.properties
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
@@ -67,7 +67,7 @@ material = "1.13.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.16.1"
+maps-utils = "3.17.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "5.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
