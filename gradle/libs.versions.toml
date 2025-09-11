@@ -35,6 +35,8 @@ dependency-guard = "0.5.0"
 # littlerobots-versioncatalog = "1.0.0"
 # https://runningcode.github.io/gradle-doctor/
 gradle-doctor = "0.12.1"
+# https://github.com/gradle/android-cache-fix-gradle-plugin/release
+gradle-android-cache-fix = "3.0.1"
 # https://github.com/google/dagger/releases/latest
 hilt = "2.57.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
@@ -321,6 +323,7 @@ vungle = [
 ]
 twitter = [
     "twitterApi",
+    "commons-lang3", # using old version
 ]
 youtube = [
     "youTubeGoogleApiClient",
@@ -374,4 +377,5 @@ dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "depende
 # benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }
 # littlerobots-versioncatalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "littlerobots-versioncatalog" }
 gradle-doctor = { id = "com.osacky.doctor", version.ref = "gradle-doctor" }
+gradle-androidCacheFix = { id = "org.gradle.android.cache-fix", version.ref = "gradle-android-cache-fix" }
 sonar = { id = "org.sonarqube", version.ref = "sonar" }

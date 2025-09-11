@@ -42,7 +42,6 @@ def envCI = System.getenv("CI")
 gradle.ext.isCI = envCI != null && envCI != ""
 println "> CI: " + gradle.ext.isCI
 
-
 develocity {
     projectId = gradle.ext.projectName
     buildScan {
