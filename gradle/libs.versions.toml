@@ -106,9 +106,6 @@ appLovin-mediation = "13.4.0.0"
 vungle-mediation = "7.5.1.0"
 # https://github.com/xdevplatform/twitter-api-java-sdk/tags
 twitterApi = "2.0.3"
-# https://cloud.google.com/java/docs/reference/google-api-client/latest/history
-# googleApiClient = "2.7.0"
-youTubeGoogleApiClient = "v3-rev20250714-2.0.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.4.8-android"
 # https://github.com/square/leakcanary/releases
@@ -133,7 +130,7 @@ okhttp = "5.1.0"
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
 chucker = "4.2.0"
 # https://github.com/google/gson/releases/latest
-# https://github.com/google/gson/blob/master/CHANGELOG.md
+# https://github.com/google/gson/blob/main/CHANGELOG.md
 gson = "2.13.1"
 # https://github.com/bumptech/glide/releases/latest
 glide = "5.0.4"
@@ -222,7 +219,6 @@ appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref
 vungle-mediation = { module = "com.google.ads.mediation:vungle", version.ref = "vungle-mediation" }
 twitterApi = { module = "com.twitter:twitter-api-java-sdk", version.ref = "twitterApi" }
 # googleApiClient = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClient" }
-youTubeGoogleApiClient = { module = "com.google.apis:google-api-services-youtube", version.ref = "youTubeGoogleApiClient" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 slackLint = { module = "com.slack.lint:slack-lint-checks", version.ref = "slackLint" }
@@ -324,9 +320,6 @@ vungle = [
 twitter = [
     "twitterApi",
     "commons-lang3", # using old version
-]
-youtube = [
-    "youTubeGoogleApiClient",
 ]
 retrofit = [
     "retrofit",
