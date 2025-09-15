@@ -7,11 +7,13 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
-# Dependenbot triggered Pull Request have their own secrets:
+# Dependabot triggered Pull Request have their own secrets:
 # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-access-to-private-registries-for-dependabot#storing-credentials-for-dependabot-to-use
 env:
   MT_BOT_USER_NAME: ${{ vars.MT_BOT_USER_NAME }}
   MT_BOT_USER_EMAIL: ${{ vars.MT_BOT_USER_EMAIL }}
+  MT_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+  MT_TARGET_BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
 jobs:
   MT-DEPENDENCY-UPDATE-BASELINE-JOB:
     name: "MT Dependency update baseline"
@@ -23,8 +25,6 @@ jobs:
           GH_TOKEN: ${{ github.token }} # GitHub CLI in a GitHub Actions workflow
         run: |
           MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android.git"
-          MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
-          MT_TARGET_BRANCH_NAME=${{ github.base_ref || github.ref_name }}
           BRANCH_EXISTS=$(git ls-remote --heads $MAIN_REPO_URL $MT_BRANCH_NAME | wc -l);
           if [ $BRANCH_EXISTS -eq 1 ]; then
             CHECKOUT_BRANCH=$MT_BRANCH_NAME
@@ -51,12 +51,18 @@ jobs:
           fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
         run: ./checkout_submodules.sh
+      - name: MT check out all git submodule closest branch
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Checking out submodules closest branch, '$MT_BRANCH_NAME' or '$MT_TARGET_BRANCH_NAME':"
+          git submodule foreach 'git checkout $MT_BRANCH_NAME || git checkout $MT_TARGET_BRANCH_NAME'
+          echo "Showing submodules current branch:"
+          git submodule foreach 'git branch --show-current'
       - name: MT check out this module repo build branch
         run: |
           REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
-          echo "Repostory name: '$REPOSITORY_NAME'."
-          MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+          echo "Repository name: '$REPOSITORY_NAME'."
           echo "Fetching from repo '$REPOSITORY_NAME':"
           git -C $REPOSITORY_NAME fetch -v --all;
           echo "Checking our this repo '$REPOSITORY_NAME' workflow branch '$MT_BRANCH_NAME':"
