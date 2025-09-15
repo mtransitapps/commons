@@ -56,7 +56,7 @@ jobs:
         run: |
           git submodule foreach 'git branch -a -vv'
           git submodule foreach 'git fetch --all'
-          git submodule foreach 'git checkout $MT_TARGET_BRANCH_NAME || git checkout $MT_BRANCH_NAME'
+          git submodule foreach 'git checkout origin/$MT_TARGET_BRANCH_NAME || git checkout $MT_BRANCH_NAME'
           git submodule foreach 'git status -sb'
       - name: MT check out this module repo build SHA
         run: |
