@@ -12,6 +12,10 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
+env:
+  MT_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+  MT_TARGET_BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
+  MT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
 jobs:
   MT-BUILD-JOB:
     name: "MT Build (git submodule)"
@@ -23,8 +27,6 @@ jobs:
           GH_TOKEN: ${{ github.token }} # GitHub CLI in a GitHub Actions workflow
         run: |
           MAIN_REPO_URL="https://github.com/mtransitapps/mtransit-for-android.git"
-          MT_BRANCH_NAME=${{ github.head_ref || github.ref_name }}
-          MT_TARGET_BRANCH_NAME=${{ github.base_ref || github.ref_name }}
           BRANCH_EXISTS=$(git ls-remote --heads $MAIN_REPO_URL $MT_BRANCH_NAME | wc -l);
           if [ $BRANCH_EXISTS -eq 1 ]; then
             CHECKOUT_BRANCH=$MT_BRANCH_NAME
@@ -50,13 +52,16 @@ jobs:
           fetch-depth: 0 # fetch all (not required util release build)
       - name: MT check out submodules
         run: ./checkout_submodules.sh
+      - name: MT check out all git submodule closest branch
+        run: |
+          git submodule foreach 'git checkout $MT_TARGET_BRANCH_NAME || git checkout $MT_BRANCH_NAME'
+          git submodule foreach 'git status -sb'
       - name: MT check out this module repo build SHA
         run: |
           REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
           REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
-          SHA=${{ github.event.pull_request.head.sha || github.sha }};
-          echo "Checking our this repo '$REPOSITORY_NAME' workflow sha '$SHA':"
-          git -C $REPOSITORY_NAME checkout $SHA; 
+          echo "Checking our this repo '$REPOSITORY_NAME' workflow sha '$MT_SHA':"
+          git -C $REPOSITORY_NAME checkout $MT_SHA;
       - name: MT setup MT_GIT_BRANCH env
         if: github.event_name != 'pull_request'
         run: |

@@ -3,6 +3,7 @@ source commons/commons.sh;
 echo "================================================================================";
 echo "> BUILD ALL...";
 echo "--------------------------------------------------------------------------------";
+# TODO REMOVE (DEPRECATED, USE other scripts)
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
