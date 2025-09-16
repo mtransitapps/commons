@@ -9,10 +9,8 @@ buildscript {
     }
     dependencies {
         // https://github.com/mtransitapps/commons/security/dependabot
-        // fix vulnerability in Android Gradle Plugin
-        classpath 'io.netty:netty-codec-http:4.2.5.Final'
-        classpath 'io.netty:netty-codec-http2:4.2.5.Final'
-        classpath 'io.netty:netty-handler:4.2.5.Final'
+        // fix netty vulnerability in Android Gradle Plugin
+        classpath("io.grpc:grpc-netty:1.75.0")
     }
 }
 
