@@ -3,6 +3,15 @@ buildscript {
         javaVersion = JavaVersion.VERSION_11
         javaToolchainVersion = JavaVersion.VERSION_17
     }
+
+    repositories {
+        mavenCentral {}
+    }
+    dependencies {
+        // https://github.com/mtransitapps/commons/security/dependabot
+        // fix netty vulnerability in Android Gradle Plugin
+        classpath("io.grpc:grpc-netty:1.75.0")
+    }
 }
 
 plugins {
