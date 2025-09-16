@@ -131,7 +131,7 @@ okhttp = "5.1.0"
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
 chucker = "4.2.0"
 # https://github.com/google/gson/releases/latest
-# https://github.com/google/gson/blob/master/CHANGELOG.md
+# https://github.com/google/gson/blob/main/CHANGELOG.md
 gson = "2.13.1"
 # https://github.com/bumptech/glide/releases/latest
 glide = "5.0.4"
