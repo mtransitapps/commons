@@ -2,35 +2,22 @@ import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.gradle.androidCacheFix)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.triplet.playPublisher)
 }
 
-Properties projectNameProperties = new Properties()
-def projectNamePropertiesFile = file("../project_name.properties")
-if (!projectNamePropertiesFile.exists()) {
-    projectNamePropertiesFile = file("project_name.properties")
-}
-projectNameProperties.load(new FileInputStream(projectNamePropertiesFile))
-def projectName = projectNameProperties["project.name"]
+def projectName = gradle.ext.projectName
 println "> App project name: " + projectName
 
-File pkgConfigFile = file("${project.rootDir}/config/pkg")
-if (!pkgConfigFile.exists()) {
-    pkgConfigFile = file("${project.rootDir}/app-android/config/pkg")
-}
-def projectPkg = ""
-if (pkgConfigFile.exists()) {
-    projectPkg = pkgConfigFile.text.trim()
-    println "> App pkg: " + projectPkg
-}
+def projectPkg = gradle.ext.projectPkg
+println "> App pkg: " + projectPkg
 
-def isMainApp = projectPkg == "org.mtransit.android"
+def isMainApp = gradle.ext.isMainApp
 println "> Main app? " + isMainApp
 
-def envCI = System.getenv("CI")
-def isCI = envCI != null && envCI != ""
+def isCI = gradle.ext.isCI
 println "> CI: " + isCI
 
 def isDevLeakCanaryOff = false
@@ -417,6 +404,7 @@ dependencies {
     }
 }
 
+
 play {
     serviceAccountCredentials.set(file("google-play-auto-publisher.json"))
     defaultToAppBundles.set(true)
@@ -448,7 +436,7 @@ def setupResValues(buildType, appId) {
     }
 
     buildType.resValue("string", "bike_station_authority", "${appId}.bike")
-    buildType.resValue("string", "gtfs_rts_authority", "${appId}.gtfs")
+    buildType.resValue("string", "gtfs_rts_authority", "${appId}.gtfs") // do not change to avoid breaking compat w/ old modules
     buildType.resValue("string", "gtfs_real_time_authority", "${appId}.gtfs.realtime")
 
     buildType.resValue("string", "rss_authority", "${appId}.news.rss")

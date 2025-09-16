@@ -1,1 +1,1 @@
-./gradlew :app-android:installRelease -PuseGooglePlayUploadKeysProperties=false;
+./gradlew :app-android:installRelease --no-scan -PuseGooglePlayUploadKeysProperties=false;

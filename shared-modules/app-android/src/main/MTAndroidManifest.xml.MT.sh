@@ -72,10 +72,10 @@ if [ -f "${BIKE_STATION_FILE}" ]; then
 EOL
 fi
 
-GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml";
+GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "${GTFS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- GTFS ROUTE TRIP STOP & SCHEDULE PROVIDER -->
+        <!-- GTFS ROUTE DIRECTION STOP & SCHEDULE PROVIDER -->
         <provider
             android:name="org.mtransit.android.commons.provider.GTFSProvider"
             android:authorities="@string/gtfs_rts_authority"
