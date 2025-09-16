@@ -104,9 +104,6 @@ appLovin-mediation = "13.4.0.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
 vungle-mediation = "7.5.1.0"
-# https://cloud.google.com/java/docs/reference/google-api-client/latest/history
-# googleApiClient = "2.7.0"
-youTubeGoogleApiClient = "v3-rev20250714-2.0.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.4.8-android"
 # https://github.com/square/leakcanary/releases
@@ -219,7 +216,6 @@ appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref
 # vungle = { module = "com.vungle:vungle-ads", version.ref = "vungle" }
 vungle-mediation = { module = "com.google.ads.mediation:vungle", version.ref = "vungle-mediation" }
 # googleApiClient = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClient" }
-youTubeGoogleApiClient = { module = "com.google.apis:google-api-services-youtube", version.ref = "youTubeGoogleApiClient" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 slackLint = { module = "com.slack.lint:slack-lint-checks", version.ref = "slackLint" }
@@ -317,9 +313,6 @@ appLovin = [
 ]
 vungle = [
     "vungle-mediation",
-]
-youtube = [
-    "youTubeGoogleApiClient",
 ]
 retrofit = [
     "retrofit",
