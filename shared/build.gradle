@@ -11,6 +11,8 @@ buildscript {
         // https://github.com/mtransitapps/commons/security/dependabot
         // fix netty vulnerability in Android Gradle Plugin
         classpath("io.grpc:grpc-netty:1.75.0")
+        // fix JDOM vulnerability in Android Gradle Plugin
+        classpath("org.jdom:jdom2:2.0.6.1")
     }
 }
 
