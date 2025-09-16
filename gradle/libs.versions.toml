@@ -104,8 +104,6 @@ appLovin-mediation = "13.4.0.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
 vungle-mediation = "7.5.1.0"
-# https://github.com/xdevplatform/twitter-api-java-sdk/tags
-twitterApi = "2.0.3"
 # https://github.com/google/guava/releases/latest
 guava = "33.4.8-android"
 # https://github.com/square/leakcanary/releases
@@ -217,7 +215,6 @@ fbAudienceNetwork-mediation = { module = "com.google.ads.mediation:facebook", ve
 appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovin-mediation" }
 # vungle = { module = "com.vungle:vungle-ads", version.ref = "vungle" }
 vungle-mediation = { module = "com.google.ads.mediation:vungle", version.ref = "vungle-mediation" }
-twitterApi = { module = "com.twitter:twitter-api-java-sdk", version.ref = "twitterApi" }
 # googleApiClient = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClient" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
@@ -316,10 +313,6 @@ appLovin = [
 ]
 vungle = [
     "vungle-mediation",
-]
-twitter = [
-    "twitterApi",
-    "commons-lang3", # using old version
 ]
 retrofit = [
     "retrofit",
