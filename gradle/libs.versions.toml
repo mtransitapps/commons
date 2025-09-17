@@ -14,7 +14,7 @@ buildTools = "36.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "2.2.20" # sync w/ ksp
 # https://github.com/google/ksp/releases/latest
-ksp = "2.2.20-2.0.2" # sync w/ kotlin # ksp.useKSP2=false in gradle.properties
+ksp = "2.2.20-2.0.3" # sync w/ kotlin # ksp.useKSP2=false in gradle.properties
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
@@ -105,7 +105,7 @@ appLovin-mediation = "13.4.0.0"
 #vungle = "_._._" # included with nediation adapter
 vungle-mediation = "7.5.1.0"
 # https://github.com/google/guava/releases/latest
-guava = "33.4.8-android"
+guava = "33.5.0-android"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.14"
 # https://github.com/slackhq/slack-lints/releases
@@ -114,7 +114,7 @@ playInsightLint = "0.1.4"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobuf = "4.32.0"
+protobuf = "4.32.1"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.5"
 # https://github.com/square/retrofit/tags
@@ -129,9 +129,9 @@ okhttp = "5.1.0"
 chucker = "4.2.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/main/CHANGELOG.md
-gson = "2.13.1"
+gson = "2.13.2"
 # https://github.com/bumptech/glide/releases/latest
-glide = "5.0.4"
+glide = "5.0.5"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 android-svg = "1.4"
