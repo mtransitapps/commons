@@ -129,9 +129,9 @@ okhttp = "5.1.0"
 chucker = "4.2.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/main/CHANGELOG.md
-gson = "2.13.1"
+gson = "2.13.2"
 # https://github.com/bumptech/glide/releases/latest
-glide = "5.0.4"
+glide = "5.0.5"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 android-svg = "1.4"
