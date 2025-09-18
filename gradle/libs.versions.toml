@@ -14,7 +14,7 @@ buildTools = "36.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "2.2.20" # sync w/ ksp
 # https://github.com/google/ksp/releases/latest
-ksp = "2.2.20-2.0.3" # sync w/ kotlin # ksp.useKSP2=false in gradle.properties
+ksp = "2.2.20-2.0.3" # sync w/ kotlin
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
