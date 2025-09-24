@@ -97,7 +97,7 @@ play-appUpdate = "2.1.0"
 play-review = "2.0.2"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
-fbAudienceNetwork-mediation = "6.20.0.0"
+fbAudienceNetwork-mediation = "6.20.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
 appLovin-mediation = "13.4.0.0"
