@@ -38,7 +38,7 @@ gradle-doctor = "0.12.1"
 # https://github.com/gradle/android-cache-fix-gradle-plugin/release
 gradle-android-cache-fix = "3.0.1"
 # https://github.com/google/dagger/releases/latest
-hilt = "2.57.1"
+hilt = "2.57.2"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.11.0"
@@ -139,7 +139,7 @@ android-svg = "1.4"
 junit = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
 mockito = "5.20.0"
-mockito-kotlin = "6.0.0"
+mockito-kotlin = "6.1.0"
 # https://commons.apache.org/
 commons-csv = "1.14.1"
 commons-io = "2.20.0"
