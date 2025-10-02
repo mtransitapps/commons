@@ -10,7 +10,8 @@ buildscript {
     dependencies {
         // https://github.com/mtransitapps/commons/security/dependabot
         // fix netty vulnerability in Android Gradle Plugin
-        classpath("io.grpc:grpc-netty:1.75.0")
+        classpath("io.netty:netty-codec-http2:4.2.6.Final")
+        classpath("io.netty:netty-handler:4.2.6.Final")
         // fix JDOM vulnerability in Android Gradle Plugin
         classpath("org.jdom:jdom2:2.0.6.1")
     }
