@@ -143,7 +143,7 @@ com.google.android.gms:play-services-measurement:23.0.0
 com.google.android.gms:play-services-stats:17.0.2
 com.google.android.gms:play-services-tasks:18.2.0
 com.google.android.gms:play-services-time:16.0.1
-com.google.android.libraries.places:places:5.0.0
+com.google.android.libraries.places:places:3.5.0
 com.google.android.material:material:1.13.0
 com.google.android.play:app-update-ktx:2.1.0
 com.google.android.play:app-update:2.1.0
