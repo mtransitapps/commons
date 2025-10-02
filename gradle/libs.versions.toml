@@ -35,8 +35,8 @@ dependency-guard = "0.5.0"
 # littlerobots-versioncatalog = "1.0.0"
 # https://runningcode.github.io/gradle-doctor/
 gradle-doctor = "0.12.1"
-# https://github.com/gradle/android-cache-fix-gradle-plugin/release
-gradle-android-cache-fix = "3.0.1"
+# https://github.com/gradle/android-cache-fix-gradle-plugin/releases
+gradle-android-cache-fix = "3.0.2"
 # https://github.com/google/dagger/releases/latest
 hilt = "2.57.2"
 # ALL: https://developer.android.com/jetpack/androidx/versions
@@ -74,8 +74,7 @@ maps-utils = "3.19.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "5.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
-#noinspection GradleDependency // 4.0.0+ requires minSDK 23 instead of 21
-places-sdk = "3.5.0"
+places-sdk = "5.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.4.3"
 # LATEST: https://developers.google.com/android/guides/releases
