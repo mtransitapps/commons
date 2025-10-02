@@ -56,8 +56,7 @@ androidx-lifecycle = "2.9.4"
 androidx-nav = "2.9.5"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
-#noinspection GradleDependency // 2.8.0 requires minSDK 23 instead of 21
-androidx-room = "2.7.2"
+androidx-room = "2.8.1"
 androidx-slidingpanelayout = "1.2.0"
 androidx-sqlite = "2.6.1"
 androidx-swiperefreshlayout = "1.1.0"
@@ -74,8 +73,7 @@ maps-utils = "3.19.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "5.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
-#noinspection GradleDependency // 4+ requires minSDK 23, 5+ requires minSDK 24
-places-sdk = "3.5.0"
+places-sdk = "5.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.4.3"
 # LATEST: https://developers.google.com/android/guides/releases
