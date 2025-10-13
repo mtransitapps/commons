@@ -14,7 +14,7 @@ buildTools = "36.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "2.2.20" # sync w/ ksp
 # https://github.com/google/ksp/releases/latest
-ksp = "2.2.20-2.0.3" # sync w/ kotlin
+ksp = "2.2.20-2.0.4" # sync w/ kotlin
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
@@ -35,10 +35,10 @@ dependency-guard = "0.5.0"
 # littlerobots-versioncatalog = "1.0.0"
 # https://runningcode.github.io/gradle-doctor/
 gradle-doctor = "0.12.1"
-# https://github.com/gradle/android-cache-fix-gradle-plugin/release
-gradle-android-cache-fix = "3.0.1"
+# https://github.com/gradle/android-cache-fix-gradle-plugin/releases
+gradle-android-cache-fix = "3.0.2"
 # https://github.com/google/dagger/releases/latest
-hilt = "2.57.1"
+hilt = "2.57.2"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.11.0"
@@ -53,18 +53,18 @@ androidx-core = "1.17.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-fragment = "1.8.9"
 androidx-lifecycle = "2.9.4"
-androidx-nav = "2.9.4"
+androidx-nav = "2.9.5"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
 #noinspection GradleDependency // 2.8.0 requires minSDK 23 instead of 21
 androidx-room = "2.7.2"
 androidx-slidingpanelayout = "1.2.0"
-androidx-sqlite = "2.6.0"
+androidx-sqlite = "2.6.1"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
 androidx-webkit = "1.14.0"
-androidx-workManager = "2.10.4"
+androidx-workManager = "2.10.5"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.13.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
@@ -74,20 +74,19 @@ maps-utils = "3.19.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "5.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
-#noinspection GradleDependency // 4.0.0+ requires minSDK 23 instead of 21
-places-sdk = "3.5.0"
+places-sdk = "5.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.4.3"
 # LATEST: https://developers.google.com/android/guides/releases
 gps-ads = "24.6.0"
 gps-ump = "3.2.0"
-gps-basement = "18.8.0"
+gps-basement = "18.9.0"
 gps-time = "16.0.1"
 gps-location = "21.3.0"
 gps-maps = "19.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "34.2.0"
+firebase-bom = "34.3.0"
 firebase-crashlytics-plugin = "3.0.6"
 firebase-perf-plugin = "2.0.1"
 play-billing = "8.0.0"
@@ -97,7 +96,7 @@ play-appUpdate = "2.1.0"
 play-review = "2.0.2"
 # https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
-fbAudienceNetwork-mediation = "6.20.0.0"
+fbAudienceNetwork-mediation = "6.20.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
 appLovin-mediation = "13.4.0.0"
@@ -123,7 +122,7 @@ retrofit = "3.0.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
-okhttp = "5.1.0"
+okhttp = "5.2.0"
 # https://github.com/ChuckerTeam/chucker/releases/latest
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
 chucker = "4.2.0"
@@ -138,12 +137,12 @@ android-svg = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 junit = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockito = "5.19.0"
-mockito-kotlin = "6.0.0"
+mockito = "5.20.0"
+mockito-kotlin = "6.1.0"
 # https://commons.apache.org/
 commons-csv = "1.14.1"
 commons-io = "2.20.0"
-commons-lang3 = "3.18.0"
+commons-lang3 = "3.19.0"
 commons-text = "1.14.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
 xerial-SQLiteJDBC = "3.50.3.0"
