@@ -76,7 +76,7 @@ maps-ktx = "5.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
 places-sdk = "5.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
-gps-plugin = "4.4.3"
+gps-plugin = "4.4.4"
 # LATEST: https://developers.google.com/android/guides/releases
 gps-ads = "24.6.0"
 gps-ump = "3.2.0"
