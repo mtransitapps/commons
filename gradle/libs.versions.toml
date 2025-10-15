@@ -108,7 +108,7 @@ guava = "33.5.0-android"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.14"
 # https://github.com/slackhq/slack-lints/releases
-slackLint = "0.11.0"
+slackLint = "0.11.1"
 playInsightLint = "0.1.4"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
