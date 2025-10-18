@@ -20,7 +20,7 @@ kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization = "1.9.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "6.3.1.5724"
+sonar = "7.0.0.6105"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "8.13.0"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
@@ -72,13 +72,13 @@ material = "1.13.0"
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
 maps-utils = "3.19.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
-maps-ktx = "5.2.0"
+maps-ktx = "5.2.1"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
 places-sdk = "5.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
-gps-plugin = "4.4.3"
+gps-plugin = "4.4.4"
 # LATEST: https://developers.google.com/android/guides/releases
-gps-ads = "24.6.0"
+gps-ads = "24.7.0"
 gps-ump = "3.2.0"
 gps-basement = "18.9.0"
 gps-time = "16.0.1"
@@ -86,7 +86,7 @@ gps-location = "21.3.0"
 gps-maps = "19.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "34.3.0"
+firebase-bom = "34.4.0"
 firebase-crashlytics-plugin = "3.0.6"
 firebase-perf-plugin = "2.0.1"
 play-billing = "8.0.0"
@@ -108,7 +108,7 @@ guava = "33.5.0-android"
 # https://github.com/square/leakcanary/releases
 leakcanary = "2.14"
 # https://github.com/slackhq/slack-lints/releases
-slackLint = "0.11.0"
+slackLint = "0.11.1"
 playInsightLint = "0.1.4"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
@@ -122,7 +122,7 @@ retrofit = "3.0.0"
 # https://github.com/square/okhttp/tags
 # https://github.com/square/okhttp/releases/latest
 # https://square.github.io/okhttp/changelog/
-okhttp = "5.2.0"
+okhttp = "5.2.1"
 # https://github.com/ChuckerTeam/chucker/releases/latest
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
 chucker = "4.2.0"
