@@ -57,7 +57,7 @@ androidx-nav = "2.9.5"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
 #noinspection GradleDependency // 2.8.0 requires minSDK 23 instead of 21
-androidx-room = "2.7.2"
+androidx-room = "2.8.3"
 androidx-slidingpanelayout = "1.2.0"
 androidx-sqlite = "2.6.1"
 androidx-swiperefreshlayout = "1.1.0"
