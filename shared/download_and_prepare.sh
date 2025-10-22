@@ -19,8 +19,6 @@ setGitCommitEnabled;
 
 if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
   cd ${SCRIPT_DIR}/agency-parser || exit; # >>
-  AGENCY_PARSER_DIR=".";
-  echo "> AGENCY_PARSER_DIR: $AGENCY_PARSER_DIR";
 
 	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'...";
 
@@ -112,7 +110,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 
 	cd ../; # <<
 else
-	echo "> SKIP PARSING FOR '$AGENCY_ID'.";
+	echo "> SKIP DOWNLOADING FOR '$AGENCY_ID'.";
 fi
 
 AFTER_DATE=$(date +%D-%X);

@@ -107,7 +107,7 @@ androidx.viewpager2:viewpager2:1.1.0
 androidx.viewpager:viewpager:1.0.0
 androidx.webkit:webkit:1.14.0
 androidx.window:window:1.0.0
-androidx.work:work-runtime:2.10.5
+androidx.work:work-runtime:2.11.0
 com.android.billingclient:billing-ktx:8.0.0
 com.android.billingclient:billing:8.0.0
 com.android.volley:volley:1.2.1
@@ -120,9 +120,9 @@ com.github.bumptech.glide:gifdecoder:5.0.5
 com.github.bumptech.glide:glide:5.0.5
 com.github.bumptech.glide:okhttp3-integration:5.0.5
 com.github.chuckerteam.chucker:library-no-op:4.2.0
-com.google.ads.mediation:applovin:13.4.0.0
-com.google.ads.mediation:facebook:6.20.0.1
-com.google.ads.mediation:vungle:7.5.1.0
+com.google.ads.mediation:applovin:13.4.0.1
+com.google.ads.mediation:facebook:6.20.0.2
+com.google.ads.mediation:vungle:7.5.1.1
 com.google.android.datatransport:transport-api:3.2.0
 com.google.android.datatransport:transport-backend-cct:3.3.0
 com.google.android.datatransport:transport-runtime:3.3.0
