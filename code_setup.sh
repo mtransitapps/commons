@@ -20,9 +20,16 @@ setGitProjectName;
 setGitBranch;
 
 setIsCI;
-echo "> CI: $IS_CI.";
 
-echo "> GitHub Actions: $GITHUB_ACTIONS.";
+DEBUG_FILES=$IS_CI;
+# DEBUG_FILES=true;
+function echoFile() {
+	if [[ $DEBUG_FILES == true ]]; then
+		echo "$@";
+	else
+		echo -n ".";
+	fi
+}
 
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
 if [[ "$IS_SHALLOW" == true && "${GITHUB_ACTIONS}" == false ]]; then
@@ -185,14 +192,14 @@ function deployFile() {
 	fi
 	# echo "--------------------------------------------------------------------------------";
 	if [[ $SRC_FILE_PATH == *.MT.sh ]]; then
-		echo "> Deploying '$SRC_FILE_PATH'...";
+		echoFile "> Deploying '$SRC_FILE_PATH'...";
 		./"$SRC_FILE_PATH";
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while deploying file '$SRC_FILE_PATH'!";
 			exit ${RESULT};
 		fi
-		echo "> Deploying '$SRC_FILE_PATH'... DONE ✓";
+		echoFile "> Deploying '$SRC_FILE_PATH'... DONE ✓";
 		return;
 	fi
 	if [[ "$OVER_WRITE" == true ]]; then
@@ -207,14 +214,14 @@ function deployFile() {
 	DEST_DIR=$(dirname ${DEST_FILE_PATH});
 	mkdir -p ${DEST_DIR};
 	checkResult $?;
-	echo "> Deploying '$SRC_FILE_PATH'...";
+	echoFile "> Deploying '$SRC_FILE_PATH'...";
 	cp --update=none -p "$SRC_FILE_PATH" "$DEST_FILE_PATH" || cp --no-clobber -p "$SRC_FILE_PATH" "$DEST_FILE_PATH"; # Ubuntu 22.04 & 24.04 compat
 	local RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while deploying file '$SRC_FILE_PATH'!";
 		exit ${RESULT};
 	fi
-	echo "> Deploying '$SRC_FILE_PATH'... DONE ✓";
+	echoFile "> Deploying '$SRC_FILE_PATH'... DONE ✓";
 	# echo "--------------------------------------------------------------------------------";
 }
 
@@ -255,12 +262,12 @@ function deployDirectory() {
 		OPT_DIR=$4;
 	fi
 	# echo "--------------------------------------------------------------------------------";
-	echo "> Deploying '${SRC_FILE_PATH}/'...";
+	echoFile "> Deploying '${SRC_FILE_PATH}/'...";
 	if [[ "$SRC_FILE_PATH" == *MTSTAR ]]; then
-		echo "> Skip fake directory '$DEST_FILE_PATH' in target directory.";
+		echoFile "> Skip fake directory '$DEST_FILE_PATH' in target directory.";
 	elif ! [[ -d "$DEST_FILE_PATH" ]]; then
 		if [[ "$OPT_DIR" == true ]]; then
-			echo "> Skip optional directory '$DEST_FILE_PATH' in target directory.";
+			echoFile "> Skip optional directory '$DEST_FILE_PATH' in target directory.";
 			return;
 		fi
 	fi
@@ -285,7 +292,7 @@ function deployDirectory() {
 			exit 1;
 		fi
 	done
-	echo "> Deploying '${SRC_FILE_PATH}/'... DONE ✓";
+	echoFile "> Deploying '${SRC_FILE_PATH}/'... DONE ✓";
 	# echo "--------------------------------------------------------------------------------";
 }
 
@@ -311,7 +318,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying shared files... DONE ✓";
+echo -e "\n> Deploying shared files... DONE ✓";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
@@ -336,7 +343,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying optional shared files... DONE ✓";
+echo -e "\n> Deploying optional shared files... DONE ✓";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
@@ -362,7 +369,7 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
       exit 1;
     fi
   done
-  echo "> Deploying main shared files... DONE ✓";
+  echo -e "\n> Deploying main shared files... DONE ✓";
 else
   echo "> Deploying modules shared files...";
   SRC_DIR_PATH="commons/shared-modules";
@@ -385,7 +392,7 @@ else
       exit 1;
     fi
   done
-  echo "> Deploying modules shared files... DONE ✓";
+  echo -e "\n> Deploying modules shared files... DONE ✓";
 fi
 echo "--------------------------------------------------------------------------------";
 
@@ -411,7 +418,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-echo "> Deploying overwritten shared files... DONE ✓";
+echo -e "\n> Deploying overwritten shared files... DONE ✓";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
