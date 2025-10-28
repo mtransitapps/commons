@@ -26,10 +26,13 @@ function setIsGHEnabled() {
 function setGitCommitEnabled() {
 	MT_GIT_COMMIT_ENABLED="false";
 
-	echo "MT_ORG_GIT_COMMIT_ON: '$MT_ORG_GIT_COMMIT_ON'." # allowed
-	echo "MT_ORG_GIT_COMMIT_OFF: '$MT_ORG_GIT_COMMIT_OFF'." # forbidden
-	echo "MT_GIT_COMMIT_ON: '$MT_GIT_COMMIT_ON'." # allowed
-	echo "MT_GIT_COMMIT_OFF: '$MT_GIT_COMMIT_OFF'." # forbidden
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		echo "MT_ORG_GIT_COMMIT_ON: '$MT_ORG_GIT_COMMIT_ON'." # allowed
+		echo "MT_ORG_GIT_COMMIT_OFF: '$MT_ORG_GIT_COMMIT_OFF'." # forbidden
+		echo "MT_GIT_COMMIT_ON: '$MT_GIT_COMMIT_ON'." # allowed
+		echo "MT_GIT_COMMIT_OFF: '$MT_GIT_COMMIT_OFF'." # forbidden
+	fi
 
 	if [[ ${MT_ORG_GIT_COMMIT_OFF} == "mt_true" ]]; then
 		echo "> Git commit disabled (org).. SKIP";
@@ -49,10 +52,13 @@ function setGitCommitEnabled() {
 function setGitCommitDependencyUpdateEnabled() {
 	MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENABLED="false";
 
-	echo "MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON: '$MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON'." # allowed
-	echo "MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_OFF: '$MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_OFF'." # forbidden
-	echo "MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON: '$MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON'." # allowed
-	echo "MT_GIT_COMMIT_DEPENDENCY_UPDATE_OFF: '$MT_GIT_COMMIT_DEPENDENCY_UPDATE_OFF'." # forbidden
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		echo "MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON: '$MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_ON'." # allowed
+		echo "MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_OFF: '$MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_OFF'." # forbidden
+		echo "MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON: '$MT_GIT_COMMIT_DEPENDENCY_UPDATE_ON'." # allowed
+		echo "MT_GIT_COMMIT_DEPENDENCY_UPDATE_OFF: '$MT_GIT_COMMIT_DEPENDENCY_UPDATE_OFF'." # forbidden
+	fi
 
 	if [[ ${MT_ORG_GIT_COMMIT_DEPENDENCY_UPDATE_OFF} == "mt_true" ]]; then
 		echo "> Git dependency update commit disabled (org).. SKIP";
@@ -72,10 +78,13 @@ function setGitCommitDependencyUpdateEnabled() {
 function setPushToStoreEnabled() {
 	MT_PUSH_STORE_ENABLED="false";
 
-	echo "MT_ORG_PUSH_STORE_ON: '$MT_ORG_PUSH_STORE_ON'." # allowed
-	echo "MT_ORG_PUSH_STORE_OFF: '$MT_ORG_PUSH_STORE_OFF'." # forbidden
-	echo "MT_PUSH_STORE_ON: '$MT_PUSH_STORE_ON'." # allowed
-	echo "MT_PUSH_STORE_OFF: '$MT_PUSH_STORE_OFF'." # forbidden
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		echo "MT_ORG_PUSH_STORE_ON: '$MT_ORG_PUSH_STORE_ON'." # allowed
+		echo "MT_ORG_PUSH_STORE_OFF: '$MT_ORG_PUSH_STORE_OFF'." # forbidden
+		echo "MT_PUSH_STORE_ON: '$MT_PUSH_STORE_ON'." # allowed
+		echo "MT_PUSH_STORE_OFF: '$MT_PUSH_STORE_OFF'." # forbidden
+	fi
 
 	if [[ ${MT_ORG_PUSH_STORE_OFF} == "mt_true" ]]; then
 		echo "> Push to Store disabled (org).. SKIP";
@@ -95,10 +104,13 @@ function setPushToStoreEnabled() {
 function setPushToStoreAlphaEnabled() {
 	MT_PUSH_STORE_ALPHA_ENABLED="false";
 
-	echo "MT_ORG_STORE_ALPHA_ON: '$MT_ORG_STORE_ALPHA_ON'." # allowed
-	echo "MT_ORG_STORE_ALPHA_OFF: '$MT_ORG_STORE_ALPHA_OFF'." # forbidden
-	echo "MT_STORE_ALPHA_ON: '$MT_STORE_ALPHA_ON'." # allowed
-	echo "MT_STORE_ALPHA_OFF: '$MT_STORE_ALPHA_OFF'." # forbidden
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		echo "MT_ORG_STORE_ALPHA_ON: '$MT_ORG_STORE_ALPHA_ON'." # allowed
+		echo "MT_ORG_STORE_ALPHA_OFF: '$MT_ORG_STORE_ALPHA_OFF'." # forbidden
+		echo "MT_STORE_ALPHA_ON: '$MT_STORE_ALPHA_ON'." # allowed
+		echo "MT_STORE_ALPHA_OFF: '$MT_STORE_ALPHA_OFF'." # forbidden
+	fi
 
 	if [[ ${MT_ORG_STORE_ALPHA_OFF} == "mt_true" ]]; then
 		echo "> Push to Store Alpha disabled (org).. SKIP";
@@ -118,10 +130,13 @@ function setPushToStoreAlphaEnabled() {
 function setPushToStoreBetaPrivateEnabled() {
 	MT_PUSH_STORE_BETA_PRIVATE_ENABLED="false";
 
-	echo "MT_ORG_STORE_BETA_PRIVATE_ON: '$MT_ORG_STORE_BETA_PRIVATE_ON'." # allowed
-	echo "MT_ORG_STORE_BETA_PRIVATE_OFF: '$MT_ORG_STORE_BETA_PRIVATE_OFF'." # forbidden
-	echo "MT_STORE_BETA_PRIVATE_ON: '$MT_STORE_BETA_PRIVATE_ON'." # allowed
-	echo "MT_STORE_BETA_PRIVATE_OFF: '$MT_STORE_BETA_PRIVATE_OFF'." # forbidden
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		echo "MT_ORG_STORE_BETA_PRIVATE_ON: '$MT_ORG_STORE_BETA_PRIVATE_ON'." # allowed
+		echo "MT_ORG_STORE_BETA_PRIVATE_OFF: '$MT_ORG_STORE_BETA_PRIVATE_OFF'." # forbidden
+		echo "MT_STORE_BETA_PRIVATE_ON: '$MT_STORE_BETA_PRIVATE_ON'." # allowed
+		echo "MT_STORE_BETA_PRIVATE_OFF: '$MT_STORE_BETA_PRIVATE_OFF'." # forbidden
+	fi
 
 	if [[ ${MT_ORG_STORE_BETA_PRIVATE_OFF} == "mt_true" ]]; then
 		echo "> Push to Store Beta Private disabled (org).. SKIP";
@@ -141,10 +156,13 @@ function setPushToStoreBetaPrivateEnabled() {
 function setPushToStoreProductionEnabled() {
 	MT_PUSH_STORE_PRODUCTION_ENABLED="false";
 
-	echo "MT_ORG_STORE_PRODUCTION_ON: '$MT_ORG_STORE_PRODUCTION_ON'." # allowed
-	echo "MT_ORG_STORE_PRODUCTION_OFF: '$MT_ORG_STORE_PRODUCTION_OFF'." # forbidden
-	echo "MT_STORE_PRODUCTION_ON: '$MT_STORE_PRODUCTION_ON'." # allowed
-	echo "MT_STORE_PRODUCTION_OFF: '$MT_STORE_PRODUCTION_OFF'." # forbidden
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		echo "MT_ORG_STORE_PRODUCTION_ON: '$MT_ORG_STORE_PRODUCTION_ON'." # allowed
+		echo "MT_ORG_STORE_PRODUCTION_OFF: '$MT_ORG_STORE_PRODUCTION_OFF'." # forbidden
+		echo "MT_STORE_PRODUCTION_ON: '$MT_STORE_PRODUCTION_ON'." # allowed
+		echo "MT_STORE_PRODUCTION_OFF: '$MT_STORE_PRODUCTION_OFF'." # forbidden
+	fi
 
 	if [[ ${MT_ORG_STORE_PRODUCTION_OFF} == "mt_true" ]]; then
 		echo "> Push to Store Production disabled (org).. SKIP";
