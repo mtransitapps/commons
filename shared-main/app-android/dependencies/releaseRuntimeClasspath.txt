@@ -200,11 +200,11 @@ jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
 org.jacoco:org.jacoco.core:0.8.8
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.9.22
-org.jetbrains.kotlin:kotlin-bom:2.2.20
+org.jetbrains.kotlin:kotlin-bom:2.2.21
 org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.22
-org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.20
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20
-org.jetbrains.kotlin:kotlin-stdlib:2.2.20
+org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.21
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.21
+org.jetbrains.kotlin:kotlin-stdlib:2.2.21
 org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2
