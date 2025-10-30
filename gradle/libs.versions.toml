@@ -20,7 +20,7 @@ kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization = "1.9.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "7.0.0.6105"
+sonar = "7.0.1.6134"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "8.13.0"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
@@ -98,10 +98,10 @@ play-review = "2.0.2"
 fbAudienceNetwork-mediation = "6.20.0.2"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
-appLovin-mediation = "13.4.0.1"
+appLovin-mediation = "13.5.0.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
-vungle-mediation = "7.5.1.1"
+vungle-mediation = "7.6.0.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.5.0-android"
 # https://github.com/square/leakcanary/releases
