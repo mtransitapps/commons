@@ -68,16 +68,16 @@ jobs:
           echo "Showing submodules current branch:"
           git submodule foreach 'git branch --show-current'
 
-      - name: MT setup MT_GIT_BRANCH env
-        if: github.repository == 'mtransitapps/mtransit-for-android' || github.event_name != 'pull_request'
+      - name: MT check out this module repo build SHA
+        if: github.repository != 'mtransitapps/mtransit-for-android'
         run: |
-          # MT_GIT_BRANCH=${GITHUB_REF##*/}"
-          MT_GIT_BRANCH=${{ github.head_ref || github.ref_name }}
-          # echo "MT_GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-          echo "MT_GIT_BRANCH=$MT_GIT_BRANCH" >> $GITHUB_ENV
+          REPOSITORY_OWNER_AND_NAME=${{ github.repository }};
+          REPOSITORY_NAME=$(basename $REPOSITORY_OWNER_AND_NAME);
+          echo "Checking our this repo '$REPOSITORY_NAME' workflow sha '$MT_SHA':"
+          git -C $REPOSITORY_NAME checkout $MT_SHA;
 
       - name: MT setup MT_GIT_BRANCH env
-        if: github.event_name != 'pull_request'
+        if: github.repository == 'mtransitapps/mtransit-for-android' || github.event_name != 'pull_request'
         run: |
           # MT_GIT_BRANCH=${GITHUB_REF##*/}"
           MT_GIT_BRANCH=${{ github.head_ref || github.ref_name }}
