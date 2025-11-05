@@ -28,4 +28,4 @@ org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0
 org.jetbrains:annotations:23.0.0
 org.mockito.kotlin:mockito-kotlin:6.1.0
 org.mockito:mockito-core:5.20.0
-org.xerial:sqlite-jdbc:3.50.3.0
+org.xerial:sqlite-jdbc:3.51.0.0
