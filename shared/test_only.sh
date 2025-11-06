@@ -39,19 +39,15 @@ cd app-android || exit;
 
 echo ">> Running test...";
 ../gradlew :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
-RESULT=$?;
-checkResult ${RESULT};
+checkResult $?;
 echo ">> Running test... DONE";
 
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo ">> Running dependency guard...";
 	../gradlew :app-android:dependencyGuard :parser:dependencyGuard ${GRADLE_ARGS};
-	RESULT=$?;
-	checkResult ${RESULT};
+	checkResult $?;
 	echo ">> Running dependency guard... DONE";
 fi
-
-checkResult ${RESULT};
 
 cd ..;
 echo "> TESTS ANDROID APP FOR '$AGENCY_ID'... DONE";
