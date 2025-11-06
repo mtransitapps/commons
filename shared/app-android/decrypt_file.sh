@@ -2,6 +2,10 @@
 SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/../commons/commons.sh
 
+setIsCI;
+
+DEBUG_FILES=$IS_CI;
+
 if [[ "$3" != "quiet" ]]; then
 	echo -n ">> Decrypting-ing file '$@'...";
 fi
@@ -32,7 +36,9 @@ if ! [[ -f $1 ]]; then
 fi
 
 if [[ -f $2 ]]; then
-	echo -n " (overriding existing '$2' file)";
+	if [[ $DEBUG_FILES == true ]]; then
+		echo -n " (overriding existing '$2' file)";
+	fi
 fi
 
 # openssl aes-256-cbc -md sha256 -d -in $1 -out $2 -k ${MT_ENCRYPT_KEY};

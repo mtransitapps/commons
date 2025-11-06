@@ -3,6 +3,18 @@ SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/../commons/commons.sh
 echo ">> Setup-ing keys...";
 
+setIsCI;
+
+DEBUG_FILES=$IS_CI;
+# DEBUG_FILES=true;
+function echoFile() {
+	if [[ $DEBUG_FILES == true ]]; then
+		echo "$@";
+	else
+		echo -n ".";
+	fi
+}
+
 source ${SCRIPT_DIR}/keys_files.sh;
 
 if [[ ${#FILES[@]} -lt 1 ]]; then
@@ -18,7 +30,7 @@ fi
 for FILE in "${FILES[@]}" ; do
 	FILE_PATH="${SCRIPT_DIR}/${FILE}";
 	if [[ -z "${FILE_PATH}" ]]; then
-		echo "Ignoring empty '$FILE_PATH'.";
+		echoFile "Ignoring empty '$FILE_PATH'.";
 		continue;
 	fi
 
@@ -40,10 +52,10 @@ CLEAR="${SCRIPT_DIR}/clr"
 for FILE in "${FILES[@]}" ; do
 	FILE_PATH="${SCRIPT_DIR}/${FILE}";
 	if [[ -z "${FILE_PATH}" ]]; then
-		echo "Ignoring empty '$FILE_PATH'.";
+		echoFile "Ignoring empty '$FILE_PATH'.";
 		continue;
 	fi
-	echo -n "> Decrypting '$FILE_PATH'...";
+	echoFile -n "> Decrypting '$FILE_PATH'...";
 
 	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
 	RESULT=$?;
@@ -55,7 +67,7 @@ for FILE in "${FILES[@]}" ; do
 				echo " ERROR! while creating '$CLEAR' directory!";
 				exit ${RESULT};
 			else
-				echo -n " (directory '$CLEAR' created)";
+				echoFile -n " (directory '$CLEAR' created)";
 			fi
 		fi
 		CLEAR_DIR=$(dirname "$CLEAR/${FILE}");
@@ -103,8 +115,8 @@ for FILE in "${FILES[@]}" ; do
 		fi
 	fi
 
-	echo " DONE ✓";
+	echoFile " DONE ✓";
 done
 
-echo ">> Setup-ing keys... DONE";
+echo -e "\n>> Setup-ing keys... DONE";
 

@@ -3,6 +3,18 @@ SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/../commons/commons.sh
 echo ">> Cleaning keys...";
 
+setIsCI;
+
+DEBUG_FILES=$IS_CI;
+# DEBUG_FILES=true;
+function echoFile() {
+	if [[ $DEBUG_FILES == true ]]; then
+		echo "$@";
+	else
+		echo -n ".";
+	fi
+}
+
 source ${SCRIPT_DIR}/keys_files.sh;
 
 if [[ ${#FILES[@]} -lt 1 ]]; then
@@ -15,10 +27,10 @@ CLEAR="${SCRIPT_DIR}/clr"
 for FILE in "${FILES[@]}" ; do
 	FILE_PATH="${SCRIPT_DIR}/${FILE}";
 	if [[ -z "${FILE_PATH}" ]]; then
-		echo "> Ignoring empty '$FILE_PATH'.";
+		echoFile "> Ignoring empty '$FILE_PATH'.";
 		continue;
 	fi
-	echo -n "> Cleaning '$FILE_PATH'...";
+	echoFile -n "> Cleaning '$FILE_PATH'...";
 
 	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
 	RESULT=$?;
@@ -50,11 +62,11 @@ for FILE in "${FILES[@]}" ; do
 		fi
 	fi
 
-	echo " DONE ✓";
+	echoFile " DONE ✓";
 done
 
 if [[ -d $CLEAR ]]; then
-	echo -n "> Deleting '$CLEAR' directory...";
+	echoFile -n "> Deleting '$CLEAR' directory...";
 	rm -r $CLEAR;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
@@ -62,9 +74,9 @@ if [[ -d $CLEAR ]]; then
 		ls -al $CLEAR;
 		exit ${RESULT};
 	else
-		echo " DONE ✓";
+		echoFile " DONE ✓";
 	fi
 fi
 
-echo ">> Cleaning keys... DONE";
+echo -e "\n>> Cleaning keys... DONE";
 

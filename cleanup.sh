@@ -17,6 +17,18 @@ setGradleArgs;
 
 setGitProjectName;
 
+setIsCI;
+
+DEBUG_FILES=$IS_CI;
+# DEBUG_FILES=true;
+function echoFile() {
+	if [[ $DEBUG_FILES == true ]]; then
+		echo "$@";
+	else
+		echo -n ".";
+	fi
+}
+
 if [[ -f "./gradlew" ]]; then
 	./gradlew clean ${GRADLE_ARGS};
 	checkResult $?;
@@ -51,19 +63,19 @@ function cleanupFile() {
 			git ls-files --error-unmatch ${REAL_DEST_FILE_PATH} &> /dev/null;
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
-				echo -n "> Cleaning-up '$REAL_DEST_FILE_PATH'...";
+				echoFile -n "> Cleaning-up '$REAL_DEST_FILE_PATH'...";
 				rm ${REAL_DEST_FILE_PATH};
 				RESULT=$?;
 				if [[ ${RESULT} -ne 0 ]]; then
 					echo " ERROR !";
 					exit ${RESULT};
 				fi
-				echo " DONE ✓";
+				echoFile " DONE ✓";
 			else
-				echo "> Cleaning-up '$REAL_DEST_FILE_PATH'... SKIP ✓ (tracked file could be generated)";
+				echoFile "> Cleaning-up '$REAL_DEST_FILE_PATH'... SKIP ✓ (tracked file could be generated)";
 			fi
 		else
-			echo "> Cleaning-up '$REAL_DEST_FILE_PATH'... SKIP ✓ (missing)";
+			echoFile "> Cleaning-up '$REAL_DEST_FILE_PATH'... SKIP ✓ (missing)";
 		fi
 		return; # no need to validate generated file content
 	fi
@@ -80,16 +92,16 @@ function cleanupFile() {
 			diff --color ${SRC_FILE_PATH} ${DEST_FILE_PATH};
 			exit ${RESULT};
 		fi
-		echo -n "> Cleaning-up '$DEST_FILE_PATH'...";
+		echoFile -n "> Cleaning-up '$DEST_FILE_PATH'...";
 		rm ${DEST_FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo " ERROR !";
 			exit ${RESULT};
 		fi
-		echo " DONE ✓";
+		echoFile " DONE ✓";
 	else
-		echo "> Cleaning-up '$DEST_FILE_PATH/'... SKIP ✓ (missing)";
+		echoFile "> Cleaning-up '$DEST_FILE_PATH/'... SKIP ✓ (missing)";
 	fi
 }
 
@@ -132,17 +144,17 @@ function cleanupDirectory() {
 			done
 		done
 		if ! [[ "$(ls -A ${DEST_FILE_PATH})" ]]; then
-			echo -n "> Cleaning-up '$DEST_FILE_PATH/' (empty)...";
+			echoFile -n "> Cleaning-up '$DEST_FILE_PATH/' (empty)...";
 			rm -r ${DEST_FILE_PATH};
 			local RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
 				echo " ERROR !";
 				exit ${RESULT};
 			fi
-			echo " DONE ✓";
+			echoFile " DONE ✓";
 		fi
 	else
-		echo "> Cleaning-up '$DEST_FILE_PATH/'... SKIP ✓ (missing)";
+		echoFile "> Cleaning-up '$DEST_FILE_PATH/'... SKIP ✓ (missing)";
 	fi
 }
 
@@ -234,7 +246,7 @@ else # modules
   done
 fi
 
-echo "--------------------------------------------------------------------------------";
+echo -e "\n--------------------------------------------------------------------------------";
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));

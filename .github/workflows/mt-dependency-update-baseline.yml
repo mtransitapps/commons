@@ -81,7 +81,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
       - name: MT dependency update baseline
         run: ./dependency_update_baseline.sh
       - name: MT commit new baseline

@@ -1,5 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
+source ${SCRIPT_DIR}/../commons/commons.sh
+
 declare -a FILES=(
 	"app-signing-release-keystore.keystore"
 	"app-signing-release-keys.properties"
@@ -25,5 +27,12 @@ if [[ -f "${SCRIPT_DIR}/google-services.json" ]]; then
     fi
 fi
 
-echo "> Files:";
-printf '> - "%s"\n' "${FILES[@]}";
+setIsCI;
+
+DEBUG_FILES=$IS_CI;
+# DEBUG_FILES=true;
+
+if [[ $DEBUG_FILES == true ]]; then
+	echo "> Files:";
+	printf '> - "%s"\n' "${FILES[@]}";
+fi

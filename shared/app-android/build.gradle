@@ -21,6 +21,7 @@ def isCI = gradle.ext.isCI
 println "> CI: " + isCI
 
 def isDevLeakCanaryOff = false
+def isDevStrictModeOff = false
 Properties devProperties = new Properties()
 def devPropertiesFile = file("dev.properties")
 if (!devPropertiesFile.exists()) {
@@ -29,8 +30,10 @@ if (!devPropertiesFile.exists()) {
 if (devPropertiesFile.exists()) {
     devProperties.load(new FileInputStream(devPropertiesFile))
     isDevLeakCanaryOff = devProperties["dev.leakCanaryOff"] == "true"
+    isDevStrictModeOff = devProperties["dev.strictModeOff"] == "true"
 }
 println "> DEV: Leak Canary OFF: " + isDevLeakCanaryOff
+println "> DEV: Strict Mode OFF: " + isDevStrictModeOff
 
 if (isMainApp) {
     apply plugin: libs.plugins.dependency.guard.get().pluginId
@@ -138,6 +141,7 @@ android {
         // App version name also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
         def appVersionName = sharedVersionName + "r" + appVersionCode
         versionName appVersionName
+        buildConfigField "boolean", "STRICT_MODE_OFF", "$isDevStrictModeOff"
         buildConfigField "String", "GIT_HASH", "\"$gitHash\""
         if (useGooglePlayUploadKeysProperties) {
             base.archivesName = "${projectName}_v${sharedVersionName}_r${appVersionCode}_upload"
