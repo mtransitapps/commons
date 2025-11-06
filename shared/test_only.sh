@@ -10,8 +10,6 @@ CURRENT_PATH=$(pwd);
 CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
 
-CONFIRM=false;
-
 setIsCI;
 
 setGradleArgs;
@@ -20,16 +18,16 @@ setGitProjectName;
 
 echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... ";
 ./gradlew :commons-java:test ${GRADLE_ARGS}; # build includes test
-checkResult $? ${CONFIRM};
+checkResult $?;
 
 if [[ -d "parser" ]]; then
 	./gradlew :parser:test ${GRADLE_ARGS}; # build includes test
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 fi
 
 if [[ -d "agency-parser" ]]; then
 	./gradlew :agency-parser:test ${GRADLE_ARGS}; # build includes test
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 fi
 
 echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
