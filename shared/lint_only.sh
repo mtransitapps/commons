@@ -6,12 +6,6 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
-AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
-
-CONFIRM=false;
-
 setIsCI;
 
 setGradleArgs;
@@ -24,12 +18,9 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 
 	echo ">> Running lint...";
 	../gradlew :app-android:lintDebug ${GRADLE_ARGS};
-	RESULT=$?;
-	checkResult ${RESULT};
+	checkResult $?;
 	echo ">> Running lint... DONE";
 fi
-
-checkResult ${RESULT};
 
 cd ..;
 

@@ -6,10 +6,10 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-./test_only.sh;
-checkResult $?;
+./test_only.sh
+checkResult $?
 
-./lint_only.sh;
+./lint_only.sh
 checkResult $?
 
 AFTER_DATE=$(date +%D-%X);
