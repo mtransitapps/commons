@@ -108,10 +108,7 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
     cd app-android || exit 1; # >>
 
     if [[ -f "keys_cleanup.sh" ]]; then
-      echo ">> Cleaning keys...";
-      ./keys_cleanup.sh;
-      echo "RESULT: $? (fail ok/expected)";
-      echo ">> Cleaning keys... DONE";
+      ./keys_cleanup.sh; # FAIL OK
     fi
 
     ./publish_to_current_users.sh;

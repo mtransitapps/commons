@@ -25,10 +25,7 @@ fi
 echo "> Git commit enabled ...";
 
 cd app-android || exit;
-echo ">> Cleaning keys...";
-./keys_cleanup.sh;
-echo "RESULT: $? (fail ok/expected)";
-echo ">> Cleaning keys... DONE";
+./keys_cleanup.sh; # FAIL OK
 cd ..;
 
 setGitUser;

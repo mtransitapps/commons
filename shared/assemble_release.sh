@@ -47,20 +47,16 @@ cd app-android || exit;
 
 if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 
-	echo ">> Setup-ing keys...";
 	./keys_setup.sh;
 	checkResult $?;
-	echo ">> Setup-ing keys... DONE";
 
 	echo ">> Running assemble release APK..."; # for GH release
 	../gradlew :app-android:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	echo ">> Running assemble release APK... DONE";
 
-	echo ">> Cleaning keys...";
 	./keys_cleanup.sh;
 	checkResult $?;
-	echo ">> Cleaning keys... DONE";
 
 	checkResult $RESULT;
 else
@@ -69,20 +65,16 @@ fi
 
 # ----------------------------------------
 
-echo ">> Setup-ing keys...";
 ./keys_setup.sh;
 checkResult $?;
-echo ">> Setup-ing keys... DONE";
 
 echo ">> Running bundle release AAB...";
 ../gradlew :app-android:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 
-echo ">> Cleaning keys...";
 ./keys_cleanup.sh;
 checkResult $?;
-echo ">> Cleaning keys... DONE";
 
 checkResult $RESULT;
 

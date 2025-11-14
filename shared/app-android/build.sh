@@ -97,10 +97,8 @@ fi
 
 if [[ ${IS_CI} = false ]]; then
 
-	echo ">> Setup-ing keys...";
 	./keys_setup.sh;
 	checkResult $?;
-	echo ">> Setup-ing keys... DONE";
 
 	echo ">> Running bundle release AAB...";
 	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
@@ -128,10 +126,8 @@ if [[ ${IS_CI} = false ]]; then
 		echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'... DONE";
 	fi
 
-	echo ">> Cleaning keys...";
 	./keys_cleanup.sh;
 	checkResult $?;
-	echo ">> Cleaning keys... DONE";
 
 fi
 
