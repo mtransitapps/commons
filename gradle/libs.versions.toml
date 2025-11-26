@@ -77,7 +77,7 @@ places-sdk = "5.0.0"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.4.4"
 # LATEST: https://developers.google.com/android/guides/releases
-gps-ads = "24.7.0"
+gps-ads = "24.8.0"
 gps-ump = "4.0.0"
 gps-basement = "18.9.0"
 gps-time = "16.0.1"
