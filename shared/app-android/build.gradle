@@ -231,9 +231,6 @@ android {
             // testCoverageEnabled false // DEBUG skip coverage report
             shrinkResources = false
             if (isMainApp) {
-                minifyEnabled = false
-                proguardFiles getDefaultProguardFile("proguard-android.txt"),
-                        "proguard-rules.pro"
                 multiDexEnabled = true
                 firebaseCrashlytics {
                     // https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?platform=android#keep_obfuscated_build_variants
@@ -243,8 +240,6 @@ android {
                     // https://firebase.google.com/docs/perf-mon/disable-sdk?platform=android#disable-gradle-plugin
                     instrumentationEnabled = false
                 }
-            } else {
-                minifyEnabled = false
             }
             aaptOptions.cruncherEnabled = false
         }
@@ -266,8 +261,10 @@ android {
                 proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), // "proguard-android.txt"),
                         "proguard-rules.pro"
             } else {
-                shrinkResources = false
-                minifyEnabled = false
+                shrinkResources = true
+                minifyEnabled = true
+                // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
+                proguardFiles getDefaultProguardFile("proguard-android-optimize.txt") // no code in module "app-android" -> no "proguard-rules.pro"
             }
         }
     }
