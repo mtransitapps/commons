@@ -82,7 +82,6 @@ jobs:
       - name: MT commit code change
         run: ./commit_code_change.sh
       - name: MT download data (& archive)
-        # if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.force-app-release == 'true' }}
         if: ${{ ! contains(github.repository, '-bike-') && ! endsWith(github.repository, '/mtransit-for-android') && github.event.inputs.skip-download-data == 'false' }}
         timeout-minutes: 10
         continue-on-error: true # optional (continue with archive data)
