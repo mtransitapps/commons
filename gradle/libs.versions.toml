@@ -77,7 +77,7 @@ places-sdk = "5.1.1"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.4.4"
 # LATEST: https://developers.google.com/android/guides/releases
-gps-ads = "24.8.0"
+gps-ads = "24.9.0"
 gps-ump = "4.0.0"
 gps-basement = "18.9.0"
 gps-time = "16.0.1"
@@ -85,7 +85,7 @@ gps-location = "21.3.0"
 gps-maps = "19.2.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "34.6.0"
+firebase-bom = "34.7.0"
 firebase-crashlytics-plugin = "3.0.6"
 firebase-perf-plugin = "2.0.2"
 play-billing = "8.2.0"
