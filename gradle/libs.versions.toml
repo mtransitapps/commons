@@ -71,7 +71,7 @@ material = "1.13.0"
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
 maps-utils = "3.20.1"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
-maps-ktx = "5.2.1"
+maps-ktx = "5.2.2"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
 places-sdk = "5.1.1"
 # https://developers.google.com/android/guides/google-services-plugin
