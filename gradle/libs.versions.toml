@@ -361,5 +361,5 @@ dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "depende
 # benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }
 # littlerobots-versioncatalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "littlerobots-versioncatalog" }
 gradle-doctor = { id = "com.osacky.doctor", version.ref = "gradle-doctor" }
-gradle-androidCacheFix = { id = "org.gradle.android.cache-fix", version.ref = "gradle-android-cache-fix" }
+gradle-androidCacheFix = { id = "org.gradle.android.cache-fix", version.ref = "gradle-androidCacheFix" }
 sonar = { id = "org.sonarqube", version.ref = "sonar" }
