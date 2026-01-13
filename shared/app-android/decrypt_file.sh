@@ -5,6 +5,7 @@ source ${SCRIPT_DIR}/../commons/commons.sh
 setIsCI;
 
 DEBUG_FILES=$IS_CI;
+# DEBUG_FILES=true;
 
 if [[ "$3" != "quiet" ]]; then
 	echo -n ">> Decrypting-ing file '$@'...";

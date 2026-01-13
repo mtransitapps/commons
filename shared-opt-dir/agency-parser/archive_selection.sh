@@ -70,6 +70,7 @@ fi
 GTFS_FILE="${SCRIPT_DIR}/input/gtfs.zip";
 GTFS_NEXT_FILE="${SCRIPT_DIR}/input/gtfs_next.zip";
 
+mkdir -p ${SCRIPT_DIR}/input;
 ls -l ${SCRIPT_DIR}/input/;
 
 if [[ -n "$CURRENT_ARCHIVE" ]]; then

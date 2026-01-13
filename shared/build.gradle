@@ -5,7 +5,7 @@ buildscript {
     }
 
     repositories {
-        mavenCentral {}
+        mavenCentral {} // https://repo.maven.apache.org/maven2
     }
     dependencies {
         // https://github.com/mtransitapps/commons/security/dependabot

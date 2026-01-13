@@ -7,20 +7,18 @@ echo ">> Pulling listing from Google Play Console...";
 # https://github.com/Triple-T/gradle-play-publisher#quickstart
 # gradlew help --task bootstrapListing
 
-echo ">> Setup-ing keys...";
+
+${SCRIPT_DIR}/keys_cleanup.sh; # FAIL OK
 ${SCRIPT_DIR}/keys_setup.sh;
 checkResult $?;
-echo ">> Setup-ing keys... DONE";
 
 setGradleArgs;
 
-${SCRIPT_DIR}/../gradlew bootstrapListing; # no ${GRADLE_ARGS} for release
+${SCRIPT_DIR}/../gradlew :app-android:bootstrapListing --app-details --listings --release-notes; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
-echo ">> Cleaning keys...";
 ${SCRIPT_DIR}/keys_cleanup.sh;
 checkResult $?;
-echo ">> Cleaning keys... DONE";
 
 checkResult $COMMAND_RESULT; # check command result after keys cleanup
 

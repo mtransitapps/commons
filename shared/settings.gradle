@@ -1,9 +1,8 @@
-// https://developer.android.com/studio/build#settings-file
-// https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:repository-content-filtering
-// https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:declaring-repository-filter
+// https://developer.android.com/build#settings-file
+// https://docs.gradle.org/current/userguide/filtering_repository_content.html
 pluginManagement {
     repositories {
-        google {
+        google { // https://dl.google.com/dl/android/maven2/
             content {
                 includeGroupByRegex("androidx\\..*")
                 includeGroupByRegex("com\\.android.*")
@@ -13,13 +12,14 @@ pluginManagement {
                 includeGroupByRegex("com\\.google\\.test.*")
             }
         }
-        gradlePluginPortal {}
+        gradlePluginPortal {} // https://plugins.gradle.org/
     }
 }
 
 plugins {
     id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
-    id "com.gradle.develocity" version "4.2.2"
+    // https://plugins.gradle.org/plugin/com.gradle.develocity
+    id "com.gradle.develocity" version "4.3"
 }
 
 Properties projectNameProperties = new Properties()
@@ -62,7 +62,7 @@ develocity {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google {
+        google { // https://dl.google.com/dl/android/maven2/
             content {
                 includeGroupByRegex("androidx\\..*")
                 includeGroupByRegex("com\\.android.*")
@@ -79,7 +79,7 @@ dependencyResolutionManagement {
                 includeGroupByRegex("com\\.pangle\\..*")
             }
         }
-        mavenCentral {}
+        mavenCentral {} // https://repo.maven.apache.org/maven2
     }
     versionCatalogs {
         libs {

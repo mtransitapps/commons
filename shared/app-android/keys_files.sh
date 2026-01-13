@@ -3,13 +3,13 @@ SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/../commons/commons.sh
 
 declare -a FILES=(
-	"app-signing-release-keystore.keystore"
 	"app-signing-release-keys.properties"
+	"app-signing-release-keystore.keystore"
 	"app-signing-release-keystore-encrypted.keystore"
 	"google-play-auto-publisher.json"
 	"google-play-upload-certificate.pem"
-	"google-play-upload-keystore.keystore"
 	"google-play-upload-keys.properties"
+	"google-play-upload-keystore.keystore"
 	"src/main/play/contact-email.txt"
 );
 

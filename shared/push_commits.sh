@@ -28,10 +28,7 @@ if [[ ${MT_SKIP_PUSH_COMMIT} == true ]]; then
 fi
 
 cd app-android || exit;
-echo ">> Cleaning keys...";
-./keys_cleanup.sh;
-echo "RESULT: $? (fail ok/expected)";
-echo ">> Cleaning keys... DONE";
+./keys_cleanup.sh; # FAIL OK
 cd ..;
 
 setGitUser;
