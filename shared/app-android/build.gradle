@@ -383,6 +383,7 @@ dependencies {
         implementation(libs.bundles.fb)
         implementation(libs.bundles.appLovin)
         implementation(libs.bundles.vungle)
+        implementation(libs.bundles.pangle)
         implementation(libs.bundles.retrofit)
         implementation(platform(libs.okhttp.bom))
         implementation(libs.bundles.okHttp)

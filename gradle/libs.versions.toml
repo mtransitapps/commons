@@ -102,6 +102,9 @@ appLovin-mediation = "13.5.1.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
 vungle-mediation = "7.6.2.0"
+# Pangle
+#pangle = "_._._" # included with nediation adapter
+pangle-mediation = "7.2.0.4.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.5.0-android"
 # https://github.com/square/leakcanary/releases
@@ -213,7 +216,7 @@ fbAudienceNetwork-mediation = { module = "com.google.ads.mediation:facebook", ve
 appLovin-mediation = { module = "com.google.ads.mediation:applovin", version.ref = "appLovin-mediation" }
 # vungle = { module = "com.vungle:vungle-ads", version.ref = "vungle" }
 vungle-mediation = { module = "com.google.ads.mediation:vungle", version.ref = "vungle-mediation" }
-# googleApiClient = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClient" }
+pangle-mediation = { module = "com.google.ads.mediation:pangle", version.ref = "pangle-mediation" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 slackLint = { module = "com.slack.lint:slack-lint-checks", version.ref = "slackLint" }
@@ -311,6 +314,9 @@ appLovin = [
 ]
 vungle = [
     "vungle-mediation",
+]
+pangle = [
+    "pangle-mediation",
 ]
 retrofit = [
     "retrofit",
