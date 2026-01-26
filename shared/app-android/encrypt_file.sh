@@ -28,6 +28,9 @@ if [[ -f $2 ]]; then
 	exit 1;
 fi
 
+DEST_DIRECTORY=$(dirname $2);
+mkdir -p $DEST_DIRECTORY;
+
 # openssl aes-256-cbc -md sha256 -salt -in $1 -out $2 -k ${MT_ENCRYPT_KEY};
 openssl aes-256-cbc -pbkdf2 -iter 7007 -md sha256 -salt -in $1 -out $2 -k ${MT_ENCRYPT_KEY};
 RESULT=$?;
