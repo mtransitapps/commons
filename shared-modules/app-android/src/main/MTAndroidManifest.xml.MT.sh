@@ -120,12 +120,30 @@ if [ -f "${GTFS_RT_FILE}" ]; then
             android:exported="true"
             android:readPermission="\${permission_provider_read}"
             tools:ignore="MissingRegistered">
+EOL
+  if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
+    cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
             <meta-data
                 android:name="@string/service_update_provider"
                 android:value="@string/service_update_provider" />
             <meta-data
                 android:name="@string/service_update_provider_target"
                 android:value="@string/gtfs_real_time_for_poi_authority" />
+EOL
+  fi
+
+  if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
+    cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+            <meta-data
+                android:name="@string/vehicle_location_provider"
+                android:value="@string/vehicle_location_provider" />
+            <meta-data
+                android:name="@string/vehicle_location_provider_target"
+                android:value="@string/gtfs_real_time_for_poi_authority" />
+EOL
+  fi
+
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         </provider>
 EOL
 fi
