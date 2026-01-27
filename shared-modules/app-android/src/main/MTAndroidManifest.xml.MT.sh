@@ -148,6 +148,38 @@ EOL
 EOL
 fi
 
+NEXT_BUS_FILE="${RES_VALUES_DIR}/next_bus_values.xml";
+if [ -f "${NEXT_BUS_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- NEXT BUS PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.NextBusProvider"
+            android:authorities="@string/next_bus_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/service_update_provider"
+                android:value="@string/service_update_provider" />
+            <meta-data
+                android:name="@string/service_update_provider_target"
+                android:value="@string/next_bus_for_poi_authority" />
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/next_bus_for_poi_authority" />
+             <meta-data
+                android:name="@string/vehicle_location_provider"
+                android:value="@string/vehicle_location_provider" />
+            <meta-data
+                android:name="@string/vehicle_location_provider_target"
+                android:value="@string/next_bus_for_poi_authority" />
+        </provider>
+EOL
+fi
+
 RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
 if [ -f "${RSS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
