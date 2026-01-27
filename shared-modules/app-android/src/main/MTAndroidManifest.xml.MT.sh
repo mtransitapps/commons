@@ -110,6 +110,9 @@ if [ -f "${GTFS_FILE}" ]; then
 EOL
 fi
 
+EXPORT_VEHICLE_LOCATION_PROVIDER=false;
+# EXPORT_VEHICLE_LOCATION_PROVIDER=true; # WIP
+
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
@@ -133,7 +136,8 @@ EOL
   fi
 
   if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
-    cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+    if [[ ${EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+      cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
             <meta-data
                 android:name="@string/vehicle_location_provider"
                 android:value="@string/vehicle_location_provider" />
@@ -141,6 +145,7 @@ EOL
                 android:name="@string/vehicle_location_provider_target"
                 android:value="@string/gtfs_real_time_for_poi_authority" />
 EOL
+    fi
   fi
 
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
@@ -170,12 +175,18 @@ if [ -f "${NEXT_BUS_FILE}" ]; then
             <meta-data
                 android:name="@string/status_provider_target"
                 android:value="@string/next_bus_for_poi_authority" />
+EOL
+  if [[ ${EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+    cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
              <meta-data
                 android:name="@string/vehicle_location_provider"
                 android:value="@string/vehicle_location_provider" />
             <meta-data
                 android:name="@string/vehicle_location_provider_target"
                 android:value="@string/next_bus_for_poi_authority" />
+EOL
+  fi
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         </provider>
 EOL
 fi
