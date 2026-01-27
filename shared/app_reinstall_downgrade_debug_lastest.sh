@@ -11,7 +11,7 @@ APK_FILE=$(find "$APK_DIR" -name "*.apk" 2>/dev/null | head -n 1);
 
 if [ -z "$APK_FILE" ] || [ ! -f "$APK_FILE" ]; then
     echo "APK file not found in $APK_DIR. Building...";
-    ./gradlew assembleDebug;
+    "${SCRIPT_DIR}"/gradlew assembleDebug;
     checkResult $?;
     APK_FILE=$(find "$APK_DIR" -name "*.apk" 2>/dev/null | head -n 1);
     if [ -z "$APK_FILE" ] || [ ! -f "$APK_FILE" ]; then
