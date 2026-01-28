@@ -375,6 +375,32 @@ if [ -f "${CA_REGINA_TRANSIT_PROVIDER_FILE}" ]; then
 EOL
 fi
 
+CA_WINNIPEG_TRANSIT_PROVIDER_FILE="${RES_VALUES_DIR}/winnipeg_transit_values.xml";
+if [ -f "${CA_WINNIPEG_TRANSIT_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- WINNIPEG TRANSIT PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.WinnipegTransitProvider"
+            android:authorities="@string/winnipeg_transit_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/winnipeg_transit_status_for_poi_authority" />
+            <meta-data
+                android:name="@string/news_provider"
+                android:value="@string/news_provider" />
+            <meta-data
+                android:name="@string/news_provider_target"
+                android:value="@string/winnipeg_transit_news_target_for_poi_authority" />
+        </provider>
+EOL
+fi
+
 RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
 if [ -f "${RSS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
