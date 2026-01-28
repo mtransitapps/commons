@@ -261,6 +261,26 @@ if [ -f "${CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE}" ]; then
 EOL
 fi
 
+CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE="${RES_VALUES_DIR}/greater_sudbury_values.xml";
+if [ -f "${CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- GREATER SUDBURY MYBUS PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.GreaterSudburyProvider"
+            android:authorities="@string/greater_sudbury_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/greater_sudbury_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
 CA_MONTREAL_STM_INFO_PROVIDER_FILE="${RES_VALUES_DIR}/stm_info_api_values.xml";
 if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
