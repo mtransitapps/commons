@@ -101,7 +101,7 @@ fbAudienceNetwork-mediation = "6.21.0.0"
 appLovin-mediation = "13.5.1.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
-vungle-mediation = "7.6.3.0"
+vungle-mediation = "7.6.3.1"
 # https://github.com/google/guava/releases/latest
 guava = "33.5.0-android"
 # https://github.com/square/leakcanary/releases
