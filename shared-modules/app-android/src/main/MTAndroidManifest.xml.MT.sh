@@ -38,6 +38,16 @@ cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         android:description="@string/app_desc"
         android:icon="@mipmap/module_app_icon"
         android:label="@string/app_name"
+EOL
+
+NETWORK_SECURITY_CONFIG_FILE="${MAIN_DIR}/res/xml/network_security_config.xml";
+if [ -f "${NETWORK_SECURITY_CONFIG_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        android:networkSecurityConfig="@xml/network_security_config"
+EOL
+fi
+
+cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         tools:targetApi="\${target_sdk_version}">
 EOL
 
