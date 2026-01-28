@@ -307,6 +307,34 @@ if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
 EOL
 fi
 
+CA_QUEBEC_RTC_PROVIDER_FILE="${RES_VALUES_DIR}/rtc_quebec_values.xml";
+if [ -f "${CA_QUEBEC_RTC_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- RTC QUEBEC PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.RTCQuebecProvider"
+            android:authorities="@string/rtc_quebec_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <!-- TODO: fix then re-enable
+            <meta-data
+                android:name="@string/service_update_provider"
+                android:value="@string/service_update_provider" />
+            <meta-data
+                android:name="@string/service_update_provider_target"
+                android:value="@string/rtc_quebec_service_update_for_poi_authority" />
+            -->
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/rtc_quebec_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
 RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
 if [ -f "${RSS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
