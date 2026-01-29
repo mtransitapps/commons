@@ -132,7 +132,6 @@ if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
     else
       echo "- TODO handle this case?";
       # - new one (future) is entirely inside archive (current)
-      # - new one (future) is actually entirely in the past and existing archive is in-progress
       # TODO ? exit 1;
     fi
     echo "--------------------"
