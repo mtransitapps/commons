@@ -94,9 +94,9 @@ checkResult $?;
 
 # ARCHIVES_COUNT=$(find $ARCHIVE_DIR/* -maxdepth 0 -type d | wc -l);
 HAS_CURRENT_ARCHIVE=false;
-ARCHIVES_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
-if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
-  for ARCHIVE in $(find $ARCHIVE_DIR -name "*.zip" -type f | sort -r) ; do
+mapfile -t ARCHIVES < <(find "$ARCHIVE_DIR" -name "*.zip" -type f | sort -r)
+if [[ "${#ARCHIVES[@]}" -gt 0 ]]; then
+  for ARCHIVE in "${ARCHIVES[@]}" ; do
     echo "--------------------"
     echo "- archive: $ARCHIVE";
     ARCHIVE_BASENAME=$(basename "$ARCHIVE");
