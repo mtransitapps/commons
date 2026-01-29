@@ -95,7 +95,27 @@ checkResult $?;
 # ARCHIVES_COUNT=$(find $ARCHIVE_DIR/* -maxdepth 0 -type d | wc -l);
 ARCHIVES_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
 if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
-  for ARCHIVE in $(find $ARCHIVE_DIR -name "*.zip" -type f) ; do
+  # First pass: check if we have a current archive (covering yesterday)
+  HAS_CURRENT_ARCHIVE=false;
+  for ARCHIVE in $(find $ARCHIVE_DIR -name "*.zip" -type f | sort -r) ; do
+    ARCHIVE_BASENAME=$(basename "$ARCHIVE");
+    ARCHIVE_BASENAME_NO_EXT="${ARCHIVE_BASENAME%.*}";
+    ARCHIVE_BASENAME_NO_EXT_PARTS=(${ARCHIVE_BASENAME_NO_EXT//-/ });
+    ARCHIVE_START_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[0]};
+    ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[1]};
+    # Check if this archive covers yesterday (is current)
+    if [[ "$ARCHIVE_START_DATE" -le "$YESTERDAY" && "$ARCHIVE_END_DATE" -ge "$YESTERDAY" ]]; then
+      HAS_CURRENT_ARCHIVE=true;
+      break;
+    fi
+  done
+  # Check if the new archive being added is current
+  if [[ "$START_DATE" -le "$YESTERDAY" && "$END_DATE" -ge "$YESTERDAY" ]]; then
+    HAS_CURRENT_ARCHIVE=true;
+  fi
+  
+  # Second pass: process archives in reverse chronological order (newest first)
+  for ARCHIVE in $(find $ARCHIVE_DIR -name "*.zip" -type f | sort -r) ; do
     echo "--------------------"
     echo "- archive: $ARCHIVE";
     ARCHIVE_BASENAME=$(basename "$ARCHIVE");
@@ -105,12 +125,12 @@ if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
     ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[1]};
     echo "- archive start date: '$ARCHIVE_START_DATE'";
     echo "- archive end date: '$ARCHIVE_END_DATE'";
-    if [[ "$ARCHIVE_END_DATE" -lt "$YESTERDAY" && "$ARCHIVE_END_DATE" -lt "$START_DATE" ]]; then
-      echo "- archive is entirely in the past & older than new one > REMOVE";
+    if [[ "$ARCHIVE_START_DATE" -eq "$START_DATE" && "$ARCHIVE_END_DATE" -eq "$END_DATE" ]]; then
+      echo "- archive is the same as the new one > REMOVE";
       rm -r "$ARCHIVE";
       checkResult $?;
-    elif [[ "$ARCHIVE_START_DATE" -eq "$START_DATE" && "$ARCHIVE_END_DATE" -eq "$END_DATE" ]]; then
-      echo "- archive is the same as the new one > REMOVE";
+    elif [[ "$ARCHIVE_END_DATE" -lt "$YESTERDAY" && "$HAS_CURRENT_ARCHIVE" = true ]]; then
+      echo "- archive is entirely in the past & current archive available > REMOVE";
       rm -r "$ARCHIVE";
       checkResult $?;
     elif [[ "$ARCHIVE_START_DATE" -ge "$START_DATE" && "$ARCHIVE_END_DATE" -le "$END_DATE" ]]; then
@@ -121,6 +141,8 @@ if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
       echo "- archive (after $YESTERDAY) is entirely inside the new (in-progress) one > REMOVE";
       rm -r "$ARCHIVE";
       checkResult $?;
+    elif [[ "$ARCHIVE_START_DATE" -le "$YESTERDAY" && "$ARCHIVE_END_DATE" -ge "$YESTERDAY" ]]; then
+      echo "- archive starts before $YESTERDAY and ends after > KEEP as CURRENT";
     elif [[ "$ARCHIVE_START_DATE" -gt "$END_DATE" && "$ARCHIVE_END_DATE" -gt "$YESTERDAY" ]]; then
       echo "- archive is entirely in the future & newer than new ZIP > KEEP";
     elif [[ "$ARCHIVE_END_DATE" -ge "$YESTERDAY" && "$ARCHIVE_END_DATE" -lt "$START_DATE" ]]; then
