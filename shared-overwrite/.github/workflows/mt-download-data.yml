@@ -48,3 +48,20 @@ jobs:
         timeout-minutes: 20
       - name: MT push commits
         run: ./push_commits.sh
+      - name: MT check if data is outdated
+        id: check-data-outdated
+        continue-on-error: true
+        run: |
+          if [[ -f "./agency-parser/check_data_outdated.sh" ]]; then
+            ./agency-parser/check_data_outdated.sh
+          else
+            echo ">> check_data_outdated.sh not found, skipping check.";
+            exit 0;
+          fi
+      - name: MT trigger sync code & data workflow
+        if: steps.check-data-outdated.outcome == 'failure'
+        run: |
+          echo ">> Data is outdated. Triggering mt-sync-code-data.yml workflow...";
+          gh workflow run mt-sync-code-data.yml --ref ${MT_GIT_BRANCH} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }}
