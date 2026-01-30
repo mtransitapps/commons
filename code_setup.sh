@@ -17,8 +17,6 @@ echo "Current directory: '$CURRENT_DIRECTORY'";
 
 setGitProjectName;
 
-setGitBranch;
-
 setIsCI;
 
 DEBUG_FILES=$IS_CI;
