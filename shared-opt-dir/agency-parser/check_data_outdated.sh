@@ -70,26 +70,26 @@ HAS_FUTURE_ARCHIVE=false;
 mapfile -t ARCHIVES < <(find "$ARCHIVE_DIR" -name "*.zip" -type f | sort)
 if [[ "${#ARCHIVES[@]}" -gt 0 ]]; then
   for ARCHIVE in "${ARCHIVES[@]}" ; do
-  ARCHIVE_BASENAME=$(basename "$ARCHIVE");
-  ARCHIVE_BASENAME_NO_EXT="${ARCHIVE_BASENAME%.*}";
-  ARCHIVE_BASENAME_NO_EXT_PARTS=(${ARCHIVE_BASENAME_NO_EXT//-/ });
-  ARCHIVE_START_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[0]};
-  ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[1]};
-  
-  echo "> Archive: $ARCHIVE_BASENAME (${ARCHIVE_START_DATE} to ${ARCHIVE_END_DATE})";
-  
-  # Check if archive is current (includes yesterday/today)
-  if [[ "$ARCHIVE_START_DATE" -le "$YESTERDAY" ]] && [[ "$ARCHIVE_END_DATE" -ge "$YESTERDAY" ]]; then
-    HAS_CURRENT_ARCHIVE=true;
-    echo "  - Current/in-progress archive";
-  fi
-  
-  # Check if archive is in the future
-  if [[ "$ARCHIVE_START_DATE" -gt "$YESTERDAY" ]]; then
-    HAS_FUTURE_ARCHIVE=true;
-    echo "  - Future archive";
-  fi
-done
+    ARCHIVE_BASENAME=$(basename "$ARCHIVE");
+    ARCHIVE_BASENAME_NO_EXT="${ARCHIVE_BASENAME%.*}";
+    ARCHIVE_BASENAME_NO_EXT_PARTS=(${ARCHIVE_BASENAME_NO_EXT//-/ });
+    ARCHIVE_START_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[0]};
+    ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[1]};
+    
+    echo "> Archive: $ARCHIVE_BASENAME (${ARCHIVE_START_DATE} to ${ARCHIVE_END_DATE})";
+    
+    # Check if archive is current (includes yesterday/today)
+    if [[ "$ARCHIVE_START_DATE" -le "$YESTERDAY" ]] && [[ "$ARCHIVE_END_DATE" -ge "$YESTERDAY" ]]; then
+      HAS_CURRENT_ARCHIVE=true;
+      echo "  - Current/in-progress archive";
+    fi
+    
+    # Check if archive is in the future
+    if [[ "$ARCHIVE_START_DATE" -gt "$YESTERDAY" ]]; then
+      HAS_FUTURE_ARCHIVE=true;
+      echo "  - Future archive";
+    fi
+  done
 fi
 
 # Determine if data is outdated
