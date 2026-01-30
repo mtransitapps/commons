@@ -29,7 +29,7 @@ get_last_departure_from_xml() {
   # Extract the last_departure_in_sec value from XML
   # Pattern matches lines like: <integer name="current_gtfs_rts_last_departure_in_sec">1782094500</integer>
   # or: <integer name="next_gtfs_rts_last_departure_in_sec">1782094500</integer>
-  grep -E "<integer name=\"[^\"]*_gtfs_rts_last_departure_in_sec\">[0-9]+</integer>" "$FILE" 2>/dev/null | tr -dc '0-9' || echo "";
+  grep -E "<integer name=\"[^\"]*_gtfs_rts_last_departure_in_sec\">[0-9]+</integer>$" "$FILE" 2>/dev/null | tr -dc '0-9' || echo "";
 }
 
 # Prefer "next" file if available, otherwise fallback to "current"
@@ -39,15 +39,27 @@ DATA_FILE_USED="";
 if [[ -f "$NEXT_VALUES" ]]; then
   DEPLOYED_LAST_DEPARTURE_SEC=$(get_last_departure_from_xml "$NEXT_VALUES");
   DATA_FILE_USED="next";
-  echo "> Using next data file.";
+  if [[ -n "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
+    echo "> Using next data file.";
+  else
+    echo "> Next data file found but timestamp not found.";
+  fi
 elif [[ -f "$CURRENT_VALUES" ]]; then
   DEPLOYED_LAST_DEPARTURE_SEC=$(get_last_departure_from_xml "$CURRENT_VALUES");
   DATA_FILE_USED="current";
-  echo "> Using current data file.";
+  if [[ -n "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
+    echo "> Using current data file.";
+  else
+    echo "> Current data file found but timestamp not found.";
+  fi
 fi
 
 if [[ -z "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
-  echo ">> No data files found or last departure timestamp not found. Data sync recommended.";
+  if [[ ! -f "$NEXT_VALUES" ]] && [[ ! -f "$CURRENT_VALUES" ]]; then
+    echo ">> No data files found. Data sync recommended.";
+  else
+    echo ">> Data files found but last departure timestamp not found. Data sync recommended.";
+  fi
   exit 1; # Exit code 1 means data is outdated/missing
 fi
 
@@ -97,8 +109,13 @@ if [[ "${#ARCHIVES[@]}" -gt 0 ]]; then
     
     echo "> Archive: $ARCHIVE_BASENAME (${ARCHIVE_START_DATE} to ${ARCHIVE_END_DATE})";
     
-    # Convert archive end date to timestamp (end of day)
-    # YYYYMMDD format to timestamp
+    # Validate archive date format
+    if [[ -z "$ARCHIVE_START_DATE" ]] || [[ -z "$ARCHIVE_END_DATE" ]]; then
+      echo "  - WARNING: Archive filename doesn't match expected format (YYYYMMDD-YYYYMMDD.zip)";
+      continue;
+    fi
+    
+    # Convert archive end date (YYYYMMDD) to timestamp at end of day (23:59:59)
     ARCHIVE_END_TIMESTAMP=$(date -d "${ARCHIVE_END_DATE} 23:59:59" +%s 2>/dev/null);
     
     if [[ -n "$ARCHIVE_END_TIMESTAMP" ]]; then
