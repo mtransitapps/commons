@@ -15,30 +15,8 @@ fi
 YESTERDAY=$(date -d "yesterday" +%Y%m%d);
 echo "> Yesterday: '$YESTERDAY'";
 
-# Function to extract last departure timestamp from schedule service dates file
-# These files are binary, but we'll check if they exist and their modification time
-get_last_date_from_schedule_file() {
-  local FILE=$1;
-  if [[ ! -f "$FILE" ]]; then
-    echo "";
-    return;
-  fi
-  # For binary files, we'll use file modification time as a proxy
-  # In a real implementation, this would parse the binary format
-  # The file name or modification date can indicate data freshness
-  stat -c %Y "$FILE" 2>/dev/null || echo "";
-}
-
-# Function to extract values from XML file
-get_value_from_xml() {
-  local FILE=$1;
-  local FIELD=$2;
-  if [[ ! -f "$FILE" ]]; then
-    echo "";
-    return;
-  fi
-  grep "<integer name=\"${FIELD}\">" "$FILE" 2>/dev/null | sed -E "s/.*<integer name=\"${FIELD}\">([^<]+)<\/integer>.*/\1/" || echo "";
-}
+# Note: Binary schedule_service_dates files and XML values files are checked for existence only.
+# Future enhancement: parse these files to extract actual last departure timestamps.
 
 # Check current and next data files
 CURRENT_SCHEDULE="${APP_ANDROID_DIR}/res-current/raw/current_gtfs_schedule_service_dates";
@@ -88,7 +66,10 @@ fi
 HAS_CURRENT_ARCHIVE=false;
 HAS_FUTURE_ARCHIVE=false;
 
-for ARCHIVE in $(find "$ARCHIVE_DIR" -name "*.zip" -type f | sort); do
+# Find archives and check them
+mapfile -t ARCHIVES < <(find "$ARCHIVE_DIR" -name "*.zip" -type f | sort)
+if [[ "${#ARCHIVES[@]}" -gt 0 ]]; then
+  for ARCHIVE in "${ARCHIVES[@]}" ; do
   ARCHIVE_BASENAME=$(basename "$ARCHIVE");
   ARCHIVE_BASENAME_NO_EXT="${ARCHIVE_BASENAME%.*}";
   ARCHIVE_BASENAME_NO_EXT_PARTS=(${ARCHIVE_BASENAME_NO_EXT//-/ });
@@ -109,6 +90,7 @@ for ARCHIVE in $(find "$ARCHIVE_DIR" -name "*.zip" -type f | sort); do
     echo "  - Future archive";
   fi
 done
+fi
 
 # Determine if data is outdated
 DATA_OUTDATED=false;
@@ -122,12 +104,6 @@ fi
 # If we have current data but NO next data, and future archive exists
 if [[ "$HAS_CURRENT_DATA" == true ]] && [[ "$HAS_NEXT_DATA" == false ]] && [[ "$HAS_FUTURE_ARCHIVE" == true ]]; then
   echo ">> Next data missing but future archive available. Data is OUTDATED.";
-  DATA_OUTDATED=true;
-fi
-
-# If we have archives but no data at all
-if [[ "$HAS_CURRENT_DATA" == false ]] && [[ "$HAS_NEXT_DATA" == false ]] && [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
-  echo ">> No data files but archives available. Data is OUTDATED.";
   DATA_OUTDATED=true;
 fi
 
