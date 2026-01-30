@@ -1,6 +1,7 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 name: MT sync code & data # download & parse
 on:
+  pull_request: # automatically skip download data & app release
   workflow_dispatch: # manual
     inputs:
       skip-download-data:
@@ -87,7 +88,7 @@ jobs:
       - name: MT commit code change
         run: ./commit_code_change.sh
       - name: MT download data (& archive)
-        if: ${{ ! contains(github.repository, '-bike-') && ! endsWith(github.repository, '/mtransit-for-android') && github.event.inputs.skip-download-data == 'false' }}
+        if: ${{ github.event_name != 'pull_request' && ! contains(github.repository, '-bike-') && ! endsWith(github.repository, '/mtransit-for-android') && github.event.inputs.skip-download-data == 'false' }}
         timeout-minutes: 10
         continue-on-error: true # optional (continue with archive data)
         run: ./download_only.sh
@@ -124,7 +125,7 @@ jobs:
       - name: MT commit data change
         run: ./commit_data_change.sh
       - name: MT set app release required (or not)
-        if: ${{ github.event.inputs.skip-app-release != 'true' }}
+        if: ${{ github.event_name != 'pull_request' && github.event.inputs.skip-app-release != 'true' }}
         run: ./set_app_release_required.sh
       - name: MT check if force app release
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.force-app-release == 'true' }}
@@ -137,13 +138,13 @@ jobs:
           MT_SKIP_PUSH_COMMIT=false;
           echo "MT_SKIP_PUSH_COMMIT=$MT_SKIP_PUSH_COMMIT" >> "$GITHUB_ENV";
       - name: MT assemble release (APK & ABB)
-        if: ${{ github.event.inputs.skip-app-release != 'true' }}
+        if: ${{ github.event_name != 'pull_request' && github.event.inputs.skip-app-release != 'true' }}
         run: ./assemble_release.sh
         env:
           GITHUB_TOKEN: ${{ secrets.MT_PAT }}
           MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
       - name: MT artifact > app-android > APK & ABB
-        if: ${{ github.event.inputs.skip-app-release != 'true' }}
+        if: ${{ github.event_name != 'pull_request' && github.event.inputs.skip-app-release != 'true' }}
         uses: actions/upload-artifact@v6
         with:
           name: app-android-apk-bundle
@@ -153,7 +154,7 @@ jobs:
       - name: MT push commits
         run: ./push_commits.sh
       - name: MT Publish release (?)
-        if: ${{ github.event.inputs.skip-app-release != 'true' }}
+        if: ${{ github.event_name != 'pull_request' && github.event.inputs.skip-app-release != 'true' }}
         run: ./publish_app_release.sh
         env:
           GITHUB_TOKEN: ${{ secrets.MT_PAT }}
