@@ -19,6 +19,14 @@ echo "> Current timestamp: '$NOW_TIMESTAMP_SEC'";
 CURRENT_VALUES="${APP_ANDROID_DIR}/res-current/values/current_gtfs_rts_values_gen.xml";
 NEXT_VALUES="${APP_ANDROID_DIR}/res-next/values/next_gtfs_rts_values_gen.xml";
 
+# DEBUG -----------------
+echo "> Current values file: '$CURRENT_VALUES'";
+head -n 5 "$CURRENT_VALUES";
+
+echo "> Next values file: '$NEXT_VALUES'";
+head -n 5 "$NEXT_VALUES";
+# DEBUG -----------------
+
 # Function to extract last departure timestamp from XML file
 get_last_departure_from_xml() {
   local FILE=$1;
@@ -29,7 +37,7 @@ get_last_departure_from_xml() {
   # Extract the last_departure_in_sec value from XML
   # Pattern matches lines like: <integer name="current_gtfs_rts_last_departure_in_sec">1782094500</integer>
   # or: <integer name="next_gtfs_rts_last_departure_in_sec">1782094500</integer>
-  grep -E "<integer name=\"[^\"]*_gtfs_rts_last_departure_in_sec\">[0-9]+</integer>$" "$FILE" 2>/dev/null | tr -dc '0-9' || echo "";
+  grep -E "<integer name=\"[^\"].*_gtfs_rts_last_departure_in_sec\">[0-9]+</integer>$" "$FILE" 2>/dev/null | tr -dc '0-9' || echo "";
 }
 
 # Prefer "next" file if available, otherwise fallback to "current"
@@ -53,6 +61,8 @@ elif [[ -f "$CURRENT_VALUES" ]]; then
     echo "> Current data file found but timestamp not found.";
   fi
 fi
+
+echo "DEPLOYED_LAST_DEPARTURE_SEC: $DEPLOYED_LAST_DEPARTURE_SEC.";
 
 if [[ -z "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
   if [[ ! -f "$NEXT_VALUES" ]] && [[ ! -f "$CURRENT_VALUES" ]]; then
