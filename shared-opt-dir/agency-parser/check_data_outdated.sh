@@ -19,14 +19,6 @@ echo "> Current timestamp: '$NOW_TIMESTAMP_SEC'";
 CURRENT_VALUES="${APP_ANDROID_DIR}/res-current/values/current_gtfs_rts_values_gen.xml";
 NEXT_VALUES="${APP_ANDROID_DIR}/res-next/values/next_gtfs_rts_values_gen.xml";
 
-# DEBUG -----------------
-echo "> Current values file: '$CURRENT_VALUES'";
-head -n 5 "$CURRENT_VALUES";
-
-echo "> Next values file: '$NEXT_VALUES'";
-head -n 5 "$NEXT_VALUES";
-# DEBUG -----------------
-
 # Function to extract last departure timestamp from XML file
 get_last_departure_from_xml() {
   local FILE=$1;

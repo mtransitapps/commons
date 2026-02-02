@@ -13,23 +13,6 @@ runs:
   using: "composite"
   steps:
 
-      - name: MT set environement variables
-        shell: bash
-        run: |
-          echo "[MT] > github.event_name: '${{ github.event_name }}''."
-          MT_IS_SUBMODULE=${{ contains(fromJSON('["mtransitapps/commons", "mtransitapps/commons-java", "mtransitapps/parser", "mtransitapps/commons-android"]'), github.repository) }}
-          echo "[MT] > set MT_IS_SUBMODULE='$MT_IS_SUBMODULE'."
-          echo "MT_IS_SUBMODULE=$MT_IS_SUBMODULE" >> $GITHUB_ENV
-          # 
-          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY.";
-          if [[ "$GITHUB_REPOSITORY" =~ ^mtransitapps/[a-zA-Z]{2}-.* ]]; then
-            MT_IS_AGENCY_REPO=true;
-          else
-            MT_IS_AGENCY_REPO=false;
-          fi
-          echo "[MT] > set MT_IS_AGENCY_REPO='$MT_IS_AGENCY_REPO'."
-          echo "MT_IS_AGENCY_REPO=$MT_IS_AGENCY_REPO" >> $GITHUB_ENV
-
       - name: MT check out submodules
         shell: bash
         run: ./checkout_submodules.sh
