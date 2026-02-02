@@ -51,13 +51,7 @@ jobs:
       - name: MT check if data is outdated
         id: check-data-outdated
         continue-on-error: true
-        run: |
-          if [[ -f "./agency-parser/check_data_outdated.sh" ]]; then
-            ./agency-parser/check_data_outdated.sh
-          else
-            echo ">> check_data_outdated.sh not found, skipping check.";
-            exit 0;
-          fi
+        run: ./agency-parser/check_data_outdated.sh
       - name: MT trigger sync code & data workflow
         if: steps.check-data-outdated.outcome == 'failure'
         run: |
