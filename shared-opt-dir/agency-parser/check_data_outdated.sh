@@ -37,7 +37,8 @@ get_last_departure_from_xml() {
   # Extract the last_departure_in_sec value from XML
   # Pattern matches lines like: <integer name="current_gtfs_rts_last_departure_in_sec">1782094500</integer>
   # or: <integer name="next_gtfs_rts_last_departure_in_sec">1782094500</integer>
-  grep -E "<integer name=\"[^\"].*_gtfs_rts_last_departure_in_sec\">[0-9]+</integer>$" "$FILE" 2>/dev/null | tr -dc '0-9' || echo "";
+  # grep -E "<integer name=\"[^\"]*_gtfs_rts_last_departure_in_sec\">[0-9]+</integer>" "$FILE" 2>/dev/null | tr -dc '0-9' || echo "";
+  grep -E "<integer name=\"[^\"]*_gtfs_rts_last_departure_in_sec\">[0-9]+</integer>" app-android/src/main/res-current/values/current_gtfs_rts_values_gen.xml | sed 's/[^[:digit:]]*\([[:digit:]]\+\).*/\1/' || echo "";
 }
 
 # Prefer "next" file if available, otherwise fallback to "current"
