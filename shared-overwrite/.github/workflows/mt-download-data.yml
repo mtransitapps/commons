@@ -62,6 +62,6 @@ jobs:
         if: steps.check-data-outdated.outcome == 'failure'
         run: |
           echo ">> Data is outdated. Triggering mt-sync-code-data.yml workflow...";
-          gh workflow run mt-sync-code-data.yml --ref ${MT_GIT_BRANCH} --repo ${{ github.repository }}
+          gh workflow run mt-sync-code-data.yml
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
