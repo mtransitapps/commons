@@ -56,11 +56,11 @@ fi
 
 if [[ -z "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
   if [[ ! -f "$NEXT_VALUES" ]] && [[ ! -f "$CURRENT_VALUES" ]]; then
-    echo ">> No data files found. Data sync recommended.";
+    echo ">> No data files found. Cannot determine if data is outdated.";
   else
-    echo ">> Data files found but last departure timestamp not found. Data sync recommended.";
+    echo ">> Data files found but last departure timestamp not found. Cannot determine if data is outdated.";
   fi
-  exit 1; # Exit code 1 means data is outdated/missing
+  exit 0; # Exit code 0 - avoid triggering sync when uncertain
 fi
 
 echo "> Deployed last departure timestamp: '$DEPLOYED_LAST_DEPARTURE_SEC' (from $DATA_FILE_USED)";
