@@ -63,8 +63,6 @@ elif [[ -f "$CURRENT_VALUES" ]]; then
   fi
 fi
 
-echo "DEPLOYED_LAST_DEPARTURE_SEC: $DEPLOYED_LAST_DEPARTURE_SEC.";
-
 if [[ -z "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
   if [[ ! -f "$NEXT_VALUES" ]] && [[ ! -f "$CURRENT_VALUES" ]]; then
     echo ">> No data files found. Cannot determine if data is outdated.";
