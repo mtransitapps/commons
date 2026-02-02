@@ -8,8 +8,6 @@ BEFORE_DATE_SEC=$(date +%s);
 
 setIsCI;
 
-setGitBranch;
-
 setGradleArgs;
 
 setGitCommitEnabled;
