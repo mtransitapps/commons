@@ -38,6 +38,16 @@ cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         android:description="@string/app_desc"
         android:icon="@mipmap/module_app_icon"
         android:label="@string/app_name"
+EOL
+
+NETWORK_SECURITY_CONFIG_FILE="${MAIN_DIR}/res/xml/network_security_config.xml";
+if [ -f "${NETWORK_SECURITY_CONFIG_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        android:networkSecurityConfig="@xml/network_security_config"
+EOL
+fi
+
+cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         tools:targetApi="\${target_sdk_version}">
 EOL
 
@@ -110,6 +120,9 @@ if [ -f "${GTFS_FILE}" ]; then
 EOL
 fi
 
+EXPORT_VEHICLE_LOCATION_PROVIDER=false;
+# EXPORT_VEHICLE_LOCATION_PROVIDER=true; # WIP
+
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
@@ -120,12 +133,270 @@ if [ -f "${GTFS_RT_FILE}" ]; then
             android:exported="true"
             android:readPermission="\${permission_provider_read}"
             tools:ignore="MissingRegistered">
+EOL
+  if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
+    cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
             <meta-data
                 android:name="@string/service_update_provider"
                 android:value="@string/service_update_provider" />
             <meta-data
                 android:name="@string/service_update_provider_target"
                 android:value="@string/gtfs_real_time_for_poi_authority" />
+EOL
+  fi
+
+  if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
+    if [[ ${EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+      cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+            <meta-data
+                android:name="@string/vehicle_location_provider"
+                android:value="@string/vehicle_location_provider" />
+            <meta-data
+                android:name="@string/vehicle_location_provider_target"
+                android:value="@string/gtfs_real_time_for_poi_authority" />
+EOL
+    fi
+  fi
+
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        </provider>
+EOL
+fi
+
+NEXT_BUS_FILE="${RES_VALUES_DIR}/next_bus_values.xml";
+if [ -f "${NEXT_BUS_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- NEXT BUS PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.NextBusProvider"
+            android:authorities="@string/next_bus_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/service_update_provider"
+                android:value="@string/service_update_provider" />
+            <meta-data
+                android:name="@string/service_update_provider_target"
+                android:value="@string/next_bus_for_poi_authority" />
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/next_bus_for_poi_authority" />
+EOL
+  if [[ ${EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+    cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+             <meta-data
+                android:name="@string/vehicle_location_provider"
+                android:value="@string/vehicle_location_provider" />
+            <meta-data
+                android:name="@string/vehicle_location_provider_target"
+                android:value="@string/next_bus_for_poi_authority" />
+EOL
+  fi
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        </provider>
+EOL
+fi
+
+STRATEGIC_MAPPING_FILE="${RES_VALUES_DIR}/strategic_mapping_values.xml";
+if [ -f "${STRATEGIC_MAPPING_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- STRATEGIC MAPPING PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.StrategicMappingProvider"
+            android:authorities="@string/strategic_mapping_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/strategic_mapping_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
+CA_EDMONTON_PROVIDER_FILE="${RES_VALUES_DIR}/ca_edmonton_values.xml";
+if [ -f "${CA_EDMONTON_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- EDMONTON PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.CaEdmontonProvider"
+            android:authorities="@string/ca_edmonton_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/ca_edmonton_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
+CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE="${RES_VALUES_DIR}/grand_river_transit_values.xml";
+if [ -f "${CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- GRAND RIVER TRANSIT PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.GrandRiverTransitProvider"
+            android:authorities="@string/grand_river_transit_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/grand_river_transit_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
+CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE="${RES_VALUES_DIR}/greater_sudbury_values.xml";
+if [ -f "${CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- GREATER SUDBURY MYBUS PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.GreaterSudburyProvider"
+            android:authorities="@string/greater_sudbury_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/greater_sudbury_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
+CA_MONTREAL_STM_INFO_PROVIDER_FILE="${RES_VALUES_DIR}/stm_info_api_values.xml";
+if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- STM INFO API PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.StmInfoApiProvider"
+            android:authorities="@string/stm_info_api_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/stm_info_api_status_for_poi_authority" />
+            <meta-data
+                android:name="@string/service_update_provider"
+                android:value="@string/service_update_provider" />
+            <meta-data
+                android:name="@string/service_update_provider_target"
+                android:value="@string/stm_info_api_service_update_for_poi_authority" />
+        </provider>
+EOL
+fi
+
+CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${RES_VALUES_DIR}/stm_info_values.xml";
+if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- STM.INFO PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.StmInfoSubwayProvider"
+            android:authorities="@string/stm_info_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/service_update_provider"
+                android:value="@string/service_update_provider" />
+            <meta-data
+                android:name="@string/service_update_provider_target"
+                android:value="@string/stm_info_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
+CA_QUEBEC_RTC_PROVIDER_FILE="${RES_VALUES_DIR}/rtc_quebec_values.xml";
+if [ -f "${CA_QUEBEC_RTC_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- RTC QUEBEC PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.RTCQuebecProvider"
+            android:authorities="@string/rtc_quebec_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <!-- TODO: fix then re-enable
+            <meta-data
+                android:name="@string/service_update_provider"
+                android:value="@string/service_update_provider" />
+            <meta-data
+                android:name="@string/service_update_provider_target"
+                android:value="@string/rtc_quebec_service_update_for_poi_authority" />
+            -->
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/rtc_quebec_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
+CA_REGINA_TRANSIT_PROVIDER_FILE="${RES_VALUES_DIR}/regina_transit_values.xml";
+if [ -f "${CA_REGINA_TRANSIT_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- REGINA TRANSIT PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.ReginaTransitProvider"
+            android:authorities="@string/regina_transit_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/regina_transit_status_for_poi_authority" />
+        </provider>
+EOL
+fi
+
+CA_WINNIPEG_TRANSIT_PROVIDER_FILE="${RES_VALUES_DIR}/winnipeg_transit_values.xml";
+if [ -f "${CA_WINNIPEG_TRANSIT_PROVIDER_FILE}" ]; then
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+        <!-- WINNIPEG TRANSIT PROVIDER -->
+        <provider
+            android:name="org.mtransit.android.commons.provider.WinnipegTransitProvider"
+            android:authorities="@string/winnipeg_transit_authority"
+            android:exported="true"
+            android:readPermission="\${permission_provider_read}"
+            tools:ignore="MissingRegistered">
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/winnipeg_transit_status_for_poi_authority" />
+            <meta-data
+                android:name="@string/news_provider"
+                android:value="@string/news_provider" />
+            <meta-data
+                android:name="@string/news_provider_target"
+                android:value="@string/winnipeg_transit_news_target_for_poi_authority" />
         </provider>
 EOL
 fi

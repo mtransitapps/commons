@@ -14,7 +14,7 @@ buildTools = "36.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "2.3.0" # sync w/ ksp
 # https://github.com/google/ksp/releases/latest
-ksp = "2.3.4"
+ksp = "2.3.5"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
 kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
@@ -69,9 +69,9 @@ material = "1.13.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "3.20.1"
+maps-utils = "4.0.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
-maps-ktx = "5.2.2"
+maps-ktx = "6.0.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
 places-sdk = "5.1.1"
 # https://developers.google.com/android/guides/google-services-plugin
@@ -101,7 +101,7 @@ fbAudienceNetwork-mediation = "6.21.0.0"
 appLovin-mediation = "13.5.1.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
-vungle-mediation = "7.6.3.0"
+vungle-mediation = "7.6.3.1"
 # https://github.com/google/guava/releases/latest
 guava = "33.5.0-android"
 # https://github.com/square/leakcanary/releases

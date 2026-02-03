@@ -89,6 +89,10 @@ if [[ -n "$CURRENT_ARCHIVE" ]]; then
   checkResult $?;
   echo "- Copying '$CURRENT_ARCHIVE' to '$GTFS_FILE'... DONE";
   echo ">> Using current archive... DONE";
+else
+  echo ">> Removing current archive...";
+  rm "$GTFS_FILE";
+  echo ">> Removing current archive... DONE";
 fi
 
 if [[ -n "$NEXT_ARCHIVE" ]]; then
@@ -107,6 +111,10 @@ if [[ -n "$NEXT_ARCHIVE" ]]; then
   checkResult $?;
   echo "- Copying '$NEXT_ARCHIVE' to '$GTFS_NEXT_FILE'... DONE";
   echo ">> Using next archive... DONE";
+else
+  echo ">> Removing next archive...";
+  rm "$GTFS_NEXT_FILE";
+  echo ">> Removing next archive... DONE";
 fi
 
 ls -l ${SCRIPT_DIR}/input/;

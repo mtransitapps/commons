@@ -108,7 +108,7 @@ com.github.bumptech.glide:okhttp3-integration:5.0.5
 com.github.chuckerteam.chucker:library-no-op:4.2.0
 com.google.ads.mediation:applovin:13.5.1.0
 com.google.ads.mediation:facebook:6.21.0.0
-com.google.ads.mediation:vungle:7.6.3.0
+com.google.ads.mediation:vungle:7.6.3.1
 com.google.android.datatransport:transport-api:3.2.0
 com.google.android.datatransport:transport-backend-cct:3.3.0
 com.google.android.datatransport:transport-runtime:3.3.0
@@ -164,9 +164,9 @@ com.google.guava:failureaccess:1.0.3
 com.google.guava:guava:33.5.0-android
 com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
 com.google.j2objc:j2objc-annotations:3.1
-com.google.maps.android:android-maps-utils:3.20.1
-com.google.maps.android:maps-ktx:5.2.2
-com.google.maps.android:maps-utils-ktx:5.2.2
+com.google.maps.android:android-maps-utils:4.0.0
+com.google.maps.android:maps-ktx:6.0.0
+com.google.maps.android:maps-utils-ktx:6.0.0
 com.google.protobuf:protobuf-javalite:3.25.6
 com.squareup.okhttp3:logging-interceptor:5.3.2
 com.squareup.okhttp3:okhttp-android:5.3.2
