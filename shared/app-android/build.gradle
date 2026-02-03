@@ -59,7 +59,7 @@ android {
     }
     kotlin {
         compilerOptions {
-            jvmTarget = rootProject.javaVersion
+            jvmTarget = rootProject.kotlinJvmTarget
             // allWarningsAsErrors = true // replaced by "DeprecatedCall" in lint
         }
     }

@@ -1,6 +1,7 @@
 buildscript {
     ext {
         javaVersion = JavaVersion.VERSION_11
+        kotlinJvmTarget = "JVM_11" // same as javaVersion
         javaToolchainVersion = JavaVersion.VERSION_17
     }
 
