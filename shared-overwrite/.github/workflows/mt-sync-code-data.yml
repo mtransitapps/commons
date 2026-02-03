@@ -112,17 +112,7 @@ jobs:
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' && github.event.inputs.delete-current-ids == 'true' }}
         run: |
           echo "Deleting all schedule files from app-android/src/main/res-*/ directories...";
-          if [ -d app-android/src/main ]; then
-            shopt -s nullglob;
-            for dir in app-android/src/main/res-*; do
-              if [ -d "$dir" ]; then
-                echo "Deleting files in $dir...";
-                find "$dir" -type f -exec rm -f {} +;
-              fi
-            done
-          else
-            echo "app-android/src/main directory does not exist.";
-          fi
+          rm -r app-android/src/main/res-*/;
           echo "Schedule files deletion completed.";
 
       - name: MT parse current
