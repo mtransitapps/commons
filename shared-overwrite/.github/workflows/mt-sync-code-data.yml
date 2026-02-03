@@ -112,8 +112,12 @@ jobs:
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' && github.event.inputs.delete-current-ids == 'true' }}
         run: |
           echo "Deleting current schedule files from app-android/src/main/res-*/ directories...";
-          find app-android/src/main/res-* -type f 2>/dev/null | xargs rm -fv || echo "No schedule files found to delete.";
-          echo "Schedule files deleted.";
+          if [ -d app-android/src/main ]; then
+            find app-android/src/main/res-* -type f -exec rm -fv {} + 2>/dev/null || echo "No schedule files found to delete.";
+          else
+            echo "app-android/src/main directory does not exist.";
+          fi
+          echo "Schedule files deletion completed.";
 
       - name: MT parse current
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
