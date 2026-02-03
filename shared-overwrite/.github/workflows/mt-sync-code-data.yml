@@ -19,8 +19,8 @@ on:
         type: boolean
         default: false
         required: false
-      delete-current-ids:
-        description: 'Delete current schedule IDs before parsing (clean unused IDs)'
+      reset-current-schedule:
+        description: 'Reset current schedule before parsing (delete all schedule files)'
         type: boolean
         default: false
         required: false
@@ -28,7 +28,7 @@ on:
     - cron: '0 12 * * 2' # Tuesdays @ 12pm UTC # WEEKLY https://crontab.guru/#0_12_*_*_2
 # gh workflow run mt-sync-code-data.yml --ref $(git rev-parse --abbrev-ref HEAD)
 # gh workflow run mt-sync-code-data.yml -f skip-download-data=true -f skip-app-release=true
-# gh workflow run mt-sync-code-data.yml -f delete-current-ids=true
+# gh workflow run mt-sync-code-data.yml -f reset-current-schedule=true
 # gh run list --workflow=mt-sync-code-data.yml
 # gh run watch ; gh browse --branch $(git rev-parse --abbrev-ref HEAD)
 concurrency:
@@ -108,8 +108,8 @@ jobs:
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         run: ./prepare_only.sh
 
-      - name: MT delete current schedule IDs
-        if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' && github.event.inputs.delete-current-ids == 'true' }}
+      - name: MT reset current schedule
+        if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' && github.event.inputs.reset-current-schedule == 'true' }}
         run: |
           echo "Deleting all schedule files from app-android/src/main/res-*/ directories...";
           rm -r app-android/src/main/res-*/;
