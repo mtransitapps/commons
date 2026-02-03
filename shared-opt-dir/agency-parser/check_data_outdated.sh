@@ -86,10 +86,10 @@ if [[ ! -d "$ARCHIVE_DIR" ]]; then
 fi
 
 # Find archives
-ARCHIVES_COUNT=$(find "$ARCHIVE_DIR" -name "*.zip" -type f 2>/dev/null | wc -l);
-echo "> Archives found: $ARCHIVES_COUNT";
+mapfile -t ARCHIVES < <(find "$ARCHIVE_DIR" -name "*.zip" -type f 2>/dev/null | sort)
+echo "> Archives found: ${#ARCHIVES[@]}";
 
-if [[ "$ARCHIVES_COUNT" -eq 0 ]]; then
+if [[ "${#ARCHIVES[@]}" -eq 0 ]]; then
   echo ">> No archives available. Data cannot be updated.";
   echo ">> Data is up-to-date (based on deployed data only).";
   exit 0;
@@ -99,36 +99,77 @@ fi
 ARCHIVE_HAS_NEWER_DATA=false;
 
 # Find archives and check them
-mapfile -t ARCHIVES < <(find "$ARCHIVE_DIR" -name "*.zip" -type f | sort)
-if [[ "${#ARCHIVES[@]}" -gt 0 ]]; then
-  for ARCHIVE in "${ARCHIVES[@]}" ; do
-    ARCHIVE_BASENAME=$(basename "$ARCHIVE");
-    ARCHIVE_BASENAME_NO_EXT="${ARCHIVE_BASENAME%.*}";
-    ARCHIVE_BASENAME_NO_EXT_PARTS=(${ARCHIVE_BASENAME_NO_EXT//-/ });
-    ARCHIVE_START_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[0]};
-    ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[1]};
-    
-    echo "> Archive: $ARCHIVE_BASENAME (${ARCHIVE_START_DATE} to ${ARCHIVE_END_DATE})";
-    
-    # Validate archive date format
-    if [[ -z "$ARCHIVE_START_DATE" ]] || [[ -z "$ARCHIVE_END_DATE" ]]; then
-      echo "  - WARNING: Archive filename doesn't match expected format (YYYYMMDD-YYYYMMDD.zip)";
-      continue;
+for ARCHIVE in "${ARCHIVES[@]}" ; do
+  ARCHIVE_BASENAME=$(basename "$ARCHIVE");
+  ARCHIVE_BASENAME_NO_EXT="${ARCHIVE_BASENAME%.*}";
+  
+  # Validate archive date format
+  if ! [[ "$ARCHIVE_BASENAME_NO_EXT" =~ ^[0-9]{8}-[0-9]{8}$ ]]; then
+    echo "> Archive: $ARCHIVE_BASENAME";
+    echo "  - WARNING: Archive filename doesn't match expected format (YYYYMMDD-YYYYMMDD.zip)";
+    continue;
+  fi
+  
+  ARCHIVE_START_DATE=${ARCHIVE_BASENAME_NO_EXT:0:8}
+  ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT:9:8}
+  echo "> Archive: $ARCHIVE_BASENAME (${ARCHIVE_START_DATE} to ${ARCHIVE_END_DATE})";
+  
+  # Convert archive end date (YYYYMMDD) to timestamp at end of day (23:59:59)
+  ARCHIVE_END_TIMESTAMP=$(date -d "${ARCHIVE_END_DATE} 23:59:59" +%s 2>/dev/null);
+  
+  if [[ -n "$ARCHIVE_END_TIMESTAMP" ]]; then
+    echo "  - Archive end timestamp: $ARCHIVE_END_TIMESTAMP";
+    # If archive has data beyond what's currently deployed, we need to sync
+    if [[ "$ARCHIVE_END_TIMESTAMP" -gt "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
+      echo "  - Archive has newer data than deployed!";
+      ARCHIVE_HAS_NEWER_DATA=true;
+      break; # Found newer data, no need to check other archives
     fi
-    
-    # Convert archive end date (YYYYMMDD) to timestamp at end of day (23:59:59)
-    ARCHIVE_END_TIMESTAMP=$(date -d "${ARCHIVE_END_DATE} 23:59:59" +%s 2>/dev/null);
-    
-    if [[ -n "$ARCHIVE_END_TIMESTAMP" ]]; then
-      echo "  - Archive end timestamp: $ARCHIVE_END_TIMESTAMP";
-      # If archive has data beyond what's currently deployed, we need to sync
-      if [[ "$ARCHIVE_END_TIMESTAMP" -gt "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
-        echo "  - Archive has newer data than deployed!";
-        ARCHIVE_HAS_NEWER_DATA=true;
-      fi
-    fi
-  done
-fi
+  fi
+done
+# ARCHIVES_COUNT=$(find "$ARCHIVE_DIR" -name "*.zip" -type f 2>/dev/null | wc -l);
+# echo "> Archives found: $ARCHIVES_COUNT";
+#
+# if [[ "$ARCHIVES_COUNT" -eq 0 ]]; then
+#   echo ">> No archives available. Data cannot be updated.";
+#   echo ">> Data is up-to-date (based on deployed data only).";
+#   exit 0;
+# fi
+#
+# # Check if any archive has data that extends beyond the deployed last departure
+# ARCHIVE_HAS_NEWER_DATA=false;
+#
+# # Find archives and check them
+# mapfile -t ARCHIVES < <(find "$ARCHIVE_DIR" -name "*.zip" -type f | sort)
+# if [[ "${#ARCHIVES[@]}" -gt 0 ]]; then
+#   for ARCHIVE in "${ARCHIVES[@]}" ; do
+#     ARCHIVE_BASENAME=$(basename "$ARCHIVE");
+#     ARCHIVE_BASENAME_NO_EXT="${ARCHIVE_BASENAME%.*}";
+#     ARCHIVE_BASENAME_NO_EXT_PARTS=(${ARCHIVE_BASENAME_NO_EXT//-/ });
+#     ARCHIVE_START_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[0]};
+#     ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[1]};
+#    
+#     echo "> Archive: $ARCHIVE_BASENAME (${ARCHIVE_START_DATE} to ${ARCHIVE_END_DATE})";
+#
+#     # Validate archive date format
+#     if [[ -z "$ARCHIVE_START_DATE" ]] || [[ -z "$ARCHIVE_END_DATE" ]]; then
+#       echo "  - WARNING: Archive filename doesn't match expected format (YYYYMMDD-YYYYMMDD.zip)";
+#       continue;
+#     fi
+#    
+#     # Convert archive end date (YYYYMMDD) to timestamp at end of day (23:59:59)
+#     ARCHIVE_END_TIMESTAMP=$(date -d "${ARCHIVE_END_DATE} 23:59:59" +%s 2>/dev/null);
+#    
+#     if [[ -n "$ARCHIVE_END_TIMESTAMP" ]]; then
+#       echo "  - Archive end timestamp: $ARCHIVE_END_TIMESTAMP";
+#       # If archive has data beyond what's currently deployed, we need to sync
+#       if [[ "$ARCHIVE_END_TIMESTAMP" -gt "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
+#         echo "  - Archive has newer data than deployed!";
+#         ARCHIVE_HAS_NEWER_DATA=true;
+#       fi
+#     fi
+#   done
+# fi
 
 # Determine if data is outdated based on archive availability
 if [[ "$ARCHIVE_HAS_NEWER_DATA" == true ]]; then
