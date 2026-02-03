@@ -116,7 +116,7 @@ jobs:
             for dir in app-android/src/main/res-*; do
               if [ -d "$dir" ]; then
                 echo "Deleting files in $dir...";
-                find "$dir" -type f -exec rm -fv {} +;
+                find "$dir" -type f -exec rm -f {} +;
               fi
             done
           else
