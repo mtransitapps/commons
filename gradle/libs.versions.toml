@@ -38,7 +38,7 @@ gradle-doctor = "0.12.1"
 # https://github.com/gradle/android-cache-fix-gradle-plugin/releases
 gradle-androidCacheFix = "3.0.3"
 # https://github.com/google/dagger/releases/latest
-hilt = "2.57.2"
+hilt = "2.59"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.12.2"
