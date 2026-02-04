@@ -79,18 +79,18 @@ jobs:
           ls -la commons/shared/gradle*
       - name: MT commit and push changes
         run: |
-          cd commons || exit;
+          cd commons || exit 1;
           git config user.name "$MT_BOT_USER_NAME";
           git config user.email "$MT_BOT_USER_EMAIL";
           git add -v shared/gradle*;
           git diff --staged --quiet || git commit -m "Update Gradle wrapper to ${{ inputs.gradle-version }}";
           git push;
-          cd .. || exit;
+          cd .. || exit 1;
       - name: MT create pull request
         env:
           GH_TOKEN: ${{ secrets.MT_PAT || secrets.GITHUB_TOKEN }}
         run: |
-          cd commons || exit;
+          cd commons || exit 1;
           PR_TITLE="Update Gradle wrapper to ${{ inputs.gradle-version }}"
           PR_BODY="This PR updates the Gradle wrapper to version ${{ inputs.gradle-version }}.
 
@@ -109,4 +109,4 @@ jobs:
             echo "Creating pull request..."
             gh pr create --title "$PR_TITLE" --body "$PR_BODY" --head "$MT_BRANCH_NAME" || echo "PR creation failed or PR already exists"
           fi
-          cd .. || exit;
+          cd .. || exit 1;
