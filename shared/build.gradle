@@ -1,6 +1,7 @@
 buildscript {
     ext {
         javaVersion = JavaVersion.VERSION_11
+        kotlinJvmTarget = "JVM_11" // same as javaVersion
         javaToolchainVersion = JavaVersion.VERSION_17
     }
 
@@ -23,7 +24,6 @@ plugins {
     alias(libs.plugins.android.lint) apply false
 
     alias(libs.plugins.kotlin.jvm) apply false
-    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlinx.serialization) apply false
     alias(libs.plugins.google.ksp) apply false
 

@@ -22,11 +22,11 @@ kotlinx-serialization = "1.10.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "7.2.2.6593"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "8.13.2"
+android-gradlePlugin = "9.0.0"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
-triplet-playPublisher = "3.13.0"
+triplet-playPublisher = "4.0.0"
 # https://github.com/dropbox/dependency-guard/releases/latest
 dependency-guard = "0.5.0"
 # # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
@@ -38,7 +38,7 @@ gradle-doctor = "0.12.1"
 # https://github.com/gradle/android-cache-fix-gradle-plugin/releases
 gradle-androidCacheFix = "3.0.3"
 # https://github.com/google/dagger/releases/latest
-hilt = "2.57.2"
+hilt = "2.59.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.12.2"
@@ -124,7 +124,7 @@ retrofit = "3.0.0"
 okhttp = "5.3.2"
 # https://github.com/ChuckerTeam/chucker/releases/latest
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
-chucker = "4.2.0"
+chucker = "4.3.0"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/main/CHANGELOG.md
 gson = "2.13.2"
@@ -221,6 +221,7 @@ playInsightLint = { module = "com.google.play.policy.insights:insights-lint", ve
 protobuf-compiler = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
 protobuf-javaLite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
+protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp" }
@@ -352,7 +353,6 @@ gms = { id = "com.google.gms.google-services", version.ref = "gps-plugin" }
 androidx-room = { id = "androidx.room", version.ref = "androidx-room" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 triplet-playPublisher = { id = "com.github.triplet.play", version.ref = "triplet-playPublisher" }
