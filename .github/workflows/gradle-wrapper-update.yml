@@ -20,6 +20,9 @@ jobs:
   MT-UPDATE-GRADLE-WRAPPER-JOB:
     name: "MT Update Gradle wrapper"
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: MT select main repo checkout branch
         id: mt-pick-main-repo-checkout-branch
