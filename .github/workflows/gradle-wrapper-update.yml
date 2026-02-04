@@ -76,10 +76,12 @@ jobs:
       - name: MT copy gradle files to commons/shared
         run: |
           echo "Copying gradle files to commons/shared/..."
-          cp -R ./gradle* commons/shared/
+          cp -R ./gradle commons/shared/
+          cp ./gradlew commons/shared/
+          cp ./gradlew.bat commons/shared/
           echo "Files copied successfully."
           echo "Verifying copied files:"
-          ls -la commons/shared/gradle*
+          ls -la commons/shared/gradle commons/shared/gradlew*
       - name: MT commit and push changes
         run: |
           cd commons || exit 1;
