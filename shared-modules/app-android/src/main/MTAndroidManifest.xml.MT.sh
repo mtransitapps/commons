@@ -35,7 +35,7 @@ cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
     tools:ignore="MissingVersion">
 
     <!-- READ_PROVIDER: required to read modules data -->
-    <uses-permission android:name="${permission_provider_read}" />
+    <uses-permission android:name="\${permission_provider_read}" />
 
     <application
         android:description="@string/app_desc"
