@@ -68,10 +68,10 @@ echo "> Deployed last departure timestamp: '$DEPLOYED_LAST_DEPARTURE_SEC' (from 
 
 # Check if deployed data is not outdated (last departure is in the future)
 if [[ "$DEPLOYED_LAST_DEPARTURE_SEC" -gt "$NOW_TIMESTAMP_SEC" ]]; then
-  DIFF_SEC=$((NOW_TIMESTAMP_SEC - DEPLOYED_LAST_DEPARTURE_SEC));
+  DIFF_SEC=$((DEPLOYED_LAST_DEPARTURE_SEC - NOW_TIMESTAMP_SEC));
   DIFF_DAYS=$((DIFF_SEC / 86400));
-  echo ">> Deployed data has not experied. Last departure will be in $DIFF_DAYS days.";
-  echo ">> Data is Not outdated. Sync not recommended.";
+  echo ">> Deployed data has not expired. Last departure will be in $DIFF_DAYS days.";
+  echo ">> Data is not outdated. Sync not recommended.";
   exit 0; # Exit code 0 indicates data is not outdated
 fi
 
