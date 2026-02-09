@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'gradle/libs.versions.toml'
+      - 'shared/settings.gradle'
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.head_ref }}
   cancel-in-progress: true
