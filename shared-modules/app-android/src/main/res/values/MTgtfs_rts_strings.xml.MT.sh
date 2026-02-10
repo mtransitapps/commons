@@ -59,11 +59,16 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
+GTFS_CONFIG_DIR="${CONFIG_DIR}/gtfs";
 GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
+AGENCY_JSON_FILE="${GTFS_CONFIG_DIR}/agency.json";
 TYPE=-1;
 if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
   TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
+elif [ -f $AGENCY_JSON_FILE ]; then
+  # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
+  TYPE=$(grep -E "\"target_route_type_id\": [0-9]+,$" $AGENCY_JSON_FILE | tr -dc '0-9')
 else
   echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE)"
   exit 1 # error

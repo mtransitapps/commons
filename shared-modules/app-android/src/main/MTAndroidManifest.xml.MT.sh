@@ -85,7 +85,7 @@ if [ -f "${BIKE_STATION_FILE}" ]; then
 EOL
 fi
 
-GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
+GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "${GTFS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- GTFS ROUTE DIRECTION STOP & SCHEDULE PROVIDER -->
