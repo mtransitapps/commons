@@ -70,7 +70,7 @@ if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
 elif [ -f $AGENCY_JSON_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "\"target_route_type_id\": [0-9]+,$" $AGENCY_JSON_FILE | tr -dc '0-9')
+  TYPE=$(jq '.target_route_type_id' "$AGENCY_JSON_FILE")
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   TYPE=$(grep -E "<integer name=\"bike_station_agency_type\">[0-9]+</integer>$" $BIKE_STATION_VALUES_FILE | tr -dc '0-9')
 else
