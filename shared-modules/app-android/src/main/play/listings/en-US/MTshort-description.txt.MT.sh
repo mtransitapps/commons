@@ -58,6 +58,9 @@ fi
 
 AGENCY_LABEL=$AGENCY_NAME_LONG;
 
+command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
+command -v jq >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y jq);
+
 GTFS_CONFIG_DIR="${CONFIG_DIR}/gtfs";
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";

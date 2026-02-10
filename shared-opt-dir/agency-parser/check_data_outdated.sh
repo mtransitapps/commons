@@ -23,6 +23,8 @@ NEXT_VALUES="${APP_ANDROID_DIR}/res-next/values/next_gtfs_rts_values_gen.xml";
 DEPLOYED_LAST_DEPARTURE_SEC="";
 DATA_FILE_USED="";
 
+command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
+
 if [[ -f "$NEXT_VALUES" ]]; then
   DEPLOYED_LAST_DEPARTURE_SEC=$(xmllint --xpath "//resources/integer[@name='next_gtfs_rts_last_departure_in_sec']/text()" "$NEXT_VALUES")
   DATA_FILE_USED="next";

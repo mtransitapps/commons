@@ -53,7 +53,7 @@ if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
         CURRENT_ARCHIVE="$ARCHIVE";
         CURRENT_ARCHIVE_START_DATE=$ARCHIVE_START_DATE;
         CURRENT_ARCHIVE_END_DATE=$ARCHIVE_END_DATE;
-      elif [[ -z "$NEXT_ARCHIVE_START_DATE" && "$ARCHIVE_START_DATE" -lt "$NEXT_ARCHIVE_START_DATE" ]]; then
+      elif [[ -z "$NEXT_ARCHIVE_START_DATE" || "$ARCHIVE_START_DATE" -lt "$NEXT_ARCHIVE_START_DATE" ]]; then
         echo "- archive is newer than previous next one > KEEP as NEXT";
         NEXT_ARCHIVE="$ARCHIVE";
         NEXT_ARCHIVE_START_DATE=$ARCHIVE_START_DATE;

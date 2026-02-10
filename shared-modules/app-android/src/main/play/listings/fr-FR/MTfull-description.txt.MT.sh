@@ -177,6 +177,9 @@ if [ ! -z "$SOURCE_NAME" ]; then
   ((INDEX++))
 fi
 
+command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
+command -v jq >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y jq);
+
 GTFS_CONFIG_DIR="${CONFIG_DIR}/gtfs";
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";
@@ -237,8 +240,6 @@ if [ -f "$GTFS_RDS_VALUES_FILE" ]; then
 fi
 
 PROVIDES_LINE="${PROVIDES_LINE} des $TYPE_LABEL";
-
-xmllint --version || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
 
 PROVIDES_LINE_END="";
 
@@ -315,9 +316,9 @@ fi
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
-    PROVIDES_LINE_END=" et alertes de service en temps-réel ${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=" et alertes de service en temps-réel${PROVIDES_LINE_END}";
   else 
-    PROVIDES_LINE_END=", alertes de service en temps-réel ${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=", alertes de service en temps-réel${PROVIDES_LINE_END}";
   fi
 fi
 
