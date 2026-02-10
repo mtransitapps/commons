@@ -113,8 +113,8 @@ BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
 if [ -f "$BIKE_STATION_FILE" ]; then
   SHORT_DESC="${SHORT_DESC} Disponibilité.";
 fi
-GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
-if [ -f "$GTFS_FILE" ]; then
+GTFS_RDS_VALUES_FILE="${RES_VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
+if [ -f "$GTFS_RDS_VALUES_FILE" ]; then
   SHORT_DESC="${SHORT_DESC} Horaire.";
 fi
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";

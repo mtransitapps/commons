@@ -227,8 +227,8 @@ if [ -f "$BIKE_STATION_FILE" ]; then
   fi
   INFORMATION_LIST="${INFORMATION_LIST}disponibilité";
 fi
-GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
-if [ -f "$GTFS_FILE" ]; then
+GTFS_RDS_VALUES_FILE="${RES_VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
+if [ -f "$GTFS_RDS_VALUES_FILE" ]; then
   PROVIDES_LINE="${PROVIDES_LINE} les horaires (accessible hors-ligne)";
   if [ ! -z "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
@@ -324,12 +324,12 @@ fi
 PROVIDES_LINE="${PROVIDES_LINE}${PROVIDES_LINE_END}";
 
 OPERATE_IN=""
-if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
+if [ -f $GTFS_RDS_VALUES_FILE ]; then
   OPERATE_IN="desservent"
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   OPERATE_IN="sont disponibles à"
 else
-  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo " > No agency file! (rds:$GTFS_RDS_VALUES_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 
