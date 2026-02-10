@@ -22,7 +22,7 @@ mkdir -p "${EN_US_DIR}";
 checkResult $?;
 if [ -f "${FULL_DESCRIPTION_FILE}" ]; then
   echo ">> File '$FULL_DESCRIPTION_FILE' already exist."; # compat with existing full-description.txt
-  # exit 0; # compat w/ manually created file
+  exit 0; # compat w/ manually created file
 fi
 
 rm -f "${FULL_DESCRIPTION_FILE}";
