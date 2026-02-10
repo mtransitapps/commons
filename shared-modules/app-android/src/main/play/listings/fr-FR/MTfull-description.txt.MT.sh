@@ -310,9 +310,9 @@ fi
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
-    PROVIDES_LINE_END=" et alertes de service en temps-réel ${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=" et alertes de service en temps-réel${PROVIDES_LINE_END}";
   else 
-    PROVIDES_LINE_END=", alertes de service en temps-réel ${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=", alertes de service en temps-réel${PROVIDES_LINE_END}";
   fi
 fi
 
