@@ -11,6 +11,8 @@ setGitProjectName;
 
 echo ">> Generating feature-graphic/1.png...";
 
+MT_GENERATE_IMAGES=true; #DEBUG
+
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
