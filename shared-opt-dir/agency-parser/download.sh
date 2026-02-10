@@ -38,7 +38,7 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GIT_STAGED_CHANGES=$?; # 0 if no changes
   echo "> Adding ZIP archives changes to git...";
-  git add -v "$ARCHIVE_DIR/.";
+  git -C "$ARCHIVE_DIR" add -v .;
   checkResult $? false;
   git -C "$ARCHIVE_DIR" status -sb;
 
