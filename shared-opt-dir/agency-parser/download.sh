@@ -35,6 +35,8 @@ if [[ -e "$FILE_PATH/input_url_next" ]]; then
 fi
 
 if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
+  git -C "$ARCHIVE_DIR" diff --staged --quiet;
+  GIT_STAGED_CHANGES=$?; # 0 if no changes
   echo "> Adding ZIP archives changes to git...";
   git add -v "$ARCHIVE_DIR/.";
   checkResult $? false;
@@ -44,7 +46,7 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   MT_SKIP_PUSH_COMMIT=true
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GTFS_ARCHIVE_UPDATED=$?; # 0 if no changes
-  if [[ $GTFS_ARCHIVE_UPDATED -gt 0 ]]; then
+  if [[ $GTFS_ARCHIVE_UPDATED -gt 0 && $GIT_STAGED_CHANGES -eq 0 ]]; then
     git -C "$ARCHIVE_DIR" commit -m "CI: Update GTFS archives"
     checkResult $?;
     MT_SKIP_PUSH_COMMIT=false
