@@ -9,8 +9,8 @@ setGitProjectName;
 
 setIsCI;
 
-GTFS_FILE="${ROOT_DIR}/app-android/src/main/res/values/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
-if [ ! -f "${GTFS_FILE}" ]; then
+GTFS_RDS_VALUES_FILE="${ROOT_DIR}/app-android/src/main/res/values/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
+if [ ! -f "${GTFS_RDS_VALUES_FILE}" ]; then
     echo ">> Generating gtfs_rts_strings.xml... SKIP (not an rds agency)";
     exit 0; # ok
 fi
