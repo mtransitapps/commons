@@ -19,26 +19,12 @@ echo "> Current timestamp: '$NOW_TIMESTAMP_SEC'";
 CURRENT_VALUES="${APP_ANDROID_DIR}/res-current/values/current_gtfs_rts_values_gen.xml";
 NEXT_VALUES="${APP_ANDROID_DIR}/res-next/values/next_gtfs_rts_values_gen.xml";
 
-# Function to extract last departure timestamp from XML file
-get_last_departure_from_xml() {
-  local FILE=$1;
-  if [[ ! -f "$FILE" ]]; then
-    echo "";
-    return;
-  fi
-  # Extract the last_departure_in_sec value from XML
-  # Pattern matches lines like: 
-  # <integer name="current_gtfs_rts_last_departure_in_sec">1782094500</integer>
-  # <integer name="next_gtfs_rts_last_departure_in_sec">1782094500</integer> <!-- with comments -->
-  grep -E "<integer name=\"[^\"]*_gtfs_rts_last_departure_in_sec\">[0-9]+</integer>" "$FILE" 2>/dev/null | sed 's/[^[:digit:]]*\([[:digit:]]\+\).*/\1/' || echo "";
-}
-
 # Prefer "next" file if available, otherwise fallback to "current"
 DEPLOYED_LAST_DEPARTURE_SEC="";
 DATA_FILE_USED="";
 
 if [[ -f "$NEXT_VALUES" ]]; then
-  DEPLOYED_LAST_DEPARTURE_SEC=$(get_last_departure_from_xml "$NEXT_VALUES");
+  DEPLOYED_LAST_DEPARTURE_SEC=$(xmllint --xpath "//resources/integer[@name='next_gtfs_rts_last_departure_in_sec']/text()" "$NEXT_VALUES")
   DATA_FILE_USED="next";
   if [[ -n "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
     echo "> Using next data file.";
@@ -46,7 +32,7 @@ if [[ -f "$NEXT_VALUES" ]]; then
     echo "> Next data file found but timestamp not found.";
   fi
 elif [[ -f "$CURRENT_VALUES" ]]; then
-  DEPLOYED_LAST_DEPARTURE_SEC=$(get_last_departure_from_xml "$CURRENT_VALUES");
+  DEPLOYED_LAST_DEPARTURE_SEC=$(xmllint --xpath "//resources/integer[@name='current_gtfs_rts_last_departure_in_sec']/text()" "$CURRENT_VALUES")
   DATA_FILE_USED="current";
   if [[ -n "$DEPLOYED_LAST_DEPARTURE_SEC" ]]; then
     echo "> Using current data file.";
