@@ -262,8 +262,8 @@ android {
                 proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), // "proguard-android.txt"),
                         "proguard-rules.pro"
             } else {
-                shrinkResources = true
-                minifyEnabled = true
+                shrinkResources = false
+                minifyEnabled = false
                 // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
                 proguardFiles getDefaultProguardFile("proguard-android-optimize.txt") // no code in module "app-android" -> no "proguard-rules.pro"
             }
