@@ -4,6 +4,7 @@ SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="$SCRIPT_DIR/../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
+source ${COMMONS_DIR}/feature_flags.sh;
 
 setIsCI;
 
@@ -123,8 +124,7 @@ if [ -f "${GTFS_FILE}" ]; then
 EOL
 fi
 
-EXPORT_VEHICLE_LOCATION_PROVIDER=false;
-# EXPORT_VEHICLE_LOCATION_PROVIDER=true; # WIP
+setFeatureFlags;
 
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
@@ -147,9 +147,8 @@ EOL
                 android:value="@string/gtfs_real_time_for_poi_authority" />
 EOL
   fi
-
   if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
-    if [[ ${EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+    if [[ ${F_EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
       cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
             <meta-data
                 android:name="@string/vehicle_location_provider"
@@ -189,7 +188,7 @@ if [ -f "${NEXT_BUS_FILE}" ]; then
                 android:name="@string/status_provider_target"
                 android:value="@string/next_bus_for_poi_authority" />
 EOL
-  if [[ ${EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+  if [[ ${F_EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
     cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
              <meta-data
                 android:name="@string/vehicle_location_provider"

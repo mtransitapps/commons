@@ -4,6 +4,7 @@ SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="$SCRIPT_DIR/../../../../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
+source ${COMMONS_DIR}/feature_flags.sh;
 
 setGitProjectName;
 
@@ -307,12 +308,33 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   # fi
 fi
 
+setFeatureFlags;
+
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
+  RT_LINE="";
+  if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
+    if [ -z "$RT_LINE" ]; then
+      RT_LINE="";
+    else 
+      RT_LINE="${RT_LINE}, ";
+    fi
+    RT_LINE="${RT_LINE}alertes de service";
+  fi
+  if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
+    if [[ ${F_EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+      if [ -z "$RT_LINE" ]; then
+        RT_LINE="";
+      else 
+        RT_LINE="${RT_LINE}, ";
+      fi
+      RT_LINE="${RT_LINE}positions des véhicules";
+    fi
+  fi
   if [ -z "$PROVIDES_LINE_END" ]; then
-    PROVIDES_LINE_END=" et alertes de service en temps-réel${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=" et ${RT_LINE} en temps-réel${PROVIDES_LINE_END}";
   else 
-    PROVIDES_LINE_END=", alertes de service en temps-réel${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=", ${RT_LINE} en temps-réel${PROVIDES_LINE_END}";
   fi
 fi
 
