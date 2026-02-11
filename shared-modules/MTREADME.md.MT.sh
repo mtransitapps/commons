@@ -65,8 +65,8 @@ if [ -z "$PKG" ]; then
     exit 1;
 fi
 
-command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
-command -v jq >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y jq);
+requireCommand "xmllint" "libxml2-utils";
+requireCommand "jq";
 
 GTFS_CONFIG_DIR="${CONFIG_DIR}/gtfs";
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";

@@ -332,6 +332,12 @@ function setGradleArgs() {
 	fi
 }
 
+function requireCommand() {
+	local cmd=$1
+	local pkg=${2:-$cmd} # Default to cmd if pkg is not provided
+	command -v "$cmd" >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y "$pkg")
+}
+
 # set current working directory to the directory of the script
 function setCurrentDirectory() {
 	if [[ "$#" -lt 1 ]]; then

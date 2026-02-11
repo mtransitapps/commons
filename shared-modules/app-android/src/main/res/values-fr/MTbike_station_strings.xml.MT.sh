@@ -65,7 +65,7 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
-command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
+requireCommand "xmllint" "libxml2-utils";
 
 VALUES_DIR="${RES_DIR}/values";
 BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml"

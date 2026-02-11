@@ -68,8 +68,8 @@ if [ -f "$AGENCY_LOCATION_FILE" ]; then
     fi
 fi
 
-command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
-command -v jq >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y jq);
+requireCommand "xmllint" "libxml2-utils";
+requireCommand "jq";
 
 GTFS_CONFIG_DIR="${CONFIG_DIR}/gtfs";
 RES_DIR="${MAIN_DIR}/res";

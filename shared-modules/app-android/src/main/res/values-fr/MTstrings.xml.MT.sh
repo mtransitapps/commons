@@ -59,8 +59,8 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
-command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
-command -v jq >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y jq);
+requireCommand "xmllint" "libxml2-utils";
+requireCommand "jq";
 
 GTFS_CONFIG_DIR="${CONFIG_DIR}/gtfs";
 VALUES_DIR="${RES_DIR}/values";
