@@ -127,9 +127,9 @@ else
 fi
 
 LOCATION_LABEL="";
-if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+if [ -n "$AGENCY_LOCATION_SHORT" ]; then
     LOCATION_LABEL="$AGENCY_LOCATION_SHORT";
-elif [ ! -z "$STATE_LABEL_LONG" ]; then
+elif [ -n "$STATE_LABEL_LONG" ]; then
     LOCATION_LABEL="$STATE_LABEL_LONG";
 else
     LOCATION_LABEL="$COUNTRY_LABEL";
