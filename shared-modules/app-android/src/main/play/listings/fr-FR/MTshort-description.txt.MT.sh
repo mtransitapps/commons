@@ -4,6 +4,7 @@ SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="$SCRIPT_DIR/../../../../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
+source ${COMMONS_DIR}/feature_flags.sh;
 
 setIsCI;
 
@@ -99,7 +100,7 @@ else
 fi
 
 AGENCY_LABEL=$AGENCY_NAME_LONG;
-if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+if [ -n "$AGENCY_LOCATION_SHORT" ]; then
   AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
 
@@ -114,9 +115,19 @@ GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid 
 if [ -f "$GTFS_FILE" ]; then
   SHORT_DESC="${SHORT_DESC} Horaire.";
 fi
+
+setFeatureFlags;
+
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
-  SHORT_DESC="${SHORT_DESC} Alertes.";
+  if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
+    SHORT_DESC="${SHORT_DESC} Alertes.";
+  fi
+  if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_VEHICLE_LOCATION_PROVIDER}" == "true" ]]; then
+      SHORT_DESC="${SHORT_DESC} Véhicules.";
+    fi
+  fi
 fi
 
 RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
