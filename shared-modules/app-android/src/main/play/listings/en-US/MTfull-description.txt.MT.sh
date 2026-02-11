@@ -304,7 +304,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
   RT_LINE="";
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     if [ -z "$RT_LINE" ]; then
-      RT_LINE="real-time ";
+      RT_LINE="";
     else 
       RT_LINE="${RT_LINE}, ";
     fi
@@ -313,7 +313,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
   if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
     if [[ ${F_EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
       if [ -z "$RT_LINE" ]; then
-        RT_LINE="real-time ";
+        RT_LINE="";
       else 
         RT_LINE="${RT_LINE}, ";
       fi
@@ -321,9 +321,9 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     fi
   fi
   if [ -z "$PROVIDES_LINE_END" ]; then
-    PROVIDES_LINE_END=" and ${RT_LINE}${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=" and real-time ${RT_LINE}${PROVIDES_LINE_END}";
   else 
-    PROVIDES_LINE_END=", ${RT_LINE}${PROVIDES_LINE_END}";
+    PROVIDES_LINE_END=", real-time ${RT_LINE}${PROVIDES_LINE_END}";
   fi
 fi
 
