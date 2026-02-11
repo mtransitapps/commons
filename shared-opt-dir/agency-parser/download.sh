@@ -50,13 +50,13 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GTFS_ARCHIVE_UPDATED=$?; # 0 if no changes
   if [[ $GTFS_ARCHIVE_UPDATED -gt 0 && $GIT_STAGED_CHANGES -eq 0 ]]; then
-    echo "> Commiting ZIP archives changes to git...";
+    echo "> Committing ZIP archives changes to git...";
     git -C "$ARCHIVE_DIR" commit -m "CI: Update GTFS archives"
     checkResult $?;
     MT_SKIP_PUSH_COMMIT=false
     # TODO push now?
   else
-    echo "> Commiting ZIP archives changes to git... SKIP";
+    echo "> Committing ZIP archives changes to git... SKIP";
   fi
   git -C "$ARCHIVE_DIR" status -sb;
 else
