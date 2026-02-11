@@ -332,7 +332,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
       PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
     fi
   fi
-find
+fi
 
 PROVIDES_LINE="${PROVIDES_LINE}${PROVIDES_LINE_END}";
 
