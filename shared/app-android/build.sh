@@ -45,7 +45,7 @@ if [[ ${IS_CI} = true ]]; then
 # echo "MT_SONAR_LOGIN environment variable is NOT defined!";
 # exit 1;
 # fi
-# if [[ ! -z "${CIRCLECI}" ]]; then
+# if [[ -n "${CIRCLECI}" ]]; then
 # GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
 # if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 # GIT_BRANCH="";
@@ -63,7 +63,7 @@ if [[ ${IS_CI} = true ]]; then
 # SONAR_ARGS+=" -Dsonar.host.url=https://sonarcloud.io";
 # echo ">> Sonar args: '$SONAR_ARGS'.";
 # SONAR_PR_ARGS="";
-# if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
+# if [[ -n "${CIRCLE_PULL_REQUEST}" ]]; then
 # # https://docs.sonarqube.org/latest/analysis/pull-request/
 # TARGET_BRANCH="TODO"; # not provided by CircleCI https://ideas.circleci.com/ideas/CCI-I-894
 # # TO DO IF hotfix/... || develop -> master ELSE feature/... -> develop
@@ -113,7 +113,7 @@ if [[ ${IS_CI} = false ]]; then
 	checkResult ${RESULT};
 	echo ">> Running assemble release APK... DONE";
 
-	if [[ ! -z "${MT_OUTPUT_DIR}" ]]; then
+	if [[ -n "${MT_OUTPUT_DIR}" ]]; then
 		echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'...";
 		if ! [[ -d "${MT_OUTPUT_DIR}" ]]; then
 			echo ">> Output release '${MT_OUTPUT_DIR}' not found!";

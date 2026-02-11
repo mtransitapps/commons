@@ -71,12 +71,12 @@ PARENT_AGENCY_NAME_LONG="";
 PARENT_AGENCY_NAME_FILE="$CONFIG_DIR/parent_agency_name";
 if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
     PARENT_AGENCY_NAME_LONG=$(tail -n 1 $PARENT_AGENCY_NAME_FILE);
-    if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+    if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
         AGENCY_LABEL="$AGENCY_LABEL ($PARENT_AGENCY_NAME_LONG)";
     fi
 fi
 
-if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+if [ -n "$AGENCY_LOCATION_SHORT" ]; then
   AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
 fi
 
@@ -129,7 +129,7 @@ else
 fi
 
 LOCATION_LABEL="$CITIES_LABEL in";
-if [ ! -z "$STATE_LABEL_LONG" ]; then
+if [ -n "$STATE_LABEL_LONG" ]; then
     LOCATION_LABEL="$LOCATION_LABEL $STATE_LABEL_LONG,";
 fi
 LOCATION_LABEL="$LOCATION_LABEL $COUNTRY_LABEL";
@@ -137,14 +137,14 @@ LOCATION_LABEL="$LOCATION_LABEL $COUNTRY_LABEL";
 SOURCE_PROVIDER="$SOURCE_NAME";
 if [ -z "$SOURCE_PROVIDER" ]; then
   SOURCE_PROVIDER="$AGENCY_NAME_SHORT";
-  if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+  if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
       SOURCE_PROVIDER=$PARENT_AGENCY_NAME_LONG;
   fi
 fi
 
 INDEX=1;
 NOT_RELATED_WITH="";
-if [ ! -z "$AGENCY_NAME_LONG" ]; then
+if [ -n "$AGENCY_NAME_LONG" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$AGENCY_NAME_LONG";
   else
@@ -152,7 +152,7 @@ if [ ! -z "$AGENCY_NAME_LONG" ]; then
   fi
   ((INDEX++))
 fi
-if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$PARENT_AGENCY_NAME_LONG";
   else
@@ -160,7 +160,7 @@ if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
   fi
   ((INDEX++))
 fi
-if [ ! -z "$SOURCE_NAME" ]; then
+if [ -n "$SOURCE_NAME" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$SOURCE_NAME";
   else
@@ -211,7 +211,7 @@ RES_VALUES_DIR="${MAIN_DIR}/res/values";
 BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
 if [ -f "$BIKE_STATION_FILE" ]; then
   PROVIDES_LINE="${PROVIDES_LINE} availability";
-  if [ ! -z "$INFORMATION_LIST" ]; then
+  if [ -n "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
   fi
   INFORMATION_LIST="${INFORMATION_LIST}availability";
@@ -219,7 +219,7 @@ fi
 GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "$GTFS_FILE" ]; then
   PROVIDES_LINE="${PROVIDES_LINE} schedule (accessible offline)";
-  if [ ! -z "$INFORMATION_LIST" ]; then
+  if [ -n "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
   fi
   INFORMATION_LIST="${INFORMATION_LIST}schedule";
@@ -313,7 +313,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
   OLD_IFS=$IFS; IFS=","
   RT_LINE="${RT_PARTS[*]}"
   IFS=$OLD_IFS
-  if [ ! -z "$RT_LINE" ]; then
+  if [ -n "$RT_LINE" ]; then
     RT_LINE=" real-time${RT_LINE}";
     if [ -z "$PROVIDES_LINE_END" ]; then
       PROVIDES_LINE_END=" and${RT_LINE}${PROVIDES_LINE_END}";
