@@ -65,7 +65,7 @@ if [ -z "$PKG" ]; then
     exit 1;
 fi
 
-command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
+requireCommand "xmllint" "libxml2-utils";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
