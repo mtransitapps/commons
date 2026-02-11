@@ -188,7 +188,7 @@ if [ -f "${NEXT_BUS_FILE}" ]; then
                 android:name="@string/status_provider_target"
                 android:value="@string/next_bus_for_poi_authority" />
 EOL
-  if [[ ${F_EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+  if [[ "${F_EXPORT_VEHICLE_LOCATION_PROVIDER}" == "true" ]]; then
     cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
              <meta-data
                 android:name="@string/vehicle_location_provider"
