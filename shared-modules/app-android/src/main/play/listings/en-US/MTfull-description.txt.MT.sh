@@ -301,23 +301,24 @@ setFeatureFlags;
 
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
-  RT_LINE="";
+  RT_PARTS=()
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
-    [ -n "$RT_LINE" ] && RT_LINE="${RT_LINE}, ";
-    RT_LINE="${RT_LINE}service alerts";
+    RT_PARTS+=(" service alerts")
   fi
   if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
     if [[ ${F_EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
-      [ -n "$RT_LINE" ] && RT_LINE="${RT_LINE}, ";
-      RT_LINE="${RT_LINE}vehicle locations";
+      RT_PARTS+=(" vehicle locations")
     fi
   fi
+  OLD_IFS=$IFS; IFS=","
+  RT_LINE="${RT_PARTS[*]}"
+  IFS=$OLD_IFS
   if [ ! -z "$RT_LINE" ]; then
-    RT_LINE="real-time ${RT_LINE}";
+    RT_LINE=" real-time${RT_LINE}";
     if [ -z "$PROVIDES_LINE_END" ]; then
-      PROVIDES_LINE_END=" and ${RT_LINE}${PROVIDES_LINE_END}";
+      PROVIDES_LINE_END=" and${RT_LINE}${PROVIDES_LINE_END}";
     else 
-      PROVIDES_LINE_END=", ${RT_LINE}${PROVIDES_LINE_END}";
+      PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
     fi
   fi
 fi
