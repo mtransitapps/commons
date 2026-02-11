@@ -84,7 +84,7 @@ elif [ -f $AGENCY_JSON_FILE ]; then
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
 else
-  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo "> No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|json:$AGENCY_JSON_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";
@@ -112,19 +112,17 @@ fi
 
 SHORT_DESC="$TYPE_LABEL $AGENCY_LABEL pour MonTransit.";
 
-RES_VALUES_DIR="${MAIN_DIR}/res/values";
-BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
-if [ -f "$BIKE_STATION_FILE" ]; then
+if [ -f "$BIKE_STATION_VALUES_FILE" ]; then
   SHORT_DESC="${SHORT_DESC} Disponibilité.";
 fi
-GTFS_RDS_VALUES_FILE="${RES_VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
+GTFS_RDS_VALUES_FILE="${VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "$GTFS_RDS_VALUES_FILE" ]; then
   SHORT_DESC="${SHORT_DESC} Horaire.";
 fi
 
 setFeatureFlags;
 
-GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
+GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     SHORT_DESC="${SHORT_DESC} Alertes.";
@@ -136,10 +134,10 @@ if [ -f "${GTFS_RT_FILE}" ]; then
   fi
 fi
 
-RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
-TWITTER_FILE="${RES_VALUES_DIR}/twitter_values.xml";
-YOUTUBE_FILE="${RES_VALUES_DIR}/youtube_values.xml";
-# INSTAGRAM_FILE="${RES_VALUES_DIR}/instagram_values.xml"; # NOT WORKING
+RSS_FILE="${VALUES_DIR}/rss_values.xml";
+TWITTER_FILE="${VALUES_DIR}/twitter_values.xml";
+YOUTUBE_FILE="${VALUES_DIR}/youtube_values.xml";
+# INSTAGRAM_FILE="${VALUES_DIR}/instagram_values.xml"; # NOT WORKING
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   SHORT_DESC="${SHORT_DESC} Nouvelles.";
 fi

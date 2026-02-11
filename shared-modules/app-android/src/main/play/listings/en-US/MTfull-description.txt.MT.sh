@@ -188,7 +188,7 @@ elif [ -f $AGENCY_JSON_FILE ]; then
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
 else
-  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo "> No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|json:$AGENCY_JSON_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";
@@ -213,16 +213,14 @@ PROVIDES_LINE="This app provides the $TYPE_LABEL";
 
 INFORMATION_LIST="";
 
-RES_VALUES_DIR="${MAIN_DIR}/res/values";
-BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
-if [ -f "$BIKE_STATION_FILE" ]; then
+if [ -f "$BIKE_STATION_VALUES_FILE" ]; then
   PROVIDES_LINE="${PROVIDES_LINE} availability";
   if [ -n "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
   fi
   INFORMATION_LIST="${INFORMATION_LIST}availability";
 fi
-GTFS_RDS_VALUES_FILE="${RES_VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
+GTFS_RDS_VALUES_FILE="${VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "$GTFS_RDS_VALUES_FILE" ]; then
   PROVIDES_LINE="${PROVIDES_LINE} schedule (accessible offline)";
   if [ -n "$INFORMATION_LIST" ]; then
@@ -233,10 +231,10 @@ fi
 
 PROVIDES_LINE_END="";
 
-RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
-TWITTER_FILE="${RES_VALUES_DIR}/twitter_values.xml";
-YOUTUBE_FILE="${RES_VALUES_DIR}/youtube_values.xml";
-# INSTAGRAM_FILE="${RES_VALUES_DIR}/instagram_values.xml"; # NOT WORKING
+RSS_FILE="${VALUES_DIR}/rss_values.xml";
+TWITTER_FILE="${VALUES_DIR}/twitter_values.xml";
+YOUTUBE_FILE="${VALUES_DIR}/youtube_values.xml";
+# INSTAGRAM_FILE="${VALUES_DIR}/instagram_values.xml"; # NOT WORKING
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
     PROVIDES_LINE_END="${PROVIDES_LINE_END} and";
@@ -305,7 +303,7 @@ fi
 
 setFeatureFlags;
 
-GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
+GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   RT_PARTS=()
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
@@ -337,7 +335,7 @@ if [ -f $GTFS_RDS_VALUES_FILE ]; then
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   OPERATE_IN="are available in"
 else
-  echo " > No agency file! (rds:$GTFS_RDS_VALUES_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo "> No agency file! (rds:$GTFS_RDS_VALUES_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 

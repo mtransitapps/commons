@@ -77,7 +77,7 @@ elif [ -f $AGENCY_JSON_FILE ]; then
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
   TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
 else
-  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  echo "> No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|json:$AGENCY_JSON_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";

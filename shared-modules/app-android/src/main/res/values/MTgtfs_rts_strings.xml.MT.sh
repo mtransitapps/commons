@@ -73,7 +73,7 @@ elif [ -f $AGENCY_JSON_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
   TYPE=$(jq '.target_route_type_id' "$AGENCY_JSON_FILE")
 else
-  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE)"
+  echo "> No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|json:$AGENCY_JSON_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";

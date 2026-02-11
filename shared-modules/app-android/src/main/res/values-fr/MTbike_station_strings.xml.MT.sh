@@ -15,8 +15,8 @@ if [ ! -f "$LANG_FR_FILE" ]; then
     exit 0; # ok
 fi
 
-BIKE_STATION_FILE="${ROOT_DIR}/app-android/src/main/res/values/bike_station_values.xml";
-if [ ! -f "${BIKE_STATION_FILE}" ]; then
+BIKE_STATION_VALUES_FILE="${ROOT_DIR}/app-android/src/main/res/values/bike_station_values.xml";
+if [ ! -f "${BIKE_STATION_VALUES_FILE}" ]; then
     echo ">> Generating values-fr/bike_station_strings.xml... SKIP (not an Bike station agency)";
     exit 0; # ok
 fi
@@ -67,13 +67,11 @@ fi
 
 requireCommand "xmllint" "libxml2-utils";
 
-VALUES_DIR="${RES_DIR}/values";
-BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml"
 TYPE=-1;
 if [ -f $BIKE_STATION_VALUES_FILE ]; then
   TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
 else
-  echo " > No agency file! (bike:$BIKE_STATION_VALUES_FILE)"
+  echo "> No agency file! (bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
 TYPE_LABEL="";
