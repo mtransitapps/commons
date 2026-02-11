@@ -55,9 +55,10 @@ cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         tools:targetApi="\${target_sdk_version}">
 EOL
 
-RES_VALUES_DIR="${MAIN_DIR}/res/values";
+RES_DIR="${MAIN_DIR}/res";
+VALUES_DIR="${RES_DIR}/values";
 
-BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
+BIKE_STATION_FILE="${VALUES_DIR}/bike_station_values.xml";
 if [ -f "${BIKE_STATION_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- BIKE STATIONS PROVIDER -->
@@ -86,8 +87,8 @@ if [ -f "${BIKE_STATION_FILE}" ]; then
 EOL
 fi
 
-GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
-if [ -f "${GTFS_FILE}" ]; then
+GTFS_RDS_VALUES_FILE="${VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
+if [ -f "${GTFS_RDS_VALUES_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- GTFS ROUTE DIRECTION STOP & SCHEDULE PROVIDER -->
         <provider
@@ -126,7 +127,7 @@ fi
 
 setFeatureFlags;
 
-GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
+GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- GTFS REAL TIME PROVIDER -->
@@ -165,7 +166,7 @@ EOL
 EOL
 fi
 
-NEXT_BUS_FILE="${RES_VALUES_DIR}/next_bus_values.xml";
+NEXT_BUS_FILE="${VALUES_DIR}/next_bus_values.xml";
 if [ -f "${NEXT_BUS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- NEXT BUS PROVIDER -->
@@ -203,7 +204,7 @@ EOL
 EOL
 fi
 
-STRATEGIC_MAPPING_FILE="${RES_VALUES_DIR}/strategic_mapping_values.xml";
+STRATEGIC_MAPPING_FILE="${VALUES_DIR}/strategic_mapping_values.xml";
 if [ -f "${STRATEGIC_MAPPING_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- STRATEGIC MAPPING PROVIDER -->
@@ -223,7 +224,7 @@ if [ -f "${STRATEGIC_MAPPING_FILE}" ]; then
 EOL
 fi
 
-CA_EDMONTON_PROVIDER_FILE="${RES_VALUES_DIR}/ca_edmonton_values.xml";
+CA_EDMONTON_PROVIDER_FILE="${VALUES_DIR}/ca_edmonton_values.xml";
 if [ -f "${CA_EDMONTON_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- EDMONTON PROVIDER -->
@@ -243,7 +244,7 @@ if [ -f "${CA_EDMONTON_PROVIDER_FILE}" ]; then
 EOL
 fi
 
-CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE="${RES_VALUES_DIR}/grand_river_transit_values.xml";
+CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE="${VALUES_DIR}/grand_river_transit_values.xml";
 if [ -f "${CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- GRAND RIVER TRANSIT PROVIDER -->
@@ -263,7 +264,7 @@ if [ -f "${CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE}" ]; then
 EOL
 fi
 
-CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE="${RES_VALUES_DIR}/greater_sudbury_values.xml";
+CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE="${VALUES_DIR}/greater_sudbury_values.xml";
 if [ -f "${CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- GREATER SUDBURY MYBUS PROVIDER -->
@@ -283,7 +284,7 @@ if [ -f "${CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE}" ]; then
 EOL
 fi
 
-CA_MONTREAL_STM_INFO_PROVIDER_FILE="${RES_VALUES_DIR}/stm_info_api_values.xml";
+CA_MONTREAL_STM_INFO_PROVIDER_FILE="${VALUES_DIR}/stm_info_api_values.xml";
 if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- STM INFO API PROVIDER -->
@@ -309,7 +310,7 @@ if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
 EOL
 fi
 
-CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${RES_VALUES_DIR}/stm_info_values.xml";
+CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${VALUES_DIR}/stm_info_values.xml";
 if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- STM.INFO PROVIDER -->
@@ -329,7 +330,7 @@ if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
 EOL
 fi
 
-CA_QUEBEC_RTC_PROVIDER_FILE="${RES_VALUES_DIR}/rtc_quebec_values.xml";
+CA_QUEBEC_RTC_PROVIDER_FILE="${VALUES_DIR}/rtc_quebec_values.xml";
 if [ -f "${CA_QUEBEC_RTC_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- RTC QUEBEC PROVIDER -->
@@ -357,7 +358,7 @@ if [ -f "${CA_QUEBEC_RTC_PROVIDER_FILE}" ]; then
 EOL
 fi
 
-CA_REGINA_TRANSIT_PROVIDER_FILE="${RES_VALUES_DIR}/regina_transit_values.xml";
+CA_REGINA_TRANSIT_PROVIDER_FILE="${VALUES_DIR}/regina_transit_values.xml";
 if [ -f "${CA_REGINA_TRANSIT_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- REGINA TRANSIT PROVIDER -->
@@ -377,7 +378,7 @@ if [ -f "${CA_REGINA_TRANSIT_PROVIDER_FILE}" ]; then
 EOL
 fi
 
-CA_WINNIPEG_TRANSIT_PROVIDER_FILE="${RES_VALUES_DIR}/winnipeg_transit_values.xml";
+CA_WINNIPEG_TRANSIT_PROVIDER_FILE="${VALUES_DIR}/winnipeg_transit_values.xml";
 if [ -f "${CA_WINNIPEG_TRANSIT_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- WINNIPEG TRANSIT PROVIDER -->
@@ -403,7 +404,7 @@ if [ -f "${CA_WINNIPEG_TRANSIT_PROVIDER_FILE}" ]; then
 EOL
 fi
 
-RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";
+RSS_FILE="${VALUES_DIR}/rss_values.xml";
 if [ -f "${RSS_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- RSS NEWS PROVIDER -->
@@ -423,7 +424,7 @@ if [ -f "${RSS_FILE}" ]; then
 EOL
 fi
 
-TWITTER_FILE="${RES_VALUES_DIR}/twitter_values.xml";
+TWITTER_FILE="${VALUES_DIR}/twitter_values.xml";
 if [ -f "${TWITTER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- TWITTER NEWS PROVIDER -->
@@ -443,7 +444,7 @@ if [ -f "${TWITTER_FILE}" ]; then
 EOL
 fi
 
-YOUTUBE_FILE="${RES_VALUES_DIR}/youtube_values.xml";
+YOUTUBE_FILE="${VALUES_DIR}/youtube_values.xml";
 if [ -f "${YOUTUBE_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- YOUTUBE NEWS PROVIDER -->
@@ -463,7 +464,7 @@ if [ -f "${YOUTUBE_FILE}" ]; then
 EOL
 fi
 
-INSTAGRAM_FILE="${RES_VALUES_DIR}/instagram_values.xml";
+INSTAGRAM_FILE="${VALUES_DIR}/instagram_values.xml";
 if [ -f "${INSTAGRAM_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         <!-- INSTAGRAM NEWS PROVIDER -->
