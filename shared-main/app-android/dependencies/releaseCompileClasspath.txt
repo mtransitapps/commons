@@ -177,10 +177,10 @@ com.vungle:vungle-ads:7.6.3
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
 org.checkerframework:checker-qual:3.43.0
-org.jetbrains.kotlin:kotlin-bom:2.3.0
-org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.3.0
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.0
-org.jetbrains.kotlin:kotlin-stdlib:2.3.0
+org.jetbrains.kotlin:kotlin-bom:2.3.10
+org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.3.10
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.10
+org.jetbrains.kotlin:kotlin-stdlib:2.3.10
 org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2
