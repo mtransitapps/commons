@@ -53,14 +53,16 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
+command -v xmllint >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
+
 GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml"
 TYPE=-1;
 if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='gtfs_rts_agency_type']/text()" "$GTFS_RDS_VALUES_GEN_FILE")
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
-  TYPE=$(grep -E "<integer name=\"bike_station_agency_type\">[0-9]+</integer>$" $BIKE_STATION_VALUES_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
 else
   echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
