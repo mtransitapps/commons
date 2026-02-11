@@ -317,7 +317,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     RT_PARTS+=(" alertes de service")
   fi
   if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
-    if [[ ${F_EXPORT_VEHICLE_LOCATION_PROVIDER} == true ]]; then
+    if [[ "${F_EXPORT_VEHICLE_LOCATION_PROVIDER}" == "true" ]]; then
       RT_PARTS+=(" positions des véhicules")
     fi
   fi
