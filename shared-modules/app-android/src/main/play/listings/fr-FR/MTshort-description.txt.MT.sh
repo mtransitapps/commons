@@ -4,6 +4,7 @@ SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="$SCRIPT_DIR/../../../../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
+source ${COMMONS_DIR}/feature_flags.sh;
 
 setIsCI;
 
@@ -64,6 +65,8 @@ fi
 
 AGENCY_LABEL=$AGENCY_NAME_LONG;
 
+requireCommand "xmllint" "libxml2-utils";
+
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";
 GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
@@ -71,9 +74,9 @@ BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml"
 TYPE=-1;
 if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='gtfs_rts_agency_type']/text()" "$GTFS_RDS_VALUES_GEN_FILE")
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
-  TYPE=$(grep -E "<integer name=\"bike_station_agency_type\">[0-9]+</integer>$" $BIKE_STATION_VALUES_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
 else
   echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
@@ -97,7 +100,7 @@ else
 fi
 
 AGENCY_LABEL=$AGENCY_NAME_LONG;
-if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+if [ -n "$AGENCY_LOCATION_SHORT" ]; then
   AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
 
@@ -112,9 +115,19 @@ GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid 
 if [ -f "$GTFS_FILE" ]; then
   SHORT_DESC="${SHORT_DESC} Horaire.";
 fi
+
+setFeatureFlags;
+
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
-  SHORT_DESC="${SHORT_DESC} Alertes.";
+  if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
+    SHORT_DESC="${SHORT_DESC} Alertes.";
+  fi
+  if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_VEHICLE_LOCATION_PROVIDER}" == "true" ]]; then
+      SHORT_DESC="${SHORT_DESC} Véhicules.";
+    fi
+  fi
 fi
 
 RSS_FILE="${RES_VALUES_DIR}/rss_values.xml";

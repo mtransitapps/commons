@@ -4,6 +4,7 @@ SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="$SCRIPT_DIR/../../../../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
+source ${COMMONS_DIR}/feature_flags.sh;
 
 setGitProjectName;
 
@@ -76,12 +77,12 @@ PARENT_AGENCY_NAME_LONG="";
 PARENT_AGENCY_NAME_FILE="$CONFIG_DIR/parent_agency_name";
 if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
     PARENT_AGENCY_NAME_LONG=$(tail -n 1 $PARENT_AGENCY_NAME_FILE);
-    if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+    if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
         AGENCY_LABEL="$AGENCY_LABEL ($PARENT_AGENCY_NAME_LONG)";
     fi
 fi
 
-if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+if [ -n "$AGENCY_LOCATION_SHORT" ]; then
   AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
 
@@ -137,7 +138,7 @@ else
 fi
 
 LOCATION_LABEL="$CITIES_LABEL au";
-if [ ! -z "$STATE_LABEL_LONG" ]; then
+if [ -n "$STATE_LABEL_LONG" ]; then
     LOCATION_LABEL="$LOCATION_LABEL $STATE_LABEL_LONG,";
 fi
 LOCATION_LABEL="$LOCATION_LABEL $COUNTRY_LABEL";
@@ -145,14 +146,14 @@ LOCATION_LABEL="$LOCATION_LABEL $COUNTRY_LABEL";
 SOURCE_PROVIDER="$SOURCE_NAME";
 if [ -z "$SOURCE_PROVIDER" ]; then
   SOURCE_PROVIDER="$AGENCY_NAME_SHORT";
-  if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+  if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
       SOURCE_PROVIDER=$PARENT_AGENCY_NAME_LONG;
   fi
 fi
 
 INDEX=1;
 NOT_RELATED_WITH="";
-if [ ! -z "$AGENCY_NAME_LONG" ]; then
+if [ -n "$AGENCY_NAME_LONG" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$AGENCY_NAME_LONG";
   else
@@ -160,7 +161,7 @@ if [ ! -z "$AGENCY_NAME_LONG" ]; then
   fi
   ((INDEX++))
 fi
-if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$PARENT_AGENCY_NAME_LONG";
   else
@@ -168,7 +169,7 @@ if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
   fi
   ((INDEX++))
 fi
-if [ ! -z "$SOURCE_NAME" ]; then
+if [ -n "$SOURCE_NAME" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$SOURCE_NAME";
   else
@@ -177,6 +178,8 @@ if [ ! -z "$SOURCE_NAME" ]; then
   ((INDEX++))
 fi
 
+requireCommand "xmllint" "libxml2-utils";
+
 RES_DIR="${MAIN_DIR}/res";
 VALUES_DIR="${RES_DIR}/values";
 GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
@@ -184,9 +187,9 @@ BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml"
 TYPE=-1;
 if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='gtfs_rts_agency_type']/text()" "$GTFS_RDS_VALUES_GEN_FILE")
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
-  TYPE=$(grep -E "<integer name=\"bike_station_agency_type\">[0-9]+</integer>$" $BIKE_STATION_VALUES_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
 else
   echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
@@ -217,7 +220,7 @@ RES_VALUES_DIR="${MAIN_DIR}/res/values";
 BIKE_STATION_FILE="${RES_VALUES_DIR}/bike_station_values.xml";
 if [ -f "$BIKE_STATION_FILE" ]; then
   PROVIDES_LINE="${PROVIDES_LINE} la disponibilité";
-  if [ ! -z "$INFORMATION_LIST" ]; then
+  if [ -n "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
   fi
   INFORMATION_LIST="${INFORMATION_LIST}disponibilité";
@@ -225,15 +228,13 @@ fi
 GTFS_FILE="${RES_VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "$GTFS_FILE" ]; then
   PROVIDES_LINE="${PROVIDES_LINE} les horaires (accessible hors-ligne)";
-  if [ ! -z "$INFORMATION_LIST" ]; then
+  if [ -n "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
   fi
   INFORMATION_LIST="${INFORMATION_LIST}horaire";
 fi
 
 PROVIDES_LINE="${PROVIDES_LINE} des $TYPE_LABEL";
-
-xmllint --version || (sudo apt-get update && sudo apt-get install -y libxml2-utils);
 
 PROVIDES_LINE_END="";
 
@@ -307,12 +308,29 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   # fi
 fi
 
+setFeatureFlags;
+
 GTFS_RT_FILE="${RES_VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
-  if [ -z "$PROVIDES_LINE_END" ]; then
-    PROVIDES_LINE_END=" et alertes de service en temps-réel ${PROVIDES_LINE_END}";
-  else 
-    PROVIDES_LINE_END=", alertes de service en temps-réel ${PROVIDES_LINE_END}";
+  RT_PARTS=()
+  if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
+    RT_PARTS+=(" alertes de service")
+  fi
+  if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_VEHICLE_LOCATION_PROVIDER}" == "true" ]]; then
+      RT_PARTS+=(" positions des véhicules")
+    fi
+  fi
+  OLD_IFS=$IFS; IFS=","
+  RT_LINE="${RT_PARTS[*]}"
+  IFS=$OLD_IFS
+  if [ -n "$RT_LINE" ]; then
+    RT_LINE="${RT_LINE} en temps-réel";
+    if [ -z "$PROVIDES_LINE_END" ]; then
+      PROVIDES_LINE_END=" et${RT_LINE}${PROVIDES_LINE_END}";
+    else 
+      PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
+    fi
   fi
 fi
 

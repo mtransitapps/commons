@@ -6,7 +6,7 @@
 
 function setIsCI() {
 	IS_CI=false;
-	if [[ ! -z "${CI}" ]]; then
+	if [[ -n "${CI}" ]]; then
 		IS_CI=true;
 	fi
 	# IS_CI=true; # DEBUG
@@ -15,7 +15,7 @@ function setIsCI() {
 function setIsGHEnabled() {
 	# https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows
 	IS_GH_ENABLED=false;
-	if [[ ! -z "${GITHUB_TOKEN}" ]]; then
+	if [[ -n "${GITHUB_TOKEN}" ]]; then
 		IS_GH_ENABLED=true;
 	elif [[ -z "${CI}" ]]; then # IF not CI DO
 		IS_GH_ENABLED=true; # local
@@ -257,12 +257,12 @@ function printGitStatus() {
 	git config --get remote.origin.url;
 	git status -sb;
 	STAGED_DIFF=$(git diff --cached | head -n $DIFF_LIMIT);
-	if [ ! -z "$STAGED_DIFF" ]; then
+	if [ -n "$STAGED_DIFF" ]; then
 		echo "> staged:";
 		echo "$STAGED_DIFF";
 	fi
 	NOT_STAGED_DIFF=$(git diff | head -n $DIFF_LIMIT);
-	if [ ! -z "$NOT_STAGED_DIFF" ]; then
+	if [ -n "$NOT_STAGED_DIFF" ]; then
 		echo "> not staged:";
 		echo "$NOT_STAGED_DIFF";
 	fi
@@ -279,12 +279,12 @@ function printGitStatus() {
 		git status -sb;
 		git config --get remote.origin.url;
 		STAGED_DIFF=\$(git diff --cached | head -n $DIFF_LIMIT);
-		if [ ! -z \"\$STAGED_DIFF\" ]; then
+		if [ -n \"\$STAGED_DIFF\" ]; then
 			echo \"> staged:\";
 			echo \"\$STAGED_DIFF\";
 		fi
 		NOT_STAGED_DIFF=\$(git diff | head -n $DIFF_LIMIT);
-		if [ ! -z \"\$NOT_STAGED_DIFF\" ]; then
+		if [ -n \"\$NOT_STAGED_DIFF\" ]; then
 			echo \"> not staged:\";
 			echo \"\$NOT_STAGED_DIFF\";
 		fi
@@ -330,6 +330,12 @@ function setGradleArgs() {
 	if [[ ${IS_CI} = true ]]; then
 		GRADLE_ARGS+=" --warning-mode all"; # print warnings in CI
 	fi
+}
+
+function requireCommand() {
+	local cmd=$1
+	local pkg=${2:-$cmd} # Default to cmd if pkg is not provided
+	command -v "$cmd" >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y "$pkg")
 }
 
 # set current working directory to the directory of the script

@@ -59,11 +59,13 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
+requireCommand "xmllint" "libxml2-utils";
+
 GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
 TYPE=-1;
 if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='gtfs_rts_agency_type']/text()" "$GTFS_RDS_VALUES_GEN_FILE")
 else
   echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE)"
   exit 1 # error

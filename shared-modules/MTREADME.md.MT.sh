@@ -41,14 +41,14 @@ fi
 
 AGENCY_LABEL=$AGENCY_NAME_LONG;
 
-if [ ! -z "$AGENCY_LOCATION_SHORT" ]; then
+if [ -n "$AGENCY_LOCATION_SHORT" ]; then
   AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
 fi
 
 PARENT_AGENCY_NAME_FILE="$CONFIG_DIR/parent_agency_name";
 if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
     PARENT_AGENCY_NAME_LONG=$(tail -n 1 $PARENT_AGENCY_NAME_FILE);
-    if [ ! -z "$PARENT_AGENCY_NAME_LONG" ]; then
+    if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
         AGENCY_LABEL="$AGENCY_LABEL ($PARENT_AGENCY_NAME_LONG)";
     fi
 fi
@@ -65,6 +65,8 @@ if [ -z "$PKG" ]; then
     exit 1;
 fi
 
+requireCommand "xmllint" "libxml2-utils";
+
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -75,9 +77,9 @@ BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml"
 TYPE=-1;
 if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
-  TYPE=$(grep -E "<integer name=\"gtfs_rts_agency_type\">[0-9]+</integer>$" $GTFS_RDS_VALUES_GEN_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='gtfs_rts_agency_type']/text()" "$GTFS_RDS_VALUES_GEN_FILE")
 elif [ -f $BIKE_STATION_VALUES_FILE ]; then
-  TYPE=$(grep -E "<integer name=\"bike_station_agency_type\">[0-9]+</integer>$" $BIKE_STATION_VALUES_FILE | tr -dc '0-9')
+  TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
 else
   echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
