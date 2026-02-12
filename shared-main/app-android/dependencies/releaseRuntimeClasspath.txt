@@ -126,7 +126,7 @@ com.github.bumptech.glide:okhttp3-integration:5.0.5
 com.github.chuckerteam.chucker:library-no-op:4.3.0
 com.google.ads.mediation:applovin:13.5.1.0
 com.google.ads.mediation:facebook:6.21.0.1
-com.google.ads.mediation:vungle:7.6.3.1
+com.google.ads.mediation:vungle:7.7.0.1
 com.google.android.datatransport:transport-api:3.2.0
 com.google.android.datatransport:transport-backend-cct:3.3.0
 com.google.android.datatransport:transport-runtime:3.3.0
@@ -200,7 +200,7 @@ com.squareup.okio:okio-jvm:3.16.4
 com.squareup.okio:okio:3.16.4
 com.squareup.retrofit2:converter-gson:3.0.0
 com.squareup.retrofit2:retrofit:3.0.0
-com.vungle:vungle-ads:7.6.3
+com.vungle:vungle-ads:7.7.0
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.9.22
