@@ -90,7 +90,6 @@ else
   echo "> No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|json:$AGENCY_JSON_FILE|bike:$BIKE_STATION_VALUES_FILE)"
   exit 1 # error
 fi
-echo " - type: '$TYPE'"
 if [ -z "$TYPE" ]; then
   echo " > No type found for agency!"
   exit 1 # error
