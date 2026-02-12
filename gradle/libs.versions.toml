@@ -41,7 +41,7 @@ gradle-androidCacheFix = "3.0.3"
 hilt = "2.59.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
-androidx-activity = "1.12.3"
+androidx-activity = "1.12.4"
 androidx-annotation = "1.9.1"
 androidx-appCompat = "1.7.1"
 androidx-browser = "1.9.0"
