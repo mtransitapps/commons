@@ -439,6 +439,17 @@ def setupResValues(buildType, appId) {
 
     buildType.resValue("string", "bike_station_authority", "${appId}.bike")
     buildType.resValue("string", "gtfs_rts_authority", "${appId}.gtfs") // do not change to avoid breaking compat w/ old modules
+    if (file("src/main/res/values/gtfs_rts_values.xml").exists()) { // do not change to avoid breaking compat w/ old modules
+        buildType.resValue("string", "poi_agency_authority", "@string/gtfs_rts_authority")
+        buildType.resValue("string", "poi_agency_color", "@string/gtfs_rts_color")
+        buildType.resValue("string", "poi_agency_short_name", "@string/gtfs_rts_short_name")
+    } else if (file("src/main/res/values/bike_station_values.xml").exists()) {
+        buildType.resValue("string", "poi_agency_authority", "@string/bike_station_authority")
+        buildType.resValue("string", "poi_agency_color", "@string/bike_station_color")
+        buildType.resValue("string", "poi_agency_short_name", "@string/bike_station_short_name")
+    } else {
+        println "> Unexpected POI agency type!"
+    }
     buildType.resValue("string", "gtfs_real_time_authority", "${appId}.gtfs.realtime")
 
     buildType.resValue("string", "rss_authority", "${appId}.news.rss")
