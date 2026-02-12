@@ -12,7 +12,7 @@ sdk-target = "35"
 # Android 16 Baklava
 buildTools = "36.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "2.3.0" # sync w/ ksp
+kotlin = "2.3.10" # sync w/ ksp
 # https://github.com/google/ksp/releases/latest
 ksp = "2.3.5"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
