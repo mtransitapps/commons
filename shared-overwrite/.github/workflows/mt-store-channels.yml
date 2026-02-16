@@ -31,7 +31,7 @@ on:
         default: ignore
         required: true
 # gh workflow run mt-store-channels.yml --ref $(git rev-parse --abbrev-ref HEAD)
-# gh workflow run mt-store-channels.yml -f alpha=enable -f beta-private=disable -f production=ignore
+# gh workflow run mt-store-channels.yml -f production=disable
 # gh run list --workflow=mt-store-channels.yml
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -67,10 +67,6 @@ jobs:
           submodules: true # required to set right token
           token: ${{ secrets.MT_PAT }}
           fetch-depth: 0 # fetch all (not required util release build)
-
-      # - name: MT setup
-      #   id: mt-setup
-      #   uses: ./.github/actions/setup
 
       - name: MT Checkout branch
         run: |
