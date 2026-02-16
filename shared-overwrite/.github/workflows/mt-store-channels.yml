@@ -4,12 +4,12 @@ on:
   workflow_dispatch: # manual
     inputs:
       alpha-enable:
-        description: '`Alpha` channel > Enable'
+        description: 'Alpha channel > Enable'
         type: boolean
         default: false
         required: false
       alpha-disable:
-        description: '`Alpha` channel > Disable'
+        description: 'Alpha channel > Disable'
         type: boolean
         default: false
         required: false
@@ -24,12 +24,12 @@ on:
         default: false
         required: false
       production-enable:
-        description: '`Production` channel > Enable'
+        description: 'Production channel > Enable'
         type: boolean
         default: false
         required: false
       production-disable:
-        description: '`Production` channel > Disable'
+        description: 'Production channel > Disable'
         type: boolean
         default: false
         required: false
@@ -75,6 +75,10 @@ jobs:
       #   id: mt-setup
       #   uses: ./.github/actions/setup
 
+      - name: MT Checkout branch
+        run: |
+          git checkout -B "update_store_channels"
+
       - name: MT Enable `Alpha` channel
         if: ${{ github.event.inputs.alpha-enable == 'true' }}
         run: |
@@ -106,34 +110,24 @@ jobs:
           rm -f config/store/production
 
       - name: MT Commit changes
+        continue-on-error: true
+        id: mt-commit-changes
         run: |
-          git config user.name "$MT_BOT_USER_NAME"
-          git config user.email "$MT_BOT_USER_EMAIL"
           git add -v config/store
           if git diff --staged --quiet; then
             echo "No changes to commit."
-            exit 0
+            exit 1 # fail
           fi
-          BRANCH_NAME="update_store_channels"
-          git checkout -B "$BRANCH_NAME"
+          git config user.name "$MT_BOT_USER_NAME"
+          git config user.email "$MT_BOT_USER_EMAIL"
           git commit -m "Update store channels"
-          git push -u origin "$BRANCH_NAME" --force
+          git push -u origin "update_store_channels" --force
+          exit 0 # success
 
       - name: MT Create pull request (if necessary)
+        if: ${{ failure() && steps.mt-commit-changes.conclusion == 'success' }}
+        continue-on-error: true
         run: |
-          # if local branch is update_store_channels, create PR
-          CURRENT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-          if [ $CURRENT_BRANCH_NAME == 'update_store_channels' ]; then
-            if ! gh pr view update_store_channels >/dev/null 2>&1; then
-              gh pr create --fill
-            else
-              echo "A pull request for branch 'update_store_channels' already exists."
-            fi
-          fi
+          gh pr view &>/dev/null && echo "PR exists" || gh pr create --fill
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
-
-      # - name: MT push commits
-      #   run: ./push_commits.sh
-      #   env:
-      #     GH_TOKEN: ${{ secrets.MT_PAT }}
