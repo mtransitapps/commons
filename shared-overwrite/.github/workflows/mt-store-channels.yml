@@ -34,6 +34,7 @@ on:
         default: false
         required: false
 # gh workflow run mt-store-channels.yml --ref $(git rev-parse --abbrev-ref HEAD)
+# gh workflow run mt-store-channels.yml -f production-disable=true
 # gh run list --workflow=mt-store-channels.yml
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
