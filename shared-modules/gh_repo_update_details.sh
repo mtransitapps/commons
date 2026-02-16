@@ -1,0 +1,130 @@
+#!/bin/bash
+SCRIPT_DIR="$(dirname "$0")";
+
+ROOT_DIR="$SCRIPT_DIR/../..";
+COMMONS_DIR="${ROOT_DIR}/commons";
+source ${COMMONS_DIR}/commons.sh;
+
+setIsCI;
+
+echo ">> Updating GitHub repository details...";
+
+CONFIG_DIR="${ROOT_DIR}/config";
+AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+if [ ! -f "$AGENCY_NAME_FILE" ]; then
+  echo ">> Updating GitHub repository details... SKIP (no config/agency_name)";
+  exit 0; # compat with old repo
+fi
+
+AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
+if [ -z "$AGENCY_NAME_LONG" ]; then
+    echo "$AGENCY_NAME_LONG is empty!";
+    exit 1;
+fi
+
+AGENCY_LOCATION_SHORT="" # optional
+AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
+if [ -f "$AGENCY_LOCATION_FILE" ]; then
+    AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
+    if [ -z "$AGENCY_LOCATION_SHORT" ]; then
+        echo "$AGENCY_LOCATION_SHORT is empty!";
+        exit 1;
+    fi
+fi
+
+AGENCY_LABEL=$AGENCY_NAME_LONG;
+
+if [ -n "$AGENCY_LOCATION_SHORT" ]; then
+  AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
+fi
+
+PARENT_AGENCY_NAME_FILE="$CONFIG_DIR/parent_agency_name";
+if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
+    PARENT_AGENCY_NAME_LONG=$(tail -n 1 $PARENT_AGENCY_NAME_FILE);
+    if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
+        AGENCY_LABEL="$AGENCY_LABEL ($PARENT_AGENCY_NAME_LONG)";
+    fi
+fi
+
+PKG_FILE="${CONFIG_DIR}/pkg";
+if [ ! -f "$PKG_FILE" ]; then
+    echo "$PKG_FILE doesn't exist!";
+    exit 1;
+fi
+
+PKG=$(head -n 1 $PKG_FILE);
+if [ -z "$PKG" ]; then
+    echo "$PKG is empty!";
+    exit 1;
+fi
+
+requireCommand "xmllint" "libxml2-utils";
+requireCommand "jq";
+
+GTFS_CONFIG_DIR="${CONFIG_DIR}/gtfs";
+APP_ANDROID_DIR="${ROOT_DIR}/app-android";
+SRC_DIR="${APP_ANDROID_DIR}/src";
+MAIN_DIR="${SRC_DIR}/main";
+RES_DIR="${MAIN_DIR}/res";
+VALUES_DIR="${RES_DIR}/values";
+GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
+BIKE_STATION_VALUES_FILE="${VALUES_DIR}/bike_station_values.xml";
+AGENCY_JSON_FILE="${GTFS_CONFIG_DIR}/agency.json";
+TYPE=-1;
+if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
+  # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
+  TYPE=$(xmllint --xpath "//resources/integer[@name='gtfs_rts_agency_type']/text()" "$GTFS_RDS_VALUES_GEN_FILE")
+elif [ -f $AGENCY_JSON_FILE ]; then
+  # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
+  TYPE=$(jq '.target_route_type_id // empty' "$AGENCY_JSON_FILE")
+elif [ -f $BIKE_STATION_VALUES_FILE ]; then
+  TYPE=$(xmllint --xpath "//resources/integer[@name='bike_station_agency_type']/text()" "$BIKE_STATION_VALUES_FILE")
+else
+  echo "> No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|json:$AGENCY_JSON_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+  exit 1 # error
+fi
+if [ -z "$TYPE" ]; then
+  echo " > No type found for agency!"
+  exit 1 # error
+fi
+TYPE_LABEL="";
+if [ "$TYPE" -eq 0 ]; then # LIGHT_RAIL
+    TYPE_LABEL="light rail"; # TODO?
+elif [ "$TYPE" -eq 1 ]; then # SUBWAY
+    TYPE_LABEL="subways";
+elif [ "$TYPE" -eq 2 ]; then # TRAIN
+    TYPE_LABEL="trains";
+elif [ "$TYPE" -eq 3 ]; then # BUS
+    TYPE_LABEL="buses";
+elif [ "$TYPE" -eq 4 ]; then # FERRY
+    TYPE_LABEL="ferries";
+elif [ "$TYPE" -eq 100 ]; then # BIKE
+    TYPE_LABEL="bikes";
+else
+  echo "Unexpected agency type '$TYPE'!"
+  exit 1 # error
+fi
+
+REPO_DESC="$AGENCY_LABEL $TYPE_LABEL for MonTransit"
+REPO_URL="https://play.google.com/store/apps/details?id=$PKG"
+
+echo ">>  Updating GitHub repository description & homepage..."
+# https://cli.github.com/manual/gh_repo_edit
+gh repo edit \
+  --description "$REPO_DESC" \
+  --homepage "$REPO_URL" \
+  ;
+checkResult $?
+echo ">>  Updating GitHub repository description & homepage... DONE"
+
+echo ">>  Updating GitHub repository features..."
+ # TODO link to main wiki?
+gh repo edit \
+  --enable-discussions=false \
+  --enable-projects=false \
+  --enable-wiki=false \
+  ;
+RESULT=$? # optional
+echo ">>  Updating GitHub repository features... DONE (result=$RESULT)"
+
+echo ">> Updating GitHub repository details... DONE";
