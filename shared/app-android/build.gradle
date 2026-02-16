@@ -421,7 +421,8 @@ play {
 }
 
 def setupResValues(buildType, appId) {
-    println "> Resource values set for: " + appId
+    def isMainApp = appId.replaceAll(".debug", "") == "org.mtransit.android"
+    println "> Resource values set for: '" + appId + "' (main app? " + isMainApp + " )"
 
     if (buildType.name == "debug") {
         // does NOT work because we can't overwrite a resource defined in XML
@@ -437,30 +438,50 @@ def setupResValues(buildType, appId) {
         buildType.resValue("string", "app_name", appName)
     }
 
-    buildType.resValue("string", "bike_station_authority", "${appId}.bike")
-    buildType.resValue("string", "gtfs_rts_authority", "${appId}.gtfs") // do not change to avoid breaking compat w/ old modules
-    buildType.resValue("string", "gtfs_real_time_authority", "${appId}.gtfs.realtime")
-
     buildType.resValue("string", "rss_authority", "${appId}.news.rss")
     buildType.resValue("string", "twitter_authority", "${appId}.news.twitter")
     buildType.resValue("string", "youtube_authority", "${appId}.news.youtube")
     buildType.resValue("string", "instagram_authority", "${appId}.news.instagram")
 
-    buildType.resValue("string", "clever_devices_authority", "${appId}.clever_devices")
-    buildType.resValue("string", "next_bus_authority", "${appId}.nextbus")
-    buildType.resValue("string", "one_bus_away_authority", "${appId}.oba")
-    buildType.resValue("string", "strategic_mapping_authority", "${appId}.strategic_mapping")
+    if (!isMainApp) {
 
-    buildType.resValue("string", "ca_edmonton_authority", "${appId}.etslive")
-    buildType.resValue("string", "ca_ltconline_authority", "${appId}.ltconline")
-    buildType.resValue("string", "ca_sto_authority", "${appId}.ca_sto")
-    buildType.resValue("string", "ca_translink_authority", "${appId}.ca_translink")
-    buildType.resValue("string", "grand_river_transit_authority", "${appId}.ca_grt")
-    buildType.resValue("string", "greater_sudbury_authority", "${appId}.mybus")
-    buildType.resValue("string", "oc_transpo_authority", "${appId}.octranspo")
-    buildType.resValue("string", "regina_transit_authority", "${appId}.transitlive_com")
-    buildType.resValue("string", "rtc_quebec_authority", "${appId}.rtcquebec")
-    buildType.resValue("string", "stm_info_authority", "${appId}.stminfo")
-    buildType.resValue("string", "stm_info_api_authority", "${appId}.stminfoapi")
-    buildType.resValue("string", "winnipeg_transit_authority", "${appId}.winnipeg_transit")
+        buildType.resValue("string", "bike_station_authority", "${appId}.bike")
+        buildType.resValue("string", "gtfs_rts_authority", "${appId}.gtfs") // do not change to avoid breaking compat w/ old modules
+
+        def poiAgencyTypePrefix
+        if (file("src/main/res/values/gtfs_rts_values.xml").exists()) { // do not change to avoid breaking compat w/ old modules
+            //noinspection GroovyUnusedAssignment
+            poiAgencyTypePrefix = "gtfs_rts" // do not change to avoid breaking compat w/ old modules
+        } else if (file("src/main/res/values/bike_station_values.xml").exists()) {
+            //noinspection GroovyUnusedAssignment
+            poiAgencyTypePrefix = "bike_station"
+        }
+        if (poiAgencyTypePrefix) {
+            buildType.resValue("string", "poi_agency_authority", "@string/${poiAgencyTypePrefix}_authority")
+            buildType.resValue("string", "poi_agency_color", "@string/${poiAgencyTypePrefix}_color")
+            buildType.resValue("string", "poi_agency_short_name", "@string/${poiAgencyTypePrefix}_short_name")
+        } else {
+            println "> Unexpected POI agency type!"
+        }
+
+        buildType.resValue("string", "gtfs_real_time_authority", "${appId}.gtfs.realtime")
+
+        buildType.resValue("string", "clever_devices_authority", "${appId}.clever_devices")
+        buildType.resValue("string", "next_bus_authority", "${appId}.nextbus")
+        buildType.resValue("string", "one_bus_away_authority", "${appId}.oba")
+        buildType.resValue("string", "strategic_mapping_authority", "${appId}.strategic_mapping")
+
+        buildType.resValue("string", "ca_edmonton_authority", "${appId}.etslive")
+        buildType.resValue("string", "ca_ltconline_authority", "${appId}.ltconline")
+        buildType.resValue("string", "ca_sto_authority", "${appId}.ca_sto")
+        buildType.resValue("string", "ca_translink_authority", "${appId}.ca_translink")
+        buildType.resValue("string", "grand_river_transit_authority", "${appId}.ca_grt")
+        buildType.resValue("string", "greater_sudbury_authority", "${appId}.mybus")
+        buildType.resValue("string", "oc_transpo_authority", "${appId}.octranspo")
+        buildType.resValue("string", "regina_transit_authority", "${appId}.transitlive_com")
+        buildType.resValue("string", "rtc_quebec_authority", "${appId}.rtcquebec")
+        buildType.resValue("string", "stm_info_authority", "${appId}.stminfo")
+        buildType.resValue("string", "stm_info_api_authority", "${appId}.stminfoapi")
+        buildType.resValue("string", "winnipeg_transit_authority", "${appId}.winnipeg_transit")
+    }
 }

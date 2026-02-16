@@ -9,8 +9,8 @@ setGitProjectName;
 
 setIsCI;
 
-GTFS_FILE="${ROOT_DIR}/app-android/src/main/res/values/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
-if [ ! -f "${GTFS_FILE}" ]; then
+GTFS_RDS_VALUES_FILE="${ROOT_DIR}/app-android/src/main/res/values/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
+if [ ! -f "${GTFS_RDS_VALUES_FILE}" ]; then
     echo ">> Generating gtfs_rts_strings.xml... SKIP (not an rds agency)";
     exit 0; # ok
 fi
@@ -60,14 +60,24 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
 fi
 
 requireCommand "xmllint" "libxml2-utils";
+requireCommand "jq";
 
+GTFS_CONFIG_DIR="${CONFIG_DIR}/gtfs";
 GTFS_RDS_VALUES_GEN_FILE="${VALUES_DIR}/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
+AGENCY_JSON_FILE="${GTFS_CONFIG_DIR}/agency.json";
 TYPE=-1;
 if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then
   # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
   TYPE=$(xmllint --xpath "//resources/integer[@name='gtfs_rts_agency_type']/text()" "$GTFS_RDS_VALUES_GEN_FILE")
+elif [ -f $AGENCY_JSON_FILE ]; then
+  # https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/gtfs/data/GRouteType.kt
+  TYPE=$(jq '.target_route_type_id // empty' "$AGENCY_JSON_FILE")
 else
-  echo " > No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE)"
+  echo "> No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|json:$AGENCY_JSON_FILE)"
+  exit 1 # error
+fi
+if [ -z "$TYPE" ]; then
+  echo " > No type found for agency!"
   exit 1 # error
 fi
 TYPE_LABEL="";

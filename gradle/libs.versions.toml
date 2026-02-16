@@ -12,7 +12,7 @@ sdk-target = "35"
 # Android 16 Baklava
 buildTools = "36.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "2.3.0" # sync w/ ksp
+kotlin = "2.3.10" # sync w/ ksp
 # https://github.com/google/ksp/releases/latest
 ksp = "2.3.5"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
@@ -41,7 +41,7 @@ gradle-androidCacheFix = "3.0.3"
 hilt = "2.59.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
-androidx-activity = "1.12.3"
+androidx-activity = "1.12.4"
 androidx-annotation = "1.9.1"
 androidx-appCompat = "1.7.1"
 androidx-browser = "1.9.0"
@@ -85,7 +85,7 @@ gps-location = "21.3.0"
 gps-maps = "20.0.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "34.8.0"
+firebase-bom = "34.9.0"
 firebase-crashlytics-plugin = "3.0.6"
 firebase-perf-plugin = "2.0.2"
 play-billing = "8.3.0"
@@ -101,7 +101,7 @@ fbAudienceNetwork-mediation = "6.21.0.1"
 appLovin-mediation = "13.5.1.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
-vungle-mediation = "7.6.3.1"
+vungle-mediation = "7.7.0.1"
 # https://github.com/google/guava/releases/latest
 guava = "33.5.0-android"
 # https://github.com/square/leakcanary/releases
@@ -144,7 +144,7 @@ commons-io = "2.21.0"
 commons-lang3 = "3.20.0"
 commons-text = "1.15.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.51.1.0"
+xerial-SQLiteJDBC = "3.51.2.0"
 
 [libraries]
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
