@@ -1,5 +1,5 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
-name: MT Store channels (enable/disable)
+name: MT store channels (enable/disable)
 on:
   workflow_dispatch: # manual
     inputs:
@@ -57,20 +57,16 @@ env:
   MT_GIT_COMMIT_OFF: ${{ secrets.MT_GIT_COMMIT_OFF }}
 jobs:
   MT-STORE-CHANNELS-JOB:
-    name: "MT Store channels"
+    name: "MT store channels"
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - name: MT check out main repository code (no submodules)
         uses: actions/checkout@v6
         with:
-          submodules: true # required to set right token
+          # submodules: true # required to set right token
           token: ${{ secrets.MT_PAT }}
-          fetch-depth: 0 # fetch all (not required util release build)
-
-      - name: MT Checkout branch
-        run: |
-          git checkout -B "update_store_channels"
+          # fetch-depth: 0 # fetch all (not required util release build)
 
       - name: MT Enable `Alpha` channel
         if: ${{ github.event.inputs.alpha == 'enable' }}
@@ -111,16 +107,35 @@ jobs:
             echo "No changes to commit."
             exit 1 # fail
           fi
+          git checkout -B "update_store_channels"
           git config user.name "$MT_BOT_USER_NAME"
           git config user.email "$MT_BOT_USER_EMAIL"
           git commit -m "Update store channels"
-          git push -u origin "update_store_channels" --force
+          git push -u origin "$(git rev-parse --abbrev-ref HEAD)" --force
           exit 0 # success
 
-      - name: MT Create pull request (if necessary)
-        if: ${{ steps.mt-commit-changes.conclusion == 'success' }}
+      - name: MT Check if PR exits
+        id: mt-check-pr-exists
+        if: ${{ steps.mt-commit-changes.outcome == 'success' }}
         continue-on-error: true
         run: |
-          gh pr view &>/dev/null && echo "PR exists" || gh pr create --fill
+          # gh pr view &>/dev/null # incl. closed PRs
+          gh pr list --state open --head "$(git rev-parse --abbrev-ref HEAD)" | wc -l
+          exit $? # 0 PR = success
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }}
+
+      - name: MT Create pull request (if necessary)
+        if: ${{ steps.mt-commit-changes.outcome == 'success' && steps.mt-check-pr-exists.outcome == 'success' }}
+        run: |
+          gh pr create --fill --assignee montransit
+          gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }}
+      - name: MT Update pull request (if necessary)
+        if: ${{ steps.mt-commit-changes.outcome == 'success' && steps.mt-check-pr-exists.outcome == 'failure' }}
+        run: |
+          gh pr edit --add-assignee montransit
+          gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
