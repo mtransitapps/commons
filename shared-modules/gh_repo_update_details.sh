@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 
-ROOT_DIR="$SCRIPT_DIR/../..";
+ROOT_DIR="$SCRIPT_DIR";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
 
@@ -108,16 +108,16 @@ fi
 REPO_DESC="$AGENCY_LABEL $TYPE_LABEL for MonTransit"
 REPO_URL="https://play.google.com/store/apps/details?id=$PKG"
 
-echo ">>  Updating GitHub repository description & homepage..."
+echo ">> Updating GitHub repository description & homepage..."
 # https://cli.github.com/manual/gh_repo_edit
 gh repo edit \
   --description "$REPO_DESC" \
   --homepage "$REPO_URL" \
   ;
 checkResult $?
-echo ">>  Updating GitHub repository description & homepage... DONE"
+echo ">> Updating GitHub repository description & homepage... DONE"
 
-echo ">>  Updating GitHub repository features..."
+echo ">> Updating GitHub repository features..."
  # TODO link to main wiki?
 gh repo edit \
   --enable-discussions=false \
@@ -125,6 +125,6 @@ gh repo edit \
   --enable-wiki=false \
   ;
 RESULT=$? # optional
-echo ">>  Updating GitHub repository features... DONE (result=$RESULT)"
+echo ">> Updating GitHub repository features... DONE (result=$RESULT)"
 
 echo ">> Updating GitHub repository details... DONE";
