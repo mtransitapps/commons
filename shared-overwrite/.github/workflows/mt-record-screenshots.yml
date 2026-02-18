@@ -151,7 +151,7 @@ jobs:
           disable-animations: true
           disable-spellchecker: true
           disable-linux-hw-accel: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
           script: ./setup-and-all-app-screenshots.sh
 
       - name: MT upload screenshots
@@ -197,6 +197,9 @@ jobs:
         if: ${{ steps.mt-commit-screenshots.outcome == 'success' }}
         continue-on-error: true
         run: |
+          # Fetch the branch to ensure it exists in the remote tracking
+          git fetch origin "${MT_BRANCH_NAME}_update_screenshots" || true
+          
           PR_COUNT=$(gh pr list --state open --head "${MT_BRANCH_NAME}_update_screenshots" | wc -l)
           echo "Pull requests found: $PR_COUNT."
           if [[ $PR_COUNT -eq 0 ]]; then
