@@ -71,13 +71,13 @@ jobs:
           MT_SKIP_PUSH_COMMIT=false;
           echo "MT_SKIP_PUSH_COMMIT=$MT_SKIP_PUSH_COMMIT" >> "$GITHUB_ENV";
 
-      - name: MT assemble release (APK & ABB)
+      - name: MT assemble release (APK & AAB)
         run: ./assemble_release.sh
         env:
           GITHUB_TOKEN: ${{ secrets.MT_PAT }}
           MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
 
-      - name: MT artifact > app-android > APK & ABB
+      - name: MT artifact > app-android > APK & AAB
         uses: actions/upload-artifact@v6
         with:
           name: app-android-apk-bundle
