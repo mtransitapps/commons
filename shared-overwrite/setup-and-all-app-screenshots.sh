@@ -17,17 +17,35 @@ SCRIPT_DIR="$(dirname "$0")"
 MAIN_APP_PACKAGE="org.mtransit.android"
 MAIN_APP_REPO="mtransitapps/mtransit-for-android"
 
+# Function to get latest release APK URL from GitHub
+get_latest_apk_url() {
+  local repo=$1
+  local release_url="https://api.github.com/repos/${repo}/releases/latest"
+  
+  echo " - Fetching latest release info from: $release_url"
+  
+  local apk_url=$(curl -s "$release_url" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
+  
+  if [ -z "$apk_url" ]; then
+    echo " > ERROR: Could not find APK in latest release for $repo"
+    echo " > This might be due to:"
+    echo "   - No releases available for this repository"
+    echo "   - GitHub API rate limiting"
+    echo "   - Network connectivity issues"
+    echo "   - The release does not contain an APK file"
+    return 1
+  fi
+  
+  echo "$apk_url"
+  return 0
+}
+
 echo ">> Step 1: Download and install main mtransit app..."
 
-# Get the latest release APK URL from GitHub
-LATEST_RELEASE_URL="https://api.github.com/repos/${MAIN_APP_REPO}/releases/latest"
-echo " - Fetching latest release info from: $LATEST_RELEASE_URL"
-
-# Download release info and extract APK URL
-APK_URL=$(curl -s "$LATEST_RELEASE_URL" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
+# Get the latest release APK URL
+APK_URL=$(get_latest_apk_url "$MAIN_APP_REPO")
 
 if [ -z "$APK_URL" ]; then
-  echo " > ERROR: Could not find APK in latest release"
   exit 1
 fi
 
@@ -76,10 +94,7 @@ if [ -f "$CONFIG_PKG_FILE" ]; then
   
   # Get the latest release APK for this module
   MODULE_REPO="mtransitapps/${REPO_NAME}"
-  MODULE_RELEASE_URL="https://api.github.com/repos/${MODULE_REPO}/releases/latest"
-  echo " - Fetching module release info from: $MODULE_RELEASE_URL"
-  
-  MODULE_APK_URL=$(curl -s "$MODULE_RELEASE_URL" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
+  MODULE_APK_URL=$(get_latest_apk_url "$MODULE_REPO")
   
   if [ -n "$MODULE_APK_URL" ]; then
     echo " - Found module APK: $MODULE_APK_URL"
