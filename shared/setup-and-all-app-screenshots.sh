@@ -65,6 +65,8 @@ echo " - Downloading..."
 
 # Download the APK to a unique temporary file
 APK_FILE=$(mktemp -t mtransit-main.XXXXXX.apk)
+echo " - DEBUG: APK_FILE='$APK_FILE'"
+echo " - DEBUG: APK_URL='$APK_URL'"
 curl -f -L -o "$APK_FILE" "$APK_URL"
 
 if [ ! -f "$APK_FILE" ] || [ ! -s "$APK_FILE" ]; then
@@ -116,6 +118,8 @@ else
       echo " - Downloading..."
       
       MODULE_APK_FILE=$(mktemp -t mtransit-module.XXXXXX.apk)
+      echo " - DEBUG: MODULE_APK_FILE='$MODULE_APK_FILE'"
+      echo " - DEBUG: MODULE_APK_URL='$MODULE_APK_URL'"
       curl -f -L -o "$MODULE_APK_FILE" "$MODULE_APK_URL"
       
       if [ ! -f "$MODULE_APK_FILE" ] || [ ! -s "$MODULE_APK_FILE" ]; then
