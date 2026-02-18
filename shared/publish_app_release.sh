@@ -65,7 +65,7 @@ if [ -e "${APK_FILES[0]}" ]; then
   echo "APK file name: '$APK_FILE_NAME'.";
   APP_VERSION_NAME=$(echo "$APK_FILE_NAME" | sed 's/.*_v\([0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}_r[0-9]\+\).*/\1/');
 elif [ -e "${AAB_FILES[0]}" ]; then
-  AAB_FILE_NAME=$(basename "$AAB_FILES");
+  AAB_FILE_NAME=$(basename "${AAB_FILES[0]}");
   echo "AAB file name: '$AAB_FILE_NAME'.";
   APP_VERSION_NAME=$(echo "$AAB_FILE_NAME" | sed 's/.*_v\([0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}_r[0-9]\+\).*/\1/');
 else
