@@ -26,7 +26,7 @@ androidx.core:core:1.17.0
 androidx.cursoradapter:cursoradapter:1.0.0
 androidx.customview:customview-poolingcontainer:1.0.0
 androidx.customview:customview:1.1.0
-androidx.databinding:viewbinding:9.0.0
+androidx.databinding:viewbinding:9.0.1
 androidx.datastore:datastore-android:1.1.7
 androidx.datastore:datastore-core-android:1.1.7
 androidx.datastore:datastore-core-okio-jvm:1.1.7
