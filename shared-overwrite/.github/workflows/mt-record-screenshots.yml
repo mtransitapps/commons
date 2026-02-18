@@ -95,13 +95,20 @@ jobs:
         continue-on-error: true
         id: mt-commit-screenshots
         run: |
-          # Find and stage screenshot files
-          find . -path "*/build/outputs/connected_android_test_additional_output/*" -name "*.png" -exec cp --parents {} screenshots_output/ \;
+          # Find screenshot files from test output
+          SCREENSHOT_FILES=$(find . -path "*/build/outputs/connected_android_test_additional_output/*" -name "*.png")
           
-          if [ -d "screenshots_output" ] && [ "$(find screenshots_output -name '*.png' | wc -l)" -gt 0 ]; then
+          if [ -n "$SCREENSHOT_FILES" ]; then
             # Copy screenshots to play store listings directory
             mkdir -p app-android/src/main/play/listings/en-US/graphics/phone-screenshots/
-            find screenshots_output -name "*.png" -exec cp {} app-android/src/main/play/listings/en-US/graphics/phone-screenshots/ \;
+            
+            # Copy with basename to flatten structure and avoid overwrites by keeping original paths
+            while IFS= read -r file; do
+              # Extract a meaningful name from the path
+              # Keep the test class/method name if available in the path
+              basename_file=$(basename "$file")
+              cp -v "$file" "app-android/src/main/play/listings/en-US/graphics/phone-screenshots/$basename_file"
+            done <<< "$SCREENSHOT_FILES"
             
             git add -v -A app-android/src/main/play/listings/en-US/graphics/phone-screenshots/
             
@@ -114,7 +121,7 @@ jobs:
             git config user.name "$MT_BOT_USER_NAME"
             git config user.email "$MT_BOT_USER_EMAIL"
             git commit -m "Update screenshots in \`${MT_BRANCH_NAME}\`"
-            git push -u origin "$(git rev-parse --abbrev-ref HEAD)" --force
+            git push -u origin "${MT_BRANCH_NAME}_update_screenshots" --force
             exit 0 # success
           else
             echo "No screenshots found."
@@ -126,7 +133,7 @@ jobs:
         if: ${{ steps.mt-commit-screenshots.outcome == 'success' }}
         continue-on-error: true
         run: |
-          PR_COUNT=$(gh pr list --state open --head "$(git rev-parse --abbrev-ref HEAD)" | wc -l)
+          PR_COUNT=$(gh pr list --state open --head "${MT_BRANCH_NAME}_update_screenshots" | wc -l)
           echo "Pull requests found: $PR_COUNT."
           if [[ $PR_COUNT -eq 0 ]]; then
             exit 1 # fail
