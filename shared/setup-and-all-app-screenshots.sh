@@ -51,6 +51,8 @@ if [ -n "$MODULE_APK_FILE" ] && [ -f "$MODULE_APK_FILE" ]; then
   CONFIG_PKG_FILE="config/pkg"
   if [ -f "$CONFIG_PKG_FILE" ]; then
     MODULE_PACKAGE=$(cat "$CONFIG_PKG_FILE")
+    # TEMPORARY DEBUG: Override MODULE_PACKAGE for testing
+    MODULE_PACKAGE="org.mtransit.android.ca_dawson_creek_transit_system_bus"
     echo " - Module package: $MODULE_PACKAGE"
     echo " - Installing module app from: $MODULE_APK_FILE"
     
