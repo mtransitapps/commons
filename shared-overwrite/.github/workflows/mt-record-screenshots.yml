@@ -123,6 +123,18 @@ jobs:
           echo "MODULE_APK_FILE=$MODULE_APK_FILE" >> $GITHUB_OUTPUT
           echo "Module app APK downloaded successfully"
 
+      - name: MT debug - verify setup script exists
+        run: |
+          echo "Checking for setup-and-all-app-screenshots.sh script..."
+          if [ -f "./setup-and-all-app-screenshots.sh" ]; then
+            echo "✓ Script found at ./setup-and-all-app-screenshots.sh"
+            ls -lh ./setup-and-all-app-screenshots.sh
+          else
+            echo "✗ Script NOT found at ./setup-and-all-app-screenshots.sh"
+            echo "Listing root directory contents:"
+            ls -al
+          fi
+
       - name: MT record screenshots with Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         env:
