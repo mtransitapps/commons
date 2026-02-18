@@ -38,27 +38,15 @@ jobs:
         with:
           token: ${{ secrets.MT_PAT }}
 
+      - name: MT setup
+        uses: ./.github/actions/setup
+
       - name: MT read sdk-target from gradle/libs.versions.toml
         id: sdk-target
         run: |
           SDK_TARGET=$(grep -E '^sdk-target\s*=\s*"[0-9]+"' gradle/libs.versions.toml | sed -E 's/.*"([0-9]+)".*/\1/')
           echo "API_LEVEL=${SDK_TARGET}" >> $GITHUB_OUTPUT
           echo "Using API level: ${SDK_TARGET}"
-
-      - name: MT set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: MT setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          cache-read-only: false
-          dependency-graph: generate-and-submit
-
-      - name: MT grant execute permission for gradlew
-        run: chmod +x gradlew
 
       - name: MT enable KVM group perms
         run: |
