@@ -72,12 +72,13 @@ jobs:
           api-level: ${{ steps.sdk-target.outputs.API_LEVEL }}
           target: google_apis
           arch: x86_64
+          profile: pixel_7_pro
           force-avd-creation: false
           disable-animations: true
           disable-spellchecker: true
           disable-linux-hw-accel: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: ./commons-android/pub/all-app-screenshots.sh
+          script: ./setup-and-all-app-screenshots.sh
 
       - name: MT upload screenshots
         if: always()
