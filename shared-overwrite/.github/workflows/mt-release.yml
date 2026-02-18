@@ -2,9 +2,9 @@
 name: MT release
 on:
   workflow_dispatch: # manual
-# gh workflow run mt-release.yml --ref $(git rev-parse --abbrev-ref HEAD)
+# gh workflow run mt-release.yml
 # gh run list --workflow=mt-release.yml
-# gh run watch ; gh browse --branch $(git rev-parse --abbrev-ref HEAD)
+# gh run watch ; gh browse --branch
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -90,4 +90,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.MT_PAT }}
           MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
-

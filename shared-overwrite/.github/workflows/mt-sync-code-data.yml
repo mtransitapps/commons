@@ -180,8 +180,8 @@ jobs:
           MT_TEMP_DIR=".mt";
           mkdir -p $MT_TEMP_DIR;
           MT_APP_RELEASE_REQUIRED_FILE="$MT_TEMP_DIR/mt_app_release_required";
-          if [ -f $MT_APP_RELEASE_REQUIRED_FILE ]; then
-            gh workflow run mt-release.yml --ref $(git rev-parse --abbrev-ref HEAD)
+          if [ -f "$MT_APP_RELEASE_REQUIRED_FILE" ] && [ "$(cat "$MT_APP_RELEASE_REQUIRED_FILE")" = "true" ]; then
+            gh workflow run mt-release.yml
           fi
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
