@@ -85,9 +85,6 @@ jobs:
             app-android/build/outputs/apk
             app-android/build/outputs/bundle
 
-      - name: MT push tags
-        run: git push --tags
-
       - name: MT Publish release
         run: ./publish_app_release.sh
         env:
