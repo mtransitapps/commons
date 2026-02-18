@@ -94,12 +94,12 @@ jobs:
         id: mt-commit-screenshots
         run: |
           # Check if screenshots were generated
-          SCREENSHOT_COUNT=$(find app-android/src/main/play/listings/*/graphics/*-screenshots/*.png -type f 2>/dev/null | wc -l)
+          SCREENSHOT_COUNT=$(find app-android/src/main/play/listings -type f -path '*/graphics/*-screenshots/*.png' 2>/dev/null | wc -l)
           
           if [ "$SCREENSHOT_COUNT" -gt 0 ]; then
             echo "Found $SCREENSHOT_COUNT screenshot file(s)."
             
-            git add -v -A app-android/src/main/play/listings/*/graphics/*-screenshots/
+            git add -v -A app-android/src/main/play/listings/
             
             if git diff --staged --quiet; then
               echo "No new screenshots to commit."
