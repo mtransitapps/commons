@@ -68,8 +68,6 @@ jobs:
           MT_APP_RELEASE_REQUIRED_FILE="$MT_TEMP_DIR/mt_app_release_required";
           MT_APP_RELEASE_REQUIRED=true;
           echo "$MT_APP_RELEASE_REQUIRED" > $MT_APP_RELEASE_REQUIRED_FILE;
-          MT_SKIP_PUSH_COMMIT=false;
-          echo "MT_SKIP_PUSH_COMMIT=$MT_SKIP_PUSH_COMMIT" >> "$GITHUB_ENV";
 
       - name: MT assemble release (APK & AAB)
         run: ./assemble_release.sh
