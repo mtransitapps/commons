@@ -86,9 +86,10 @@ jobs:
 
       - name: MT download this app release APK
         id: download-module-apk
-        continue-on-error: true
         run: |
           REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
+          # TEMPORARY DEBUG: Override REPO_NAME for testing
+          REPO_NAME="ca-dawson-creek-transit-system-bus-android"
           MODULE_REPO="mtransitapps/${REPO_NAME}"
           RELEASE_URL="https://api.github.com/repos/${MODULE_REPO}/releases/latest"
           
@@ -98,15 +99,15 @@ jobs:
           RESPONSE=$(curl -f -s "$RELEASE_URL" 2>/dev/null)
           
           if [ $? -ne 0 ]; then
-            echo "WARNING: Could not fetch release info (may not have releases yet)"
-            exit 0
+            echo "ERROR: Could not fetch release info"
+            exit 1
           fi
           
           APK_URL=$(echo "$RESPONSE" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
           
           if [ -z "$APK_URL" ]; then
-            echo "WARNING: Could not find APK in latest release"
-            exit 0
+            echo "ERROR: Could not find APK in latest release"
+            exit 1
           fi
           
           echo "Found module APK URL: $APK_URL"
@@ -116,8 +117,8 @@ jobs:
           curl -f -L -o "$MODULE_APK_FILE" "$APK_URL"
           
           if [ ! -f "$MODULE_APK_FILE" ] || [ ! -s "$MODULE_APK_FILE" ]; then
-            echo "WARNING: Failed to download module APK or file is empty"
-            exit 0
+            echo "ERROR: Failed to download module APK or file is empty"
+            exit 1
           fi
           
           echo "MODULE_APK_FILE=$MODULE_APK_FILE" >> $GITHUB_OUTPUT
@@ -133,6 +134,8 @@ jobs:
             echo "✗ Script NOT found at ./setup-and-all-app-screenshots.sh"
             echo "Listing root directory contents:"
             ls -al
+            echo "ERROR: setup-and-all-app-screenshots.sh script is required but not found"
+            exit 1
           fi
 
       - name: MT record screenshots with Android Emulator
