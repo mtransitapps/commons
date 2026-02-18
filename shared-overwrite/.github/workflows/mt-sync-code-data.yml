@@ -172,6 +172,9 @@ jobs:
           MT_SKIP_PUSH_COMMIT=false;
           echo "MT_SKIP_PUSH_COMMIT=$MT_SKIP_PUSH_COMMIT" >> "$GITHUB_ENV";
 
+      - name: MT push commits
+        run: ./push_commits.sh
+
       - name: MT trigger release if required
         run: |
           MT_TEMP_DIR=".mt";
