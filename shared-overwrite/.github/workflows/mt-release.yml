@@ -51,9 +51,10 @@ jobs:
     name: "MT Release"
     runs-on: ubuntu-latest
     steps:
-      - name: MT check out main repository code (no submodules)
+      - name: MT check out main repository code (with submodules)
         uses: actions/checkout@v6
         with:
+          submodules: true # required to set right token
           token: ${{ secrets.MT_PAT }}
           fetch-depth: 0 # fetch all (not required util release build)
 
