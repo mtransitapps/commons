@@ -77,7 +77,7 @@ jobs:
           disable-spellchecker: true
           disable-linux-hw-accel: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: ./gradlew connectedDebugAndroidTest --stacktrace
+          script: ./commons-android/pub/all-app-screenshots.sh
 
       - name: MT upload screenshots
         if: always()
@@ -85,9 +85,7 @@ jobs:
         with:
           name: screenshots-${{ github.sha }}
           path: |
-            **/build/outputs/connected_android_test_additional_output/
-            **/androidTest-results/
-            **/outputs/androidTest-results/
+            app-android/src/main/play/listings/*/graphics/*-screenshots/*.png
           retention-days: 30
           if-no-files-found: warn
 
@@ -95,22 +93,13 @@ jobs:
         continue-on-error: true
         id: mt-commit-screenshots
         run: |
-          # Find screenshot files from test output
-          SCREENSHOT_FILES=$(find . -path "*/build/outputs/connected_android_test_additional_output/*" -name "*.png")
+          # Check if screenshots were generated
+          SCREENSHOT_COUNT=$(find app-android/src/main/play/listings/*/graphics/*-screenshots/*.png -type f 2>/dev/null | wc -l)
           
-          if [ -n "$SCREENSHOT_FILES" ]; then
-            # Copy screenshots to play store listings directory
-            mkdir -p app-android/src/main/play/listings/en-US/graphics/phone-screenshots/
+          if [ "$SCREENSHOT_COUNT" -gt 0 ]; then
+            echo "Found $SCREENSHOT_COUNT screenshot file(s)."
             
-            # Copy with basename to flatten structure and avoid overwrites by keeping original paths
-            while IFS= read -r file; do
-              # Extract a meaningful name from the path
-              # Keep the test class/method name if available in the path
-              basename_file=$(basename "$file")
-              cp -v "$file" "app-android/src/main/play/listings/en-US/graphics/phone-screenshots/$basename_file"
-            done <<< "$SCREENSHOT_FILES"
-            
-            git add -v -A app-android/src/main/play/listings/en-US/graphics/phone-screenshots/
+            git add -v -A app-android/src/main/play/listings/*/graphics/*-screenshots/
             
             if git diff --staged --quiet; then
               echo "No new screenshots to commit."
