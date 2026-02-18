@@ -54,8 +54,80 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: MT download main app release APK
+        id: download-main-apk
+        run: |
+          MAIN_APP_REPO="mtransitapps/mtransit-for-android"
+          RELEASE_URL="https://api.github.com/repos/${MAIN_APP_REPO}/releases/latest"
+          
+          echo "Fetching latest release info from: $RELEASE_URL"
+          RESPONSE=$(curl -f -s "$RELEASE_URL")
+          
+          APK_URL=$(echo "$RESPONSE" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
+          
+          if [ -z "$APK_URL" ]; then
+            echo "ERROR: Could not find APK in latest release"
+            exit 1
+          fi
+          
+          echo "Found APK URL: $APK_URL"
+          
+          MAIN_APK_FILE="${RUNNER_TEMP}/mtransit-main.apk"
+          echo "Downloading to: $MAIN_APK_FILE"
+          curl -f -L -o "$MAIN_APK_FILE" "$APK_URL"
+          
+          if [ ! -f "$MAIN_APK_FILE" ] || [ ! -s "$MAIN_APK_FILE" ]; then
+            echo "ERROR: Failed to download APK or file is empty"
+            exit 1
+          fi
+          
+          echo "MAIN_APK_FILE=$MAIN_APK_FILE" >> $GITHUB_OUTPUT
+          echo "Main app APK downloaded successfully"
+
+      - name: MT download this app release APK
+        id: download-module-apk
+        continue-on-error: true
+        run: |
+          REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
+          MODULE_REPO="mtransitapps/${REPO_NAME}"
+          RELEASE_URL="https://api.github.com/repos/${MODULE_REPO}/releases/latest"
+          
+          echo "Repository: $REPO_NAME"
+          echo "Fetching latest release info from: $RELEASE_URL"
+          
+          RESPONSE=$(curl -f -s "$RELEASE_URL" 2>/dev/null)
+          
+          if [ $? -ne 0 ]; then
+            echo "WARNING: Could not fetch release info (may not have releases yet)"
+            exit 0
+          fi
+          
+          APK_URL=$(echo "$RESPONSE" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
+          
+          if [ -z "$APK_URL" ]; then
+            echo "WARNING: Could not find APK in latest release"
+            exit 0
+          fi
+          
+          echo "Found module APK URL: $APK_URL"
+          
+          MODULE_APK_FILE="${RUNNER_TEMP}/mtransit-module.apk"
+          echo "Downloading to: $MODULE_APK_FILE"
+          curl -f -L -o "$MODULE_APK_FILE" "$APK_URL"
+          
+          if [ ! -f "$MODULE_APK_FILE" ] || [ ! -s "$MODULE_APK_FILE" ]; then
+            echo "WARNING: Failed to download module APK or file is empty"
+            exit 0
+          fi
+          
+          echo "MODULE_APK_FILE=$MODULE_APK_FILE" >> $GITHUB_OUTPUT
+          echo "Module app APK downloaded successfully"
+
       - name: MT record screenshots with Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
+        env:
+          MAIN_APK_FILE: ${{ steps.download-main-apk.outputs.MAIN_APK_FILE }}
+          MODULE_APK_FILE: ${{ steps.download-module-apk.outputs.MODULE_APK_FILE }}
         with:
           api-level: ${{ steps.sdk-target.outputs.API_LEVEL }}
           target: google_apis
