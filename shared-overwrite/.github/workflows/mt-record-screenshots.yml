@@ -44,7 +44,7 @@ jobs:
       - name: MT read sdk-target from gradle/libs.versions.toml
         id: sdk-target
         run: |
-          SDK_TARGET=$(grep -E '^sdk-target\s*=\s*"[0-9]+"' gradle/libs.versions.toml | sed -E 's/.*"([0-9]+)".*/\1/')
+          SDK_TARGET=$(grep -E '^sdk-target\s*=\s*"[0-9]+"' commons/gradle/libs.versions.toml | sed -E 's/.*"([0-9]+)".*/\1/')
           echo "API_LEVEL=${SDK_TARGET}" >> $GITHUB_OUTPUT
           echo "Using API level: ${SDK_TARGET}"
 
