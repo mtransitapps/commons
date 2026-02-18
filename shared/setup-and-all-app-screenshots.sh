@@ -64,11 +64,11 @@ echo " - Found APK: $APK_URL"
 echo " - Downloading..."
 
 # Download the APK to a unique temporary file
-APK_FILE=$(mktemp /tmp/mtransit-main.XXXXXX.apk)
-curl -L -o "$APK_FILE" "$APK_URL"
+APK_FILE=$(mktemp -t mtransit-main.XXXXXX.apk)
+curl -f -L -o "$APK_FILE" "$APK_URL"
 
-if [ ! -f "$APK_FILE" ]; then
-  echo " > ERROR: Failed to download APK"
+if [ ! -f "$APK_FILE" ] || [ ! -s "$APK_FILE" ]; then
+  echo " > ERROR: Failed to download APK or file is empty"
   exit 1
 fi
 
@@ -115,17 +115,21 @@ else
       echo " - Found module APK: $MODULE_APK_URL"
       echo " - Downloading..."
       
-      MODULE_APK_FILE=$(mktemp /tmp/mtransit-module.XXXXXX.apk)
-      curl -L -o "$MODULE_APK_FILE" "$MODULE_APK_URL"
+      MODULE_APK_FILE=$(mktemp -t mtransit-module.XXXXXX.apk)
+      curl -f -L -o "$MODULE_APK_FILE" "$MODULE_APK_URL"
       
-      echo " - Installing module app..."
-      adb install -r -d "$MODULE_APK_FILE"
-      
-      # Verify installation
-      if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
-        echo " - Module app installed successfully"
+      if [ ! -f "$MODULE_APK_FILE" ] || [ ! -s "$MODULE_APK_FILE" ]; then
+        echo " > WARNING: Failed to download module APK or file is empty, skipping module installation"
       else
-        echo " > WARNING: Module app installation may have failed"
+        echo " - Installing module app..."
+        adb install -r -d "$MODULE_APK_FILE"
+        
+        # Verify installation
+        if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
+          echo " - Module app installed successfully"
+        else
+          echo " > WARNING: Module app installation may have failed"
+        fi
       fi
     else
       echo " > WARNING: Could not find module APK in latest release, skipping module installation"
