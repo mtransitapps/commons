@@ -24,14 +24,25 @@ get_latest_apk_url() {
   
   echo " - Fetching latest release info from: $release_url"
   
-  local apk_url=$(curl -s "$release_url" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
+  # Use -f to fail on HTTP errors and check the response
+  local response=$(curl -f -s "$release_url" 2>/dev/null)
+  local curl_exit_code=$?
+  
+  if [ $curl_exit_code -ne 0 ]; then
+    echo " > ERROR: Failed to fetch release information (curl exit code: $curl_exit_code)"
+    echo " > This might be due to:"
+    echo "   - GitHub API rate limiting"
+    echo "   - Network connectivity issues"
+    echo "   - Repository not found or access denied"
+    return 1
+  fi
+  
+  local apk_url=$(echo "$response" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
   
   if [ -z "$apk_url" ]; then
     echo " > ERROR: Could not find APK in latest release for $repo"
     echo " > This might be due to:"
     echo "   - No releases available for this repository"
-    echo "   - GitHub API rate limiting"
-    echo "   - Network connectivity issues"
     echo "   - The release does not contain an APK file"
     return 1
   fi
@@ -52,8 +63,8 @@ fi
 echo " - Found APK: $APK_URL"
 echo " - Downloading..."
 
-# Download the APK
-APK_FILE="/tmp/mtransit-main.apk"
+# Download the APK to a unique temporary file
+APK_FILE=$(mktemp /tmp/mtransit-main.XXXXXX.apk)
 curl -L -o "$APK_FILE" "$APK_URL"
 
 if [ ! -f "$APK_FILE" ]; then
@@ -82,41 +93,46 @@ echo " - Location permissions granted"
 
 echo ">> Step 3: Install current repository module app..."
 
-# Get the current repository name from git
-REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
-echo " - Repository: $REPO_NAME"
+# Verify we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+  echo " > WARNING: Not in a git repository, skipping module installation"
+else
+  # Get the current repository name from git
+  REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
+  echo " - Repository: $REPO_NAME"
 
-# Get the package name from config/pkg if it exists
-CONFIG_PKG_FILE="config/pkg"
-if [ -f "$CONFIG_PKG_FILE" ]; then
-  MODULE_PACKAGE=$(cat "$CONFIG_PKG_FILE")
-  echo " - Module package: $MODULE_PACKAGE"
-  
-  # Get the latest release APK for this module
-  MODULE_REPO="mtransitapps/${REPO_NAME}"
-  MODULE_APK_URL=$(get_latest_apk_url "$MODULE_REPO")
-  
-  if [ -n "$MODULE_APK_URL" ]; then
-    echo " - Found module APK: $MODULE_APK_URL"
-    echo " - Downloading..."
+  # Get the package name from config/pkg if it exists
+  CONFIG_PKG_FILE="config/pkg"
+  if [ -f "$CONFIG_PKG_FILE" ]; then
+    MODULE_PACKAGE=$(cat "$CONFIG_PKG_FILE")
+    echo " - Module package: $MODULE_PACKAGE"
     
-    MODULE_APK_FILE="/tmp/mtransit-module.apk"
-    curl -L -o "$MODULE_APK_FILE" "$MODULE_APK_URL"
+    # Get the latest release APK for this module
+    MODULE_REPO="mtransitapps/${REPO_NAME}"
+    MODULE_APK_URL=$(get_latest_apk_url "$MODULE_REPO")
     
-    echo " - Installing module app..."
-    adb install -r -d "$MODULE_APK_FILE"
-    
-    # Verify installation
-    if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
-      echo " - Module app installed successfully"
+    if [ -n "$MODULE_APK_URL" ]; then
+      echo " - Found module APK: $MODULE_APK_URL"
+      echo " - Downloading..."
+      
+      MODULE_APK_FILE=$(mktemp /tmp/mtransit-module.XXXXXX.apk)
+      curl -L -o "$MODULE_APK_FILE" "$MODULE_APK_URL"
+      
+      echo " - Installing module app..."
+      adb install -r -d "$MODULE_APK_FILE"
+      
+      # Verify installation
+      if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
+        echo " - Module app installed successfully"
+      else
+        echo " > WARNING: Module app installation may have failed"
+      fi
     else
-      echo " > WARNING: Module app installation may have failed"
+      echo " > WARNING: Could not find module APK in latest release, skipping module installation"
     fi
   else
-    echo " > WARNING: Could not find module APK in latest release, skipping module installation"
+    echo " > WARNING: No config/pkg file found, skipping module installation"
   fi
-else
-  echo " > WARNING: No config/pkg file found, skipping module installation"
 fi
 
 echo ">> Step 4: Record screenshots..."
