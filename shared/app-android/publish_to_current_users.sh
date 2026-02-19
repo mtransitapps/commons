@@ -18,24 +18,36 @@ if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
 fi
 
 if [[ -f "$CONFIG_PATH/store/production" ]]; then
-    echo "> Current users == production.";
-    $SCRIPT_DIR/publish_to_production_100.sh || exit;
-elif [[ -f "$CONFIG_PATH/store/beta-private" ]]; then
+  if [[ -f "$CONFIG_PATH/store/beta-private" ]]; then
     if [[ -f "$CONFIG_PATH/store/alpha" ]]; then
-        echo "> Current users == alpha + private-beta.";
-        $SCRIPT_DIR/publish_to_alpha.sh || exit;
-        $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit;
+      echo "> Current users == alpha + private-beta + production.";
+      $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
+      $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit 1; #error
+      $SCRIPT_DIR/promote_from_private_beta_to_production_100.sh.sh || exit 1; #error
     else
-        echo "> Current users == private-beta.";
-        $SCRIPT_DIR/publish_to_private_beta.sh || exit;
+      echo "> Current users == private-beta + production.";
+      $SCRIPT_DIR/publish_to_private_beta.sh || exit 1; #error
+      $SCRIPT_DIR/promote_from_private_beta_to_production_100.sh.sh || exit 1; #error
     fi
+  else
+    echo "> Current users == production.";
+    $SCRIPT_DIR/publish_to_production_100.sh || exit 1; #error
+  fi
+elif [[ -f "$CONFIG_PATH/store/beta-private" ]]; then
+  if [[ -f "$CONFIG_PATH/store/alpha" ]]; then
+    echo "> Current users == alpha + private-beta.";
+    $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
+    $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit 1; #error
+  else
+    echo "> Current users == private-beta.";
+    $SCRIPT_DIR/publish_to_private_beta.sh || exit 1; #error
+  fi
 elif [[ -f "$CONFIG_PATH/store/alpha" ]]; then
-    echo "> Current users == alpha.";
-    $SCRIPT_DIR/publish_to_alpha.sh || exit;
+  echo "> Current users == alpha.";
+  $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
 else
-    echo "> Push to Store NOT enabled... SKIP (no current users)";
-    exit 0 # success
+  echo "> Push to Store NOT enabled... SKIP (no current users)";
+  exit 0 # success
 fi
-
 
 echo ">> Publishing to all current users... DONE";
