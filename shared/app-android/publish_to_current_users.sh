@@ -23,11 +23,11 @@ if [[ -f "$CONFIG_PATH/store/production" ]]; then
       echo "> Current users == alpha + private-beta + production.";
       $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
       $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit 1; #error
-$SCRIPT_DIR/promote_from_private_beta_to_production_100.sh || exit 1; #error
+      $SCRIPT_DIR/promote_from_private_beta_to_production_100.sh || exit 1; #error
     else
       echo "> Current users == private-beta + production.";
       $SCRIPT_DIR/publish_to_private_beta.sh || exit 1; #error
-$SCRIPT_DIR/promote_from_private_beta_to_production_100.sh || exit 1; #error
+      $SCRIPT_DIR/promote_from_private_beta_to_production_100.sh || exit 1; #error
     fi
   else
     echo "> Current users == production.";
