@@ -26,9 +26,7 @@ elif [[ -f "$CONFIG_PATH/store/beta-private" ]]; then
         echo "> Current users == alpha + private-beta.";
         $SCRIPT_DIR/publish_to_alpha.sh;
         RESULT=$?;
-        if [[ ${RESULT} != 0 ]]; then
-            exit ${RESULT};
-        fi
+        [[ ${RESULT} != 0 ]] && exit ${RESULT};
         $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh;
         exit $?;
     else
