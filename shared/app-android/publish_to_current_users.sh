@@ -41,8 +41,8 @@ elif [[ -f "$CONFIG_PATH/store/alpha" ]]; then
     $SCRIPT_DIR/publish_to_alpha.sh;
     exit $?;
 else
-    echo "> Current users NOT found!";
-    exit 1; # error
+    echo "> No current user (SKIP)";
+    exit 0 # success
 fi
 
 
