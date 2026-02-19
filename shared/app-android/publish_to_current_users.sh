@@ -19,19 +19,19 @@ fi
 
 if [[ -f "$CONFIG_PATH/store/production" ]]; then
     echo "> Current users == production.";
-    $SCRIPT_DIR/publish_to_production_100.sh || exit $?;
+    $SCRIPT_DIR/publish_to_production_100.sh || exit;
 elif [[ -f "$CONFIG_PATH/store/beta-private" ]]; then
     if [[ -f "$CONFIG_PATH/store/alpha" ]]; then
         echo "> Current users == alpha + private-beta.";
-        $SCRIPT_DIR/publish_to_alpha.sh || exit $?;
-        $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit $?;
+        $SCRIPT_DIR/publish_to_alpha.sh || exit;
+        $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit;
     else
         echo "> Current users == private-beta.";
-        $SCRIPT_DIR/publish_to_private_beta.sh || exit $?;
+        $SCRIPT_DIR/publish_to_private_beta.sh || exit;
     fi
 elif [[ -f "$CONFIG_PATH/store/alpha" ]]; then
     echo "> Current users == alpha.";
-    $SCRIPT_DIR/publish_to_alpha.sh || exit $?;
+    $SCRIPT_DIR/publish_to_alpha.sh || exit;
 else
     echo "> Push to Store NOT enabled... SKIP (no current users)";
     exit 0 # success
