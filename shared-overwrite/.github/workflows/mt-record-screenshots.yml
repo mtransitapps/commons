@@ -93,9 +93,24 @@ jobs:
           MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
         run: |
           echo "No release APK found, building from source..."
-          ./app-android/keys_setup.sh || { echo "ERROR: Failed to setup keys!"; exit 1; }
-          ./app_install_release.sh || { echo "ERROR: Failed to build and install APK!"; ./app-android/keys_cleanup.sh; exit 1; }
-          ./app-android/keys_cleanup.sh
+          # Ensure cleanup always runs
+          cleanup_keys() {
+            ./app-android/keys_cleanup.sh || echo "WARNING: Keys cleanup failed"
+          }
+          # Setup keys
+          if ! ./app-android/keys_setup.sh; then
+            echo "ERROR: Failed to setup keys!"
+            cleanup_keys
+            exit 1
+          fi
+          # Build and install APK
+          if ! ./app_install_release.sh; then
+            echo "ERROR: Failed to build and install APK!"
+            cleanup_keys
+            exit 1
+          fi
+          # Cleanup keys
+          cleanup_keys
           echo "Module app built and installed successfully."
 
       - name: MT read timezone from XML resource value (optional)
