@@ -106,7 +106,6 @@ jobs:
             # Cleanup keys (must succeed since keys were set up)
             if ! ./app-android/keys_cleanup.sh; then
               echo "ERROR: Keys cleanup failed - sensitive keys may remain in workspace!"
-              exit 1
             fi
             exit 1
           fi
