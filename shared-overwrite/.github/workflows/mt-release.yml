@@ -3,29 +3,29 @@ name: MT release
 on:
   workflow_dispatch: # manual
     inputs:
-      skipAll:
+      skipStoreAll:
         description: 'Skip all store releases'
         type: boolean
         default: false
         required: false
-      skipProduction:
+      skipStoreProduction:
         description: 'Skip production store release'
         type: boolean
         default: false
         required: false
-      skipAlpha:
+      skipStoreAlpha:
         description: 'Skip alpha store release'
         type: boolean
         default: false
         required: false
-      skipBetaPrivate:
+      skipStoreBetaPrivate:
         description: 'Skip beta-private store release'
         type: boolean
         default: false
         required: false
 # gh workflow run mt-release.yml
-# gh workflow run mt-release.yml -f skipAll=true
-# gh workflow run mt-release.yml -f skipProduction=true
+# gh workflow run mt-release.yml -f skipStoreAll=true
+# gh workflow run mt-release.yml -f skipStoreProduction=true
 # gh run list --workflow=mt-release.yml
 # gh run watch ; gh browse --branch
 concurrency:
@@ -108,23 +108,23 @@ jobs:
             app-android/build/outputs/bundle
 
       - name: MT skip store releases
-        if: ${{ github.event.inputs.skipAll == 'true' || github.event.inputs.skipProduction == 'true' || github.event.inputs.skipAlpha == 'true' || github.event.inputs.skipBetaPrivate == 'true' }}
+        if: ${{ github.event.inputs.skipStoreAll == 'true' || github.event.inputs.skipStoreProduction == 'true' || github.event.inputs.skipStoreAlpha == 'true' || github.event.inputs.skipStoreBetaPrivate == 'true' }}
         run: |
-          if [[ "${{ github.event.inputs.skipAll }}" == "true" ]]; then
+          if [[ "${{ github.event.inputs.skipStoreAll }}" == "true" ]]; then
             echo "Skipping all store releases..."
             rm -f config/store/production
             rm -f config/store/alpha
             rm -f config/store/beta-private
           else
-            if [[ "${{ github.event.inputs.skipProduction }}" == "true" ]]; then
+            if [[ "${{ github.event.inputs.skipStoreProduction }}" == "true" ]]; then
               echo "Skipping production store release..."
               rm -f config/store/production
             fi
-            if [[ "${{ github.event.inputs.skipAlpha }}" == "true" ]]; then
+            if [[ "${{ github.event.inputs.skipStoreAlpha }}" == "true" ]]; then
               echo "Skipping alpha store release..."
               rm -f config/store/alpha
             fi
-            if [[ "${{ github.event.inputs.skipBetaPrivate }}" == "true" ]]; then
+            if [[ "${{ github.event.inputs.skipStoreBetaPrivate }}" == "true" ]]; then
               echo "Skipping beta-private store release..."
               rm -f config/store/beta-private
             fi
