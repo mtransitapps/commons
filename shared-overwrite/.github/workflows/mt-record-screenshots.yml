@@ -95,7 +95,7 @@ jobs:
           echo "No release APK found, building from source..."
           # Ensure cleanup always runs
           cleanup_keys() {
-            ./app-android/keys_cleanup.sh || echo "WARNING: Keys cleanup failed"
+            ./app-android/keys_cleanup.sh || echo "WARNING: Keys cleanup failed - sensitive keys may remain in workspace"
           }
           # Setup keys
           if ! ./app-android/keys_setup.sh; then
