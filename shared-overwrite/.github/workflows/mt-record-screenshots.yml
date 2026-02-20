@@ -93,8 +93,8 @@ jobs:
           MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
         run: |
           echo "No release APK found, building from source..."
-          ./app-android/keys_setup.sh || exit 1
-          ./app_install_release.sh || { ./app-android/keys_cleanup.sh; exit 1; }
+          ./app-android/keys_setup.sh || { echo "ERROR: Failed to setup keys!"; exit 1; }
+          ./app_install_release.sh || { echo "ERROR: Failed to build and install APK!"; ./app-android/keys_cleanup.sh; exit 1; }
           ./app-android/keys_cleanup.sh
           echo "Module app built and installed successfully."
 
