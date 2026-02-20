@@ -93,7 +93,7 @@ jobs:
           echo "MODULE_APK_FILE=$APK_FILE" >> $GITHUB_OUTPUT
           echo "Module app APK downloaded successfully."
 
-      - name: MT build and install this app release APK (fallback)
+      - name: MT build this app release APK (fallback)
         if: steps.download-module-apk.outcome == 'failure' || github.event.inputs.buildFromSource == 'true'
         id: build-module-apk
         env:
@@ -104,17 +104,24 @@ jobs:
           ./app-android/keys_cleanup.sh || echo "Keys cleanup (pre-setup) completed with warnings (OK)"
           # Setup keys (can fail CI if fail)
           ./app-android/keys_setup.sh || exit
-          # Build and install APK (store result)
-          ./app_install_release.sh
+          # Assemble release APK (store result)
+          ./gradlew :app-android:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false
           RESULT=$?
           # Cleanup keys (can fail CI if fail)
           ./app-android/keys_cleanup.sh || exit
           # Check if build failed
           if [[ $RESULT -ne 0 ]]; then
-            echo "ERROR: Failed to build and install APK!"
+            echo "ERROR: Failed to assemble release APK!"
             exit ${RESULT}
           fi
-          echo "Module app built and installed successfully."
+          # Find and set the APK file path
+          APK_FILE=$(find ./app-android/build/outputs/apk/release -name "*.apk" -type f | head -1)
+          if [[ -z "$APK_FILE" ]] || [[ ! -f "$APK_FILE" ]]; then
+            echo "ERROR: APK file not found in ./app-android/build/outputs/apk/release/"
+            exit 1
+          fi
+          echo "MODULE_APK_FILE=$APK_FILE" >> $GITHUB_OUTPUT
+          echo "Module app APK assembled successfully at: $APK_FILE"
 
       - name: MT read timezone from XML resource value (optional)
         id: timezone
