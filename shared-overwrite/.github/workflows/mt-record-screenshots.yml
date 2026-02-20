@@ -8,8 +8,17 @@ on:
         required: false
         default: false
         type: boolean
+      buildFromSource:
+        description: 'Build APK from source (skip download)'
+        type: choice
+        options:
+          - ignore
+          - enable
+        default: ignore
+        required: true
 # gh workflow run mt-record-screenshots.yml --ref $(git rev-parse --abbrev-ref HEAD)
 # gh workflow run mt-record-screenshots.yml --ref $(git rev-parse --abbrev-ref HEAD) -f commitDirectly=true
+# gh workflow run mt-record-screenshots.yml --ref $(git rev-parse --abbrev-ref HEAD) -f buildFromSource=enable
 # gh run list --workflow=mt-record-screenshots.yml
 # gh run watch
 concurrency:
@@ -74,6 +83,7 @@ jobs:
 
       - name: MT download this app release APK
         id: download-module-apk
+        if: github.event.inputs.buildFromSource != 'enable'
         continue-on-error: true
         run: |
           REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
@@ -87,33 +97,25 @@ jobs:
           echo "Module app APK downloaded successfully."
 
       - name: MT build and install this app release APK (fallback)
-        if: steps.download-module-apk.outcome == 'failure'
+        if: steps.download-module-apk.outcome == 'failure' || github.event.inputs.buildFromSource == 'enable'
         id: build-module-apk
         env:
           MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
         run: |
           echo "No release APK found, building from source..."
-          # Setup keys
-          if ! ./app-android/keys_setup.sh; then
-            echo "ERROR: Failed to setup keys!"
-            # Try cleanup (may fail if keys were not fully set up)
-            ./app-android/keys_cleanup.sh || echo "WARNING: Keys cleanup failed (may not have been fully set up)"
-            exit 1
-          fi
-          # Build and install APK
-          if ! ./app_install_release.sh; then
+          # Cleanup keys first (fail OK)
+          ./app-android/keys_cleanup.sh || echo "Keys cleanup (pre-setup) completed with warnings (OK)"
+          # Setup keys (can fail CI if fail)
+          ./app-android/keys_setup.sh || exit
+          # Build and install APK (store result)
+          ./app_install_release.sh
+          RESULT=$?
+          # Cleanup keys (can fail CI if fail)
+          ./app-android/keys_cleanup.sh || exit
+          # Check if build failed
+          if [[ $RESULT -ne 0 ]]; then
             echo "ERROR: Failed to build and install APK!"
-            # Cleanup keys (must succeed since keys were set up)
-            if ! ./app-android/keys_cleanup.sh; then
-              echo "ERROR: Keys cleanup failed - sensitive keys may remain in workspace!"
-              exit 1
-            fi
-            exit 1
-          fi
-          # Cleanup keys (must succeed)
-          if ! ./app-android/keys_cleanup.sh; then
-            echo "ERROR: Keys cleanup failed - sensitive keys may remain in workspace!"
-            exit 1
+            exit ${RESULT}
           fi
           echo "Module app built and installed successfully."
 
