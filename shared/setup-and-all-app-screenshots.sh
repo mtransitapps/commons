@@ -112,13 +112,16 @@ if [ -n "$MODULE_APK_FILE" ] && [ -f "$MODULE_APK_FILE" ]; then
     if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
       echo " - Module app installed successfully"
     else
-      echo " > WARNING: Module app installation may have failed"
+      echo " > ERROR: Module app installation may have failed!"
+      exit 1
     fi
   else
-    echo " > WARNING: No config/pkg file found, skipping module installation"
+    echo " > ERROR: No config/pkg file found, skipping module installation!"
+    exit 1
   fi
 else
-  echo " - No module APK provided or file not found, skipping module installation"
+  echo " > ERROR: No module APK provided or file not found, skipping module installation!"
+  exit 1
 fi
 
 echo ">> Step 4: Disable Pixel Launcher to prevent crashes..."
