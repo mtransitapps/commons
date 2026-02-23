@@ -120,7 +120,7 @@ if [ -n "$MODULE_APK_FILE" ] && [ -f "$MODULE_APK_FILE" ]; then
     exit 1
   fi
 else
-  echo " > ERROR: No module APK provided or file not found, skipping module installation!"
+  echo " > ERROR: No module APK provided or file not found, skipping module installation ($MODULE_APK_FILE)!"
   exit 1
 fi
 
