@@ -26,6 +26,29 @@ if [ ! -f "$MAIN_APK_FILE" ]; then
   exit 1
 fi
 
+if [ -z "$MODULE_APK_FILE" ]; then
+  echo " > ERROR: MODULE_APK_FILE environment variable not set"
+  exit 1
+fi
+
+if [ ! -f "$MODULE_APK_FILE" ]; then
+  echo " > ERROR: module APK file not found: $MODULE_APK_FILE"
+  exit 1
+fi
+
+# Get the package name from config/pkg if it exists
+CONFIG_PKG_FILE="config/pkg"
+if [ ! -f "$CONFIG_PKG_FILE" ]; then
+  echo " > ERROR: $CONFIG_PKG_FILE not found"
+  exit 1
+fi
+
+MODULE_PACKAGE=$(cat "$CONFIG_PKG_FILE")
+if [ -z "$MODULE_PACKAGE" ]; then
+  echo " > ERROR: $MODULE_PACKAGE not found in $CONFIG_PKG_FILE"
+  exit 1
+fi
+
 echo " - Installing main app from: $MAIN_APK_FILE"
 adb install -r -d "$MAIN_APK_FILE"
 
@@ -98,29 +121,16 @@ fi
 
 echo ">> Step 3: Install current repository module app..."
 
-if [ -n "$MODULE_APK_FILE" ] && [ -f "$MODULE_APK_FILE" ]; then
-  # Get the package name from config/pkg if it exists
-  CONFIG_PKG_FILE="config/pkg"
-  if [ -f "$CONFIG_PKG_FILE" ]; then
-    MODULE_PACKAGE=$(cat "$CONFIG_PKG_FILE")
-    echo " - Module package: $MODULE_PACKAGE"
-    echo " - Installing module app from: $MODULE_APK_FILE"
-    
-    adb install -r -d "$MODULE_APK_FILE"
-    
-    # Verify installation
-    if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
-      echo " - Module app installed successfully"
-    else
-      echo " > ERROR: Module app installation may have failed!"
-      exit 1
-    fi
-  else
-    echo " > ERROR: No config/pkg file found, skipping module installation!"
-    exit 1
-  fi
+echo " - Module package: $MODULE_PACKAGE"
+echo " - Installing module app from: $MODULE_APK_FILE"
+
+adb install -r -d "$MODULE_APK_FILE"
+
+# Verify installation
+if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
+  echo " - Module app installed successfully"
 else
-  echo " > ERROR: No module APK provided or file not found, skipping module installation ($MODULE_APK_FILE)!"
+  echo " > ERROR: Module app installation may have failed!"
   exit 1
 fi
 
