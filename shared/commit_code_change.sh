@@ -59,7 +59,7 @@ checkResult $?;
 echo "> GIT > git_commit_all_submodules.sh... DONE";
 
 echo "> GIT > remaining repo files to commit (if no submodule change)...";
-git diff-index --quiet HEAD || git commit -m '$GIT_MSG';
+git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT > remaining repo files to commit (if no submodule change)... DONE";
 
