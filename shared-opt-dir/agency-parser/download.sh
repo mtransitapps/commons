@@ -34,6 +34,8 @@ if [[ -e "$FILE_PATH/input_url_next" ]]; then
 	checkResult $?;
 fi
 
+printGitStatus;
+
 if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GIT_STAGED_CHANGES=$?; # 0 if no changes
@@ -69,5 +71,7 @@ if [[ ${GITHUB_ACTIONS} = true ]]; then
 else
   export MT_SKIP_PUSH_COMMIT="$MT_SKIP_PUSH_COMMIT"
 fi
+
+printGitStatus;
 
 echo ">> Downloading... DONE"
