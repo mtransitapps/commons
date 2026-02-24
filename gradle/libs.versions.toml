@@ -77,7 +77,7 @@ places-sdk = "5.1.1"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.4.4"
 # LATEST: https://developers.google.com/android/guides/releases
-gps-ads = "25.0.0"
+gps-ads = "0.24.0-beta01"
 gps-ump = "4.0.0"
 gps-basement = "18.10.0"
 gps-time = "16.0.1"
@@ -189,7 +189,7 @@ androix-webkit = { module = "androidx.webkit:webkit", version.ref = "androidx-we
 androidx-workManager-runtime = { module = "androidx.work:work-runtime", version.ref = "androidx-workManager" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 # adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
-gps-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "gps-ads" }
+gps-ads = { module = "com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk", version.ref = "gps-ads" }
 gps-ump = { module = "com.google.android.ump:user-messaging-platform", version.ref = "gps-ump" }
 gps-basement = { module = "com.google.android.gms:play-services-basement", version.ref = "gps-basement" }
 gps-time = { module = "com.google.android.gms:play-services-time", version.ref = "gps-time" }
