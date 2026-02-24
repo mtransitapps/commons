@@ -52,10 +52,17 @@ echo "> GIT > add...";
 git add -v -A; # needed for other files than git submodules
 checkResult $?;
 echo "> GIT > add... DONE";
+
 echo "> GIT > git_commit_all_submodules.sh...";
 ./git_commit_all_submodules.sh;
 checkResult $?;
 echo "> GIT > git_commit_all_submodules.sh... DONE";
+
+echo "> GIT > remaining repo files to commit (if no submodule change)...";
+git diff-index --quiet HEAD || git commit -m '$GIT_MSG';
+checkResult $?;
+echo "> GIT > remaining repo files to commit (if no submodule change)... DONE";
+
 # TODO ? git push;
 
 printGitStatus;
