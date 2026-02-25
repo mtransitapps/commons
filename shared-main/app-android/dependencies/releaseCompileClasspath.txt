@@ -108,12 +108,11 @@ com.google.ads.mediation:vungle:7.7.0.1
 com.google.android.datatransport:transport-api:3.1.0
 com.google.android.datatransport:transport-backend-cct:3.2.0
 com.google.android.datatransport:transport-runtime:3.2.0
-com.google.android.gms:play-services-ads-api:25.0.0
 com.google.android.gms:play-services-ads-identifier:18.0.0
-com.google.android.gms:play-services-ads:25.0.0
 com.google.android.gms:play-services-appset:16.0.1
 com.google.android.gms:play-services-base:18.5.0
 com.google.android.gms:play-services-basement:18.10.0
+com.google.android.gms:play-services-cronet:18.0.1
 com.google.android.gms:play-services-location:21.3.0
 com.google.android.gms:play-services-maps:20.0.0
 com.google.android.gms:play-services-measurement-api:23.0.0
@@ -124,6 +123,7 @@ com.google.android.gms:play-services-measurement-sdk:23.0.0
 com.google.android.gms:play-services-measurement:23.0.0
 com.google.android.gms:play-services-stats:17.0.2
 com.google.android.gms:play-services-tasks:18.4.0
+com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:0.24.0-beta01
 com.google.android.libraries.places:places:5.1.1
 com.google.android.material:material:1.13.0
 com.google.android.play:core-common:2.0.4
@@ -133,6 +133,7 @@ com.google.android.ump:user-messaging-platform:4.0.0
 com.google.auto.value:auto-value-annotations:1.6.2
 com.google.code.findbugs:jsr305:3.0.2
 com.google.code.gson:gson:2.13.2
+com.google.crypto.tink:tink-android:1.20.0
 com.google.dagger:dagger-lint-aar:2.59.1
 com.google.dagger:dagger:2.59.1
 com.google.dagger:hilt-android:2.59.1
@@ -185,6 +186,7 @@ org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2
+org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2
 org.jetbrains.kotlinx:kotlinx-serialization-bom:1.10.0
 org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.10.0
