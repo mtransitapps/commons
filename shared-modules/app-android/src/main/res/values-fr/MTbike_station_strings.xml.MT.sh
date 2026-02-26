@@ -18,7 +18,7 @@ RES_DIR="${MAIN_DIR}/res";
 VALUES_FR_DIR="${RES_DIR}/values-fr";
 
 LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
-if [ ! -f "$LANG_FR_FILE" && ! -d "$VALUES_FR_DIR" ]; then
+if [[ ! -f "$LANG_FR_FILE" && ! -d "$VALUES_FR_DIR" ]]; then
     echo ">> Generating values-fr/bike_station_strings.xml... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
