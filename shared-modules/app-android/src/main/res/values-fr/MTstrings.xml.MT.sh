@@ -9,12 +9,6 @@ setGitProjectName;
 
 setIsCI;
 
-LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
-if [ ! -f "$LANG_FR_FILE" ]; then
-    echo ">> Generating values-fr/strings.xml... SKIP (FR lang not supported)";
-    exit 0; # ok
-fi
-
 echo ">> Generating values-fr/strings.xml...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -22,6 +16,13 @@ SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
 RES_DIR="${MAIN_DIR}/res";
 VALUES_FR_DIR="${RES_DIR}/values-fr";
+
+LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
+if [[ ! -f "$LANG_FR_FILE" && ! -d "$VALUES_FR_DIR" ]]; then
+    echo ">> Generating values-fr/strings.xml... SKIP (FR lang not supported)";
+    exit 0; # ok
+fi
+
 STRINGS_FILE="${VALUES_FR_DIR}/strings.xml";
 mkdir -p "${VALUES_FR_DIR}";
 checkResult $?;

@@ -99,6 +99,11 @@ if [ -f "$SOURCE_NAME_FILE" ]; then
   SOURCE_NAME=$(head -n 1 $SOURCE_NAME_FILE);
 fi
 
+AGENCY_OWNER_FILE="${CONFIG_DIR}/agency_owner"; #optional
+if [ -f "$AGENCY_OWNER_FILE" ]; then
+  AGENCY_OWNER_LONG=$(tail -n 1 $AGENCY_OWNER_FILE);
+fi
+
 CITIES_FILE="${CONFIG_DIR}/cities";
 if [ ! -f "$CITIES_FILE" ]; then
     echo "$CITIES_FILE doesn't exist!";
@@ -144,6 +149,22 @@ fi
 
 INDEX=1;
 NOT_RELATED_WITH="";
+if [ -n "$SOURCE_NAME" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$SOURCE_NAME";
+  else
+    NOT_RELATED_WITH+=" or $SOURCE_NAME";
+  fi
+  ((INDEX++))
+fi
+if [ -n "$AGENCY_OWNER_LONG" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$AGENCY_OWNER_LONG";
+  else
+    NOT_RELATED_WITH+=" or $AGENCY_OWNER_LONG";
+  fi
+  ((INDEX++))
+fi
 if [ -n "$AGENCY_NAME_LONG" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$AGENCY_NAME_LONG";
@@ -157,14 +178,6 @@ if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
     NOT_RELATED_WITH="$PARENT_AGENCY_NAME_LONG";
   else
     NOT_RELATED_WITH+=" or $PARENT_AGENCY_NAME_LONG";
-  fi
-  ((INDEX++))
-fi
-if [ -n "$SOURCE_NAME" ]; then
-  if [ "${INDEX}" -eq 1 ]; then
-    NOT_RELATED_WITH="$SOURCE_NAME";
-  else
-    NOT_RELATED_WITH+=" or $SOURCE_NAME";
   fi
   ((INDEX++))
 fi

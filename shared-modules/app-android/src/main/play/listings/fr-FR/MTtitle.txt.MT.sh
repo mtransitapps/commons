@@ -7,12 +7,6 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
-if [ ! -f "$LANG_FR_FILE" ]; then
-    echo ">> Generating fr-FR/title.txt... SKIP (FR lang not supported)";
-    exit 0; # ok
-fi
-
 echo ">> Generating fr-FR/title.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -21,6 +15,13 @@ MAIN_DIR="${SRC_DIR}/main";
 PLAY_DIR="${MAIN_DIR}/play";
 LISTINGS_DIR="${PLAY_DIR}/listings";
 FR_FR_DIR="${LISTINGS_DIR}/fr-FR";
+
+LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
+if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
+    echo ">> Generating fr-FR/title.txt... SKIP (FR lang not supported)";
+    exit 0; # ok
+fi
+
 TITLE_FILE="${FR_FR_DIR}/title.txt";
 mkdir -p "${FR_FR_DIR}";
 checkResult $?;
