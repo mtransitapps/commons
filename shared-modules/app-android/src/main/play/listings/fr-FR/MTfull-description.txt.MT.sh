@@ -10,12 +10,6 @@ setGitProjectName;
 
 setIsCI;
 
-LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
-if [ ! -f "$LANG_FR_FILE" ]; then
-    echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
-    exit 0; # ok
-fi
-
 echo ">> Generating fr-FR/full-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -24,6 +18,13 @@ MAIN_DIR="${SRC_DIR}/main";
 PLAY_DIR="${MAIN_DIR}/play";
 LISTINGS_DIR="${PLAY_DIR}/listings";
 FR_FR_DIR="${LISTINGS_DIR}/fr-FR";
+
+LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
+if [ ! -f "$LANG_FR_FILE" && ! -f "$FR_FR_DIR"]; then
+    echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
+    exit 0; # ok
+fi
+
 FULL_DESCRIPTION_FILE="${FR_FR_DIR}/full-description.txt";
 mkdir -p "${FR_FR_DIR}";
 checkResult $?;
@@ -108,6 +109,11 @@ if [ -f "$SOURCE_NAME_FILE" ]; then
   SOURCE_NAME=$(head -n 1 $SOURCE_NAME_FILE);
 fi
 
+AGENCY_OWNER_FILE="${CONFIG_DIR}/agency_owner"; #optional
+if [ -f "$AGENCY_OWNER_FILE" ]; then
+  AGENCY_OWNER_LONG=$(tail -n 1 $AGENCY_OWNER_FILE);
+fi
+
 CITIES_FILE="${CONFIG_DIR}/cities";
 if [ ! -f "$CITIES_FILE" ]; then
     echo "$CITIES_FILE doesn't exist!";
@@ -137,11 +143,11 @@ else
   exit 1 # error
 fi
 
-LOCATION_LABEL="$CITIES_LABEL au";
+LOCATION_LABEL="$CITIES_LABEL (";
 if [ -n "$STATE_LABEL_LONG" ]; then
-    LOCATION_LABEL="$LOCATION_LABEL $STATE_LABEL_LONG,";
+    LOCATION_LABEL="$LOCATION_LABEL$STATE_LABEL_LONG, ";
 fi
-LOCATION_LABEL="$LOCATION_LABEL $COUNTRY_LABEL";
+LOCATION_LABEL="$LOCATION_LABEL$COUNTRY_LABEL)";
 
 SOURCE_PROVIDER="$SOURCE_NAME";
 if [ -z "$SOURCE_PROVIDER" ]; then
@@ -153,6 +159,22 @@ fi
 
 INDEX=1;
 NOT_RELATED_WITH="";
+if [ -n "$SOURCE_NAME" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$SOURCE_NAME";
+  else
+    NOT_RELATED_WITH+=" ou $SOURCE_NAME";
+  fi
+  ((INDEX++))
+fi
+if [ -n "$AGENCY_OWNER_LONG" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$AGENCY_OWNER_LONG";
+  else
+    NOT_RELATED_WITH+=" ou $AGENCY_OWNER_LONG";
+  fi
+  ((INDEX++))
+fi
 if [ -n "$AGENCY_NAME_LONG" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$AGENCY_NAME_LONG";
@@ -166,14 +188,6 @@ if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
     NOT_RELATED_WITH="$PARENT_AGENCY_NAME_LONG";
   else
     NOT_RELATED_WITH+=" ou $PARENT_AGENCY_NAME_LONG";
-  fi
-  ((INDEX++))
-fi
-if [ -n "$SOURCE_NAME" ]; then
-  if [ "${INDEX}" -eq 1 ]; then
-    NOT_RELATED_WITH="$SOURCE_NAME";
-  else
-    NOT_RELATED_WITH+=" ou $SOURCE_NAME";
   fi
   ((INDEX++))
 fi
@@ -212,7 +226,7 @@ elif [ "$TYPE" -eq 1 ]; then # SUBWAY
 elif [ "$TYPE" -eq 2 ]; then # TRAIN
     TYPE_LABEL="trains";
 elif [ "$TYPE" -eq 3 ]; then # BUS
-    TYPE_LABEL="bus";
+    TYPE_LABEL="autobus"; # "bus"
 elif [ "$TYPE" -eq 4 ]; then # FERRY
     TYPE_LABEL="bateaux";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
