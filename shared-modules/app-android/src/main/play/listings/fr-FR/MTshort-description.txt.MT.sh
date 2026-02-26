@@ -18,8 +18,8 @@ LISTINGS_DIR="${PLAY_DIR}/listings";
 FR_FR_DIR="${LISTINGS_DIR}/fr-FR";
 
 LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
-if [ ! -f "$LANG_FR_FILE" && ! -f "$FR_FR_DIR"]; then
-    echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
+if [ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]; then
+    echo ">> Generating fr-FR/short-description.txt... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
 
