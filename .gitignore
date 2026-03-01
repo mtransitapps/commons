@@ -1,5 +1,8 @@
 # IntelliJ
 *.iml
 
+# Gradle
+.gradle/
+
 # TOML Dependency updater file
 *.updates.toml
