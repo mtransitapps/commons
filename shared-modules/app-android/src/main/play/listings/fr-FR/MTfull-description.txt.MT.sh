@@ -326,7 +326,7 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
     ((NEWS_SOURCE_COUNT++))
   fi
   # if [[ -f "${YOUTUBE_FILE}" ]]; then
-  # YOUTUBE_FILE="${YOUTUBE_FILE} de YouTube"; # Google Play Store doesn´t like it
+  # YOUTUBE_FILE="${YOUTUBE_FILE} de YouTube"; # Play Store doesn't like it
   # fi
 fi
 

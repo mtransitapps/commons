@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/../commons/commons.sh
-echo ">> Pushing listing to Google Play Console...";
+echo ">> Pushing listing to the Play Console...";
 
 # LINKS:
 # https://github.com/Triple-T/gradle-play-publisher#publishing-listings
@@ -21,4 +21,4 @@ checkResult $?;
 
 checkResult $COMMAND_RESULT; # check command result after keys cleanup
 
-echo ">> Pushing listing to Google Play Console... DONE";
+echo ">> Pushing listing to the Play Console... DONE";

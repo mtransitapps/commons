@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 source ${SCRIPT_DIR}/../commons/commons.sh
-echo ">> Pulling listing from Google Play Console...";
+echo ">> Pulling listing from the Play Console...";
 
 # LINKS:
 # https://github.com/Triple-T/gradle-play-publisher#quickstart
@@ -79,4 +79,4 @@ checkResult $?;
 # done
 # IFS="$OLD_IFS"; # work w/ file name with spaces
 
-echo ">> Pulling listing from Google Play Console... DONE";
+echo ">> Pulling listing from the Play Console... DONE";
