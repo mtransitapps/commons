@@ -20,7 +20,7 @@ kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization = "1.10.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "7.2.2.6593"
+sonar = "7.2.3.7755"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "9.1.0"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
@@ -85,7 +85,7 @@ gps-location = "21.3.0"
 gps-maps = "20.0.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "34.9.0"
+firebase-bom = "34.10.0"
 firebase-crashlytics-plugin = "3.0.6"
 firebase-perf-plugin = "2.0.2"
 play-billing = "8.3.0"
@@ -112,7 +112,7 @@ playInsightLint = "0.1.4"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
-protobuf = "4.33.5"
+protobuf = "4.34.0"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.9.6"
 # https://github.com/square/retrofit/tags
@@ -124,7 +124,7 @@ retrofit = "3.0.0"
 okhttp = "5.3.2"
 # https://github.com/ChuckerTeam/chucker/releases/latest
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
-chucker = "4.3.0"
+chucker = "4.3.1"
 # https://github.com/google/gson/releases/latest
 # https://github.com/google/gson/blob/main/CHANGELOG.md
 gson = "2.13.2"
@@ -136,7 +136,7 @@ android-svg = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 junit = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockito = "5.21.0"
+mockito = "5.22.0"
 mockito-kotlin = "6.2.3"
 # https://commons.apache.org/
 commons-csv = "1.14.1"
