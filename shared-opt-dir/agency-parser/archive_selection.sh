@@ -19,10 +19,10 @@ NEXT_ARCHIVE="";
 NEXT_ARCHIVE_START_DATE="";
 NEXT_ARCHIVE_END_DATE="";
 
-# ARCHIVES_COUNT=$(find $ARCHIVE_DIR/* -maxdepth 0 -type d | wc -l);
-ARCHIVES_COUNT=$(find $ARCHIVE_DIR -name "*.zip" -type f | wc -l);
+mapfile -t ARCHIVES < <(find "$ARCHIVE_DIR" -name "*.zip" -type f | sort);
+ARCHIVES_COUNT=${#ARCHIVES[@]};
 if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
-  for ARCHIVE in $(find $ARCHIVE_DIR -name "*.zip" -type f) ; do
+  for ARCHIVE in "${ARCHIVES[@]}" ; do
     echo "--------------------"
     echo "- archive: $ARCHIVE";
     ARCHIVE_BASENAME=$(basename "$ARCHIVE");
