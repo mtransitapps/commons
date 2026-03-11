@@ -148,6 +148,18 @@ EOL
                 android:value="@string/gtfs_real_time_for_poi_authority" />
 EOL
   fi
+  if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
+      cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
+            <meta-data
+                android:name="@string/status_provider"
+                android:value="@string/status_provider" />
+            <meta-data
+                android:name="@string/status_provider_target"
+                android:value="@string/gtfs_real_time_for_poi_authority" />
+EOL
+    fi
+  fi
   if grep -q "gtfs_real_time_agency_vehicle_positions_url" "${GTFS_RT_FILE}"; then
     if [[ "${F_EXPORT_VEHICLE_LOCATION_PROVIDER}" == "true" ]]; then
       cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
