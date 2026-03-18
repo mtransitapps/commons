@@ -1,11 +1,9 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
-name: MT pull store listings
+name: MT store listings > pull
 on:
   workflow_dispatch: # manual
-  schedule:
-    - cron: '0 14 1 * *' # 1st of month @ 2pm UTC # MONTHLY https://crontab.guru/#0_14_1_*_*
-# gh workflow run mt-pull-store-listings.yml --ref $(git rev-parse --abbrev-ref HEAD)
-# gh run list --workflow=mt-pull-store-listings.yml
+# gh workflow run mt-store-listing-pull.yml --ref $(git rev-parse --abbrev-ref HEAD)
+# gh run list --workflow=mt-store-listing-pull.yml
 # gh run watch ; gh browse --branch $(git rev-parse --abbrev-ref HEAD)
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,8 +28,8 @@ env:
   MT_GIT_COMMIT_ON: ${{ secrets.MT_GIT_COMMIT_ON }}
   MT_GIT_COMMIT_OFF: ${{ secrets.MT_GIT_COMMIT_OFF }}
 jobs:
-  MT-PULL-STORE-LISTINGS-JOB:
-    name: "MT pull store listings"
+  MT-STORE-LISTING-PULL-JOB:
+    name: "MT store listings > pull"
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
