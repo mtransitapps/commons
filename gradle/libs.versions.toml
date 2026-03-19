@@ -12,7 +12,7 @@ sdk-target = "35"
 # Android 16 Baklava
 buildTools = "36.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "2.3.10" # sync w/ ksp
+kotlin = "2.3.20" # sync w/ ksp
 # https://github.com/google/ksp/releases/latest
 ksp = "2.3.6"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
@@ -69,15 +69,15 @@ material = "1.13.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
 # https://search.maven.org/artifact/com.google.maps.android/android-maps-utils
 # https://repo1.maven.org/maven2/com/google/maps/android/android-maps-utils/
-maps-utils = "4.1.0"
+maps-utils = "4.1.1"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
-maps-ktx = "6.0.0"
+maps-ktx = "6.0.1"
 # https://developers.google.com/maps/documentation/places/android-sdk/versions
 places-sdk = "5.1.1"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.4.4"
 # LATEST: https://developers.google.com/android/guides/releases
-gps-ads = "25.0.0"
+gps-ads = "25.1.0"
 gps-ump = "4.0.0"
 gps-basement = "18.10.0"
 gps-time = "16.0.1"
@@ -136,7 +136,7 @@ android-svg = "1.4"
 # https://mvnrepository.com/artifact/junit/junit
 junit = "4.13.2"
 # https://mvnrepository.com/artifact/org.mockito/mockito-core
-mockito = "5.22.0"
+mockito = "5.23.0"
 mockito-kotlin = "6.2.3"
 # https://commons.apache.org/
 commons-csv = "1.14.1"
@@ -144,7 +144,7 @@ commons-io = "2.21.0"
 commons-lang3 = "3.20.0"
 commons-text = "1.15.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.51.2.0"
+xerial-SQLiteJDBC = "3.51.3.0"
 
 [libraries]
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }

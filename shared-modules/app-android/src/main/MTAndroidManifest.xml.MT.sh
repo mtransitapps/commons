@@ -306,18 +306,28 @@ if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
             android:exported="true"
             android:readPermission="\${permission_provider_read}"
             tools:ignore="MissingRegistered">
+EOL
+  if grep -q "<bool name=\"stm_info_api_status_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
+    cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
             <meta-data
                 android:name="@string/status_provider"
                 android:value="@string/status_provider" />
             <meta-data
                 android:name="@string/status_provider_target"
                 android:value="@string/stm_info_api_status_for_poi_authority" />
+EOL
+  fi
+  if grep -q "<bool name=\"stm_info_api_service_update_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
+    cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
             <meta-data
                 android:name="@string/service_update_provider"
                 android:value="@string/service_update_provider" />
             <meta-data
                 android:name="@string/service_update_provider_target"
                 android:value="@string/stm_info_api_service_update_for_poi_authority" />
+EOL
+  fi
+  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
         </provider>
 EOL
 fi
