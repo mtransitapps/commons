@@ -13,7 +13,8 @@ checkResult $?;
 
 setGradleArgs;
 
-${SCRIPT_DIR}/../gradlew :app-android:publishListing; # no ${GRADLE_ARGS} for release
+# ${SCRIPT_DIR}/../gradlew :app-android:publishListing; # no ${GRADLE_ARGS} for release
+${SCRIPT_DIR}/../gradlew :app-android:publishListing --no-commit; # DEBUG # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
 ${SCRIPT_DIR}/keys_cleanup.sh;
