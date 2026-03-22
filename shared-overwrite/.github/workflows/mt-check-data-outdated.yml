@@ -31,7 +31,7 @@ jobs:
     # if: ${{ env.MT_IS_MAIN_REPO != 'true' &&  env.MT_IS_AGENCY_BIKE != 'true' }} # can NOT use env here:
     if: ${{ ! endsWith(github.repository, '/mtransit-for-android') && ! contains(github.repository, '-bike-') }}
     name: "MT Check Data Outdated"
-    timeout-minutes: 30
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       - name: MT check out main repository code (with submodules)
