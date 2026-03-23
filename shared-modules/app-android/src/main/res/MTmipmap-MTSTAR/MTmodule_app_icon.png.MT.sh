@@ -9,7 +9,7 @@ setIsCI;
 
 setGitProjectName;
 
-echo ">> Generating mipmap-*/module_app_icon.png...";
+echo ">> Generating mipmap-*/module_app_icon.[png|xml]...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
@@ -21,6 +21,22 @@ if [ ! -f "$REQUIRED_ICON_FILE" ]; then
     $ROOT_DIR/commons/shared-modules/app-android/src/main/play/listings/en-US/graphics/icon/MT1.png.MT.sh;
     checkResult $?;
 fi
+
+FILE_NAME_XML="module_app_icon.xml"
+MIPMAP_ANYDPI="${RES_DIR}/mipmap-anydpi-v26"
+FILE_XML="${MIPMAP_ANYDPI}/${FILE_NAME_XML}";
+echo "FILE_XML: $FILE_XML"
+mkdir -p "${MIPMAP_ANYDPI}";
+checkResult $?;
+if [ -f "${FILE_XML}" ]; then
+  echo ">> File '$FILE_XML' already exist."; # compat with existing mipmap-anydpi-v26/module_app_icon.xml
+  exit 0; # compat w/ manually created file
+fi
+rm -f "${FILE_XML}";
+checkResult $?;
+
+$ROOT_DIR/commons-android/pub/module-res-mipmap-launcher-icon-adaptive.sh;
+checkResult $?;
 
 FILE_NAME="module_app_icon.png";
 
@@ -82,4 +98,4 @@ checkResult $?;
 $ROOT_DIR/commons-android/pub/module-res-mipmap-launcher-icon.sh;
 checkResult $?;
 
-echo ">> Generating mipmap-*/module_app_icon.png... DONE";
+echo ">> Generating mipmap-*/module_app_icon.[png|xml]... DONE";
