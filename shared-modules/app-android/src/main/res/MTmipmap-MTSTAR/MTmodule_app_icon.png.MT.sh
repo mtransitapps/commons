@@ -29,7 +29,9 @@ mkdir -p "${MIPMAP_ANYDPI}";
 checkResult $?;
 if [ -f "${FILE_XML}" ]; then
   echo ">> File '$FILE_XML' already exist."; # compat with existing mipmap-anydpi-v26/module_app_icon.xml
-  exit 0; # compat w/ manually created file
+else
+  $ROOT_DIR/commons-android/pub/module-res-mipmap-launcher-icon-adaptive.sh;
+  checkResult $?;
 fi
 
 $ROOT_DIR/commons-android/pub/module-res-mipmap-launcher-icon-adaptive.sh;
