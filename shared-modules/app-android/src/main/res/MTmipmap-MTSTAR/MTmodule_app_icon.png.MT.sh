@@ -34,9 +34,6 @@ else
   checkResult $?;
 fi
 
-$ROOT_DIR/commons-android/pub/module-res-mipmap-launcher-icon-adaptive.sh;
-checkResult $?;
-
 FILE_NAME="module_app_icon.png";
 
 MIPMAP_MDPI="${RES_DIR}/mipmap-mdpi";
