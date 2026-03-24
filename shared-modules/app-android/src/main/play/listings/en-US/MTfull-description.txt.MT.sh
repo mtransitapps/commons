@@ -365,7 +365,7 @@ $AGENCY_NAME_SHORT $TYPE_LABEL $OPERATE_IN $LOCATION_LABEL.
 
 Once this application is installed, the MonTransit app will display $TYPE_LABEL information ($INFORMATION_LIST...).
 
-This application only has a temporary icon: download the MonTransit app (free) in the "More ..." section bellow or by following this Google Play link https://bit.ly/MonTransitPlay
+This application only has a temporary icon: download the MonTransit app (free) in the "More ..." section below or by following this Google Play link https://bit.ly/MonTransitPlay
 
 You can install this application on the SD card but it is not recommended.
 
