@@ -54,8 +54,9 @@ fi
 
 echo "> Deployed last departure timestamp: '$DEPLOYED_LAST_DEPARTURE_SEC' (from $DATA_FILE_USED)";
 
-# Check if deployed data is not outdated (last departure is in the future)
-if [[ "$DEPLOYED_LAST_DEPARTURE_SEC" -gt "$NOW_TIMESTAMP_SEC" ]]; then
+# Check if deployed data is not outdated (last departure is more than 3 days in the future)
+THREE_DAYS_SEC=$((3 * 86400));
+if [[ "$DEPLOYED_LAST_DEPARTURE_SEC" -gt "$((NOW_TIMESTAMP_SEC + THREE_DAYS_SEC))" ]]; then
   DIFF_SEC=$((DEPLOYED_LAST_DEPARTURE_SEC - NOW_TIMESTAMP_SEC));
   DIFF_DAYS=$((DIFF_SEC / 86400));
   echo ">> Deployed data has not expired. Last departure will be in $DIFF_DAYS days.";
@@ -63,9 +64,15 @@ if [[ "$DEPLOYED_LAST_DEPARTURE_SEC" -gt "$NOW_TIMESTAMP_SEC" ]]; then
   exit 0; # Exit code 0 indicates data is not outdated
 fi
 
-DIFF_SEC=$((NOW_TIMESTAMP_SEC - DEPLOYED_LAST_DEPARTURE_SEC));
-DIFF_DAYS=$((DIFF_SEC / 86400));
-echo ">> Deployed data has expired! Last departure was $DIFF_DAYS days ago.";
+if [[ "$DEPLOYED_LAST_DEPARTURE_SEC" -gt "$NOW_TIMESTAMP_SEC" ]]; then
+  DIFF_SEC=$((DEPLOYED_LAST_DEPARTURE_SEC - NOW_TIMESTAMP_SEC));
+  DIFF_DAYS=$((DIFF_SEC / 86400));
+  echo ">> Deployed data expires in $DIFF_DAYS days (within 3 days). Sync recommended.";
+else
+  DIFF_SEC=$((NOW_TIMESTAMP_SEC - DEPLOYED_LAST_DEPARTURE_SEC));
+  DIFF_DAYS=$((DIFF_SEC / 86400));
+  echo ">> Deployed data has expired! Last departure was $DIFF_DAYS days ago.";
+fi
 echo ">> Data is OUTDATED. Sync recommended. Looking for available archives...";
 
 # Check archive directory for available data
