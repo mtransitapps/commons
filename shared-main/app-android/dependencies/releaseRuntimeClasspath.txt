@@ -7,7 +7,7 @@ androidx.appcompat:appcompat-resources:1.7.1
 androidx.appcompat:appcompat:1.7.1
 androidx.arch.core:core-common:2.2.0
 androidx.arch.core:core-runtime:2.2.0
-androidx.browser:browser:1.9.0
+androidx.browser:browser:1.10.0
 androidx.cardview:cardview:1.0.0
 androidx.collection:collection-jvm:1.6.0
 androidx.collection:collection-ktx:1.6.0
@@ -111,7 +111,7 @@ androidx.viewpager2:viewpager2:1.1.0
 androidx.viewpager:viewpager:1.0.0
 androidx.webkit:webkit:1.15.0
 androidx.window:window:1.0.0
-androidx.work:work-runtime:2.11.1
+androidx.work:work-runtime:2.11.2
 com.android.billingclient:billing-ktx:8.3.0
 com.android.billingclient:billing:8.3.0
 com.android.volley:volley:1.2.1
