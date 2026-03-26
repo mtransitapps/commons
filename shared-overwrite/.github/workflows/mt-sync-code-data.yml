@@ -2,6 +2,11 @@
 name: MT sync code & data # download & parse
 on:
   pull_request: # automatically skip download data & app release
+    types:
+      - opened # default
+      - synchronize # default
+      - reopened # default
+      - ready_for_review # draft -> ready
   workflow_dispatch: # manual
     inputs:
       skip-download-data:
