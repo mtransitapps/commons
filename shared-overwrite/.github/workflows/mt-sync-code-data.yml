@@ -8,7 +8,7 @@ on:
       - reopened # default
       - ready_for_review # draft -> ready
     paths-ignore:
-      - 'app-android/src/main/play/**' 
+      - 'app-android/src/main/play/**'
   workflow_dispatch: # manual
     inputs:
       skip-download-data:
