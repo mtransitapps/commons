@@ -33,10 +33,10 @@ cd ..;
 
 setGitUser;
 
-echo "> GIT submodule > push...";
-git submodule foreach git push; # git push fails if there are new changes on remote
-checkResult $?;
-echo "> GIT submodule > push... DONE";
+# echo "> GIT submodule > push...";
+# git submodule foreach git push; # git push fails if there are new changes on remote
+# checkResult $?;
+# echo "> GIT submodule > push... DONE";
 
 echo "> GIT > push...";
 git push; # git push fails if there are new changes on remote
