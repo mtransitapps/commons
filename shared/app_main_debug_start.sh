@@ -4,8 +4,6 @@ source "${SCRIPT_DIR}"/commons/commons.sh;
 source "${SCRIPT_DIR}"/commons/adb_setup.sh;
 checkResult $?;
 source "${SCRIPT_DIR}"/app_main_setup.sh "debug";
+checkResult $?;
 
-$ADB shell am start \
-  -n "$APP_PKG"/"$APP_ACTIVITY" \
-  $@ \
-;
+$ADB shell am start "$APP_PKG"/"$APP_ACTIVITY" "$@";

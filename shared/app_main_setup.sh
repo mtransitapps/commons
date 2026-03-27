@@ -1,6 +1,4 @@
 #!/bin/bash
-SCRIPT_DIR="$(dirname "$0")"
-
 if [ "$1" = "debug" ]; then
   DEBUG=true
 else
@@ -14,3 +12,4 @@ fi
 echo "PKG: '$APP_PKG'."
 
 APP_ACTIVITY="org.mtransit.android.ui.SplashScreenActivity"
+echo "ACTIVITY: '$APP_ACTIVITY'."
