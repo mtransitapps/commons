@@ -2,15 +2,15 @@
 SCRIPT_DIR="$(dirname "$0")"
 
 if [ "$1" = "debug" ]; then
-  DEBUG=true;
+  DEBUG=true
 else
-  DEBUG=false;
+  DEBUG=false
 fi
 
-APP_PKG="org.mtransit.android.debug"
+APP_PKG="org.mtransit.android"
 if [ "$DEBUG" = true ]; then
   APP_PKG="$APP_PKG.debug" #DEBUG
 fi
 echo "PKG: '$APP_PKG'."
 
-APP_ACTIVITY="org.mtransit.android.ui.SplashScreenActivity";
+APP_ACTIVITY="org.mtransit.android.ui.SplashScreenActivity"
