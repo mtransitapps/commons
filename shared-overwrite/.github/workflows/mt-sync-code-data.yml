@@ -123,14 +123,90 @@ jobs:
           echo "Schedule files deletion completed.";
 
       - name: MT parse current
+        id: mt-parse-current
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         timeout-minutes: 40
         run: ./parse_current.sh
 
+      - name: MT parse current failed - create issue
+        if: ${{ failure() && steps.mt-parse-current.outcome == 'failure' }}
+        run: |
+          STEP_NAME="MT parse current"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          FAILED_LOGS=$(gh run view ${{ github.run_id }} --log-failed 2>&1 || echo "Failed to fetch logs")
+          HOW_TO_FIX="Need to update \`config/gtfs/*.json\` if available or \`agency-parser/src/main/java/org/mtransit/parser/*/*AgencyTools.java\` to fix.
+Look at [parser](https://github.com/mtransitapps/parser) repository for available options in [\`src/main/java/org/mtransit/parser/config/gtfs/data/*Config.kt\`](https://github.com/mtransitapps/parser/tree/master/src/main/java/org/mtransit/parser/config/gtfs/data) and [\`src/main/java/org/mtransit/parser/DefaultAgencyTools.java\`](https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/DefaultAgencyTools.java)
+Open a **draft** pull request when ready.
+Notify \`@mtransitapps/reviewers\` in the pull request comment"
+          ISSUE_BODY="## ${STEP_NAME} failed
+
+**Run:** [${STEP_NAME} - ${{ github.run_id }}](${RUN_URL})
+**Raw logs:** ${RUN_URL} (see failed step)
+
+<details>
+<summary>Failed step logs</summary>
+
+\`\`\`
+${FAILED_LOGS}
+\`\`\`
+
+</details>
+
+## How to fix
+
+${HOW_TO_FIX}"
+          ISSUE_URL=$(gh issue create \
+            --title "${STEP_NAME} failed" \
+            --type "Bug" \
+            --label "bug" \
+            --body "${ISSUE_BODY}" \
+            --assignee "copilot")
+          gh issue comment "${ISSUE_URL}" --body "@mtransitapps/reviewers please review"
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }}
+
       - name: MT parse next
+        id: mt-parse-next
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         timeout-minutes: 40
         run: ./parse_next.sh
+
+      - name: MT parse next failed - create issue
+        if: ${{ failure() && steps.mt-parse-next.outcome == 'failure' }}
+        run: |
+          STEP_NAME="MT parse next"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          FAILED_LOGS=$(gh run view ${{ github.run_id }} --log-failed 2>&1 || echo "Failed to fetch logs")
+          HOW_TO_FIX="Need to update \`config/gtfs/*.json\` if available or \`agency-parser/src/main/java/org/mtransit/parser/*/*AgencyTools.java\` to fix.
+Look at [parser](https://github.com/mtransitapps/parser) repository for available options in [\`src/main/java/org/mtransit/parser/config/gtfs/data/*Config.kt\`](https://github.com/mtransitapps/parser/tree/master/src/main/java/org/mtransit/parser/config/gtfs/data) and [\`src/main/java/org/mtransit/parser/DefaultAgencyTools.java\`](https://github.com/mtransitapps/parser/blob/master/src/main/java/org/mtransit/parser/DefaultAgencyTools.java)
+Open a **draft** pull request when ready.
+Notify \`@mtransitapps/reviewers\` in the pull request comment"
+          ISSUE_BODY="## ${STEP_NAME} failed
+
+**Run:** [${STEP_NAME} - ${{ github.run_id }}](${RUN_URL})
+**Raw logs:** ${RUN_URL} (see failed step)
+
+<details>
+<summary>Failed step logs</summary>
+
+\`\`\`
+${FAILED_LOGS}
+\`\`\`
+
+</details>
+
+## How to fix
+
+${HOW_TO_FIX}"
+          ISSUE_URL=$(gh issue create \
+            --title "${STEP_NAME} failed" \
+            --type "Bug" \
+            --label "bug" \
+            --body "${ISSUE_BODY}" \
+            --assignee "copilot")
+          gh issue comment "${ISSUE_URL}" --body "@mtransitapps/reviewers please review"
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }}
 
       - name: MT parse list change
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
