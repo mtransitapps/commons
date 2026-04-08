@@ -34,7 +34,9 @@ if [[ -e "$FILE_PATH/input_url_next" ]]; then
 	checkResult $?;
 fi
 
-printGitStatus;
+if [[ ${IS_CI} = true ]]; then
+  printGitStatus;
+fi
 
 if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
@@ -43,7 +45,9 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
     echo "> Adding ZIP archives changes to git...";
     git -C "$ARCHIVE_DIR" add -v ".";
     checkResult $? false;
-    git -C "$ARCHIVE_DIR" status -sb;
+    if [[ ${IS_CI} = true ]]; then
+      git -C "$ARCHIVE_DIR" status -sb;
+    fi
   else
     echo "> Adding ZIP archives changes to git... SKIP";
   fi
@@ -60,7 +64,9 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   else
     echo "> Committing ZIP archives changes to git... SKIP";
   fi
-  git -C "$ARCHIVE_DIR" status -sb;
+  if [[ ${IS_CI} = true ]]; then
+    git -C "$ARCHIVE_DIR" status -sb;
+  fi
 else
   echo ">> Git commit NOT enabled.. SKIP";
 fi
@@ -72,6 +78,8 @@ else
   export MT_SKIP_PUSH_COMMIT="$MT_SKIP_PUSH_COMMIT"
 fi
 
-printGitStatus;
+if [[ ${IS_CI} = true ]]; then
+  printGitStatus;
+fi
 
 echo ">> Downloading... DONE"
