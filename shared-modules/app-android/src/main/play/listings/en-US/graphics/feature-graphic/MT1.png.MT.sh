@@ -134,7 +134,7 @@ CITIES_LABEL=$(echo $CITIES_LABEL | awk -v len=$MAX_CITY_LENGTH '{ if (length($0
 if [[ -z "${AGENCY_NAME_2}" ]]; then
   $ROOT_DIR/commons-android/pub/module-featured-graphic.sh "$AGENCY_NAME_1" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
   checkResult $?;
-else 
+else
   $ROOT_DIR/commons-android/pub/module-featured-graphic.sh "$AGENCY_NAME_1" "$AGENCY_NAME_2" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
   checkResult $?;
 fi
