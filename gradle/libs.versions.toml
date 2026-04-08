@@ -42,7 +42,7 @@ hilt = "2.59.2"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.13.0"
-androidx-annotation = "1.9.1"
+androidx-annotation = "1.10.0"
 androidx-appCompat = "1.7.1"
 androidx-browser = "1.10.0"
 androidx-cardview = "1.0.0"
