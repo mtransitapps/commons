@@ -267,7 +267,7 @@ YOUTUBE_FILE="${VALUES_DIR}/youtube_values.xml";
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
     PROVIDES_LINE_END="${PROVIDES_LINE_END} et";
-  else 
+  else
     PROVIDES_LINE_END="${PROVIDES_LINE_END},";
   fi
   PROVIDES_LINE_END="${PROVIDES_LINE_END} les nouvelles";
@@ -350,7 +350,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     RT_LINE="${RT_LINE} en temps-réel";
     if [ -z "$PROVIDES_LINE_END" ]; then
       PROVIDES_LINE_END=" et${RT_LINE}${PROVIDES_LINE_END}";
-    else 
+    else
       PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
     fi
   fi
@@ -410,7 +410,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
     PERMISSIONS_LINE="- Autres : requis pour le téléchargement des";
-  else 
+  else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
   PERMISSIONS_LINE="${PERMISSIONS_LINE} alertes de service en temps-réel";
@@ -421,7 +421,7 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
     echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
     PERMISSIONS_LINE="- Autres : requis pour le téléchargement des";
-  else 
+  else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
   PERMISSIONS_LINE="${PERMISSIONS_LINE} nouvelles";

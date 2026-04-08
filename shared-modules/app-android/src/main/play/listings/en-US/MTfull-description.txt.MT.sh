@@ -226,6 +226,14 @@ else
   exit 1 # error
 fi
 
+AGENCY_TYPE_FILE="${CONFIG_DIR}/agency_type";
+if [ -f "$AGENCY_TYPE_FILE" ]; then
+  AGENCY_TYPE_SHORT=$(head -n 1 "$AGENCY_TYPE_FILE");
+  if [ -n "$AGENCY_TYPE_SHORT" ]; then
+    TYPE_LABEL="$AGENCY_TYPE_SHORT";
+  fi
+fi
+
 PROVIDES_LINE="This app provides the $TYPE_LABEL";
 
 INFORMATION_LIST="";
@@ -255,7 +263,7 @@ YOUTUBE_FILE="${VALUES_DIR}/youtube_values.xml";
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
     PROVIDES_LINE_END="${PROVIDES_LINE_END} and";
-  else 
+  else
     PROVIDES_LINE_END="${PROVIDES_LINE_END},";
   fi
   PROVIDES_LINE_END="${PROVIDES_LINE_END} news";
@@ -338,7 +346,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     RT_LINE=" real-time${RT_LINE}";
     if [ -z "$PROVIDES_LINE_END" ]; then
       PROVIDES_LINE_END=" and${RT_LINE}${PROVIDES_LINE_END}";
-    else 
+    else
       PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
     fi
   fi
@@ -398,7 +406,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
     PERMISSIONS_LINE="- Other: required to download";
-  else 
+  else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} and";
   fi
   PERMISSIONS_LINE="${PERMISSIONS_LINE} real-time service alerts";
@@ -409,7 +417,7 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
     echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
     PERMISSIONS_LINE="- Other: required to download";
-  else 
+  else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} and";
   fi
   PERMISSIONS_LINE="${PERMISSIONS_LINE} news";
