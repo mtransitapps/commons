@@ -42,13 +42,13 @@ fi
 
 AGENCY_NAME_COUNT=$(grep -c ^ $AGENCY_NAME_FILE);
 if [ $AGENCY_NAME_COUNT -eq 0 ]; then
-    echo "$AGENCY_NAME_FILE is empty!";
+    echo "AGENCY_NAME_FILE is empty!";
     exit 1;
 fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
@@ -57,7 +57,7 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi

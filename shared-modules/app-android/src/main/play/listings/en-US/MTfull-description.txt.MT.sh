@@ -45,13 +45,13 @@ fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+    echo "AGENCY_NAME_LONG is empty!";
     exit 1;
 fi
 
@@ -60,7 +60,7 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi
@@ -90,7 +90,7 @@ if [ ! -f "$SOURCE_URL_FILE" ]; then
 fi
 SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
 if [ -z "$SOURCE_URL" ]; then
-    echo "$SOURCE_URL is empty!";
+    echo "SOURCE_URL is empty!";
     exit 1;
 fi
 
@@ -111,7 +111,7 @@ if [ ! -f "$CITIES_FILE" ]; then
 fi
 CITIES_LABEL=$(head -n 1 $CITIES_FILE);
 if [ -z "$CITIES_LABEL" ]; then
-    echo "$CITIES_LABEL is empty!";
+    echo "CITIES_LABEL is empty!";
     exit 1;
 fi
 
@@ -394,7 +394,7 @@ EOL
 PERMISSIONS_LINE="";
 
 if [ -f "${BIKE_STATION_FILE}" ]; then
-  if [ -z "$PERMISSIONS_LINES" ]; then
+  if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
     echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
@@ -406,7 +406,7 @@ if [ -f "${BIKE_STATION_FILE}" ]; then
 fi
 
 if [ -f "${GTFS_RT_FILE}" ]; then
-  if [ -z "$PERMISSIONS_LINES" ]; then
+  if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
     echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
