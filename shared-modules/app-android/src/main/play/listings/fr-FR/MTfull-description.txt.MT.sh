@@ -127,7 +127,7 @@ if [ ! -f "$CITIES_FILE" ]; then
 fi
 CITIES_LABEL=$(head -n 1 $CITIES_FILE);
 if [ -z "$CITIES_LABEL" ]; then
-    echo "CITIES_LABEL is empty!";
+    echo "CITIES_LABEL is empty in '$CITIES_FILE'!";
     exit 1;
 fi
 
