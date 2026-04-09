@@ -44,7 +44,10 @@ if [ ! -d "$CONFIG_DIR" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+AGENCY_NAME_FILE="${CONFIG_DIR}/fr/agency_name";
+if [ ! -f "$AGENCY_NAME_FILE" ]; then
+  AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+fi
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
     exit 1;
@@ -90,7 +93,10 @@ fi
 GIT_OWNER="mtransitapps"; #TODO extract de GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
 CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
-SOURCE_URL_FILE="${CONFIG_DIR}/source_url_fr";
+SOURCE_URL_FILE="${CONFIG_DIR}/fr/source_url";
+if [ ! -f "$SOURCE_URL_FILE" ]; then
+  SOURCE_URL_FILE="${CONFIG_DIR}/source_url_fr"; # Deprecated
+fi
 if [ ! -f "$SOURCE_URL_FILE" ]; then
   SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 fi
@@ -335,6 +341,11 @@ setFeatureFlags;
 GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   RT_PARTS=()
+  if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
+      RT_PARTS+=(" prochains départs")
+    fi
+  fi
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     RT_PARTS+=(" alertes de service")
   fi
@@ -413,7 +424,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
   else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
-  PERMISSIONS_LINE="${PERMISSIONS_LINE} alertes de service en temps-réel";
+  PERMISSIONS_LINE="${PERMISSIONS_LINE} information en temps-réel";
 fi
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PERMISSIONS_LINE" ]; then

@@ -331,6 +331,11 @@ setFeatureFlags;
 GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   RT_PARTS=()
+  if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
+      RT_PARTS+=(" next departures")
+    fi
+  fi
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     RT_PARTS+=(" service alerts")
   fi
@@ -409,7 +414,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
   else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} and";
   fi
-  PERMISSIONS_LINE="${PERMISSIONS_LINE} real-time service alerts";
+  PERMISSIONS_LINE="${PERMISSIONS_LINE} real-time information";
 fi
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PERMISSIONS_LINE" ]; then

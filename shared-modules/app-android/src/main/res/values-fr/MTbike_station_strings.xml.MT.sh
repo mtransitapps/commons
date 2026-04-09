@@ -48,7 +48,10 @@ if [ ! -d "$CONFIG_DIR" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+AGENCY_NAME_FILE="${CONFIG_DIR}/fr/agency_name";
+if [ ! -f "$AGENCY_NAME_FILE" ]; then
+  AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+fi
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
     exit 1;
