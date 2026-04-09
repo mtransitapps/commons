@@ -54,6 +54,12 @@ runs:
           # echo "MT_GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "MT_GIT_BRANCH=$MT_GIT_BRANCH" >> $GITHUB_ENV
 
+      - name: MT install apt dependencies
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils jq inkscape imagemagick
+
       - name: MT code sync
         shell: bash
         if: ${{ inputs.code-sync == 'true' }}
