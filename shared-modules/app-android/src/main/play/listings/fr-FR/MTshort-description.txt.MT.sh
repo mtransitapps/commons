@@ -42,7 +42,10 @@ if [ ! -d "$CONFIG_DIR" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+AGENCY_NAME_FILE="${CONFIG_DIR}/fr/agency_name";
+if [ ! -f "$AGENCY_NAME_FILE" ]; then
+  AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+fi
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
     exit 1;
@@ -50,7 +53,13 @@ fi
 
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+    echo "AGENCY_NAME_LONG is empty!";
+    exit 1;
+fi
+
+AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
+if [ -z "$AGENCY_NAME_SHORT" ]; then
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
@@ -59,12 +68,10 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi
-
-AGENCY_LABEL=$AGENCY_NAME_LONG;
 
 requireCommand "xmllint" "libxml2-utils";
 requireCommand "jq";
@@ -110,7 +117,7 @@ else
   exit 1 # error
 fi
 
-AGENCY_LABEL=$AGENCY_NAME_LONG;
+AGENCY_LABEL=$AGENCY_NAME_SHORT;
 if [ -n "$AGENCY_LOCATION_SHORT" ]; then
   AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
@@ -129,6 +136,7 @@ setFeatureFlags;
 
 GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
+  SHORT_DESC="${SHORT_DESC} Temps-Réel.";
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     SHORT_DESC="${SHORT_DESC} Alertes.";
   fi
@@ -137,7 +145,13 @@ if [ -f "${GTFS_RT_FILE}" ]; then
       SHORT_DESC="${SHORT_DESC} Véhicules.";
     fi
   fi
+  if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
+      SHORT_DESC="${SHORT_DESC} Départs.";
+    fi
+  fi
 fi
+# TODO: support other real-time providers
 
 RSS_FILE="${VALUES_DIR}/rss_values.xml";
 TWITTER_FILE="${VALUES_DIR}/twitter_values.xml";

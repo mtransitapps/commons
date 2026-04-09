@@ -44,7 +44,10 @@ if [ ! -d "$CONFIG_DIR" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+AGENCY_NAME_FILE="${CONFIG_DIR}/fr/agency_name";
+if [ ! -f "$AGENCY_NAME_FILE" ]; then
+  AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+fi
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
     exit 1;
@@ -52,13 +55,13 @@ fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+    echo "AGENCY_NAME_LONG is empty!";
     exit 1;
 fi
 
@@ -67,7 +70,7 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi
@@ -90,7 +93,10 @@ fi
 GIT_OWNER="mtransitapps"; #TODO extract de GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
 CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
-SOURCE_URL_FILE="${CONFIG_DIR}/source_url_fr";
+SOURCE_URL_FILE="${CONFIG_DIR}/fr/source_url";
+if [ ! -f "$SOURCE_URL_FILE" ]; then
+  SOURCE_URL_FILE="${CONFIG_DIR}/source_url_fr"; # Deprecated
+fi
 if [ ! -f "$SOURCE_URL_FILE" ]; then
   SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 fi
@@ -100,7 +106,7 @@ if [ ! -f "$SOURCE_URL_FILE" ]; then
 fi
 SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
 if [ -z "$SOURCE_URL" ]; then
-    echo "$SOURCE_URL is empty!";
+    echo "SOURCE_URL is empty!";
     exit 1;
 fi
 
@@ -121,7 +127,7 @@ if [ ! -f "$CITIES_FILE" ]; then
 fi
 CITIES_LABEL=$(head -n 1 $CITIES_FILE);
 if [ -z "$CITIES_LABEL" ]; then
-    echo "$CITIES_LABEL is empty!";
+    echo "CITIES_LABEL is empty in '$CITIES_FILE'!";
     exit 1;
 fi
 
@@ -335,6 +341,11 @@ setFeatureFlags;
 GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   RT_PARTS=()
+  if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
+      RT_PARTS+=(" prochains départs")
+    fi
+  fi
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     RT_PARTS+=(" alertes de service")
   fi
@@ -393,7 +404,7 @@ EOL
 PERMISSIONS_LINE="";
 
 if [ -f "${BIKE_STATION_FILE}" ]; then
-  if [ -z "$PERMISSIONS_LINES" ]; then
+  if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
     echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
@@ -405,7 +416,7 @@ if [ -f "${BIKE_STATION_FILE}" ]; then
 fi
 
 if [ -f "${GTFS_RT_FILE}" ]; then
-  if [ -z "$PERMISSIONS_LINES" ]; then
+  if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
     echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
@@ -413,7 +424,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
   else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
-  PERMISSIONS_LINE="${PERMISSIONS_LINE} alertes de service en temps-réel";
+  PERMISSIONS_LINE="${PERMISSIONS_LINE} information en temps-réel";
 fi
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PERMISSIONS_LINE" ]; then
