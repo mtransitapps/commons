@@ -60,11 +60,12 @@ runs:
           max_attempts=2
           for attempt in $(seq 1 ${max_attempts}); do
             echo "[MT] > Installing apt dependencies (attempt ${attempt}/${max_attempts})..."
-            if timeout 600 sudo apt-get update && timeout 600 sudo apt-get install -y libxml2-utils jq inkscape imagemagick; then
+            if timeout 300 sudo apt-get update && timeout 300 sudo apt-get install -y --no-install-recommends libxml2-utils jq inkscape imagemagick; then
               echo "[MT] > apt dependencies installed successfully."
               break
             elif [[ ${attempt} -lt ${max_attempts} ]]; then
-              echo "[MT] > apt dependencies installation failed or timed out, retrying..."
+              echo "[MT] > apt dependencies installation failed or timed out, retrying in 5 seconds..."
+              sleep 5
             else
               echo "[MT] > apt dependencies installation failed after ${attempt} attempts."
               exit 1
