@@ -18,6 +18,11 @@ fi
 
 ARCHIVE_DIR="${SCRIPT_DIR}/archive";
 
+if [[ ! -f "$FILE_PATH/input_url" ]]; then
+	echo ">> No input_url file found. Exiting early.";
+	exit 0;
+fi
+
 URL=`cat $FILE_PATH/input_url`;
 INPUT_DIR="${SCRIPT_DIR}/input";
 mkdir -p "${INPUT_DIR}";
