@@ -10,9 +10,31 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  MT-CHECK-DATA-OUTDATED-JOB:
+  check-input-url:
     # if: ${{ env.MT_IS_MAIN_REPO != 'true' &&  env.MT_IS_AGENCY_BIKE != 'true' }} # can NOT use env here:
     if: ${{ ! endsWith(github.repository, '/mtransit-for-android') && ! contains(github.repository, '-bike-') }}
+    name: "Check input_url"
+    runs-on: ubuntu-latest
+    outputs:
+      has_input_url: ${{ steps.check.outputs.has_input_url }}
+    steps:
+      - name: MT check out repository code
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.MT_PAT }}
+          fetch-depth: 1
+      - name: Check if config/input_url file exists
+        id: check
+        run: |
+          if [[ -f "config/input_url" ]]; then
+            echo "has_input_url=true" >> "$GITHUB_OUTPUT"
+          else
+            echo ">> No config/input_url file found. Skipping job."
+            echo "has_input_url=false" >> "$GITHUB_OUTPUT"
+          fi
+  MT-CHECK-DATA-OUTDATED-JOB:
+    needs: check-input-url
+    if: ${{ needs.check-input-url.outputs.has_input_url == 'true' }}
     name: "MT Check Data Outdated"
     timeout-minutes: 5
     runs-on: ubuntu-latest
