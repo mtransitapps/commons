@@ -45,10 +45,10 @@ jobs:
       - name: Check if config/input_url file exists
         id: check-input-url
         run: |
-          if [[ -f "config/input_url" ]]; then
+          if [[ -f "config/input_url" || -f "app-android/config/input_url" ]]; then
             echo "has_input_url=true" >> "$GITHUB_OUTPUT"
           else
-            echo ">> No config/input_url file found. Skipping remaining steps."
+            echo ">> No input_url file found. Skipping remaining steps."
             echo "has_input_url=false" >> "$GITHUB_OUTPUT"
           fi
 
