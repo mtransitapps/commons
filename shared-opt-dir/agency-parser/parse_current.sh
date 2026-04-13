@@ -12,7 +12,12 @@ elif [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then # OLD REPO
 	FILE_PATH="${SCRIPT_DIR}/../app-android/config";
 fi
 
-URL=$(cat "$FILE_PATH/input_url");
+URL="";
+if [[ -e "$FILE_PATH/input_url" ]]; then
+  URL=$(cat "$FILE_PATH/input_url");
+elif [[ -e "$FILE_PATH/source_url" ]]; then
+  URL=$(cat "$FILE_PATH/source_url");
+fi
 
 GENERATE_STOP_TIMES_FROM_FREQUENCIES="false";
 if [[ -f "${SCRIPT_DIR}/generate_stop_times_from_frequencies" ]]; then
