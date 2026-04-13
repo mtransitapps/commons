@@ -61,7 +61,7 @@ runs:
           for attempt in $(seq 1 ${max_attempts}); do
             echo "[MT] > Installing apt dependencies (attempt ${attempt}/${max_attempts})..."
             # can not use '--no-install-recommends' because some of those recommended dependencies are required
-            if timeout 1m sudo apt-get update && timeout 1m sudo apt-get install -y libxml2-utils jq inkscape imagemagick; then
+            if timeout 5m sudo apt-get update && timeout 10m sudo apt-get install -y libxml2-utils jq inkscape imagemagick; then
               echo "[MT] > apt dependencies installed successfully."
               break
             elif [[ ${attempt} -lt ${max_attempts} ]]; then
