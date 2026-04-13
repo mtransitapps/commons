@@ -15,10 +15,10 @@ fi
 URL="";
 if [[ -e "$FILE_PATH/input_url_next" ]]; then
  URL=$(cat "$FILE_PATH/input_url_next");
-elif [[ -e "$FILE_PATH/input_url" ]]; then
-  URL=$(cat "$FILE_PATH/input_url");
-elif [[ -e "$FILE_PATH/source_url" ]]; then
-  URL=$(cat "$FILE_PATH/source_url");
+elif [[ -f "$FILE_PATH/input_url" ]]; then
+	URL=$(cat "$FILE_PATH/input_url");
+elif [[ -f "$FILE_PATH/source_url" ]]; then
+	URL=$(cat "$FILE_PATH/source_url");
 fi
 
 GENERATE_STOP_TIMES_FROM_FREQUENCIES="false";
