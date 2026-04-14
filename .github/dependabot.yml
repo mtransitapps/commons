@@ -9,6 +9,7 @@ updates:
   - package-ecosystem: "github-actions"
     directories:
       - "/"
+      - "/shared-overwrite/.github/actions/"
       - "/shared-overwrite/.github/workflows/"
     schedule:
       interval: "weekly"
