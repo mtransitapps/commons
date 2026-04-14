@@ -8,8 +8,8 @@ orbs:
 workflows:
   mt-workflow:
     when:
-      and:
-        - equal: [ false, << pipeline.event.github.pull_request.draft >> ]
+      not:
+        - equal: [ true, << pipeline.event.github.pull_request.draft >> ]
     jobs:
       - mt-job:
           context:
