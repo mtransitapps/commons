@@ -7,6 +7,9 @@ orbs:
   android: circleci/android@3.1.0
 workflows:
   mt-workflow:
+    when:
+      and:
+        - equal: [ false, << pipeline.event.github.pull_request.draft >> ]
     jobs:
       - mt-job:
           context:
