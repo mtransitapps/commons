@@ -183,7 +183,6 @@ function deleteFile() {
 		exit 1;
 	fi
 	local DEST_FILE_PATH=$1;
-	echoFile "> Deleting '${DEST_FILE_PATH}'...";
 	if [[ -f "${DEST_FILE_PATH}" ]]; then
 		rm "${DEST_FILE_PATH}";
 		checkResult $?;
