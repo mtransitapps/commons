@@ -177,6 +177,22 @@ function canOverwriteFile() {
 	fi
 }
 
+function deleteFile() {
+	if [[ "$#" -ne 1 ]]; then
+		echo "> deleteFile() > Illegal number of parameters!";
+		exit 1;
+	fi
+	local DEST_FILE_PATH=$1;
+	echoFile "> Deleting '${DEST_FILE_PATH}'...";
+	if [[ -f "${DEST_FILE_PATH}" ]]; then
+		rm "${DEST_FILE_PATH}";
+		checkResult $?;
+		echoFile "> Deleting '${DEST_FILE_PATH}'... DONE ✓";
+	else
+		echoFile "> Deleting '${DEST_FILE_PATH}'... SKIP (not found)";
+	fi
+}
+
 function deployFile() {
 	if [[ "$#" -lt 2 ]]; then
 		echo "> deployFile() > Illegal number of parameters!";
@@ -277,7 +293,10 @@ function deployDirectory() {
 		fi
 		local S_FILE_NAME_DEST=${S_FILE_NAME#"MT"}; # MT+filename used to ignore ".gitignore"
 		local S_DEST_FILE_PATH="$DEST_FILE_PATH/$S_FILE_NAME_DEST";
-		if [[ -f $S_SRC_FILE_PATH ]]; then
+		if [[ $S_FILE_NAME == MT.DELETE.* ]]; then
+			deleteFile "$DEST_FILE_PATH/${S_FILE_NAME#"MT.DELETE."}";
+			checkResult $?;
+		elif [[ -f $S_SRC_FILE_PATH ]]; then
 			deployFile ${S_SRC_FILE_PATH} ${S_DEST_FILE_PATH} ${OVER_WRITE};
 			checkResult $?;
 		elif [[ -d "$S_SRC_FILE_PATH" ]]; then
@@ -404,7 +423,10 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 	fi
 	FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
 	DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST"
-	if [[ -f $SRC_FILE_PATH ]]; then
+	if [[ $FILENAME == MT.DELETE.* ]]; then
+		deleteFile "$DEST_PATH/${FILENAME#"MT.DELETE."}";
+		checkResult $?;
+	elif [[ -f $SRC_FILE_PATH ]]; then
 		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH} true; #over-write
 		checkResult $?;
 	elif [[ -d "$SRC_FILE_PATH" ]]; then
