@@ -43,6 +43,18 @@ if [[ ${IS_CI} = true ]]; then
   printGitStatus;
 fi
 
+echo "DEBUG: -----------------------------------------"
+echo "DEBUG: git -C "$ARCHIVE_DIR" diff --staged";
+git -C "$ARCHIVE_DIR" diff --staged --quiet;
+echo "- RESULT: $?";
+git -C "$ARCHIVE_DIR" diff --staged;
+echo "DEBUG: -----------------------------------------"
+echo "DEBUG: git -C "$ARCHIVE_DIR" diff";
+git -C "$ARCHIVE_DIR" diff --quiet;
+echo "- RESULT: $?";
+git -C "$ARCHIVE_DIR" diff;
+echo "DEBUG: -----------------------------------------"
+
 if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GIT_STAGED_CHANGES=$?; # 0 if no changes
