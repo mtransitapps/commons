@@ -46,6 +46,7 @@ fi
 if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GIT_STAGED_CHANGES=$?; # 0 if no changes
+  echo "GIT_STAGED_CHANGES: $GIT_STAGED_CHANGES";
   if [[ $GIT_STAGED_CHANGES -eq 0 ]]; then
     echo "> Adding ZIP archives changes to git...";
     git -C "$ARCHIVE_DIR" add -v ".";
@@ -60,6 +61,7 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   MT_SKIP_PUSH_COMMIT=true
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GTFS_ARCHIVE_UPDATED=$?; # 0 if no changes
+  echo "GTFS_ARCHIVE_UPDATED: $GTFS_ARCHIVE_UPDATED";
   if [[ $GTFS_ARCHIVE_UPDATED -gt 0 && $GIT_STAGED_CHANGES -eq 0 ]]; then
     echo "> Committing ZIP archives changes to git...";
     git -C "$ARCHIVE_DIR" commit -m "CI: Update GTFS archives"
