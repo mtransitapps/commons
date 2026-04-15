@@ -28,11 +28,9 @@ if [ -f "${FILE_1_PNG}" ]; then
     exit 0; # compat w/ manually created file
   else
     echo ">> File '$FILE_1_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
+    rm -f "${FILE_1_PNG}";
   fi
 fi
-
-rm -f "${FILE_1_PNG}";
-checkResult $?;
 
 CONFIG_DIR="${ROOT_DIR}/config";
 if [ ! -d "$CONFIG_DIR" ]; then
