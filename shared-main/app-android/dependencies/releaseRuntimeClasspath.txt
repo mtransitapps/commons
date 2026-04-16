@@ -204,6 +204,11 @@ com.squareup.retrofit2:retrofit:3.0.0
 com.vungle:vungle-ads:7.7.2
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
+org.chromium.net:cronet-api:143.7445.0
+org.chromium.net:cronet-common:143.7445.0
+org.chromium.net:cronet-fallback:143.7445.0
+org.chromium.net:cronet-shared:143.7445.0
+org.chromium.net:httpengine-native-provider:143.7445.0
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.9.22
 org.jetbrains.kotlin:kotlin-bom:2.3.20
 org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.22
