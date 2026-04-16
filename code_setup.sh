@@ -19,8 +19,8 @@ setGitProjectName;
 
 setIsCI;
 
-DEBUG_FILES=$IS_CI;
-# DEBUG_FILES=true;
+# DEBUG_FILES=$IS_CI;
+DEBUG_FILES=true;
 function echoFile() {
 	if [[ $DEBUG_FILES == true ]]; then
 		echo "$@";
