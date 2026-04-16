@@ -103,7 +103,7 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
   fi
   echo "> GitHub > publishing release '$APP_VERSION_NAME'... DONE";
 
-  # PUSH TO GOOGLE PLAY STORE
+  # PUSH TO PLAY STORE
   if [[ -d "app-android" ]]; then
     cd app-android || exit 1; # >>
 

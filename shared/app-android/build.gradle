@@ -59,7 +59,7 @@ android {
     }
     kotlin {
         compilerOptions {
-            // jvmTarget = rootProject.kotlinJvmTarget // same as android.compileOptions.targetCompatibility
+            // jvmTarget = JvmTarget.fromTarget(rootProject.javaVersion.toString()) // same as android.compileOptions.targetCompatibility
             // allWarningsAsErrors = true // replaced by "DeprecatedCall" in lint
         }
     }
@@ -107,7 +107,7 @@ android {
     if (project.hasProperty("useGooglePlayUploadKeysProperties")) {
         useGooglePlayUploadKeysProperties = project.getProperty("useGooglePlayUploadKeysProperties").toBoolean()
     }
-    println "> Using Google Play Upload keys: " + useGooglePlayUploadKeysProperties
+    println "> Using the Play Store Upload keys: " + useGooglePlayUploadKeysProperties
 
     Properties appSigningKeysProperties = new Properties()
     def appSigningKeysPropertiesFile = file("app-signing-release-keys.properties")
@@ -265,7 +265,8 @@ android {
                 shrinkResources = true
                 minifyEnabled = true
                 // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
-                proguardFiles getDefaultProguardFile("proguard-android-optimize.txt") // no code in module "app-android" -> no "proguard-rules.pro"
+                proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), // no code in module "app-android" -> no "proguard-rules.pro"
+                        "module-proguard-rules.pro"
             }
         }
     }

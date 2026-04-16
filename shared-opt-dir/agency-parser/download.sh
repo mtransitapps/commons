@@ -18,6 +18,11 @@ fi
 
 ARCHIVE_DIR="${SCRIPT_DIR}/archive";
 
+if [[ ! -f "$FILE_PATH/input_url" ]]; then
+	echo ">> No input_url file found. Exiting early.";
+	exit 0;
+fi
+
 URL=`cat $FILE_PATH/input_url`;
 INPUT_DIR="${SCRIPT_DIR}/input";
 mkdir -p "${INPUT_DIR}";
@@ -34,14 +39,33 @@ if [[ -e "$FILE_PATH/input_url_next" ]]; then
 	checkResult $?;
 fi
 
+if [[ ${IS_CI} = true ]]; then
+  printGitStatus;
+fi
+
+echo "DEBUG: -----------------------------------------"
+echo "DEBUG: git -C "$ARCHIVE_DIR" diff --staged";
+git -C "$ARCHIVE_DIR" diff --staged --quiet;
+echo "- RESULT: $?";
+git -C "$ARCHIVE_DIR" diff --staged;
+echo "DEBUG: -----------------------------------------"
+echo "DEBUG: git -C "$ARCHIVE_DIR" diff";
+git -C "$ARCHIVE_DIR" diff --quiet;
+echo "- RESULT: $?";
+git -C "$ARCHIVE_DIR" diff;
+echo "DEBUG: -----------------------------------------"
+
 if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GIT_STAGED_CHANGES=$?; # 0 if no changes
+  echo "GIT_STAGED_CHANGES: $GIT_STAGED_CHANGES";
   if [[ $GIT_STAGED_CHANGES -eq 0 ]]; then
     echo "> Adding ZIP archives changes to git...";
     git -C "$ARCHIVE_DIR" add -v ".";
     checkResult $? false;
-    git -C "$ARCHIVE_DIR" status -sb;
+    if [[ ${IS_CI} = true ]]; then
+      git -C "$ARCHIVE_DIR" status -sb;
+    fi
   else
     echo "> Adding ZIP archives changes to git... SKIP";
   fi
@@ -49,6 +73,7 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   MT_SKIP_PUSH_COMMIT=true
   git -C "$ARCHIVE_DIR" diff --staged --quiet;
   GTFS_ARCHIVE_UPDATED=$?; # 0 if no changes
+  echo "GTFS_ARCHIVE_UPDATED: $GTFS_ARCHIVE_UPDATED";
   if [[ $GTFS_ARCHIVE_UPDATED -gt 0 && $GIT_STAGED_CHANGES -eq 0 ]]; then
     echo "> Committing ZIP archives changes to git...";
     git -C "$ARCHIVE_DIR" commit -m "CI: Update GTFS archives"
@@ -58,7 +83,9 @@ if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
   else
     echo "> Committing ZIP archives changes to git... SKIP";
   fi
-  git -C "$ARCHIVE_DIR" status -sb;
+  if [[ ${IS_CI} = true ]]; then
+    git -C "$ARCHIVE_DIR" status -sb;
+  fi
 else
   echo ">> Git commit NOT enabled.. SKIP";
 fi
@@ -68,6 +95,10 @@ if [[ ${GITHUB_ACTIONS} = true ]]; then
   echo "MT_SKIP_PUSH_COMMIT=$MT_SKIP_PUSH_COMMIT" >> "$GITHUB_ENV"
 else
   export MT_SKIP_PUSH_COMMIT="$MT_SKIP_PUSH_COMMIT"
+fi
+
+if [[ ${IS_CI} = true ]]; then
+  printGitStatus;
 fi
 
 echo ">> Downloading... DONE"

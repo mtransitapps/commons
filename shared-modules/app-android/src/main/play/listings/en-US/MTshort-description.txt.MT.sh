@@ -43,7 +43,13 @@ fi
 
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+    echo "AGENCY_NAME_LONG is empty!";
+    exit 1;
+fi
+
+AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
+if [ -z "$AGENCY_NAME_SHORT" ]; then
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
@@ -52,12 +58,10 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi
-
-AGENCY_LABEL=$AGENCY_NAME_LONG;
 
 requireCommand "xmllint" "libxml2-utils";
 requireCommand "jq";
@@ -103,11 +107,20 @@ else
   exit 1 # error
 fi
 
-SHORT_DESC="$AGENCY_NAME_LONG $TYPE_LABEL for MonTransit.";
-
-if [ -n "$AGENCY_LOCATION_SHORT" ]; then
-  SHORT_DESC="$AGENCY_LOCATION_SHORT $SHORT_DESC"
+AGENCY_TYPE_FILE="${CONFIG_DIR}/agency_type";
+if [ -f "$AGENCY_TYPE_FILE" ]; then
+  AGENCY_TYPE_SHORT=$(head -n 1 "$AGENCY_TYPE_FILE");
+  if [ -n "$AGENCY_TYPE_SHORT" ]; then
+    TYPE_LABEL="$AGENCY_TYPE_SHORT";
+  fi
 fi
+
+AGENCY_LABEL=$AGENCY_NAME_SHORT;
+if [ -n "$AGENCY_LOCATION_SHORT" ]; then
+  AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
+fi
+
+SHORT_DESC="$AGENCY_LABEL $TYPE_LABEL for MonTransit.";
 
 if [ -f "$BIKE_STATION_VALUES_FILE" ]; then
   SHORT_DESC="${SHORT_DESC} Availability.";
@@ -121,6 +134,7 @@ setFeatureFlags;
 
 GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
+  SHORT_DESC="${SHORT_DESC} Real-Time.";
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     SHORT_DESC="${SHORT_DESC} Alerts.";
   fi
@@ -129,7 +143,13 @@ if [ -f "${GTFS_RT_FILE}" ]; then
       SHORT_DESC="${SHORT_DESC} Vehicles.";
     fi
   fi
+  if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
+      SHORT_DESC="${SHORT_DESC} Departures.";
+    fi
+  fi
 fi
+# TODO: support other real-time providers
 
 RSS_FILE="${VALUES_DIR}/rss_values.xml";
 TWITTER_FILE="${VALUES_DIR}/twitter_values.xml";

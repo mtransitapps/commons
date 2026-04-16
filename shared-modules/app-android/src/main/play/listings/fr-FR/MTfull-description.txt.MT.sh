@@ -10,12 +10,6 @@ setGitProjectName;
 
 setIsCI;
 
-LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
-if [ ! -f "$LANG_FR_FILE" ]; then
-    echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
-    exit 0; # ok
-fi
-
 echo ">> Generating fr-FR/full-description.txt...";
 
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
@@ -24,6 +18,13 @@ MAIN_DIR="${SRC_DIR}/main";
 PLAY_DIR="${MAIN_DIR}/play";
 LISTINGS_DIR="${PLAY_DIR}/listings";
 FR_FR_DIR="${LISTINGS_DIR}/fr-FR";
+
+LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
+if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
+    echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
+    exit 0; # ok
+fi
+
 FULL_DESCRIPTION_FILE="${FR_FR_DIR}/full-description.txt";
 mkdir -p "${FR_FR_DIR}";
 checkResult $?;
@@ -43,7 +44,10 @@ if [ ! -d "$CONFIG_DIR" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+AGENCY_NAME_FILE="${CONFIG_DIR}/fr/agency_name";
+if [ ! -f "$AGENCY_NAME_FILE" ]; then
+  AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+fi
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
     exit 1;
@@ -51,13 +55,13 @@ fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+    echo "AGENCY_NAME_LONG is empty!";
     exit 1;
 fi
 
@@ -66,7 +70,7 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi
@@ -89,7 +93,10 @@ fi
 GIT_OWNER="mtransitapps"; #TODO extract de GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
 CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
-SOURCE_URL_FILE="${CONFIG_DIR}/source_url_fr";
+SOURCE_URL_FILE="${CONFIG_DIR}/fr/source_url";
+if [ ! -f "$SOURCE_URL_FILE" ]; then
+  SOURCE_URL_FILE="${CONFIG_DIR}/source_url_fr"; # Deprecated
+fi
 if [ ! -f "$SOURCE_URL_FILE" ]; then
   SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 fi
@@ -99,13 +106,18 @@ if [ ! -f "$SOURCE_URL_FILE" ]; then
 fi
 SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
 if [ -z "$SOURCE_URL" ]; then
-    echo "$SOURCE_URL is empty!";
+    echo "SOURCE_URL is empty!";
     exit 1;
 fi
 
 SOURCE_NAME_FILE="${CONFIG_DIR}/source_name"; #optional
 if [ -f "$SOURCE_NAME_FILE" ]; then
   SOURCE_NAME=$(head -n 1 $SOURCE_NAME_FILE);
+fi
+
+AGENCY_OWNER_FILE="${CONFIG_DIR}/agency_owner"; #optional
+if [ -f "$AGENCY_OWNER_FILE" ]; then
+  AGENCY_OWNER_LONG=$(tail -n 1 $AGENCY_OWNER_FILE);
 fi
 
 CITIES_FILE="${CONFIG_DIR}/cities";
@@ -115,7 +127,7 @@ if [ ! -f "$CITIES_FILE" ]; then
 fi
 CITIES_LABEL=$(head -n 1 $CITIES_FILE);
 if [ -z "$CITIES_LABEL" ]; then
-    echo "$CITIES_LABEL is empty!";
+    echo "CITIES_LABEL is empty in '$CITIES_FILE'!";
     exit 1;
 fi
 
@@ -137,11 +149,11 @@ else
   exit 1 # error
 fi
 
-LOCATION_LABEL="$CITIES_LABEL au";
+LOCATION_LABEL="$CITIES_LABEL (";
 if [ -n "$STATE_LABEL_LONG" ]; then
-    LOCATION_LABEL="$LOCATION_LABEL $STATE_LABEL_LONG,";
+    LOCATION_LABEL="$LOCATION_LABEL$STATE_LABEL_LONG, ";
 fi
-LOCATION_LABEL="$LOCATION_LABEL $COUNTRY_LABEL";
+LOCATION_LABEL="$LOCATION_LABEL$COUNTRY_LABEL)";
 
 SOURCE_PROVIDER="$SOURCE_NAME";
 if [ -z "$SOURCE_PROVIDER" ]; then
@@ -153,6 +165,22 @@ fi
 
 INDEX=1;
 NOT_RELATED_WITH="";
+if [ -n "$SOURCE_NAME" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$SOURCE_NAME";
+  else
+    NOT_RELATED_WITH+=" ou $SOURCE_NAME";
+  fi
+  ((INDEX++))
+fi
+if [ -n "$AGENCY_OWNER_LONG" ]; then
+  if [ "${INDEX}" -eq 1 ]; then
+    NOT_RELATED_WITH="$AGENCY_OWNER_LONG";
+  else
+    NOT_RELATED_WITH+=" ou $AGENCY_OWNER_LONG";
+  fi
+  ((INDEX++))
+fi
 if [ -n "$AGENCY_NAME_LONG" ]; then
   if [ "${INDEX}" -eq 1 ]; then
     NOT_RELATED_WITH="$AGENCY_NAME_LONG";
@@ -166,14 +194,6 @@ if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
     NOT_RELATED_WITH="$PARENT_AGENCY_NAME_LONG";
   else
     NOT_RELATED_WITH+=" ou $PARENT_AGENCY_NAME_LONG";
-  fi
-  ((INDEX++))
-fi
-if [ -n "$SOURCE_NAME" ]; then
-  if [ "${INDEX}" -eq 1 ]; then
-    NOT_RELATED_WITH="$SOURCE_NAME";
-  else
-    NOT_RELATED_WITH+=" ou $SOURCE_NAME";
   fi
   ((INDEX++))
 fi
@@ -212,7 +232,7 @@ elif [ "$TYPE" -eq 1 ]; then # SUBWAY
 elif [ "$TYPE" -eq 2 ]; then # TRAIN
     TYPE_LABEL="trains";
 elif [ "$TYPE" -eq 3 ]; then # BUS
-    TYPE_LABEL="bus";
+    TYPE_LABEL="autobus"; # "bus"
 elif [ "$TYPE" -eq 4 ]; then # FERRY
     TYPE_LABEL="bateaux";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
@@ -253,7 +273,7 @@ YOUTUBE_FILE="${VALUES_DIR}/youtube_values.xml";
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
     PROVIDES_LINE_END="${PROVIDES_LINE_END} et";
-  else 
+  else
     PROVIDES_LINE_END="${PROVIDES_LINE_END},";
   fi
   PROVIDES_LINE_END="${PROVIDES_LINE_END} les nouvelles";
@@ -312,7 +332,7 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
     ((NEWS_SOURCE_COUNT++))
   fi
   # if [[ -f "${YOUTUBE_FILE}" ]]; then
-  # YOUTUBE_FILE="${YOUTUBE_FILE} de YouTube"; # Google Play Store doesn´t like it
+  # YOUTUBE_FILE="${YOUTUBE_FILE} de YouTube"; # Play Store doesn't like it
   # fi
 fi
 
@@ -321,6 +341,11 @@ setFeatureFlags;
 GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
   RT_PARTS=()
+  if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
+      RT_PARTS+=(" prochains départs")
+    fi
+  fi
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     RT_PARTS+=(" alertes de service")
   fi
@@ -336,7 +361,7 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     RT_LINE="${RT_LINE} en temps-réel";
     if [ -z "$PROVIDES_LINE_END" ]; then
       PROVIDES_LINE_END=" et${RT_LINE}${PROVIDES_LINE_END}";
-    else 
+    else
       PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
     fi
   fi
@@ -379,7 +404,7 @@ EOL
 PERMISSIONS_LINE="";
 
 if [ -f "${BIKE_STATION_FILE}" ]; then
-  if [ -z "$PERMISSIONS_LINES" ]; then
+  if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
     echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
@@ -391,15 +416,15 @@ if [ -f "${BIKE_STATION_FILE}" ]; then
 fi
 
 if [ -f "${GTFS_RT_FILE}" ]; then
-  if [ -z "$PERMISSIONS_LINES" ]; then
+  if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
     echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
     PERMISSIONS_LINE="- Autres : requis pour le téléchargement des";
-  else 
+  else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
-  PERMISSIONS_LINE="${PERMISSIONS_LINE} alertes de service en temps-réel";
+  PERMISSIONS_LINE="${PERMISSIONS_LINE} information en temps-réel";
 fi
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PERMISSIONS_LINE" ]; then
@@ -407,7 +432,7 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
     echo "Autorisations :" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
     PERMISSIONS_LINE="- Autres : requis pour le téléchargement des";
-  else 
+  else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} et des";
   fi
   PERMISSIONS_LINE="${PERMISSIONS_LINE} nouvelles";
