@@ -19,8 +19,8 @@ setGitProjectName;
 
 setIsCI;
 
-# DEBUG_FILES=$IS_CI;
-DEBUG_FILES=true;
+DEBUG_FILES=$IS_CI;
+# DEBUG_FILES=true;
 function echoFile() {
 	if [[ $DEBUG_FILES == true ]]; then
 		echo "$@";
@@ -119,17 +119,8 @@ function cleanupDirectory() {
 			fi
 			local S_FILE_NAME_DEST=${S_FILE_NAME#"MT"}; # MT+filename used to ignore ".gitignore"
 			if [[ "$S_FILE_NAME_DEST" == *MTSTAR* ]]; then
-				# echo ">> -----------------------------------------------------";
-				# echo ">> S_FILE_NAME_DEST='$S_FILE_NAME_DEST'";
-				# replace MTSTAR with * to find all generated files with same name starting with S_FILE_NAME_DEST without MTSTAR
 				S_FILE_NAME_DEST_REGEX=${S_FILE_NAME_DEST//MTSTAR*/*};
-				# echo ">> S_FILE_NAME_DEST_REGEX='$S_FILE_NAME_DEST_REGEX'";
-				# S_FILE_NAME_DEST_REGEX=${S_FILE_NAME_DEST%MTSTAR};
-				# echo ">> S_FILE_NAME_DEST_REGEX='$S_FILE_NAME_DEST_REGEX'";
-				# echo ">> DEST_FILE_PATH='$DEST_FILE_PATH'";
 				S_FILE_NAME_DEST_LIST=$(find ${DEST_FILE_PATH}/ -mindepth 1 -maxdepth 1 -name "$S_FILE_NAME_DEST_REGEX" -exec basename {} \; | xargs);
-				# echo ">> S_FILE_NAME_DEST_LIST='$S_FILE_NAME_DEST_LIST'";
-				# echo ">> -----------------------------------------------------";
 			else # just use file name
 				S_FILE_NAME_DEST_LIST="$S_FILE_NAME_DEST";
 			fi
