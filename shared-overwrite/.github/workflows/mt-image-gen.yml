@@ -50,18 +50,6 @@ jobs:
         with:
           image-gen: true
 
-      - name: MT upload images?
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: images-${{ github.sha }}
-          path: |
-            app-android/src/main/play/listings/*/graphics/feature-graphic/*.png
-            app-android/src/main/play/listings/*/graphics/icon/*.png
-            app-android/src/main/res/mipmap-*/module_app_icon*.png
-          retention-days: 30
-          if-no-files-found: warn
-
       - name: MT commit images
         continue-on-error: true
         id: mt-commit-images
