@@ -1,6 +1,16 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 name: MT generate images
 on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'app-android/src/main/res/values/gtfs_rts_values_gen.xml' # gtfs_rts_color | gtfs_rts_agency_type
+      - 'app-android/src/main/res/values/bike_station_values.xml' # bike_station_color | bike_station_agency_type
+      - 'config/gtfs/agency.json' # target_route_type_id | default_color
+      - 'config/agency_name' # feature graphic
+      - 'config/cities' # feature graphic
+      - 'config/state' # feature graphic
   workflow_dispatch: # manual
     inputs:
       commitDirectly:
