@@ -67,9 +67,9 @@ jobs:
         id: mt-commit-images
         run: |
           # Check if images were generated
-          IMAGE_COUNT=$(find app-android/src/main/play/listings -type f -name '*.png' 2>/dev/null | wc -l)
+          IMAGE_COUNT=$(git status --porcelain -- ':(glob)**/*.png' | wc -l)
           if [ "$IMAGE_COUNT" -gt 0 ]; then
-            echo "Found $IMAGE_COUNT image file(s)."
+            echo "Found $IMAGE_COUNT changed PNG file(s)."
             git add -v -A app-android/src/main/play/listings/
             if git diff --staged --quiet; then
               echo "No new images to commit."
@@ -90,7 +90,7 @@ jobs:
             fi
             exit 0 # success == PR needed
           else
-            echo "No images found."
+            echo "No PNG changes found."
             exit 1 # fail == no PR needed
           fi
 
