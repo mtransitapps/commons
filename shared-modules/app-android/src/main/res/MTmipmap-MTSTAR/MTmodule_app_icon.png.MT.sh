@@ -36,75 +36,22 @@ fi
 
 FILE_NAME="module_app_icon.png";
 
-MIPMAP_MDPI="${RES_DIR}/mipmap-mdpi";
-FILE_PNG="${MIPMAP_MDPI}/${FILE_NAME}";
-mkdir -p "${MIPMAP_MDPI}";
-checkResult $?;
-if [ -f "${FILE_PNG}" ]; then
-  if [[ ${MT_GENERATE_IMAGES} != true ]]; then
-    echo ">> File '$FILE_PNG' already exist."; # compat with existing icon/1.png
-    exit 0; # compat w/ manually created file
-  else
-    echo ">> File '$FILE_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
-    rm -f "${FILE_PNG}";
+for DENSITY in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
+  MIPMAP_DIR="${RES_DIR}/mipmap-${DENSITY}"
+  FILE_PNG="${MIPMAP_DIR}/${FILE_NAME}"
+  mkdir -p "${MIPMAP_DIR}"
+  checkResult $?;
+  if [ -f "${FILE_PNG}" ]; then
+    if [[ ${MT_GENERATE_IMAGES} != true ]]; then
+      echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
+      exit 0; # compat w/ manually created file
+    else
+      echo ">> File '$FILE_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
+      rm -f "${FILE_PNG}";
+      checkResult $?;
+    fi
   fi
-fi
-
-MIPMAP_HDPI="${RES_DIR}/mipmap-hdpi";
-FILE_PNG="${MIPMAP_HDPI}/${FILE_NAME}";
-mkdir -p "${MIPMAP_HDPI}";
-checkResult $?;
-if [ -f "${FILE_PNG}" ]; then
-  if [[ ${MT_GENERATE_IMAGES} != true ]]; then
-    echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-    exit 0; # compat w/ manually created file
-  else
-    echo ">> File '$FILE_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
-    rm -f "${FILE_PNG}";
-  fi
-fi
-
-MIPMAP_XHDPI="${RES_DIR}/mipmap-xhdpi";
-FILE_PNG="${MIPMAP_XHDPI}/${FILE_NAME}";
-mkdir -p "${MIPMAP_XHDPI}";
-checkResult $?;
-if [ -f "${FILE_PNG}" ]; then
-  if [[ ${MT_GENERATE_IMAGES} != true ]]; then
-    echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-    exit 0; # compat w/ manually created file
-  else
-    echo ">> File '$FILE_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
-    rm -f "${FILE_PNG}";
-  fi
-fi
-
-MIPMAP_XXHDPI="${RES_DIR}/mipmap-xxhdpi";
-FILE_PNG="${MIPMAP_XXHDPI}/${FILE_NAME}";
-mkdir -p "${MIPMAP_XXHDPI}";
-checkResult $?;
-if [ -f "${FILE_PNG}" ]; then
-  if [[ ${MT_GENERATE_IMAGES} != true ]]; then
-    echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-    exit 0; # compat w/ manually created file
-  else
-    echo ">> File '$FILE_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
-    rm -f "${FILE_PNG}";
-  fi
-fi
-
-MIPMAP_XXXHDPI="${RES_DIR}/mipmap-xxxhdpi";
-FILE_PNG="${MIPMAP_XXXHDPI}/${FILE_NAME}";
-mkdir -p "${MIPMAP_XXXHDPI}";
-checkResult $?;
-if [ -f "${FILE_PNG}" ]; then
-  if [[ ${MT_GENERATE_IMAGES} != true ]]; then
-    echo ">> File '$FILE_PNG' already exist."; # compat with existing mipmap-*/module_app_icon.png
-    exit 0; # compat w/ manually created file
-  else
-    echo ">> File '$FILE_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
-    rm -f "${FILE_PNG}";
-  fi
-fi
+done
 
 $ROOT_DIR/commons-android/pub/module-res-mipmap-launcher-icon.sh;
 checkResult $?;
