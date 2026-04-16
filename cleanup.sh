@@ -118,9 +118,9 @@ function cleanupDirectory() {
 				continue;
 			fi
 			local S_FILE_NAME_DEST=${S_FILE_NAME#"MT"}; # MT+filename used to ignore ".gitignore"
-			if [[ "$S_FILE_NAME_DEST" == *MTSTAR ]]; then
-				S_FILE_NAME_DEST_STARTS_WITH=${S_FILE_NAME_DEST%MTSTAR};
-				S_FILE_NAME_DEST_LIST=$(find ${DEST_FILE_PATH}/ -mindepth 1 -maxdepth 1 -name "$S_FILE_NAME_DEST_STARTS_WITH*" -exec basename {} \; | xargs);
+			if [[ "$S_FILE_NAME_DEST" == *MTSTAR* ]]; then
+				S_FILE_NAME_DEST_REGEX=${S_FILE_NAME_DEST//MTSTAR*/*};
+				S_FILE_NAME_DEST_LIST=$(find ${DEST_FILE_PATH}/ -mindepth 1 -maxdepth 1 -name "$S_FILE_NAME_DEST_REGEX" -exec basename {} \; | xargs);
 			else # just use file name
 				S_FILE_NAME_DEST_LIST="$S_FILE_NAME_DEST";
 			fi
