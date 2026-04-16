@@ -29,6 +29,7 @@ if [ -f "${FILE_1_PNG}" ]; then
   else
     echo ">> File '$FILE_1_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
     rm -f "${FILE_1_PNG}";
+    checkResult $?;
   fi
 fi
 
