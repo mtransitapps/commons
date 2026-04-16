@@ -26,6 +26,30 @@ COLOR_FILE_XML="${VALUES_DIR}/${COLOR_FILE_NAME_XML}";
 if [ -f "${COLOR_FILE_XML}" ]; then
   echo ">> File '$COLOR_FILE_XML' already exist."; # compat with existing values/module_app_icon_color.xml
 else
+  requireCommand "xmllint" "libxml2-utils";
+  requireCommand "jq";
+  GTFS_RDS_VALUES_GEN_FILE="$VALUES_DIR/gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
+  BIKE_STATION_VALUES_FILE="$VALUES_DIR/bike_station_values.xml";
+  AGENCY_JSON_FILE="$ROOT_DIR/config/gtfs/agency.json";
+  COLOR=""
+  if [ -f $GTFS_RDS_VALUES_GEN_FILE ]; then #1st because color computed
+    echo "> Agency file: '$GTFS_RDS_VALUES_GEN_FILE'."
+    COLOR=$(xmllint --xpath "//resources/string[@name='gtfs_rts_color']/text()" "$GTFS_RDS_VALUES_GEN_FILE")
+  elif [ -f $AGENCY_JSON_FILE ]; then
+    echo "> Agency file: '$AGENCY_JSON_FILE'."
+    COLOR=$(jq -r '.default_color // empty' "$AGENCY_JSON_FILE")
+  elif [ -f $BIKE_STATION_VALUES_FILE ]; then
+    echo "> Agency file: '$BIKE_STATION_VALUES_FILE'."
+    COLOR=$(xmllint --xpath "//resources/string[@name='bike_station_color']/text()" "$BIKE_STATION_VALUES_FILE")
+  else
+    echo "> No agency file! (rds:$GTFS_RDS_VALUES_GEN_FILE|json:$AGENCY_JSON_FILE|bike:$BIKE_STATION_VALUES_FILE)"
+    exit 1 # error
+  fi
+  echo " - color: $COLOR"
+  if [ -z "$COLOR" ]; then
+    echo " > No color found for agency type!"
+    exit 1 # error
+  fi
   rm -f "${COLOR_FILE_XML}";
   checkResult $?;
   touch "${COLOR_FILE_XML}";
