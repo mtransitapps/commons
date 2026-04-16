@@ -70,7 +70,7 @@ jobs:
           IMAGE_COUNT=$(git status --porcelain -- ':(glob)**/*.png' | wc -l)
           if [ "$IMAGE_COUNT" -gt 0 ]; then
             echo "Found $IMAGE_COUNT changed PNG file(s)."
-            git add -v -A app-android/src/main/play/listings/
+            git add -v -A -- ':(glob)**/*.png'
             if git diff --staged --quiet; then
               echo "No new images to commit."
               exit 1 # fail == no PR needed
