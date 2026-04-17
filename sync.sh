@@ -123,7 +123,7 @@ for S in "${!SUBMODULES[@]}"; do
 		echo " DONE ✓";
 	fi
 	echo "> Setting submodule branch '$GIT_BRANCH' in '$SUBMODULE'...";
-	git checkout $GIT_BRANCH;
+	git switch $GIT_BRANCH;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while checking out '$GIT_BRANCH' in '$SUBMODULE_REPO' submodule in '$SUBMODULE'!";
