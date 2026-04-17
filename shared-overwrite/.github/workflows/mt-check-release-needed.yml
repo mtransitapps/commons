@@ -26,6 +26,15 @@ jobs:
         run: |
           echo ">> Checking if release is needed..."
 
+          trigger_release_workflow() {
+            echo ">> Triggering mt-release.yml workflow..."
+            if ! gh workflow run mt-release.yml; then
+              echo ">> Failed to trigger mt-release.yml workflow."
+              exit 1
+            fi
+            echo ">> mt-release.yml workflow triggered."
+          }
+
           APP_ANDROID_MAIN_DIR="app-android/src/main"
           if [[ ! -d "${APP_ANDROID_MAIN_DIR}" ]]; then
             echo ">> No app-android directory found. Release check not applicable."
@@ -34,8 +43,8 @@ jobs:
 
           LAST_GIT_TAG_HASH=$(git rev-list --tags --max-count=1)
           if [[ -z "${LAST_GIT_TAG_HASH}" ]]; then
-            echo ">> No release tag found. Triggering mt-release.yml workflow..."
-            gh workflow run mt-release.yml
+            echo ">> No release tag found."
+            trigger_release_workflow
             exit 0
           fi
 
@@ -73,8 +82,8 @@ jobs:
           done
 
           if [[ "${RELEASE_TOO_OLD}" == "true" || "${DATA_CHANGED}" == "true" ]]; then
-            echo ">> Release needed. Triggering mt-release.yml workflow..."
-            gh workflow run mt-release.yml
+            echo ">> Release needed."
+            trigger_release_workflow
           else
             echo ">> Release not needed."
           fi
