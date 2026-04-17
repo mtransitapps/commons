@@ -255,6 +255,7 @@ function printGitStatus() {
 	echo "> [GIT STATUS & LOG]...";
 	echo "'$(basename $PWD)'"
 	git config --get remote.origin.url;
+	echo "> status:";
 	git status -sb;
 	STAGED_DIFF=$(git diff --cached | head -n $DIFF_LIMIT);
 	if [ -n "$STAGED_DIFF" ]; then
@@ -276,6 +277,7 @@ function printGitStatus() {
 	echo "$LOG";
 	echo "--------------------------------------------------";
 	git submodule foreach "
+	    echo \"> status:\";
 		git status -sb;
 		git config --get remote.origin.url;
 		STAGED_DIFF=\$(git diff --cached | head -n $DIFF_LIMIT);
