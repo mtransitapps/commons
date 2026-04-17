@@ -23,28 +23,21 @@ jobs:
           fetch-depth: 0 # required for release tags & history
 
       - name: MT check if release is needed
+        id: mt-check-release-needed
         run: |
           echo ">> Checking if release is needed..."
-
-          trigger_release_workflow() {
-            echo ">> Triggering mt-release.yml workflow..."
-            if ! gh workflow run mt-release.yml; then
-              echo ">> Failed to trigger mt-release.yml workflow. Verify GH_TOKEN (from MT_PAT) has workflow scope and '.github/workflows/mt-release.yml' exists on default branch."
-              exit 1
-            fi
-            echo ">> mt-release.yml workflow triggered."
-          }
 
           APP_ANDROID_MAIN_DIR="app-android/src/main"
           if [[ ! -d "${APP_ANDROID_MAIN_DIR}" ]]; then
             echo ">> No app-android directory found. Release check not applicable."
+            echo "release_needed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           LAST_GIT_TAG_NAME=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           if [[ -z "${LAST_GIT_TAG_NAME}" ]]; then
             echo ">> No release tag found."
-            trigger_release_workflow
+            echo "release_needed=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -81,9 +74,20 @@ jobs:
 
           if [[ "${RELEASE_TOO_OLD}" == "true" || "${DATA_CHANGED}" == "true" ]]; then
             echo ">> Release needed."
-            trigger_release_workflow
+            echo "release_needed=true" >> "$GITHUB_OUTPUT"
           else
             echo ">> Release not needed."
+            echo "release_needed=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: MT trigger release workflow
+        if: steps.mt-check-release-needed.outputs.release_needed == 'true'
+        run: |
+          echo ">> Triggering mt-release.yml workflow..."
+          if ! gh workflow run mt-release.yml; then
+            echo ">> Failed to trigger mt-release.yml workflow. Verify GH_TOKEN (from MT_PAT) has workflow scope and '.github/workflows/mt-release.yml' exists on default branch."
+            exit 1
+          fi
+          echo ">> mt-release.yml workflow triggered."
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
