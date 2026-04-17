@@ -54,7 +54,7 @@ jobs:
           echo "> Last release '${LAST_GIT_TAG_NAME}' on '${LAST_GIT_TAG_DATE_TIME}'."
 
           NOW_TIMESTAMP_SEC=$(date +%s)
-          MIN_DIFF_FOR_RELEASE_SEC=4233600 # 7 weeks
+          MIN_DIFF_FOR_RELEASE_SEC=4233600 # 7 weeks (7 * 7 * 24 * 60 * 60)
           RELEASE_TOO_OLD=false
           if (( NOW_TIMESTAMP_SEC - LAST_GIT_TAG_TIMESTAMP_SEC > MIN_DIFF_FOR_RELEASE_SEC )); then
             RELEASE_TOO_OLD=true
