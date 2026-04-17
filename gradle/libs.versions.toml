@@ -188,7 +188,6 @@ androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref =
 androix-webkit = { module = "androidx.webkit:webkit", version.ref = "androidx-webkit" }
 androidx-workManager-runtime = { module = "androidx.work:work-runtime", version.ref = "androidx-workManager" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
-# adds WRITE_EXTERNAL_STORAGE, READ_PHONE_STATE...
 gps-ads = { module = "com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk", version.ref = "gps-ads" }
 gps-ump = { module = "com.google.android.ump:user-messaging-platform", version.ref = "gps-ump" }
 gps-basement = { module = "com.google.android.gms:play-services-basement", version.ref = "gps-basement" }
