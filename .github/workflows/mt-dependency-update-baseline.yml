@@ -79,13 +79,9 @@ jobs:
           echo "MT_GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: MT code setup
         run: ./commons/code_setup.sh
-      - name: MT set up JDK 17
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+      - name: MT setup
+        id: mt-setup
+        uses: mtransitapps/gh-actions/.github/actions/setup@v1.0.1
       - name: MT dependency update baseline
         run: ./dependency_update_baseline.sh
       - name: MT commit new baseline
