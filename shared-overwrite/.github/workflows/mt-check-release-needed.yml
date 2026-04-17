@@ -41,14 +41,13 @@ jobs:
             exit 0
           fi
 
-          LAST_GIT_TAG_HASH=$(git rev-list --tags --max-count=1)
-          if [[ -z "${LAST_GIT_TAG_HASH}" ]]; then
+          LAST_GIT_TAG_NAME=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [[ -z "${LAST_GIT_TAG_NAME}" ]]; then
             echo ">> No release tag found."
             trigger_release_workflow
             exit 0
           fi
 
-          LAST_GIT_TAG_NAME=$(git describe --tags "${LAST_GIT_TAG_HASH}")
           LAST_GIT_TAG_TIMESTAMP_SEC=$(git log -1 --pretty=format:"%at" "${LAST_GIT_TAG_NAME}")
           LAST_GIT_TAG_DATE_TIME=$(date --date='@'"${LAST_GIT_TAG_TIMESTAMP_SEC}"'')
           echo "> Last release '${LAST_GIT_TAG_NAME}' on '${LAST_GIT_TAG_DATE_TIME}'."
@@ -74,13 +73,11 @@ jobs:
             "app-android/src/main/res-next/raw/" # git diff checks directory recursively
           )
 
-          for DATA_PATH in "${DATA_PATHS[@]}"; do
-            if ! git diff --quiet "${LAST_GIT_TAG_NAME}"..HEAD -- "${DATA_PATH}"; then
-              echo ">> Data changed since '${LAST_GIT_TAG_NAME}': ${DATA_PATH}"
-              DATA_CHANGED=true
-              break
-            fi
-          done
+          if ! git diff --quiet "${LAST_GIT_TAG_NAME}"..HEAD -- "${DATA_PATHS[@]}"; then
+            echo ">> Data changed since '${LAST_GIT_TAG_NAME}':"
+            git diff --name-only "${LAST_GIT_TAG_NAME}"..HEAD -- "${DATA_PATHS[@]}"
+            DATA_CHANGED=true
+          fi
 
           if [[ "${RELEASE_TOO_OLD}" == "true" || "${DATA_CHANGED}" == "true" ]]; then
             echo ">> Release needed."
