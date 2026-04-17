@@ -64,6 +64,7 @@ jobs:
           fi
 
           DATA_CHANGED=false
+          # files are checked directly; raw directories are checked recursively for any file change
           DATA_PATHS=(
             "app-android/src/main/res/values/gtfs_rts_values_gen.xml"
             "app-android/src/main/res/raw/"
