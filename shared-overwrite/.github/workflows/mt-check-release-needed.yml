@@ -29,7 +29,7 @@ jobs:
           trigger_release_workflow() {
             echo ">> Triggering mt-release.yml workflow..."
             if ! gh workflow run mt-release.yml; then
-              echo ">> Failed to trigger mt-release.yml workflow. Verify GH_TOKEN has actions: write and workflow file exists on default branch."
+              echo ">> Failed to trigger mt-release.yml workflow. Verify GH_TOKEN has workflow scope and workflow file exists on default branch."
               exit 1
             fi
             echo ">> mt-release.yml workflow triggered."
