@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@v6
       with:
         repository: mtransitapps/mtransit-for-android
-    - name: MT check out submodules
+    - name: MT init submodules
       run: ./submodules_init.sh
     - name: MT code setup
       run: ./commons/code_setup.sh
