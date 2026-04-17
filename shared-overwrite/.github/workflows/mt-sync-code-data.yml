@@ -154,7 +154,7 @@ jobs:
         continue-on-error: true
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         run: |
-          RESULT=$(git diff-index --name-only HEAD -- "app-android/src/main/res/values/gtfs_rts_values_gen.xml" | wc -l)
+          RESULT=$(git status --porcelain -- "app-android/src/main/res/values/gtfs_rts_values_gen.xml" | wc -l)
           if [ "$RESULT" -gt 0 ]; then
             echo "Image generation required.";
             exit 0 # success
