@@ -19,7 +19,7 @@ function setGitProjectName() { # copy from commons.sh
 echo "> GitHub Actions: $GITHUB_ACTIONS.";
 
 IS_SHALLOW=$(git rev-parse --is-shallow-repository);
-if [[ "$IS_SHALLOW" == true && "$GITHUB_ACTIONS" == false ]]; then
+if [[ "$IS_SHALLOW" == "true" && "$GITHUB_ACTIONS" != "true" ]]; then
 	echo "> Fetching un-shallow GIT repo...";
 	git fetch -v --unshallow;
 	RESULT=$?;
