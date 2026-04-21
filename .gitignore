@@ -3,3 +3,7 @@
 
 # TOML Dependency updater file
 *.updates.toml
+
+# Local Gradle artifacts
+shared/.gradle/
+shared/build/
