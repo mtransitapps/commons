@@ -53,8 +53,8 @@ jobs:
           submodules: true # required to set right token
           token: ${{ secrets.MT_PAT || secrets.MT_DEPENDABOT_PAT }} # use our token to trigger workflow events, if available
           fetch-depth: 0 # fetch all (not required util release build)
-      - name: MT check out submodules
-        run: ./checkout_submodules.sh
+      - name: MT init submodules
+        run: ./submodules_init.sh
       - name: MT switch all git submodule closest branch
         if: github.event_name == 'pull_request'
         run: |
