@@ -255,16 +255,13 @@ android {
                 }
             }
 
+            shrinkResources = true
+            minifyEnabled = true
+            // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
             if (isMainApp) {
-                shrinkResources = true
-                minifyEnabled = true
-                // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
                 proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
                         "proguard-rules.pro"
             } else {
-                shrinkResources = true
-                minifyEnabled = true
-                // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
                 proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
                         "module-proguard-rules.pro"
             }
