@@ -1,5 +1,5 @@
-# Produces useful obfuscated stack traces
-# http://proguard.sourceforge.net/manual/examples.html#stacktrace
+# Producing useful obfuscated stack traces
+# https://www.guardsquare.com/manual/configuration/examples#stacktrace
 -renamesourcefileattribute SourceFile
 -keepattributes LineNumberTable
 -keepattributes SourceFile
