@@ -1,4 +1,4 @@
-mt-re# ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
+# ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 name: MT record screenshots
 on:
   workflow_dispatch: # manual
