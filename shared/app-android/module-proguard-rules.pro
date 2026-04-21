@@ -6,5 +6,5 @@
 -keepattributes EnclosingMethod
 -keepattributes InnerClasses
 
-## Do not obfuscate the class files since open source (DEBUG only)
-#-dontobfuscate
+# Do not obfuscate the class files since open source & no Crashlytics (DEBUG only)
+-dontobfuscate
