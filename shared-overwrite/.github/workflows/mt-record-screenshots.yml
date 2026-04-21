@@ -1,4 +1,4 @@
-# ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
+mt-re# ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 name: MT record screenshots
 on:
   workflow_dispatch: # manual
@@ -43,6 +43,8 @@ env:
 jobs:
   MT-RECORD-SCREENSHOTS-JOB:
     name: "MT record screenshots"
+    # if: ${{ env.MT_IS_MAIN_REPO != 'true' }} # can NOT use env here:
+    if: ${{ ! endsWith(github.repository, '/mtransit-for-android') }}
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
