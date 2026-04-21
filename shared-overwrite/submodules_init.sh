@@ -56,7 +56,7 @@ for SUBMODULE in "${SUBMODULES[@]}" ; do
 		echo "> Submodule does NOT exist '$SUBMODULE'!";
 		exit 1;
 	fi
-	git submodule update --init --recursive ${SUBMODULE};
+	git submodule update --init --recursive "${SUBMODULE}";
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "Error while update GIT submodule '$SUBMODULE'!";
