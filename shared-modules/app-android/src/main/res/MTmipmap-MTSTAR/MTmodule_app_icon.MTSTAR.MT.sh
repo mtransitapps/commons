@@ -125,8 +125,6 @@ for DENSITY in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
       exit 0; # compat w/ manually created file
     else
       echo ">> File '$FILE_PNG' already exist: overriding image... (MT_GENERATE_IMAGES=$MT_GENERATE_IMAGES)";
-      rm -f "${FILE_PNG}";
-      checkResult $?;
     fi
   fi
 done
