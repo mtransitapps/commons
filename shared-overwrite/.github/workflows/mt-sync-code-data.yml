@@ -165,7 +165,7 @@ jobs:
       - name: MT check if image generation required
         id: mt-check-image-gen-required
         continue-on-error: true
-        if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
+        if: ${{ env.MT_IS_MAIN_REPO != 'true' }}
         run: |
           RESULT=$(git status --porcelain -- "app-android/src/main/res/values/gtfs_rts_values_gen.xml" | wc -l)
           if [ "$RESULT" -gt 0 ]; then
