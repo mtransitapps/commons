@@ -34,13 +34,13 @@ fi
 CONFIG_DIR="${ROOT_DIR}/config";
 if [ ! -d "$CONFIG_DIR" ]; then
     echo "$CONFIG_DIR doesn't exist!";
-    exit 1;
+    [ -f "${FILE_1_PNG}" ] && exit 0 || exit 1;
 fi
 
 AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
-    exit 1;
+    [ -f "${FILE_1_PNG}" ] && exit 0 || exit 1;
 fi
 
 AGENCY_NAME_COUNT=$(grep -c ^ $AGENCY_NAME_FILE);
@@ -93,7 +93,7 @@ fi
 CITIES_FILE="${CONFIG_DIR}/cities";
 if [ ! -f "$CITIES_FILE" ]; then
     echo "$CITIES_FILE doesn't exist!";
-    exit 1;
+    [ -f "${FILE_1_PNG}" ] && exit 0 || exit 1;
 fi
 CITIES_LABEL=$(head -n 1 $CITIES_FILE);
 if [ -z "$CITIES_LABEL" ]; then
