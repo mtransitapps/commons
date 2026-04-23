@@ -153,6 +153,7 @@ android {
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdk = libs.versions.sdk.target.get().toInteger()
         buildConfigField "int", "TARGET_SDK_VERSION", "$targetSdkVersion.apiLevel"
+        buildConfigField "boolean", "GMA_NEXT_GEN", "${rootProject.gmaNextGen}"
 
         manifestPlaceholders.target_sdk_version = libs.versions.sdk.target.get()
         manifestPlaceholders.pkg_namespace = namespace
@@ -378,6 +379,11 @@ dependencies {
         ksp(libs.glide.ksp)
         implementation(platform(libs.firebase.bom))
         implementation(libs.bundles.gps)
+        if (rootProject.gmaNextGen) {
+            implementation(libs.gps.ads.nextgen)
+        } else {
+            implementation(libs.gps.ads)
+        }
         implementation(libs.bundles.billingClient)
         implementation(libs.play.review)
         implementation(libs.bundles.fb)
@@ -403,8 +409,7 @@ dependencies {
         implementation(libs.androidx.core)
     }
 }
-
-if (isMainApp) {
+if (isMainApp && rootProject.gmaNextGen) {
     configurations.configureEach {
         exclude group: "com.google.android.gms", module: "play-services-ads"
         exclude group: "com.google.android.gms", module: "play-services-ads-lite"
