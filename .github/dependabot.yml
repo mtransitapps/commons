@@ -25,7 +25,9 @@ updates:
     open-pull-requests-limit: 7
   # Gradle in /gradle/libs.versions.toml
   - package-ecosystem: "gradle"
-    directory: "/"
+    directories:
+      - "/"
+      - "/shared/settings.gradle"
     registries:
       - maven-google
     schedule:
