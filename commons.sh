@@ -209,7 +209,7 @@ function setGitProjectName() {
 }
 
 function setGitBranch() {
-	DEFAULT_GIT_BRANCH="master";
+	DEFAULT_GIT_BRANCH="${MT_DEFAULT_BRANCH_NAME:-master}";
 	GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
 	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 		GIT_BRANCH="";
@@ -221,13 +221,13 @@ function setGitBranch() {
 		fi
 	fi
 	if [[ -z "${GIT_BRANCH}" ]]; then
-		GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}; #TravicCI
+		GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}; #TravisCI
 		if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 			GIT_BRANCH="";
 		fi
 	fi
 	if [[ -z "${GIT_BRANCH}" ]]; then
-		GIT_BRANCH=${TRAVIS_BRANCH}; #TravicCI
+		GIT_BRANCH=${TRAVIS_BRANCH}; #TravisCI
 		if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 			GIT_BRANCH="";
 		fi

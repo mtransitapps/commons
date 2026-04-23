@@ -27,12 +27,16 @@ if [[ ${MT_GIT_COMMIT_ENABLED} != true && ${MT_GIT_COMMIT_DEPENDENCY_UPDATE_ENAB
 fi
 echo "> Git commit enabled ...";
 
-echo "--------------------------------------------------------------------------------";
+echo "> Fetching latest from submodules...";
 git submodule foreach git fetch -v --all;
+echo "> Fetching latest from submodules... DONE";
+
+echo "--------------------------------------------------------------------------------";
 git submodule foreach git branch -v -a;
+echo "--------------------------------------------------------------------------------";
+
 echo "> Switching to branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH')...";
 git submodule foreach "git switch $GIT_BRANCH || git switch $DEFAULT_GIT_BRANCH";
-# git submodule foreach git switch --guess $GIT_BRANCH; # EXPERIMENTAL
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
 	echo "> Error while switching to branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH') in submodules!";
@@ -42,14 +46,14 @@ echo "> Switching to branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH')... DONE";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
-echo "> Pulling latest from branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH')...";
-git submodule foreach "git pull -v --ff-only || git pull -v --ff-only";
+echo "> Pulling latest from submodules...";
+git submodule foreach "git pull -v --ff-only";
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
-	echo "> Error while pulling latest from '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH') in submodules!";
+	echo "> Error while pulling latest from submodules!";
 	exit ${RESULT};
 fi
-echo "> Pulling latest from branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH')... DONE";
+echo "> Pulling latest from submodules... DONE";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
