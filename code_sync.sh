@@ -28,10 +28,10 @@ fi
 echo "> Git commit enabled ...";
 
 echo "--------------------------------------------------------------------------------";
-echo "> Switching to branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH')...";
 git submodule foreach git fetch -v --all;
 git submodule foreach git branch -v -a;
-git submodule foreach 'git switch $GIT_BRANCH || git switch $DEFAULT_GIT_BRANCH';
+echo "> Switching to branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH')...";
+git submodule foreach "git switch $GIT_BRANCH || git switch $DEFAULT_GIT_BRANCH";
 # git submodule foreach git switch --guess $GIT_BRANCH; # EXPERIMENTAL
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
@@ -43,7 +43,7 @@ echo "--------------------------------------------------------------------------
 
 echo "--------------------------------------------------------------------------------";
 echo "> Pulling latest from branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH')...";
-git submodule foreach 'git pull -v --ff-only || git pull -v --ff-only';
+git submodule foreach "git pull -v --ff-only || git pull -v --ff-only";
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
 	echo "> Error while pulling latest from '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH') in submodules!";
