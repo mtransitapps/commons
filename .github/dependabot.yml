@@ -26,8 +26,8 @@ updates:
   # Gradle in /gradle/libs.versions.toml
   - package-ecosystem: "gradle"
     directories:
-      - "/"
-      - "/shared/settings.gradle"
+      - "/" # gradle/libs.versions.toml
+      - "/shared" # settings.gradle
     registries:
       - maven-google
     schedule:
