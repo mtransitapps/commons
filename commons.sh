@@ -209,6 +209,7 @@ function setGitProjectName() {
 }
 
 function setGitBranch() {
+	DEFAULT_GIT_BRANCH="master";
 	GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
 	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 		GIT_BRANCH="";
@@ -241,7 +242,7 @@ function setGitBranch() {
 		echo "GIT_BRANCH not found!";
 		exit 1;
 	fi
-	echo "GIT_BRANCH: $GIT_BRANCH.";
+	echo "GIT_BRANCH: $GIT_BRANCH. | DEFAULT_GIT_BRANCH: $DEFAULT_GIT_BRANCH.";
 }
 
 function printGitStatus() {
