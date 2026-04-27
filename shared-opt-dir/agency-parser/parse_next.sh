@@ -32,18 +32,18 @@ if [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then
 fi
 
 GTFS_DIR="input/gtfs_next";
-if ! [[ -e "input/gtfs_next" ]]; then
+if ! [[ -e "$FILE_PATH/input/gtfs_next" ]]; then
 	GTFS_DIR="input/gtfs";
 fi
-if ! [[ -e "${SCRIPT_DIR}/input/gtfs_next/agency.txt" ]]; then
+if ! [[ -e "$FILE_PATH/input/gtfs_next/agency.txt" ]]; then
 	GTFS_DIR="input/gtfs";
 fi
 
 ARGS="$GTFS_DIR unused next_ $GENERATE_STOP_TIMES_FROM_FREQUENCIES $URL";
 
 ${SCRIPT_DIR}/../gradlew run \
---args="${ARGS}" \
-${GRADLE_ARGS};
+  --args="${ARGS}" \
+  ${GRADLE_ARGS};
 RESULT=$?;
 
 echo ">> Parsing Next... DONE";
