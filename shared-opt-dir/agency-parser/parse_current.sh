@@ -29,8 +29,8 @@ GTFS_DIR="input/gtfs";
 ARGS="$GTFS_DIR unused current_ $GENERATE_STOP_TIMES_FROM_FREQUENCIES $URL";
 
 ${SCRIPT_DIR}/../gradlew run \
---args="${ARGS}" \
-${GRADLE_ARGS};
+  --args="${ARGS}" \
+  ${GRADLE_ARGS};
 RESULT=$?;
 
 echo ">> Parsing Current... DONE";
