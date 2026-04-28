@@ -18,7 +18,7 @@ echo "> Push to Store Production enabled...";
 
 setGitProjectName $SCRIPT_DIR/../;
 CONFIG_PATH="$SCRIPT_DIR/../config";
-if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
+if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
