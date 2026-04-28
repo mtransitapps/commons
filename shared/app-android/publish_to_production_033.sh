@@ -16,9 +16,9 @@ if [[ ${MT_PUSH_STORE_PRODUCTION_ENABLED} != true ]]; then
 fi
 echo "> Push to Store Production enabled...";
 
-setGitProjectName $SCRIPT_DIR/../;
+setGitProjectName "${SCRIPT_DIR}/../";
 CONFIG_PATH="$SCRIPT_DIR/../config";
-if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
+if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
@@ -27,4 +27,8 @@ if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
     exit 1; # error
 fi
 
-./publish.sh --track production --user-fraction 0.33 --release-status inProgress
+./publish.sh \
+  --track production \
+  --release-status inProgress --user-fraction 0.33 \
+;
+

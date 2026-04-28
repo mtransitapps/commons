@@ -11,9 +11,9 @@ if [[ ${MT_PUSH_STORE_ENABLED} != true ]]; then
 fi
 echo "> Push to Store enabled...";
 
-setGitProjectName $SCRIPT_DIR/../;
+setGitProjectName "${SCRIPT_DIR}/../";
 CONFIG_PATH="$SCRIPT_DIR/../config";
-if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
+if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
