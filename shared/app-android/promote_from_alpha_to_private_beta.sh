@@ -17,9 +17,9 @@ if [[ ${MT_PUSH_STORE_BETA_PRIVATE_ENABLED} != true ]]; then
 fi
 echo "> Push to Store Beta Private enabled...";
 
-setGitProjectName $SCRIPT_DIR/../;
+setGitProjectName "${SCRIPT_DIR}/../";
 CONFIG_PATH="$SCRIPT_DIR/../config";
-if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
+if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
@@ -28,4 +28,7 @@ if [[ ! -f "$CONFIG_PATH/store/beta-private" ]]; then
     exit 1; # error
 fi
 
-./promote.sh --from-track alpha --release-status completed;
+./promote.sh \
+  --from-track alpha \
+  --release-status completed \
+;

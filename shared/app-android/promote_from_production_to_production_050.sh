@@ -9,12 +9,12 @@ if [[ ${MT_PUSH_STORE_ENABLED} != true ]]; then
 fi
 echo "> Push to Store enabled...";
 
-setPushToStoreAlphaEnabled;
-if [[ ${MT_PUSH_STORE_ALPHA_ENABLED} != true ]]; then
-  echo "> Push to Store Alpha NOT enabled... SKIP ($MT_PUSH_STORE_ALPHA_ENABLED)";
+setPushToStoreProductionEnabled;
+if [[ ${MT_PUSH_STORE_PRODUCTION_ENABLED} != true ]]; then
+  echo "> Push to Store Production NOT enabled... SKIP ($MT_PUSH_STORE_PRODUCTION_ENABLED)";
   exit 1; # error
 fi
-echo "> Push to Store Alpha enabled...";
+echo "> Push to Store Production enabled...";
 
 setGitProjectName "${SCRIPT_DIR}/../";
 CONFIG_PATH="$SCRIPT_DIR/../config";
@@ -22,12 +22,13 @@ if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
-if [[ ! -f "$CONFIG_PATH/store/alpha" ]]; then
-    echo "> Publish to alpha NOT authorized!";
+if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
+    echo "> Publish production NOT authorized!";
     exit 1; # error
 fi
 
-./publish.sh \
-  --track alpha \
-  --release-status completed --user-fraction 1.00 \
+./promote.sh \
+  --from-track production --promote-track production \
+  --update production \
+  --release-status inProgress --user-fraction 0.50 \
 ;
