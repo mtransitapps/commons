@@ -9,9 +9,9 @@ if [[ ${MT_PUSH_STORE_ENABLED} != true ]]; then
 fi
 echo "> Push to Store enabled...";
 
-setGitProjectName $SCRIPT_DIR/../;
+setGitProjectName "${SCRIPT_DIR}/../";
 CONFIG_PATH="$SCRIPT_DIR/../config";
-if [[ $GIT_PROJECT_NAME == *"-gradle"* ]]; then # OLD REPO
+if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
@@ -20,4 +20,7 @@ if [[ ! -f "$CONFIG_PATH/store/internal" ]]; then
     exit 1; # error
 fi
 
-./publish.sh --track internal --user-fraction 1.0 --release-status completed
+./publish.sh \
+  --track internal \
+  --release-status completed --user-fraction 1.00 \
+;

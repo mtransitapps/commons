@@ -29,5 +29,6 @@ fi
 
 ./promote.sh \
   --from-track production --promote-track production \
-  --update production --release-status inProgress --user-fraction 0.50 \
+  --update production \
+  --release-status inProgress --user-fraction 0.50 \
 ;
