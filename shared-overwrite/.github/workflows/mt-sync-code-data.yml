@@ -149,14 +149,32 @@ jobs:
           echo "Schedule files deletion completed.";
 
       - name: MT parse current
+        id: mt-parse-current
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         timeout-minutes: 40
         run: ./parse_current.sh
 
+      - name: MT parse current failed - create issue
+        if: ${{ failure() && steps.mt-parse-current.outcome == 'failure' }}
+        uses: ./.github/actions/handle-parse-failure
+        with:
+          step-name: "MT parse current"
+          run-id: ${{ github.run_id }}
+          github-token: ${{ secrets.MT_PAT }}
+
       - name: MT parse next
+        id: mt-parse-next
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         timeout-minutes: 40
         run: ./parse_next.sh
+
+      - name: MT parse next failed - create issue
+        if: ${{ failure() && steps.mt-parse-next.outcome == 'failure' }}
+        uses: ./.github/actions/handle-parse-failure
+        with:
+          step-name: "MT parse next"
+          run-id: ${{ github.run_id }}
+          github-token: ${{ secrets.MT_PAT }}
 
       - name: MT parse list change
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
