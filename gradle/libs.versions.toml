@@ -20,7 +20,7 @@ kotlinx-coroutines = "1.10.2"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization = "1.11.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "7.2.3.7755"
+sonar = "7.3.0.8198"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "9.1.1"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
