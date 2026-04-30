@@ -481,7 +481,6 @@ def setupResValues(buildType, appId) {
         buildType.resValue("string", "one_bus_away_authority", "${appId}.oba")
         buildType.resValue("string", "strategic_mapping_authority", "${appId}.strategic_mapping")
 
-        buildType.resValue("string", "ca_edmonton_authority", "${appId}.etslive")
         buildType.resValue("string", "ca_ltconline_authority", "${appId}.ltconline")
         buildType.resValue("string", "ca_sto_authority", "${appId}.ca_sto")
         buildType.resValue("string", "ca_translink_authority", "${appId}.ca_translink")
