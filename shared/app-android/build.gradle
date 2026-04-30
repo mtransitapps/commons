@@ -469,6 +469,7 @@ def setupResValues(buildType, appId) {
             buildType.resValue("string", "poi_agency_authority", "@string/${poiAgencyTypePrefix}_authority")
             buildType.resValue("string", "poi_agency_color", "@string/${poiAgencyTypePrefix}_color")
             buildType.resValue("string", "poi_agency_short_name", "@string/${poiAgencyTypePrefix}_short_name")
+            buildType.resValue("string", "poi_agency_timezone", "@string/${poiAgencyTypePrefix}_timezone")
         } else {
             println "> Unexpected POI agency type!"
         }
