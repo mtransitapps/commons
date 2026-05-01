@@ -216,26 +216,6 @@ EOL
 EOL
 fi
 
-STRATEGIC_MAPPING_FILE="${VALUES_DIR}/strategic_mapping_values.xml";
-if [ -f "${STRATEGIC_MAPPING_FILE}" ]; then
-  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- STRATEGIC MAPPING PROVIDER -->
-        <provider
-            android:name="org.mtransit.android.commons.provider.StrategicMappingProvider"
-            android:authorities="@string/strategic_mapping_authority"
-            android:exported="true"
-            android:readPermission="\${permission_provider_read}"
-            tools:ignore="MissingRegistered">
-            <meta-data
-                android:name="@string/status_provider"
-                android:value="@string/status_provider" />
-            <meta-data
-                android:name="@string/status_provider_target"
-                android:value="@string/strategic_mapping_status_for_poi_authority" />
-        </provider>
-EOL
-fi
-
 CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE="${VALUES_DIR}/grand_river_transit_values.xml";
 if [ -f "${CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
