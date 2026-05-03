@@ -216,26 +216,6 @@ EOL
 EOL
 fi
 
-CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE="${VALUES_DIR}/grand_river_transit_values.xml";
-if [ -f "${CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE}" ]; then
-  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- GRAND RIVER TRANSIT PROVIDER -->
-        <provider
-            android:name="org.mtransit.android.commons.provider.GrandRiverTransitProvider"
-            android:authorities="@string/grand_river_transit_authority"
-            android:exported="true"
-            android:readPermission="\${permission_provider_read}"
-            tools:ignore="MissingRegistered">
-            <meta-data
-                android:name="@string/status_provider"
-                android:value="@string/status_provider" />
-            <meta-data
-                android:name="@string/status_provider_target"
-                android:value="@string/grand_river_transit_status_for_poi_authority" />
-        </provider>
-EOL
-fi
-
 CA_MONTREAL_STM_INFO_PROVIDER_FILE="${VALUES_DIR}/stm_info_api_values.xml";
 if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
