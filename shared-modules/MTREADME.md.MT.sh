@@ -148,7 +148,7 @@ Learn more about the BETA program [here](https://github.com/mtransitapps/mtransi
 
 ## License
 
-* [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+* [Apache Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 EOL
 
 if [[ ${IS_CI} = true ]]; then
