@@ -116,7 +116,7 @@ if [ -f "$AGENCY_TYPE_FILE" ]; then
 fi
 
 AGENCY_LABEL=$AGENCY_NAME_SHORT;
-if [ -n "$AGENCY_LOCATION_SHORT" ]; then
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* ]]; then
   AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
 fi
 
@@ -148,6 +148,10 @@ if [ -f "${GTFS_RT_FILE}" ]; then
       SHORT_DESC="${SHORT_DESC} Departures.";
     fi
   fi
+fi
+STM_INFO_VALUES_FILE="${VALUES_DIR}/stm_info_values.xml";
+if [ -f "${STM_INFO_VALUES_FILE}" ]; then
+  SHORT_DESC="${SHORT_DESC} Service Updates.";
 fi
 # TODO: support other real-time providers
 

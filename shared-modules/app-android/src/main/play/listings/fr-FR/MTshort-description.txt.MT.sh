@@ -118,7 +118,7 @@ else
 fi
 
 AGENCY_LABEL=$AGENCY_NAME_SHORT;
-if [ -n "$AGENCY_LOCATION_SHORT" ]; then
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* ]]; then
   AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
 
@@ -150,6 +150,10 @@ if [ -f "${GTFS_RT_FILE}" ]; then
       SHORT_DESC="${SHORT_DESC} Départs.";
     fi
   fi
+fi
+STM_INFO_VALUES_FILE="${VALUES_DIR}/stm_info_values.xml";
+if [ -f "${STM_INFO_VALUES_FILE}" ]; then
+  SHORT_DESC="${SHORT_DESC} État de service.";
 fi
 # TODO: support other real-time providers
 
