@@ -76,8 +76,8 @@ if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
     fi
 fi
 
-if [ -n "$AGENCY_LOCATION_SHORT" ]; then
-  AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* ]]; then
+  AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL";
 fi
 
 GIT_OWNER="mtransitapps"; #TODO extract from GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.

@@ -10,8 +10,6 @@ setGitProjectName;
 
 setIsCI;
 
-echo ">> Generating fr-FR/full-description.txt...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -24,6 +22,8 @@ if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
     echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
+
+echo ">> Generating fr-FR/full-description.txt...";
 
 FULL_DESCRIPTION_FILE="${FR_FR_DIR}/full-description.txt";
 mkdir -p "${FR_FR_DIR}";
@@ -86,7 +86,7 @@ if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
     fi
 fi
 
-if [ -n "$AGENCY_LOCATION_SHORT" ]; then
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* ]]; then
   AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
 
@@ -226,7 +226,7 @@ if [ -z "$TYPE" ]; then
 fi
 TYPE_LABEL="";
 if [ "$TYPE" -eq 0 ]; then # LIGHT_RAIL
-    TYPE_LABEL="trains léger"; # TODO?
+    TYPE_LABEL="trains légers"; # TODO?
 elif [ "$TYPE" -eq 1 ]; then # SUBWAY
     TYPE_LABEL="métros";
 elif [ "$TYPE" -eq 2 ]; then # TRAIN
@@ -255,7 +255,7 @@ if [ -f "$BIKE_STATION_VALUES_FILE" ]; then
 fi
 GTFS_RDS_VALUES_FILE="${VALUES_DIR}/gtfs_rts_values.xml"; # do not change to avoid breaking compat w/ old modules
 if [ -f "$GTFS_RDS_VALUES_FILE" ]; then
-  PROVIDES_LINE="${PROVIDES_LINE} les horaires (accessible hors-ligne)";
+  PROVIDES_LINE="${PROVIDES_LINE} l'horaire (accessible hors-ligne)";
   if [ -n "$INFORMATION_LIST" ]; then
     INFORMATION_LIST="${INFORMATION_LIST},";
   fi
@@ -384,7 +384,7 @@ Cette application ajoute les informations des $TYPE_LABEL $AGENCY_LABEL à MonTr
 
 $PROVIDES_LINE.
 
-Les $TYPE_LABEL de $AGENCY_NAME_SHORT $OPERATE_IN $LOCATION_LABEL.
+Les $TYPE_LABEL $AGENCY_NAME_SHORT $OPERATE_IN $LOCATION_LABEL.
 
 Une fois cette application installée, l'application MonTransit affichera les informations des $TYPE_LABEL ($INFORMATION_LIST...).
 
@@ -398,7 +398,7 @@ $SOURCE_URL
 Cette application est gratuite et open-source :
 $CONTACT_WEBSITE_URL
 
-Cette application n'est pas associée à $NOT_RELATED_WITH.
+Cette application n'est pas associée à : $NOT_RELATED_WITH.
 EOL
 
 PERMISSIONS_LINE="";

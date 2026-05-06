@@ -7,8 +7,6 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo ">> Generating fr-FR/title.txt...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -21,6 +19,8 @@ if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
     echo ">> Generating fr-FR/title.txt... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
+
+echo ">> Generating fr-FR/title.txt...";
 
 TITLE_FILE="${FR_FR_DIR}/title.txt";
 mkdir -p "${FR_FR_DIR}";
@@ -122,7 +122,7 @@ AGENCY_LABEL=$AGENCY_NAME_SHORT;
 
 AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH=$((${#AGENCY_LABEL} + ${#AGENCY_LOCATION_SHORT}));
 
-if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH" -lt "$MAX_LENGTH" ]]; then
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* && "$AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH" -lt "$MAX_LENGTH" ]]; then
   AGENCY_LABEL="$AGENCY_LABEL $AGENCY_LOCATION_SHORT"
 fi
 

@@ -8,8 +8,6 @@ source ${COMMONS_DIR}/feature_flags.sh;
 
 setIsCI;
 
-echo ">> Generating fr-FR/short-description.txt...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -22,6 +20,8 @@ if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
     echo ">> Generating fr-FR/short-description.txt... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
+
+echo ">> Generating fr-FR/short-description.txt...";
 
 SHORT_DESCRIPTION_FILE="${FR_FR_DIR}/short-description.txt";
 mkdir -p "${FR_FR_DIR}";
@@ -118,7 +118,7 @@ else
 fi
 
 AGENCY_LABEL=$AGENCY_NAME_SHORT;
-if [ -n "$AGENCY_LOCATION_SHORT" ]; then
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* ]]; then
   AGENCY_LABEL="$AGENCY_LABEL de $AGENCY_LOCATION_SHORT"
 fi
 
@@ -150,6 +150,10 @@ if [ -f "${GTFS_RT_FILE}" ]; then
       SHORT_DESC="${SHORT_DESC} Départs.";
     fi
   fi
+fi
+STM_INFO_VALUES_FILE="${VALUES_DIR}/stm_info_values.xml";
+if [ -f "${STM_INFO_VALUES_FILE}" ]; then
+  SHORT_DESC="${SHORT_DESC} État de service.";
 fi
 # TODO: support other real-time providers
 
