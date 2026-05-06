@@ -9,8 +9,6 @@ setGitProjectName;
 
 setIsCI;
 
-echo ">> Generating values-fr/bike_station_strings.xml...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -28,6 +26,8 @@ if [ ! -f "${BIKE_STATION_VALUES_FILE}" ]; then
     echo ">> Generating values-fr/bike_station_strings.xml... SKIP (not an Bike station agency)";
     exit 0; # ok
 fi
+
+echo ">> Generating values-fr/bike_station_strings.xml...";
 
 BIKE_STATION_STRINGS_FILE="${VALUES_FR_DIR}/bike_station_strings.xml";
 mkdir -p "${VALUES_FR_DIR}";

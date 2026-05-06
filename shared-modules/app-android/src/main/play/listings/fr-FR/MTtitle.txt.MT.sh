@@ -7,8 +7,6 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo ">> Generating fr-FR/title.txt...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -21,6 +19,8 @@ if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
     echo ">> Generating fr-FR/title.txt... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
+
+echo ">> Generating fr-FR/title.txt...";
 
 TITLE_FILE="${FR_FR_DIR}/title.txt";
 mkdir -p "${FR_FR_DIR}";

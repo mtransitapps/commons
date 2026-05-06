@@ -10,8 +10,6 @@ setGitProjectName;
 
 setIsCI;
 
-echo ">> Generating fr-FR/full-description.txt...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -24,6 +22,8 @@ if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
     echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
+
+echo ">> Generating fr-FR/full-description.txt...";
 
 FULL_DESCRIPTION_FILE="${FR_FR_DIR}/full-description.txt";
 mkdir -p "${FR_FR_DIR}";

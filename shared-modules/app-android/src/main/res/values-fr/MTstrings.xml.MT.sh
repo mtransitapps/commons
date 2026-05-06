@@ -9,8 +9,6 @@ setGitProjectName;
 
 setIsCI;
 
-echo ">> Generating values-fr/strings.xml...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -22,6 +20,8 @@ if [[ ! -f "$LANG_FR_FILE" && ! -d "$VALUES_FR_DIR" ]]; then
     echo ">> Generating values-fr/strings.xml... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
+
+echo ">> Generating values-fr/strings.xml...";
 
 STRINGS_FILE="${VALUES_FR_DIR}/strings.xml";
 mkdir -p "${VALUES_FR_DIR}";
@@ -135,7 +135,7 @@ else
 fi
 
 LOCATION_LABEL="";
-if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* ]]; then
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_NAME_SHORT" != *"$AGENCY_LOCATION_SHORT"* ]]; then
     LOCATION_LABEL="$AGENCY_LOCATION_SHORT";
 elif [ -n "$STATE_LABEL_LONG" ]; then
     LOCATION_LABEL="$STATE_LABEL_LONG";
