@@ -88,7 +88,7 @@ androidx.vectordrawable:vectordrawable:1.2.0
 androidx.versionedparcelable:versionedparcelable:1.1.1
 androidx.viewpager2:viewpager2:1.1.0
 androidx.viewpager:viewpager:1.0.0
-androidx.webkit:webkit:1.15.0
+androidx.webkit:webkit:1.16.0
 androidx.work:work-runtime:2.7.0
 com.android.billingclient:billing-ktx:8.3.0
 com.android.billingclient:billing:8.3.0
