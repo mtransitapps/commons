@@ -13,7 +13,6 @@ APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
 RES_DIR="${MAIN_DIR}/res";
-VALUES_DIR="${RES_DIR}/values";
 VALUES_FR_DIR="${RES_DIR}/values-fr";
 
 LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
