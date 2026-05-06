@@ -83,7 +83,7 @@ if [ -z "$TYPE" ]; then
 fi
 TYPE_LABEL="";
 if [ "$TYPE" -eq 0 ]; then # LIGHT_RAIL
-    TYPE_LABEL="trains léger"; # TODO?
+    TYPE_LABEL="trains légers"; # TODO?
 elif [ "$TYPE" -eq 1 ]; then # SUBWAY
     TYPE_LABEL="métros";
 elif [ "$TYPE" -eq 2 ]; then # TRAIN
