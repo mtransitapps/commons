@@ -149,8 +149,17 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     fi
   fi
 fi
-STM_INFO_VALUES_FILE="${VALUES_DIR}/stm_info_values.xml";
-if [ -f "${STM_INFO_VALUES_FILE}" ]; then
+CA_MONTREAL_STM_INFO_PROVIDER_FILE="${VALUES_DIR}/stm_info_api_values.xml";
+if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
+  if grep -q "<bool name=\"stm_info_api_status_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
+    SHORT_DESC="${SHORT_DESC} Departures.";
+  fi
+  if grep -q "<bool name=\"stm_info_api_service_update_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
+    SHORT_DESC="${SHORT_DESC} Alerts.";
+  fi
+fi
+CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${VALUES_DIR}/stm_info_values.xml";
+if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
   SHORT_DESC="${SHORT_DESC} Service Updates.";
 fi
 # TODO: support other real-time providers
