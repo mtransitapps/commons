@@ -45,20 +45,6 @@ jobs:
           token: ${{ secrets.MT_PAT }}
           fetch-depth: 0 # fetch all (not required util release build)
 
-      - name: MT open draft PR (on config/input_url push)
-        if: github.event_name == 'push'
-        continue-on-error: true
-        run: |
-          gh pr create \
-            --draft \
-            --title "Update config/input_url" \
-            --body "Automatically opened draft PR triggered by change to \`config/input_url\`." \
-            --base "${{ env.MT_DEFAULT_BRANCH_NAME }}" \
-            --head "${{ env.MT_BRANCH_NAME }}" \
-          || echo ">> Draft PR already exists or could not be created."
-        env:
-          GH_TOKEN: ${{ secrets.MT_PAT }}
-
       - name: Check if config/input_url file exists
         id: check-input-url
         run: |
