@@ -328,9 +328,9 @@ fi
 
 setFeatureFlags;
 
+RT_PARTS=()
 GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
-  RT_PARTS=()
   if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
     if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
       RT_PARTS+=(" next departures")
@@ -344,16 +344,30 @@ if [ -f "${GTFS_RT_FILE}" ]; then
       RT_PARTS+=(" vehicle locations")
     fi
   fi
-  OLD_IFS=$IFS; IFS=","
-  RT_LINE="${RT_PARTS[*]}"
-  IFS=$OLD_IFS
-  if [ -n "$RT_LINE" ]; then
-    RT_LINE=" real-time${RT_LINE}";
-    if [ -z "$PROVIDES_LINE_END" ]; then
-      PROVIDES_LINE_END=" and${RT_LINE}${PROVIDES_LINE_END}";
-    else
-      PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
-    fi
+fi
+CA_MONTREAL_STM_INFO_PROVIDER_FILE="${VALUES_DIR}/stm_info_api_values.xml";
+if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
+  if grep -q "<bool name=\"stm_info_api_status_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
+    RT_PARTS+=(" next departures")
+  fi
+  if grep -q "<bool name=\"stm_info_api_service_update_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
+    RT_PARTS+=(" service alerts")
+  fi
+fi
+CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${VALUES_DIR}/stm_info_values.xml";
+if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
+  RT_PARTS+=(" service updates")
+fi
+# TODO: support other real-time providers
+OLD_IFS=$IFS; IFS=","
+RT_LINE="${RT_PARTS[*]}"
+IFS=$OLD_IFS
+if [ -n "$RT_LINE" ]; then
+  RT_LINE=" real-time${RT_LINE}";
+  if [ -z "$PROVIDES_LINE_END" ]; then
+    PROVIDES_LINE_END=" and${RT_LINE}${PROVIDES_LINE_END}";
+  else
+    PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
   fi
 fi
 
@@ -380,7 +394,7 @@ Once this application is installed, the MonTransit app will display $TYPE_LABEL 
 
 This application only has a temporary icon: download the MonTransit app (free) in the "More ..." section below or by following this Google Play link https://bit.ly/MonTransitPlay
 
-You can install this application on the SD card but it is not recommended.
+You can install this application on the SD card, but it is not recommended.
 
 The information comes from the data published by $SOURCE_PROVIDER:
 $SOURCE_URL
