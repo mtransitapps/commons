@@ -2,6 +2,8 @@
 name: MT download data
 on:
   push:
+    branches: # ignore all tags
+      - '**' # all branches
     paths:
       - 'config/input_url'
       - 'config/input_url_next'
