@@ -22,13 +22,13 @@ if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
-if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
-    echo "> Publish production NOT authorized!";
+if [[ ! -f "$CONFIG_PATH/store/alpha" ]]; then
+    echo "> Publish to alpha NOT authorized!";
     exit 1; # error
 fi
 
 ./promote.sh \
-  --from-track production --promote-track production \
-  --update production \
+  --promote-track production \
   --release-status inProgress --user-fraction 0.50 \
+  --from-track internal \
 ;

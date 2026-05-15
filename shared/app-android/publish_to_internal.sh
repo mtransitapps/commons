@@ -9,6 +9,13 @@ if [[ ${MT_PUSH_STORE_ENABLED} != true ]]; then
 fi
 echo "> Push to Store enabled...";
 
+setPushToStoreInternalEnabled;
+if [[ ${MT_PUSH_STORE_INTERNAL_ENABLED} != true ]]; then
+  echo "> Push to Store Internal NOT enabled... SKIP ($MT_PUSH_STORE_INTERNAL_ENABLED)";
+  exit 1; # error
+fi
+echo "> Push to Store Internal enabled...";
+
 setGitProjectName "${SCRIPT_DIR}/../";
 CONFIG_PATH="$SCRIPT_DIR/../config";
 if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
