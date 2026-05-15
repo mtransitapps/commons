@@ -22,8 +22,8 @@ if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
-if [[ ! -f "$CONFIG_PATH/store/alpha" ]]; then
-    echo "> Publish to alpha NOT authorized!";
+if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
+    echo "> Publish to production NOT authorized!";
     exit 1; # error
 fi
 

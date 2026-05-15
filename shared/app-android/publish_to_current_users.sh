@@ -99,7 +99,7 @@ elif [[ -f "$CONFIG_PATH/store/alpha" ]]; then
     echo "> Current users == alpha.";
     $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
   fi
-else if [[ -f "$CONFIG_PATH/store/internal" ]]; then
+elif [[ -f "$CONFIG_PATH/store/internal" ]]; then
     echo "> Current users == internal.";
     $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
 else # no internal, no alpha, no private beta, no production
