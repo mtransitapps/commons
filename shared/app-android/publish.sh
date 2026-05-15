@@ -27,7 +27,7 @@ checkResult $?;
 
 setGradleArgs;
 
-/${SCRIPT_DIR}/../gradlew publishReleaseBundle --no-scan ${@}; # no ${GRADLE_ARGS} for release
+${SCRIPT_DIR}/../gradlew publishReleaseBundle --no-scan ${@}; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
 ./${SCRIPT_DIR}/keys_cleanup.sh;
