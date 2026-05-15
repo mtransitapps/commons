@@ -17,94 +17,42 @@ if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
-# TODO sequential algo from internal to production, with checks at each step (alpha, private beta, production) and publish to the track if it exists in config (if not, skip to next track), first track publish and other track promote
-if [[ -f "$CONFIG_PATH/store/production" ]]; then
-  if [[ -f "$CONFIG_PATH/store/beta-private" ]]; then
-    if [[ -f "$CONFIG_PATH/store/alpha" ]]; then
-      if [[ -f "$CONFIG_PATH/store/internal" ]]; then
-        echo "> Current users == internal + alpha + private-beta + production.";
-        $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_internal_to_alpha.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_private_beta_to_production_100.sh || exit 1; #error
-      else # no internal
-        echo "> Current users == alpha + private-beta + production.";
-        $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_private_beta_to_production_100.sh || exit 1; #error
-      fi
-    else # no alpha
-      if [[ -f "$CONFIG_PATH/store/internal" ]]; then
-        echo "> Current users == internal + private-beta + production.";
-        $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_internal_to_private_beta.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_private_beta_to_production_100.sh || exit 1; #error
-      else # no internal
-        echo "> Current users == private-beta + production.";
-        $SCRIPT_DIR/publish_to_private_beta.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_private_beta_to_production_100.sh || exit 1; #error
-      fi
-    fi
-  else # no private beta
-    if [[ -f "$CONFIG_PATH/store/alpha" ]]; then
-      if [[ -f "$CONFIG_PATH/store/internal" ]]; then
-        echo "> Current users == internal + alpha + production.";
-        $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_internal_to_alpha.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_alpha_to_production_100.sh || exit 1; #error
-      else # no internal
-        echo "> Current users == alpha + production.";
-        $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_alpha_to_production_100.sh || exit 1; #error
-      fi
-    else # no alpha
-      if [[ -f "$CONFIG_PATH/store/internal" ]]; then
-        echo "> Current users == internal + production.";
-        $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
-        $SCRIPT_DIR/promote_from_internal_to_production_100.sh || exit 1; #error
-      else # no internal
-        echo "> Current users == production.";
-        $SCRIPT_DIR/publish_to_production_100.sh || exit 1; #error
-      fi
-    fi
+trackScriptName() {
+  case "$1" in
+    beta-private) echo "private_beta";;
+    *) echo "$1";;
+  esac
+}
+
+TRACKS=(internal alpha beta-private production)
+CURRENT_USER_TRACKS=()
+for track in "${TRACKS[@]}"; do
+  if [[ -f "$CONFIG_PATH/store/$track" ]]; then
+    CURRENT_USER_TRACKS+=("$track")
   fi
-elif [[ -f "$CONFIG_PATH/store/beta-private" ]]; then
-  if [[ -f "$CONFIG_PATH/store/alpha" ]]; then
-    if [[ -f "$CONFIG_PATH/store/internal" ]]; then
-      echo "> Current users == internal + alpha + private-beta.";
-      $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
-      $SCRIPT_DIR/promote_from_internal_to_alpha.sh || exit 1; #error
-      $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit 1; #error
-    else # no internal
-      echo "> Current users == alpha + private-beta.";
-      $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
-      $SCRIPT_DIR/promote_from_alpha_to_private_beta.sh || exit 1; #error
-    fi
-  else # no alpha
-    if [[ -f "$CONFIG_PATH/store/internal" ]]; then
-      echo "> Current users == internal + private-beta.";
-      $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
-      $SCRIPT_DIR/promote_from_internal_to_private_beta.sh || exit 1; #error
-    else # no internal
-      echo "> Current users == private-beta.";
-      $SCRIPT_DIR/publish_to_private_beta.sh || exit 1; #error
-    fi
-  fi
-elif [[ -f "$CONFIG_PATH/store/alpha" ]]; then
-  if [[ -f "$CONFIG_PATH/store/internal" ]]; then
-    echo "> Current users == internal + alpha.";
-    $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
-    $SCRIPT_DIR/promote_from_internal_to_alpha.sh || exit 1; #error
-  else # no internal
-    echo "> Current users == alpha.";
-    $SCRIPT_DIR/publish_to_alpha.sh || exit 1; #error
-  fi
-elif [[ -f "$CONFIG_PATH/store/internal" ]]; then
-    echo "> Current users == internal.";
-    $SCRIPT_DIR/publish_to_internal.sh || exit 1; #error
-else # no internal, no alpha, no private beta, no production
+done
+
+if [[ ${#CURRENT_USER_TRACKS[@]} -eq 0 ]]; then # no internal, no alpha, no private beta, no production
   echo "> Push to Store NOT enabled... SKIP (no current users)";
   exit 0 # success
 fi
+
+echo "> Current users == $(IFS=' + '; echo "${CURRENT_USER_TRACKS[*]}").";
+FIRST_TRACK_SCRIPT_NAME="$(trackScriptName "${CURRENT_USER_TRACKS[0]}")"
+if [[ "${CURRENT_USER_TRACKS[0]}" == "production" ]]; then
+  "$SCRIPT_DIR"/publish_to_"${FIRST_TRACK_SCRIPT_NAME}"_100.sh || exit 1; #error
+else
+  "$SCRIPT_DIR"/publish_to_"${FIRST_TRACK_SCRIPT_NAME}".sh || exit 1; #error
+fi
+
+for (( i=1; i<${#CURRENT_USER_TRACKS[@]}; i++ )); do
+  PREVIOUS_TRACK_SCRIPT_NAME="$(trackScriptName "${CURRENT_USER_TRACKS[$((i-1))]}")"
+  CURRENT_TRACK_SCRIPT_NAME="$(trackScriptName "${CURRENT_USER_TRACKS[$i]}")"
+  if [[ "${CURRENT_USER_TRACKS[$i]}" == "production" ]]; then
+    "$SCRIPT_DIR"/promote_from_"${PREVIOUS_TRACK_SCRIPT_NAME}"_to_"${CURRENT_TRACK_SCRIPT_NAME}"_100.sh || exit 1; #error
+  else
+    "$SCRIPT_DIR"/promote_from_"${PREVIOUS_TRACK_SCRIPT_NAME}"_to_"${CURRENT_TRACK_SCRIPT_NAME}".sh || exit 1; #error
+  fi
+done
 
 echo ">> Publishing to all current users... DONE";
