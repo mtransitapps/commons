@@ -150,7 +150,7 @@ jobs:
       - name: MT Create pull request (if necessary)
         if: ${{ steps.mt-commit-changes.outcome == 'success' && steps.mt-check-pr-exists.outcome == 'failure' }}
         run: |
-          gh pr create --fill --assignee montransit
+          gh pr create --base "${MT_BRANCH_NAME}" --fill --assignee montransit
           gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
