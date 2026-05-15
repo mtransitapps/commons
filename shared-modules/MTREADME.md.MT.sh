@@ -150,7 +150,7 @@ else
   STORE_SECTION=$(cat <<EOL
 ## Coming soon...
 
-Currently being setup and tested before initial release.
+Currently being set up and tested before initial release.
 EOL
 )
 fi
