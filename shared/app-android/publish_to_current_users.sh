@@ -37,7 +37,11 @@ if [[ ${#CURRENT_USER_TRACKS[@]} -eq 0 ]]; then # no internal, no alpha, no priv
   exit 0 # success
 fi
 
-echo "> Current users == $(IFS=' + '; echo "${CURRENT_USER_TRACKS[*]}").";
+TRACKS_STR="${CURRENT_USER_TRACKS[0]}"
+for (( i=1; i<${#CURRENT_USER_TRACKS[@]}; i++ )); do
+  TRACKS_STR+=" + ${CURRENT_USER_TRACKS[$i]}"
+done
+echo "> Current users == ${TRACKS_STR}.";
 FIRST_TRACK_SCRIPT_NAME="$(trackScriptName "${CURRENT_USER_TRACKS[0]}")"
 if [[ "${CURRENT_USER_TRACKS[0]}" == "production" ]]; then
   "$SCRIPT_DIR"/publish_to_"${FIRST_TRACK_SCRIPT_NAME}"_100.sh || exit 1; #error
