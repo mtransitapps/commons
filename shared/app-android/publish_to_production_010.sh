@@ -27,7 +27,7 @@ if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
     exit 1; # error
 fi
 
-./${SCRIPT_DIR}/publish.sh \
+${SCRIPT_DIR}/publish.sh \
   --track production \
   --release-status inProgress --user-fraction 0.10 \
 ;

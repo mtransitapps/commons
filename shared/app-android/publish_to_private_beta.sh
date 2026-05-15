@@ -28,6 +28,6 @@ if [[ ! -f "$CONFIG_PATH/store/beta-private" ]]; then
     exit 1; # error
 fi
 
-./${SCRIPT_DIR}/publish.sh \
+${SCRIPT_DIR}/publish.sh \
   --release-status completed --user-fraction 1.00 \
 ; # --track "Beta (Private)" # default from build.gradle

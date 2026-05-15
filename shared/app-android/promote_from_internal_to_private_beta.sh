@@ -28,7 +28,7 @@ if [[ ! -f "$CONFIG_PATH/store/beta-private" ]]; then
     exit 1; # error
 fi
 
-./${SCRIPT_DIR}/promote.sh \
+${SCRIPT_DIR}/promote.sh \
   --from-track internal \
   --release-status completed \
 ;

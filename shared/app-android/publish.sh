@@ -22,7 +22,7 @@ if [[ $# -eq 0 ]]; then
 	exit 1;
 fi
 
-./${SCRIPT_DIR}/keys_setup.sh;
+${SCRIPT_DIR}/keys_setup.sh;
 checkResult $?;
 
 setGradleArgs;
@@ -30,7 +30,7 @@ setGradleArgs;
 ${SCRIPT_DIR}/../gradlew publishReleaseBundle --no-scan ${@}; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
-./${SCRIPT_DIR}/keys_cleanup.sh;
+${SCRIPT_DIR}/keys_cleanup.sh;
 checkResult $?;
 
 checkResult $COMMAND_RESULT; # check command result after keys cleanup
