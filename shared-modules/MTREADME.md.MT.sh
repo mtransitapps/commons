@@ -143,7 +143,7 @@ elif [[ -f "$STORE_BETA_PRIVATE_FILE" ]]; then
 
 [Join the Private Beta](https://play.google.com/apps/testing/$PKG)
 
-Learn more about the private beta program [here](https://github.com/mtransitapps/mtransit-for-android/wiki/Beta)
+Learn more about the [private beta program](https://github.com/mtransitapps/mtransit-for-android/wiki/Beta).
 EOL
 )
 else
