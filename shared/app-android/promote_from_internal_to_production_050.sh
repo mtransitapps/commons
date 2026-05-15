@@ -27,7 +27,6 @@ if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
     exit 1; # error
 fi
 
-
 ./promote.sh \
   --promote-track production \
   --release-status inProgress --user-fraction 0.50 \
