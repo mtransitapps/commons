@@ -29,6 +29,6 @@ if [[ ! -f "$CONFIG_PATH/store/beta-private" ]]; then
 fi
 
 ${SCRIPT_DIR}/promote.sh \
-  --from-track alpha \
+  --from-track internal \
   --release-status completed \
 ;

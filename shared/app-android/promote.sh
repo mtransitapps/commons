@@ -1,5 +1,6 @@
 #!/bin/bash
-source ../commons/commons.sh
+SCRIPT_DIR="$(dirname "$0")";
+source "${SCRIPT_DIR}"/../commons/commons.sh
 echo ">> Promote '${@}'...";
 
 setPushToStoreEnabled;
@@ -15,28 +16,20 @@ echo "> Push to Store enabled ...";
 # Use --no-commit to do a dry-run
 # gradlew help --task promoteReleaseArtifact
 
-CURRENT_DIRECTORY_PATH="$(realpath "$PWD")";
-SCRIPT_DIRECTORY_PATH="$(realpath $(dirname "$0"))";
-
-if [[ "${CURRENT_DIRECTORY_PATH}" != "${SCRIPT_DIRECTORY_PATH}" ]]; then
-	echo ">> Script needs to be executed from '$SCRIPT_DIRECTORY_PATH' instead of '${CURRENT_DIRECTORY_PATH}'!";
-	exit 1;
-fi
-
 if [[ $# -eq 0 ]]; then
     echo ">> Invalid number of arguments!"
 	exit 1;
 fi
 
-./keys_setup.sh;
+${SCRIPT_DIR}/keys_setup.sh;
 checkResult $?;
 
 setGradleArgs;
 
-../gradlew promoteReleaseArtifact --no-scan ${@}; # no ${GRADLE_ARGS} for release
+${SCRIPT_DIR}/../gradlew promoteReleaseArtifact --no-scan ${@}; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
-./keys_cleanup.sh;
+${SCRIPT_DIR}/keys_cleanup.sh;
 checkResult $?;
 
 checkResult $COMMAND_RESULT; # check command result after keys cleanup

@@ -32,7 +32,7 @@ for FILE in "${FILES[@]}" ; do
 		fi
 	fi
 
-	./${SCRIPT_DIR}/encrypt_file.sh ${FILE_PATH} ${FILE_ENC};
+	${SCRIPT_DIR}/encrypt_file.sh ${FILE_PATH} ${FILE_ENC};
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "Error while encrypting file '${FILE_PATH}' to '$FILE_ENC'!";

@@ -87,7 +87,7 @@ for FILE in "${FILES[@]}" ; do
 
 	FILE_ENC="${SCRIPT_DIR}/enc/${FILE}";
 
-	./${SCRIPT_DIR}/decrypt_file.sh ${FILE_ENC} ${FILE_PATH} "quiet";
+	${SCRIPT_DIR}/decrypt_file.sh ${FILE_ENC} ${FILE_PATH} "quiet";
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo " ERROR! while decrypting '$FILE_ENC'!";

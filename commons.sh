@@ -101,6 +101,32 @@ function setPushToStoreEnabled() {
 	fi
 }
 
+function setPushToStoreInternalEnabled() {
+	MT_PUSH_STORE_INTERNAL_ENABLED="false";
+
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		echo "MT_ORG_STORE_INTERNAL_ON: '$MT_ORG_STORE_INTERNAL_ON'." # allowed
+		echo "MT_ORG_STORE_INTERNAL_OFF: '$MT_ORG_STORE_INTERNAL_OFF'." # forbidden
+		echo "MT_STORE_INTERNAL_ON: '$MT_STORE_INTERNAL_ON'." # allowed
+		echo "MT_STORE_INTERNAL_OFF: '$MT_STORE_INTERNAL_OFF'." # forbidden
+	fi
+
+	if [[ ${MT_ORG_STORE_INTERNAL_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Internal disabled (org).. SKIP";
+		MT_PUSH_STORE_INTERNAL_ENABLED="false";
+	elif [[ ${MT_STORE_INTERNAL_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Internal disabled (project).. SKIP";
+		MT_PUSH_STORE_INTERNAL_ENABLED="false";
+	elif [[ ${MT_ORG_STORE_INTERNAL_ON} != "mt_true" && $MT_STORE_INTERNAL_ON != "mt_true" ]]; then
+		echo "> Push to Store Internal NOT enabled (org:'$MT_ORG_STORE_INTERNAL_ON'|project:'$MT_STORE_INTERNAL_ON').. SKIP";
+		MT_PUSH_STORE_INTERNAL_ENABLED="false";
+	else
+		echo "> Push to Store Internal enabled (org:'$MT_ORG_STORE_INTERNAL_ON'|project:'$MT_STORE_INTERNAL_ON')";
+		MT_PUSH_STORE_INTERNAL_ENABLED="true";
+	fi
+}
+
 function setPushToStoreAlphaEnabled() {
 	MT_PUSH_STORE_ALPHA_ENABLED="false";
 
