@@ -27,7 +27,7 @@ if [[ ! -f "$CONFIG_PATH/store/internal" ]]; then
     exit 1; # error
 fi
 
-./publish.sh \
+./${SCRIPT_DIR}/publish.sh \
   --track internal \
   --release-status completed --user-fraction 1.00 \
 ;

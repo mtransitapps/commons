@@ -27,7 +27,7 @@ if [[ ! -f "$CONFIG_PATH/store/alpha" ]]; then
     exit 1; # error
 fi
 
-./promote.sh \
+./${SCRIPT_DIR}/promote.sh \
   --from-track internal --promote-track alpha \
   --release-status completed \
 ;

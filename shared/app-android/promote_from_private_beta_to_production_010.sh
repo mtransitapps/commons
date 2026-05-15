@@ -28,7 +28,7 @@ if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
     exit 1; # error
 fi
 
-./promote.sh \
+./${SCRIPT_DIR}/promote.sh \
   --promote-track production \
   --release-status inProgress --user-fraction 0.10 \
 ; # --from-track "Beta (Private)" # default from build.gradle
