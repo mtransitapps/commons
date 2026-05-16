@@ -115,8 +115,8 @@ if [ -f "$AGENCY_TYPE_FILE" ]; then
 fi
 
 # escape "&" -> "&amp;" for XML
-AGENCY_NAME_LONG="${AGENCY_NAME_LONG//&/\&amp;}";
-AGENCY_NAME_SHORT="${AGENCY_NAME_SHORT//&/\&amp;}";
+AGENCY_NAME_LONG="${AGENCY_NAME_LONG//&/&amp;}";
+AGENCY_NAME_SHORT="${AGENCY_NAME_SHORT//&/&amp;}";
 
 cat >>"${GTFS_RTS_STRINGS_FILE}" <<EOL
 <?xml version="1.0" encoding="utf-8"?>
