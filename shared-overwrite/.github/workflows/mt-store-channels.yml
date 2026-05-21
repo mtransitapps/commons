@@ -144,6 +144,14 @@ jobs:
             echo "$result"
           }
 
+          channel_label() {
+            if [[ "$1" -eq 1 ]]; then
+              echo "store channel"
+            else
+              echo "store channels"
+            fi
+          }
+
           ENABLED_CHANNELS=()
           DISABLED_CHANNELS=()
 
@@ -173,10 +181,10 @@ jobs:
 
           ACTION_PARTS=()
           if [[ ${#ENABLED_CHANNELS[@]} -gt 0 ]]; then
-            ACTION_PARTS+=("Enable $(join_by_comma_space "${ENABLED_CHANNELS[@]}") store channels")
+            ACTION_PARTS+=("Enable $(join_by_comma_space "${ENABLED_CHANNELS[@]}") $(channel_label "${#ENABLED_CHANNELS[@]}")")
           fi
           if [[ ${#DISABLED_CHANNELS[@]} -gt 0 ]]; then
-            ACTION_PARTS+=("Disable $(join_by_comma_space "${DISABLED_CHANNELS[@]}") store channels")
+            ACTION_PARTS+=("Disable $(join_by_comma_space "${DISABLED_CHANNELS[@]}") $(channel_label "${#DISABLED_CHANNELS[@]}")")
           fi
 
           if [[ ${#ACTION_PARTS[@]} -eq 0 ]]; then
