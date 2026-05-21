@@ -145,7 +145,8 @@ jobs:
           }
 
           channel_label() {
-            if [[ "$1" -eq 1 ]]; then
+            local count="${1:-0}"
+            if [[ "$count" =~ ^[0-9]+$ ]] && [[ "$count" -eq 1 ]]; then
               echo "store channel"
             else
               echo "store channels"
@@ -193,7 +194,7 @@ jobs:
             ACTION_SUMMARY="$(join_by_separator " & " "${ACTION_PARTS[@]}")"
           fi
 
-          COMMIT_MESSAGE="${ACTION_SUMMARY} in \`${MT_BRANCH_NAME}\`"
+          printf -v COMMIT_MESSAGE '%s in `%s`' "${ACTION_SUMMARY}" "${MT_BRANCH_NAME}"
           echo "commit_message=${COMMIT_MESSAGE}" >> "$GITHUB_OUTPUT"
 
       - name: MT Commit changes
