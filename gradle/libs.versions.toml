@@ -82,7 +82,7 @@ gps-plugin = "4.4.4"
 # https://developers.google.com/admob/android/rel-notes
 gps-ads = "25.2.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
-gps-ads-nextgen = "1.0.1"
+gps-ads-nextgen = "1.1.0"
 gps-ump = "4.0.0"
 gps-basement = "18.10.0"
 gps-time = "16.0.1"
@@ -107,7 +107,7 @@ fbAudienceNetwork-mediation = "6.21.0.3"
 appLovin-mediation = "13.6.2.0"
 # Liftoff = Vungle
 #vungle = "_._._" # included with nediation adapter
-vungle-mediation = "7.7.3.0"
+vungle-mediation = "7.7.4.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.6.0-android"
 # https://github.com/square/leakcanary/releases
