@@ -115,6 +115,55 @@ jobs:
         run: |
           rm -f config/store/production
 
+      - name: MT Compute commit & PR title
+        id: mt-change-message
+        run: |
+          ENABLED_CHANNELS=()
+          DISABLED_CHANNELS=()
+
+          if [[ "${{ github.event.inputs.internal }}" == "enable" ]]; then
+            ENABLED_CHANNELS+=("\`Internal\`")
+          elif [[ "${{ github.event.inputs.internal }}" == "disable" ]]; then
+            DISABLED_CHANNELS+=("\`Internal\`")
+          fi
+
+          if [[ "${{ github.event.inputs.alpha }}" == "enable" ]]; then
+            ENABLED_CHANNELS+=("\`Alpha\`")
+          elif [[ "${{ github.event.inputs.alpha }}" == "disable" ]]; then
+            DISABLED_CHANNELS+=("\`Alpha\`")
+          fi
+
+          if [[ "${{ github.event.inputs.betaPrivate }}" == "enable" ]]; then
+            ENABLED_CHANNELS+=("\`Beta Private\`")
+          elif [[ "${{ github.event.inputs.betaPrivate }}" == "disable" ]]; then
+            DISABLED_CHANNELS+=("\`Beta Private\`")
+          fi
+
+          if [[ "${{ github.event.inputs.production }}" == "enable" ]]; then
+            ENABLED_CHANNELS+=("\`Production\`")
+          elif [[ "${{ github.event.inputs.production }}" == "disable" ]]; then
+            DISABLED_CHANNELS+=("\`Production\`")
+          fi
+
+          ACTION_PARTS=()
+          if [[ ${#ENABLED_CHANNELS[@]} -gt 0 ]]; then
+            ACTION_PARTS+=("Enable $(IFS=', '; echo "${ENABLED_CHANNELS[*]}") store channels")
+          fi
+          if [[ ${#DISABLED_CHANNELS[@]} -gt 0 ]]; then
+            ACTION_PARTS+=("Disable $(IFS=', '; echo "${DISABLED_CHANNELS[*]}") store channels")
+          fi
+
+          if [[ ${#ACTION_PARTS[@]} -eq 0 ]]; then
+            ACTION_SUMMARY="Update store channels"
+          elif [[ ${#ACTION_PARTS[@]} -eq 1 ]]; then
+            ACTION_SUMMARY="${ACTION_PARTS[0]}"
+          else
+            ACTION_SUMMARY="${ACTION_PARTS[0]} & ${ACTION_PARTS[1]}"
+          fi
+
+          COMMIT_MESSAGE="${ACTION_SUMMARY} in \`${MT_BRANCH_NAME}\`"
+          echo "commit_message=${COMMIT_MESSAGE}" >> "$GITHUB_OUTPUT"
+
       - name: MT Commit changes
         continue-on-error: true
         id: mt-commit-changes
@@ -127,7 +176,7 @@ jobs:
           git switch -C "${MT_BRANCH_NAME}_update_store_channels"
           git config user.name "$MT_BOT_USER_NAME"
           git config user.email "$MT_BOT_USER_EMAIL"
-          git commit -m "Update store channels in \`${MT_BRANCH_NAME}\`"
+          git commit -m "${{ steps.mt-change-message.outputs.commit_message }}"
           git push -u origin "$(git rev-parse --abbrev-ref HEAD)" --force
           exit 0 # success
 
@@ -150,14 +199,14 @@ jobs:
       - name: MT Create pull request (if necessary)
         if: ${{ steps.mt-commit-changes.outcome == 'success' && steps.mt-check-pr-exists.outcome == 'failure' }}
         run: |
-          gh pr create --base "${MT_BRANCH_NAME}" --fill --assignee montransit
+          gh pr create --base "${MT_BRANCH_NAME}" --fill --title "${{ steps.mt-change-message.outputs.commit_message }}" --assignee montransit
           gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
       - name: MT Update pull request (if necessary)
         if: ${{ steps.mt-commit-changes.outcome == 'success' && steps.mt-check-pr-exists.outcome == 'success' }}
         run: |
-          gh pr edit --add-assignee montransit --title "Update store channels in \`${MT_BRANCH_NAME}\`"
+          gh pr edit --add-assignee montransit --title "${{ steps.mt-change-message.outputs.commit_message }}"
           gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
