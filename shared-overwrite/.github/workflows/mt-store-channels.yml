@@ -118,6 +118,32 @@ jobs:
       - name: MT Compute commit & PR title
         id: mt-change-message
         run: |
+          join_by_comma_space() {
+            local result=""
+            local value=""
+            for value in "$@"; do
+              if [[ -n "$result" ]]; then
+                result+=", "
+              fi
+              result+="$value"
+            done
+            echo "$result"
+          }
+
+          join_by_separator() {
+            local separator="$1"
+            shift
+            local result=""
+            local value=""
+            for value in "$@"; do
+              if [[ -n "$result" ]]; then
+                result+="$separator"
+              fi
+              result+="$value"
+            done
+            echo "$result"
+          }
+
           ENABLED_CHANNELS=()
           DISABLED_CHANNELS=()
 
@@ -147,18 +173,16 @@ jobs:
 
           ACTION_PARTS=()
           if [[ ${#ENABLED_CHANNELS[@]} -gt 0 ]]; then
-            ACTION_PARTS+=("Enable $(IFS=', '; echo "${ENABLED_CHANNELS[*]}") store channels")
+            ACTION_PARTS+=("Enable $(join_by_comma_space "${ENABLED_CHANNELS[@]}") store channels")
           fi
           if [[ ${#DISABLED_CHANNELS[@]} -gt 0 ]]; then
-            ACTION_PARTS+=("Disable $(IFS=', '; echo "${DISABLED_CHANNELS[*]}") store channels")
+            ACTION_PARTS+=("Disable $(join_by_comma_space "${DISABLED_CHANNELS[@]}") store channels")
           fi
 
           if [[ ${#ACTION_PARTS[@]} -eq 0 ]]; then
             ACTION_SUMMARY="Update store channels"
-          elif [[ ${#ACTION_PARTS[@]} -eq 1 ]]; then
-            ACTION_SUMMARY="${ACTION_PARTS[0]}"
           else
-            ACTION_SUMMARY="${ACTION_PARTS[0]} & ${ACTION_PARTS[1]}"
+            ACTION_SUMMARY="$(join_by_separator " & " "${ACTION_PARTS[@]}")"
           fi
 
           COMMIT_MESSAGE="${ACTION_SUMMARY} in \`${MT_BRANCH_NAME}\`"
