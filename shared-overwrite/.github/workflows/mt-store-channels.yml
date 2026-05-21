@@ -194,7 +194,8 @@ jobs:
             ACTION_SUMMARY="$(join_by_separator " & " "${ACTION_PARTS[@]}")"
           fi
 
-          printf -v COMMIT_MESSAGE '%s in `%s`' "${ACTION_SUMMARY}" "${MT_BRANCH_NAME}"
+          BRANCH_LABEL="\`${MT_BRANCH_NAME}\`"
+          printf -v COMMIT_MESSAGE '%s in %s' "${ACTION_SUMMARY}" "${BRANCH_LABEL}"
           echo "commit_message=${COMMIT_MESSAGE}" >> "$GITHUB_OUTPUT"
 
       - name: MT Commit changes
