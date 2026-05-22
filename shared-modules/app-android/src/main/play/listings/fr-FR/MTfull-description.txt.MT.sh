@@ -364,10 +364,6 @@ if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
     RT_PARTS+=(" alertes de service")
   fi
 fi
-CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${VALUES_DIR}/stm_info_values.xml";
-if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
-  RT_PARTS+=(" états de service")
-fi
 # TODO: support other real-time providers
 OLD_IFS=$IFS; IFS=","
 RT_LINE="${RT_PARTS[*]}"
