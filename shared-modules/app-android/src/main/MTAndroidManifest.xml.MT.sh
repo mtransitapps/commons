@@ -252,26 +252,6 @@ EOL
 EOL
 fi
 
-CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${VALUES_DIR}/stm_info_values.xml";
-if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
-  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- STM.INFO PROVIDER -->
-        <provider
-            android:name="org.mtransit.android.commons.provider.StmInfoSubwayProvider"
-            android:authorities="@string/stm_info_authority"
-            android:exported="true"
-            android:readPermission="\${permission_provider_read}"
-            tools:ignore="MissingRegistered">
-            <meta-data
-                android:name="@string/service_update_provider"
-                android:value="@string/service_update_provider" />
-            <meta-data
-                android:name="@string/service_update_provider_target"
-                android:value="@string/stm_info_status_for_poi_authority" />
-        </provider>
-EOL
-fi
-
 CA_QUEBEC_RTC_PROVIDER_FILE="${VALUES_DIR}/rtc_quebec_values.xml";
 if [ -f "${CA_QUEBEC_RTC_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL

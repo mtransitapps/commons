@@ -482,7 +482,6 @@ def setupResValues(buildType, appId) {
 
         buildType.resValue("string", "regina_transit_authority", "${appId}.transitlive_com")
         buildType.resValue("string", "rtc_quebec_authority", "${appId}.rtcquebec")
-        buildType.resValue("string", "stm_info_authority", "${appId}.stminfo")
         buildType.resValue("string", "stm_info_api_authority", "${appId}.stminfoapi")
         buildType.resValue("string", "winnipeg_transit_authority", "${appId}.winnipeg_transit")
     }

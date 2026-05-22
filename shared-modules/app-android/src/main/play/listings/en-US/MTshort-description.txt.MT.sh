@@ -158,10 +158,6 @@ if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
     SHORT_DESC="${SHORT_DESC} Alerts.";
   fi
 fi
-CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${VALUES_DIR}/stm_info_values.xml";
-if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
-  SHORT_DESC="${SHORT_DESC} Service Updates.";
-fi
 # TODO: support other real-time providers
 
 RSS_FILE="${VALUES_DIR}/rss_values.xml";
