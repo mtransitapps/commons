@@ -201,6 +201,8 @@ jobs:
       - name: MT Commit changes
         continue-on-error: true
         id: mt-commit-changes
+        env:
+          COMMIT_MESSAGE: ${{ steps.mt-change-message.outputs.commit_message }}
         run: |
           git add -v -A config/store
           if git diff --staged --quiet; then
@@ -210,7 +212,7 @@ jobs:
           git switch -C "${MT_BRANCH_NAME}_update_store_channels"
           git config user.name "$MT_BOT_USER_NAME"
           git config user.email "$MT_BOT_USER_EMAIL"
-          git commit -m "${{ steps.mt-change-message.outputs.commit_message }}"
+          git commit -m "$COMMIT_MESSAGE"
           git push -u origin "$(git rev-parse --abbrev-ref HEAD)" --force
           exit 0 # success
 
@@ -232,15 +234,17 @@ jobs:
 
       - name: MT Create pull request (if necessary)
         if: ${{ steps.mt-commit-changes.outcome == 'success' && steps.mt-check-pr-exists.outcome == 'failure' }}
-        run: |
-          gh pr create --base "${MT_BRANCH_NAME}" --fill --title "${{ steps.mt-change-message.outputs.commit_message }}" --assignee montransit
-          gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
+          COMMIT_MESSAGE: ${{ steps.mt-change-message.outputs.commit_message }}
+        run: |
+          gh pr create --base "${MT_BRANCH_NAME}" --fill --title "$COMMIT_MESSAGE" --assignee montransit
+          gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
       - name: MT Update pull request (if necessary)
         if: ${{ steps.mt-commit-changes.outcome == 'success' && steps.mt-check-pr-exists.outcome == 'success' }}
-        run: |
-          gh pr edit --add-assignee montransit --title "${{ steps.mt-change-message.outputs.commit_message }}"
-          gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
+          COMMIT_MESSAGE: ${{ steps.mt-change-message.outputs.commit_message }}
+        run: |
+          gh pr edit --add-assignee montransit --title "$COMMIT_MESSAGE"
+          gh pr comment --body "@mtransitapps/reviewers please review" # --reviewer mtransitapps/reviewers;
