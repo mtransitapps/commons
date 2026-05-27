@@ -19,12 +19,13 @@ fi
 
 trackScriptName() {
   case "$1" in
+    internal-draft) echo "internal_draft";;
     beta-private) echo "private_beta";;
     *) echo "$1";;
   esac
 }
 
-TRACKS=(internal alpha beta-private production)
+TRACKS=(internal-draft internal alpha beta-private production)
 CURRENT_USER_TRACKS=()
 for track in "${TRACKS[@]}"; do
   if [[ -f "$CONFIG_PATH/store/$track" ]]; then
@@ -32,7 +33,12 @@ for track in "${TRACKS[@]}"; do
   fi
 done
 
-if [[ ${#CURRENT_USER_TRACKS[@]} -eq 0 ]]; then # no internal, no alpha, no private beta, no production
+if [[ -f "$CONFIG_PATH/store/internal-draft" && ! -f "$CONFIG_PATH/store/internal" ]]; then
+  echo "> Invalid store configuration: internal-draft requires internal.";
+  exit 1; # error
+fi
+
+if [[ ${#CURRENT_USER_TRACKS[@]} -eq 0 ]]; then # no internal-draft, no internal, no alpha, no private beta, no production
   echo "> Push to Store NOT enabled... SKIP (no current users)";
   exit 0 # success
 fi

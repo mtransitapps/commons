@@ -34,6 +34,16 @@ on:
         type: boolean
         default: false
         required: false
+      skipStoreInternalDraft:
+        description: 'Skip internal draft store release'
+        type: boolean
+        default: false
+        required: false
+      allowStoreInternalDraft:
+        description: 'Allow internal draft store release'
+        type: boolean
+        default: false
+        required: false
       allowStoreInternal:
         description: 'Allow internal store release'
         type: boolean
@@ -152,9 +162,13 @@ jobs:
             app-android/build/outputs/bundle
 
       - name: MT allow store releases
-        if: ${{ github.event.inputs.allowStoreInternal == 'true' || github.event.inputs.allowStoreAlpha == 'true' || github.event.inputs.allowStoreBetaPrivate == 'true' || github.event.inputs.allowStoreProduction == 'true' }}
+        if: ${{ github.event.inputs.allowStoreInternalDraft == 'true' || github.event.inputs.allowStoreInternal == 'true' || github.event.inputs.allowStoreAlpha == 'true' || github.event.inputs.allowStoreBetaPrivate == 'true' || github.event.inputs.allowStoreProduction == 'true' }}
         run: |
           mkdir -p config/store
+          if [[ "${{ github.event.inputs.allowStoreInternalDraft }}" == "true" ]]; then
+            echo "Allowing internal draft store release..."
+            touch config/store/internal-draft
+          fi
           if [[ "${{ github.event.inputs.allowStoreInternal }}" == "true" ]]; then
             echo "Allowing internal store release..."
             touch config/store/internal
@@ -173,10 +187,11 @@ jobs:
           fi
 
       - name: MT skip store releases
-        if: ${{ github.event.inputs.skipStoreAll == 'true' || github.event.inputs.skipStoreProduction == 'true' ||  github.event.inputs.skipStoreBetaPrivate == 'true' || github.event.inputs.skipStoreAlpha == 'true' || github.event.inputs.skipStoreInternal == 'true' }}
+        if: ${{ github.event.inputs.skipStoreAll == 'true' || github.event.inputs.skipStoreProduction == 'true' ||  github.event.inputs.skipStoreBetaPrivate == 'true' || github.event.inputs.skipStoreAlpha == 'true' || github.event.inputs.skipStoreInternal == 'true' || github.event.inputs.skipStoreInternalDraft == 'true' }}
         run: |
           if [[ "${{ github.event.inputs.skipStoreAll }}" == "true" ]]; then
             echo "Skipping all store releases..."
+            rm -f config/store/internal-draft
             rm -f config/store/internal
             rm -f config/store/production
             rm -f config/store/alpha
@@ -197,6 +212,10 @@ jobs:
             if [[ "${{ github.event.inputs.skipStoreInternal }}" == "true" ]]; then
               echo "Skipping internal store release..."
               rm -f config/store/internal
+            fi
+            if [[ "${{ github.event.inputs.skipStoreInternalDraft }}" == "true" ]]; then
+              echo "Skipping internal draft store release..."
+              rm -f config/store/internal-draft
             fi
           fi
 

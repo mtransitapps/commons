@@ -26,6 +26,10 @@ if [[ ! -f "$CONFIG_PATH/store/internal" ]]; then
     echo "> Publish to internal NOT authorized!";
     exit 1; # error
 fi
+if [[ ! -f "$CONFIG_PATH/store/internal-draft" ]]; then
+    echo "> Promote from internal draft NOT authorized!";
+    exit 1; # error
+fi
 
 ${SCRIPT_DIR}/promote.sh \
   --from-track internal --promote-track internal \
