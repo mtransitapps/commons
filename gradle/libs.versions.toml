@@ -80,7 +80,7 @@ places-sdk = "5.2.0"
 gps-plugin = "4.4.4"
 # LATEST: https://developers.google.com/android/guides/releases
 # https://developers.google.com/admob/android/rel-notes
-gps-ads = "25.2.0"
+gps-ads = "25.3.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
 gps-ads-nextgen = "1.1.0"
 gps-ump = "4.0.0"
