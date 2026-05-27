@@ -167,7 +167,7 @@ jobs:
           mkdir -p config/store
           if [[ "${{ github.event.inputs.allowStoreInternalDraft }}" == "true" ]]; then
             echo "Allowing internal draft store release..."
-            touch config/store/internal-draft
+            touch config/store/internal
           fi
           if [[ "${{ github.event.inputs.allowStoreInternal }}" == "true" ]]; then
             echo "Allowing internal store release..."
@@ -191,7 +191,6 @@ jobs:
         run: |
           if [[ "${{ github.event.inputs.skipStoreAll }}" == "true" ]]; then
             echo "Skipping all store releases..."
-            rm -f config/store/internal-draft
             rm -f config/store/internal
             rm -f config/store/production
             rm -f config/store/alpha
@@ -215,7 +214,7 @@ jobs:
             fi
             if [[ "${{ github.event.inputs.skipStoreInternalDraft }}" == "true" ]]; then
               echo "Skipping internal draft store release..."
-              rm -f config/store/internal-draft
+              rm -f config/store/internal
             fi
           fi
 

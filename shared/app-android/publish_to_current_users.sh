@@ -25,18 +25,16 @@ trackScriptName() {
   esac
 }
 
-TRACKS=(internal-draft internal alpha beta-private production)
 CURRENT_USER_TRACKS=()
+if [[ -f "$CONFIG_PATH/store/internal" ]]; then
+  CURRENT_USER_TRACKS+=("internal-draft" "internal")
+fi
+TRACKS=(alpha beta-private production)
 for track in "${TRACKS[@]}"; do
   if [[ -f "$CONFIG_PATH/store/$track" ]]; then
     CURRENT_USER_TRACKS+=("$track")
   fi
 done
-
-if [[ -f "$CONFIG_PATH/store/internal-draft" && ! -f "$CONFIG_PATH/store/internal" ]]; then
-  echo "> Invalid store configuration: internal-draft requires internal.";
-  exit 1; # error
-fi
 
 if [[ ${#CURRENT_USER_TRACKS[@]} -eq 0 ]]; then # no internal-draft, no internal, no alpha, no private beta, no production
   echo "> Push to Store NOT enabled... SKIP (no current users)";

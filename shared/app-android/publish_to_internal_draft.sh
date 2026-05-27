@@ -22,7 +22,7 @@ if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
   CONFIG_PATH="$SCRIPT_DIR/config";
 fi
 
-if [[ ! -f "$CONFIG_PATH/store/internal-draft" ]]; then
+if [[ ! -f "$CONFIG_PATH/store/internal" ]]; then
     echo "> Publish to internal draft NOT authorized!";
     exit 1; # error
 fi
