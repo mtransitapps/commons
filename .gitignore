@@ -3,7 +3,3 @@
 
 # TOML Dependency updater file
 *.updates.toml
-
-# Gradle local caches
-.gradle/
-**/.gradle/
