@@ -14,8 +14,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.mobilitydata.gtfs-validator</groupId>
-            <artifactId>gtfs-validator-main</artifactId>
+            <groupId>org.mobilitydata</groupId>
+            <artifactId>gtfs-validator</artifactId>
             <version>${gtfs.validator.version}</version>
         </dependency>
     </dependencies>
