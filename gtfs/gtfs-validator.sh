@@ -27,9 +27,29 @@ fi
 # gh release list --limit 1 --repo github.com/MobilityData/gtfs-validator;
 # echo "> GTFS Validator latest release... DONE";
 
-JAR_FILE_PATTERN="$SCRIPT_DIR/gtfs-validator-*.jar";
-JAR_FILES=($JAR_FILE_PATTERN);
-JAR_FILE="${JAR_FILES[0]}";
+VERSION_FILE="$SCRIPT_DIR/pom.xml";
+if [ ! -f "$VERSION_FILE" ]; then
+    echo "> GTFS Validator version file '$VERSION_FILE' not found!";
+    exit 1;
+fi
+GTFS_VALIDATOR_VERSION=$(grep -E '<gtfs.validator.version>[^<]+</gtfs.validator.version>' "$VERSION_FILE" | sed -E 's/.*<gtfs.validator.version>([^<]+)<\/gtfs.validator.version>.*/\1/' | head -n1);
+if [ -z "$GTFS_VALIDATOR_VERSION" ]; then
+    echo "> GTFS Validator version not found in '$VERSION_FILE'!";
+    exit 1;
+fi
+JAR_FILE="$SCRIPT_DIR/gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar";
+JAR_URL="https://github.com/MobilityData/gtfs-validator/releases/download/v$GTFS_VALIDATOR_VERSION/gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar";
+if [ ! -f "$JAR_FILE" ]; then
+    echo "> Downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'...";
+    curl --fail --location --output "$JAR_FILE" "$JAR_URL";
+    DOWNLOAD_RESULT=$?;
+    if [[ ${DOWNLOAD_RESULT} -ne 0 ]]; then
+        echo "> Error while downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'!";
+        exit ${DOWNLOAD_RESULT};
+    fi
+    echo "> Downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'... DONE";
+fi
+echo "> GTFS Validator version: '$GTFS_VALIDATOR_VERSION'.";
 echo "> GTFS Validator JAR file: '$JAR_FILE'.";
 
 echo "> Launching GTFS Validator...";

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.mtransitapps.commons</groupId>
+    <artifactId>gtfs-validator-version</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <gtfs.validator.version>8.0.1</gtfs.validator.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mobilitydata.gtfs-validator</groupId>
+            <artifactId>gtfs-validator-main</artifactId>
+            <version>${gtfs.validator.version}</version>
+        </dependency>
+    </dependencies>
+</project>
