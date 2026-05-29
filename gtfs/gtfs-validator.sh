@@ -47,10 +47,16 @@ if [ -z "$GTFS_VALIDATOR_VERSION" ]; then
     exit 1;
 fi
 JAR_FILE="$SCRIPT_DIR/gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar";
-JAR_URL="https://github.com/MobilityData/gtfs-validator/releases/download/v$GTFS_VALIDATOR_VERSION/gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar";
 if [ ! -f "$JAR_FILE" ]; then
+    if ! command -v gh >/dev/null 2>&1; then
+        echo "> GitHub CLI is required to download GTFS Validator '$GTFS_VALIDATOR_VERSION'!";
+        exit 1;
+    fi
     echo "> Downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'...";
-    curl --fail --location --silent --show-error --output "$JAR_FILE" "$JAR_URL";
+    gh release download "v$GTFS_VALIDATOR_VERSION" \
+      --repo MobilityData/gtfs-validator \
+      --pattern "gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar" \
+      --dir "$SCRIPT_DIR";
     DOWNLOAD_RESULT=$?;
     if [[ ${DOWNLOAD_RESULT} -ne 0 ]]; then
         echo "> Error while downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'!";
