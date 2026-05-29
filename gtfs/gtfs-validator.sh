@@ -49,7 +49,7 @@ fi
 JAR_FILE="$SCRIPT_DIR/gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar";
 if [ ! -f "$JAR_FILE" ]; then
     if ! command -v gh >/dev/null 2>&1; then
-        echo "> GitHub CLI is required to download GTFS Validator '$GTFS_VALIDATOR_VERSION'!";
+        echo "> GitHub CLI (gh) is required to download GTFS Validator '$GTFS_VALIDATOR_VERSION' (https://cli.github.com/)!";
         exit 1;
     fi
     echo "> Downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'...";
@@ -61,6 +61,10 @@ if [ ! -f "$JAR_FILE" ]; then
     if [[ ${DOWNLOAD_RESULT} -ne 0 ]]; then
         echo "> Error while downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'!";
         exit ${DOWNLOAD_RESULT};
+    fi
+    if [ ! -s "$JAR_FILE" ]; then
+        echo "> Downloaded GTFS Validator JAR '$JAR_FILE' is missing or empty!";
+        exit 1;
     fi
     echo "> Downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'... DONE";
 fi
