@@ -32,7 +32,16 @@ if [ ! -f "$VERSION_FILE" ]; then
     echo "> GTFS Validator version file '$VERSION_FILE' not found!";
     exit 1;
 fi
-GTFS_VALIDATOR_VERSION=$(grep -E '<gtfs.validator.version>[^<]+</gtfs.validator.version>' "$VERSION_FILE" | sed -E 's/.*<gtfs.validator.version>([^<]+)<\/gtfs.validator.version>.*/\1/' | head -n1);
+if ! command -v mvn >/dev/null 2>&1; then
+    echo "> Maven CLI is required to resolve GTFS Validator version!";
+    exit 1;
+fi
+GTFS_VALIDATOR_VERSION=$(mvn -q -f "$VERSION_FILE" help:evaluate -Dexpression=gtfs.validator.version -DforceStdout);
+MVN_RESULT=$?;
+if [[ ${MVN_RESULT} -ne 0 ]]; then
+    echo "> Error while resolving GTFS Validator version from '$VERSION_FILE'!";
+    exit ${MVN_RESULT};
+fi
 if [ -z "$GTFS_VALIDATOR_VERSION" ]; then
     echo "> GTFS Validator version not found in '$VERSION_FILE'!";
     exit 1;
@@ -41,7 +50,7 @@ JAR_FILE="$SCRIPT_DIR/gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar";
 JAR_URL="https://github.com/MobilityData/gtfs-validator/releases/download/v$GTFS_VALIDATOR_VERSION/gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar";
 if [ ! -f "$JAR_FILE" ]; then
     echo "> Downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'...";
-    curl --fail --location --output "$JAR_FILE" "$JAR_URL";
+    curl --fail --location --silent --show-error --output "$JAR_FILE" "$JAR_URL";
     DOWNLOAD_RESULT=$?;
     if [[ ${DOWNLOAD_RESULT} -ne 0 ]]; then
         echo "> Error while downloading GTFS Validator '$GTFS_VALIDATOR_VERSION'!";
