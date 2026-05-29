@@ -104,8 +104,8 @@ SOURCE_URL="";
 if [ -f "$SOURCE_URL_FILE" ]; then
   SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
   if [ -z "$SOURCE_URL" ]; then
-      echo "SOURCE_URL is empty!";
-      exit 1;
+    echo "SOURCE_URL is empty!";
+    exit 1;
   fi
 fi
 
@@ -391,6 +391,8 @@ fi
 SOURCES_LINES="Les informations viennent des données publiées par $SOURCE_PROVIDER"
 if [ -n "$SOURCE_URL" ]; then
   SOURCES_LINES="${SOURCES_LINES} : "$'\n'"${SOURCE_URL}";
+else
+  SOURCES_LINES="${SOURCES_LINES}.";
 fi
 
 cat >>"${FULL_DESCRIPTION_FILE}" <<EOL
