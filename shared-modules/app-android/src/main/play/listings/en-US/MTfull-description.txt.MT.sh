@@ -86,10 +86,10 @@ CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 SOURCE_URL="";
 SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 if [ -f "$SOURCE_URL_FILE" ]; then
-    SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
-    if [ -z "$SOURCE_URL" ]; then
-      echo "SOURCE_URL is empty!";
-      exit 1;
+  SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
+  if [ -z "$SOURCE_URL" ]; then
+    echo "SOURCE_URL is empty!";
+    exit 1;
   fi
 fi
 
