@@ -83,15 +83,14 @@ fi
 GIT_OWNER="mtransitapps"; #TODO extract from GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
 CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
+SOURCE_URL="";
 SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
-if [ ! -f "$SOURCE_URL_FILE" ]; then
-    echo "$SOURCE_URL_FILE doesn't exist!";
-    exit 1;
-fi
-SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
-if [ -z "$SOURCE_URL" ]; then
-    echo "SOURCE_URL is empty!";
-    exit 1;
+if [ -f "$SOURCE_URL_FILE" ]; then
+    SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
+    if [ -z "$SOURCE_URL" ]; then
+      echo "SOURCE_URL is empty!";
+      exit 1;
+  fi
 fi
 
 SOURCE_NAME_FILE="${CONFIG_DIR}/source_name"; #optional
@@ -379,6 +378,12 @@ else
   exit 1 # error
 fi
 
+SOURCES_LINES="The information comes from the data published by $SOURCE_PROVIDER";
+if [ -n "$SOURCE_URL" ]; then
+  SOURCES_LINES="$SOURCES_LINES:
+$SOURCE_URL";
+fi
+
 cat >>"${FULL_DESCRIPTION_FILE}" <<EOL
 This app adds $AGENCY_LABEL $TYPE_LABEL information to MonTransit.
 
@@ -392,8 +397,7 @@ This application only has a temporary icon: download the MonTransit app (free) i
 
 You can install this application on the SD card, but it is not recommended.
 
-The information comes from the data published by $SOURCE_PROVIDER:
-$SOURCE_URL
+$SOURCES_LINES
 
 This application is free and open-source:
 $CONTACT_WEBSITE_URL

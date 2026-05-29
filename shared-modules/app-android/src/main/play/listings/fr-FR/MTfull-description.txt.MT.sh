@@ -100,14 +100,13 @@ fi
 if [ ! -f "$SOURCE_URL_FILE" ]; then
   SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
 fi
-if [ ! -f "$SOURCE_URL_FILE" ]; then
-    echo "$SOURCE_URL_FILE doesn't exist!";
-    exit 1;
-fi
-SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
-if [ -z "$SOURCE_URL" ]; then
-    echo "SOURCE_URL is empty!";
-    exit 1;
+SOURCE_URL="";
+if [ -f "$SOURCE_URL_FILE" ]; then
+  SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
+  if [ -z "$SOURCE_URL" ]; then
+      echo "SOURCE_URL is empty!";
+      exit 1;
+  fi
 fi
 
 SOURCE_NAME_FILE="${CONFIG_DIR}/source_name"; #optional
@@ -389,6 +388,12 @@ else
   exit 1 # error
 fi
 
+SOURCES_LINES="Les informations viennent des données publiées par $SOURCE_PROVIDER"
+if [ -n "$SOURCE_URL" ]; then
+  SOURCES_LINES="$SOURCES_LINES :
+$SOURCE_URL";
+fi
+
 cat >>"${FULL_DESCRIPTION_FILE}" <<EOL
 Cette application ajoute les informations des $TYPE_LABEL $AGENCY_LABEL à MonTransit.
 
@@ -402,8 +407,7 @@ Cette application a seulement une icône temporaire : télécharger l'app MonTra
 
 Vous pouvez installer cette application sur la carte SD mais ce n'est pas recommandé.
 
-Les informations viennent des données publiées par $SOURCE_PROVIDER:
-$SOURCE_URL
+$SOURCES_LINES
 
 Cette application est gratuite et open-source :
 $CONTACT_WEBSITE_URL
