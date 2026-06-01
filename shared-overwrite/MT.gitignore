@@ -237,10 +237,6 @@ dev.properties
 
 
 # Merged from shared/app-android/MT.gitignore
-/app-android/gen/
-/app-android/.gradle/
-/app-android/local.properties
-/app-android/proguard/
 /app-android/app-signing-debug-keys.properties
 /app-android/app-signing-debug-keystore.keystore
 /app-android/build.gradle
