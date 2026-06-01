@@ -390,7 +390,7 @@ fi
 
 SOURCES_LINES="Les informations viennent des données publiées par $SOURCE_PROVIDER"
 if [ -n "$SOURCE_URL" ]; then
-  SOURCES_LINES="${SOURCES_LINES} : "$'\n'"${SOURCE_URL}";
+  SOURCES_LINES="${SOURCES_LINES} :"$'\n'"${SOURCE_URL}";
 else
   SOURCES_LINES="${SOURCES_LINES}.";
 fi
