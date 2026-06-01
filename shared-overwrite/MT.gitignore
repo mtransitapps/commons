@@ -270,9 +270,9 @@ dev.properties
 /app-android/src/main/res/values/gtfs_rts_strings.xml
 /app-android/src/main/res/values/module_app_icon_color.xml
 /app-android/src/main/res/values/parent_agency_values.xml
-/app-android/src/main/res/values-fr/bike_station_strings.xml
-/app-android/src/main/res/values-fr/gtfs_rts_strings.xml
-/app-android/src/main/res/values-fr/strings.xml
+/app-android/src/main/res/values-*/bike_station_strings.xml
+/app-android/src/main/res/values-*/gtfs_rts_strings.xml
+/app-android/src/main/res/values-*/strings.xml
 /app-android/app-signing-release-keys.properties
 /app-android/app-signing-release-keystore-encrypted.keystore
 /app-android/app-signing-release-keystore.keystore
