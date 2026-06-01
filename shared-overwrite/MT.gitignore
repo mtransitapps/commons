@@ -1,6 +1,7 @@
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 # Built application files
 *.apk
+*.aab
 *.ap_
 
 # Files for the ART/Dalvik VM
@@ -8,6 +9,9 @@
 
 # Java class files
 *.class
+*.jar
+*.war
+*.ear
 
 # Generated files
 bin/
@@ -31,6 +35,10 @@ proguard/
 
 # Log Files
 *.log
+*.out
+
+# Do Not Publish files
+*.donotpublish
 
 # Android Studio Navigation editor temp files
 .navigation/
@@ -94,6 +102,8 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+# virtual machine crash logs, see https://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
 # Editor-based Rest Client
 .idea/httpRequests
 # Android studio 3.1+ serialized cache file
@@ -227,10 +237,6 @@ dev.properties
 
 
 # Merged from shared/app-android/MT.gitignore
-/app-android/*.apk
-/app-android/*.ap_
-/app-android/*.dex
-/app-android/*.class
 /app-android/bin/
 /app-android/gen/
 /app-android/.gradle/
@@ -238,9 +244,6 @@ dev.properties
 /app-android/*/build/
 /app-android/local.properties
 /app-android/proguard/
-/app-android/*.log
-/app-android/*.iml
-/app-android/*.donotpublish
 /app-android/app-signing-debug-keys.properties
 /app-android/app-signing-debug-keystore.keystore
 /app-android/build.gradle
@@ -304,17 +307,11 @@ dev.properties
 /app-android/stage_res_next_schedule_stops.sh
 
 # Merged from shared-opt-dir/agency-parser/MT.gitignore
-/agency-parser/*.class
 /agency-parser/.mtj.tmp/
-/agency-parser/*.jar
-/agency-parser/*.war
-/agency-parser/*.ear
-/agency-parser/hs_err_pid*
 /agency-parser/bin/
 /agency-parser/build/
 /agency-parser/input/
 /agency-parser/output/
-/agency-parser/*.iml
 /agency-parser/archive.sh
 /agency-parser/archive_selection.sh
 /agency-parser/build.gradle
