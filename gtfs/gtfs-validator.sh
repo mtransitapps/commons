@@ -32,22 +32,14 @@ if [ ! -f "$VERSION_FILE" ]; then
     echo "> GTFS Validator version file '$VERSION_FILE' not found!";
     exit 1;
 fi
-if ! command -v mvn >/dev/null 2>&1; then
-    echo "> Maven CLI is required to resolve GTFS Validator version!";
-    exit 1;
-fi
-GTFS_VALIDATOR_VERSION=$(mvn -q -f "$VERSION_FILE" help:evaluate -Dexpression=gtfs.validator.version -DforceStdout);
-MVN_RESULT=$?;
-if [[ ${MVN_RESULT} -ne 0 ]]; then
-    echo "> Error while resolving GTFS Validator version from '$VERSION_FILE'!";
-    exit ${MVN_RESULT};
-fi
+GTFS_VALIDATOR_VERSION=$(sed -n 's/.*<gtfs.validator.version>\([^<]*\)<\/gtfs.validator.version>.*/\1/p' "$VERSION_FILE" | head -n 1 | tr -d '[:space:]');
 if [ -z "$GTFS_VALIDATOR_VERSION" ]; then
     echo "> GTFS Validator version not found in '$VERSION_FILE'!";
     exit 1;
 fi
 JAR_FILE="$SCRIPT_DIR/gtfs-validator-$GTFS_VALIDATOR_VERSION-cli.jar";
-if [ ! -f "$JAR_FILE" ]; then
+if [ ! -s "$JAR_FILE" ]; then
+    rm -f "$JAR_FILE";
     if ! command -v gh >/dev/null 2>&1; then
         echo "> GitHub CLI (gh) is required to download GTFS Validator '$GTFS_VALIDATOR_VERSION' (https://cli.github.com/)!";
         exit 1;
