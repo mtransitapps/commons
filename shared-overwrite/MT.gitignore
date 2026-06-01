@@ -237,11 +237,8 @@ dev.properties
 
 
 # Merged from shared/app-android/MT.gitignore
-/app-android/bin/
 /app-android/gen/
 /app-android/.gradle/
-/app-android/build/
-/app-android/*/build/
 /app-android/local.properties
 /app-android/proguard/
 /app-android/app-signing-debug-keys.properties
@@ -308,8 +305,6 @@ dev.properties
 
 # Merged from shared-opt-dir/agency-parser/MT.gitignore
 /agency-parser/.mtj.tmp/
-/agency-parser/bin/
-/agency-parser/build/
 /agency-parser/input/
 /agency-parser/output/
 /agency-parser/archive.sh
