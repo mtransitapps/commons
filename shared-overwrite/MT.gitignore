@@ -265,12 +265,9 @@ dev.properties
 /app-android/src/main/play/default-language.txt
 /app-android/src/main/AndroidManifest.xml
 /app-android/src/main/play/contact-website.txt
-/app-android/src/main/play/listings/en-US/title.txt
-/app-android/src/main/play/listings/en-US/short-description.txt
-/app-android/src/main/play/listings/en-US/full-description.txt
-/app-android/src/main/play/listings/fr-FR/title.txt
-/app-android/src/main/play/listings/fr-FR/short-description.txt
-/app-android/src/main/play/listings/fr-FR/full-description.txt
+/app-android/src/main/play/listings/*/title.txt
+/app-android/src/main/play/listings/*/short-description.txt
+/app-android/src/main/play/listings/*/full-description.txt
 /app-android/src/main/res/mipmap-anydpi-v26/module_app_icon.xml
 /app-android/src/main/res/values/bike_station_strings.xml
 /app-android/src/main/res/values/strings.xml
