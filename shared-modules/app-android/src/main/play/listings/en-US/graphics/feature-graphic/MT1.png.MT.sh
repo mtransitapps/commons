@@ -73,8 +73,8 @@ else
   if [ "$SPLIT_INDEX" -gt 0 ]; then
     AGENCY_NAME_1="${AGENCY_NAME_SHORT:0:SPLIT_INDEX}";
     AGENCY_NAME_2="${AGENCY_NAME_SHORT:SPLIT_INDEX}";
-    AGENCY_NAME_1="$(printf '%s' "$AGENCY_NAME_1" | sed 's/[[:space:]]*$//')";
-    AGENCY_NAME_2="$(printf '%s' "$AGENCY_NAME_2" | sed 's/^[[:space:]]*//')";
+    AGENCY_NAME_1="${AGENCY_NAME_1%"${AGENCY_NAME_1##*[![:space:]]}"}";
+    AGENCY_NAME_2="${AGENCY_NAME_2#"${AGENCY_NAME_2%%[![:space:]]*}"}";
   else
     AGENCY_NAME_2="$AGENCY_NAME_SHORT";
   fi
