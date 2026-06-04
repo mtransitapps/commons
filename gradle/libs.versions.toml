@@ -22,7 +22,7 @@ kotlinx-datetime = "0.8.0"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization = "1.11.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "7.3.0.8198"
+sonar = "7.3.1.8318"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "9.2.1"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
