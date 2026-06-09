@@ -55,7 +55,7 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
-MAX_AGENCY_LENGTH=15 # from module-featured-graphic.sh
+MAX_AGENCY_LENGTH=14 # from module-featured-graphic.sh
 
 AGENCY_NAME_1="";
 AGENCY_NAME_2="";
