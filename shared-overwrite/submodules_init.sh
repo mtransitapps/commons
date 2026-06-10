@@ -94,10 +94,6 @@ for SUBMODULE in "${SUBMODULES[@]}" ; do
 		fi
 		echo "> Adding submodule '$SUBMODULE'... DONE ✓";
 	fi
-	if ! [[ -d "$CURRENT_PATH/$SUBMODULE" ]]; then
-		echo "> Submodule directory '$CURRENT_PATH/$SUBMODULE' does NOT exist!";
-		exit 1;
-	fi
 	git submodule update --init --recursive "${SUBMODULE}";
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
