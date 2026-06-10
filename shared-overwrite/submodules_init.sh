@@ -71,7 +71,6 @@ elif [[ $PROJECT_NAME == *"-bike"* ]]; then
 else
 	echo "> Bus/Train/... android app: '$PROJECT_NAME' > parser required";
 	SUBMODULES+=('parser');
-	SUBMODULES_REPO+=('parser');
 	mkdir -p agency-parser/archive; # needed for shared-opt-dir #InitRepo
 	if [[ "$INIT_SUBMODULE" == true ]]; then
 		git lfs track agency-parser/archive/*;
