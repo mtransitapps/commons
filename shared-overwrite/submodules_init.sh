@@ -1,7 +1,7 @@
 #!/bin/bash
 # ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
 #NO DEPENDENCY <= EXECUTED BEFORE GIT SUBMODULE
-function setGitProjectName() { # copy from commons.sh
+setGitProjectName() { # copy from commons.sh
 	GIT_URL=$(git config --get remote.origin.url);
 	GIT_PROJECT_NAME=$(basename -- "${GIT_URL}");
 	GIT_PROJECT_NAME="${GIT_PROJECT_NAME%.*}" # remove ".git" extension
@@ -42,9 +42,9 @@ setGitProjectName;
 
 CURRENT_PATH=$(pwd);
 
-INIT_SUBMODULE=true
+FIRST_INIT=true
 if [[ -f "$CURRENT_PATH/.gitmodules" ]]; then
-	INIT_SUBMODULE=false
+	FIRST_INIT=false
 fi
 
 # SHARED SUBMODULES
@@ -69,7 +69,7 @@ else
 	echo "> Bus/Train/... android app: '$PROJECT_NAME' > parser required";
 	SUBMODULES+=('parser');
 	mkdir -p agency-parser/archive; # needed for shared-opt-dir #InitRepo
-	if [[ "$INIT_SUBMODULE" == true ]]; then
+	if [[ "$FIRST_INIT" == true ]]; then
 		git lfs track "agency-parser/archive/*"
 	fi
 fi
@@ -110,7 +110,7 @@ done
 echo "--------------------------------------------------------------------------------";
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
-DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
+DURATION_SEC=$((AFTER_DATE_SEC - BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
 echo "> INIT SUBMODULES... DONE ✓";
 echo "================================================================================";
