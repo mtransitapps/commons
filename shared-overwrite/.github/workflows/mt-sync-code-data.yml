@@ -17,7 +17,7 @@ on:
         default: false
         required: false
       skip-app-release:
-        description: 'App release > SKIP (event if data change or latest release old)'
+        description: 'App release > SKIP (even if data change or latest release old)'
         type: boolean
         default: false
         required: false

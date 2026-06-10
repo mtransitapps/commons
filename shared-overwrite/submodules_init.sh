@@ -71,6 +71,11 @@ else
 	mkdir -p agency-parser/archive; # needed for shared-opt-dir #InitRepo
 	if [[ "$FIRST_INIT" == true ]]; then
 		git lfs track "agency-parser/archive/*"
+		RESULT=$?
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo "> Error while configuring Git LFS tracking for agency-parser archive!"
+			exit ${RESULT}
+		fi
 	fi
 fi
 
