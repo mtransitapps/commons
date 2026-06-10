@@ -81,7 +81,8 @@ printf '> - "%s"\n' "${SUBMODULES[@]}";
 
 for SUBMODULE in "${SUBMODULES[@]}" ; do
     echo "--------------------------------------------------------------------------------";
-    if [[ "$INIT_SUBMODULE" == true ]]; then # ADDNING GIT SUBMODULE
+    # Check if the submodule is already registered in .gitmodules
+    if ! git config --file "$CURRENT_PATH/.gitmodules" --get "submodule.${SUBMODULE}.path" >/dev/null 2>&1; then
 		if [[ -d "$CURRENT_PATH/$SUBMODULE" ]]; then
 			echo "> Cannot override '$CURRENT_PATH/$SUBMODULE'!";
 			exit 1;
