@@ -41,7 +41,6 @@ fi
 setGitProjectName;
 
 CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename "${CURRENT_PATH}");
 
 INIT_SUBMODULE=false;
 if [[ -f "$CURRENT_PATH/.gitmodules" ]]; then
