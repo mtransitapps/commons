@@ -71,6 +71,9 @@ fi
 TYPE_LABEL="";
 if [ "$TYPE" -eq 100 ]; then # BIKE
     TYPE_LABEL="bikes";
+elif [ "$TYPE" -eq 999 ]; then # TEMPLATE
+    echo "> WARNING: template agency type '$TYPE'!"
+    TYPE_LABEL="templates";
 else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error

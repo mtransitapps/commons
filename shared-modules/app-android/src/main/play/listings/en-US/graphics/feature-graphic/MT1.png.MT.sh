@@ -113,6 +113,9 @@ elif [ "$COUNTRY_CODE" = "us" ]; then
     COUNTRY_LABEL="United States";
 elif [ "$COUNTRY_CODE" = "fr" ]; then
     COUNTRY_LABEL="France";
+elif [ "$COUNTRY_CODE" = "xx" ]; then
+    echo "> WARNING: template country code '$COUNTRY_CODE'!"
+    COUNTRY_LABEL=""; # (unknown country)
 else
   echo "Unexpected country code '$COUNTRY_CODE'!"
   exit 1 # error

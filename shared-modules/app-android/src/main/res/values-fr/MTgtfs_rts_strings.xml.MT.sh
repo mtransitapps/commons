@@ -101,6 +101,9 @@ elif [ "$TYPE" -eq 3 ]; then # BUS
     TYPE_LABEL="autobus";
 elif [ "$TYPE" -eq 4 ]; then # FERRY
     TYPE_LABEL="bateaux";
+elif [ "$TYPE" -eq 999 ]; then # TEMPLATE
+    echo "> WARNING: template agency type '$TYPE'!"
+    TYPE_LABEL="templates";
 else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error

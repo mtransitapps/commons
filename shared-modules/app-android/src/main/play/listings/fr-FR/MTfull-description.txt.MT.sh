@@ -143,6 +143,9 @@ elif [ "$COUNTRY_CODE" = "us" ]; then
     COUNTRY_LABEL="États-Unis";
 elif [ "$COUNTRY_CODE" = "fr" ]; then
     COUNTRY_LABEL="France";
+elif [ "$COUNTRY_CODE" = "xx" ]; then
+    echo "> WARNING: template country code '$COUNTRY_CODE'!"
+    COUNTRY_LABEL=""; # (unknown country)
 else
   echo "Unexpected country code '$COUNTRY_CODE'!"
   exit 1 # error
@@ -236,6 +239,9 @@ elif [ "$TYPE" -eq 4 ]; then # FERRY
     TYPE_LABEL="bateaux";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
     TYPE_LABEL="vélos";
+elif [ "$TYPE" -eq 999 ]; then # TEMPLATE
+    echo "> WARNING: template agency type '$TYPE'!"
+    TYPE_LABEL="templates";
 else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error
