@@ -73,7 +73,7 @@ else
 	SUBMODULES+=('parser');
 	mkdir -p agency-parser/archive; # needed for shared-opt-dir #InitRepo
 	if [[ "$INIT_SUBMODULE" == true ]]; then
-		git lfs track agency-parser/archive/*;
+		git lfs track "agency-parser/archive/*"
 	fi
 fi
 
