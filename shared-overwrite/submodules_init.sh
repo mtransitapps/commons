@@ -54,11 +54,6 @@ declare -a SUBMODULES=(
 	"commons-android"
 );
 
-# APP-ANDROID (OLD REPO)
-if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-	SUBMODULES+=('app-android'); # OLD REPO
-fi
-
 #PARSER
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo "> Main android app: '$PROJECT_NAME' > parser required";
