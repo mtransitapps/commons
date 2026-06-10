@@ -42,11 +42,9 @@ setGitProjectName;
 
 CURRENT_PATH=$(pwd);
 
-INIT_SUBMODULE=false;
+INIT_SUBMODULE=true
 if [[ -f "$CURRENT_PATH/.gitmodules" ]]; then
-	INIT_SUBMODULE=false;
-else
-	INIT_SUBMODULE=true;
+	INIT_SUBMODULE=false
 fi
 
 # SHARED SUBMODULES
