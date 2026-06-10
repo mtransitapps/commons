@@ -101,7 +101,7 @@ for SUBMODULE in "${SUBMODULES[@]}" ; do
 	git submodule update --init --recursive "${SUBMODULE}";
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
-		echo "> Error while update GIT submodule '$SUBMODULE'!";
+		echo "> Error while updating GIT submodule '$SUBMODULE'!";
 		exit ${RESULT};
 	fi
 	echo "'$SUBMODULE' updated successfully."
