@@ -4,8 +4,8 @@
 [versions]
 # Android 7.0 Nougat
 sdk-min = "24"
-# Android 16 Baklava (update 1st)
-sdk-compile = "36"
+# Android 17 ? (update 1st)
+sdk-compile = "37"
 # Android 15 Vanilla Ice Cream (update 2nd)
 sdk-target = "35"
 # https://developer.android.com/tools/releases/build-tools
