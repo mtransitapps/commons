@@ -123,7 +123,7 @@ if [ -n "$STATE_LABEL_SHORT" ]; then
     STATE_AND_COUNTRY_LABEL="$STATE_LABEL_SHORT, $COUNTRY_LABEL";
 fi
 
-MAX_CITY_LENGTH=77 # from module-featured-graphic.sh
+MAX_CITY_LENGTH=$((77 - 1)) # -1 for "…" # 77 from module-featured-graphic.sh
 CITIES_LABEL=$(echo $CITIES_LABEL | awk -v len=$MAX_CITY_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }');
 
 # uses inkscape
