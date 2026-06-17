@@ -82,7 +82,7 @@ gps-plugin = "4.4.4"
 # https://developers.google.com/admob/android/rel-notes
 gps-ads = "25.3.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
-gps-ads-nextgen = "1.1.1"
+gps-ads-nextgen = "1.2.1"
 gps-ump = "4.0.0"
 gps-basement = "18.10.0"
 gps-time = "16.0.1"
