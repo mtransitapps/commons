@@ -19,7 +19,7 @@ pluginManagement {
 plugins {
     id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
     // https://plugins.gradle.org/plugin/com.gradle.develocity
-    id "com.gradle.develocity" version "4.3.2"
+    id "com.gradle.develocity" version "4.4.3"
 }
 
 Properties projectNameProperties = new Properties()
@@ -71,6 +71,7 @@ dependencyResolutionManagement {
                 includeGroupByRegex("com\\.google\\.android\\.gms.*")
                 includeGroupByRegex("com\\.google\\.firebase.*")
                 includeGroupByRegex("com\\.google\\.play.*")
+                includeGroupByRegex("org\\.chromium\\.net")
             }
         }
         mavenCentral {} // https://repo.maven.apache.org/maven2

@@ -216,86 +216,6 @@ EOL
 EOL
 fi
 
-STRATEGIC_MAPPING_FILE="${VALUES_DIR}/strategic_mapping_values.xml";
-if [ -f "${STRATEGIC_MAPPING_FILE}" ]; then
-  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- STRATEGIC MAPPING PROVIDER -->
-        <provider
-            android:name="org.mtransit.android.commons.provider.StrategicMappingProvider"
-            android:authorities="@string/strategic_mapping_authority"
-            android:exported="true"
-            android:readPermission="\${permission_provider_read}"
-            tools:ignore="MissingRegistered">
-            <meta-data
-                android:name="@string/status_provider"
-                android:value="@string/status_provider" />
-            <meta-data
-                android:name="@string/status_provider_target"
-                android:value="@string/strategic_mapping_status_for_poi_authority" />
-        </provider>
-EOL
-fi
-
-CA_EDMONTON_PROVIDER_FILE="${VALUES_DIR}/ca_edmonton_values.xml";
-if [ -f "${CA_EDMONTON_PROVIDER_FILE}" ]; then
-  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- EDMONTON PROVIDER -->
-        <provider
-            android:name="org.mtransit.android.commons.provider.CaEdmontonProvider"
-            android:authorities="@string/ca_edmonton_authority"
-            android:exported="true"
-            android:readPermission="\${permission_provider_read}"
-            tools:ignore="MissingRegistered">
-            <meta-data
-                android:name="@string/status_provider"
-                android:value="@string/status_provider" />
-            <meta-data
-                android:name="@string/status_provider_target"
-                android:value="@string/ca_edmonton_status_for_poi_authority" />
-        </provider>
-EOL
-fi
-
-CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE="${VALUES_DIR}/grand_river_transit_values.xml";
-if [ -f "${CA_GRAND_RIVER_TRANSIT_PROVIDER_FILE}" ]; then
-  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- GRAND RIVER TRANSIT PROVIDER -->
-        <provider
-            android:name="org.mtransit.android.commons.provider.GrandRiverTransitProvider"
-            android:authorities="@string/grand_river_transit_authority"
-            android:exported="true"
-            android:readPermission="\${permission_provider_read}"
-            tools:ignore="MissingRegistered">
-            <meta-data
-                android:name="@string/status_provider"
-                android:value="@string/status_provider" />
-            <meta-data
-                android:name="@string/status_provider_target"
-                android:value="@string/grand_river_transit_status_for_poi_authority" />
-        </provider>
-EOL
-fi
-
-CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE="${VALUES_DIR}/greater_sudbury_values.xml";
-if [ -f "${CA_GREATER_SUDBURY_MYBUS_PROVIDER_FILE}" ]; then
-  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- GREATER SUDBURY MYBUS PROVIDER -->
-        <provider
-            android:name="org.mtransit.android.commons.provider.GreaterSudburyProvider"
-            android:authorities="@string/greater_sudbury_authority"
-            android:exported="true"
-            android:readPermission="\${permission_provider_read}"
-            tools:ignore="MissingRegistered">
-            <meta-data
-                android:name="@string/status_provider"
-                android:value="@string/status_provider" />
-            <meta-data
-                android:name="@string/status_provider_target"
-                android:value="@string/greater_sudbury_status_for_poi_authority" />
-        </provider>
-EOL
-fi
-
 CA_MONTREAL_STM_INFO_PROVIDER_FILE="${VALUES_DIR}/stm_info_api_values.xml";
 if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
@@ -328,26 +248,6 @@ EOL
 EOL
   fi
   cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        </provider>
-EOL
-fi
-
-CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE="${VALUES_DIR}/stm_info_values.xml";
-if [ -f "${CA_MONTREAL_STM_INFO_SUBWAY_PROVIDER_FILE}" ]; then
-  cat >>"${ANDROID_MANIFEST_FILE}" <<EOL
-        <!-- STM.INFO PROVIDER -->
-        <provider
-            android:name="org.mtransit.android.commons.provider.StmInfoSubwayProvider"
-            android:authorities="@string/stm_info_authority"
-            android:exported="true"
-            android:readPermission="\${permission_provider_read}"
-            tools:ignore="MissingRegistered">
-            <meta-data
-                android:name="@string/service_update_provider"
-                android:value="@string/service_update_provider" />
-            <meta-data
-                android:name="@string/service_update_provider_target"
-                android:value="@string/stm_info_status_for_poi_authority" />
         </provider>
 EOL
 fi

@@ -7,8 +7,6 @@ source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
-echo ">> Generating fr-FR/title.txt...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -21,6 +19,8 @@ if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
     echo ">> Generating fr-FR/title.txt... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
+
+echo ">> Generating fr-FR/title.txt...";
 
 TITLE_FILE="${FR_FR_DIR}/title.txt";
 mkdir -p "${FR_FR_DIR}";
@@ -41,7 +41,10 @@ if [ ! -d "$CONFIG_DIR" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+AGENCY_NAME_FILE="${CONFIG_DIR}/fr/agency_name";
+if [ ! -f "$AGENCY_NAME_FILE" ]; then
+  AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+fi
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
     exit 1;
@@ -55,7 +58,7 @@ fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
@@ -64,7 +67,7 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi
@@ -119,7 +122,7 @@ AGENCY_LABEL=$AGENCY_NAME_SHORT;
 
 AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH=$((${#AGENCY_LABEL} + ${#AGENCY_LOCATION_SHORT}));
 
-if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH" -lt "$MAX_LENGTH" ]]; then
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* && "$AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH" -lt "$MAX_LENGTH" ]]; then
   AGENCY_LABEL="$AGENCY_LABEL $AGENCY_LOCATION_SHORT"
 fi
 

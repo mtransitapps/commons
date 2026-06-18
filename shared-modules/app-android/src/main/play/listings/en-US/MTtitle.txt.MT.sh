@@ -48,7 +48,7 @@ fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
@@ -57,7 +57,7 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi
@@ -106,6 +106,14 @@ else
   exit 1 # error
 fi
 
+AGENCY_TYPE_FILE="${CONFIG_DIR}/agency_type";
+if [ -f "$AGENCY_TYPE_FILE" ]; then
+  AGENCY_TYPE_SHORT=$(head -n 1 "$AGENCY_TYPE_FILE");
+  if [ -n "$AGENCY_TYPE_SHORT" ]; then
+    TYPE_LABEL="$AGENCY_TYPE_SHORT";
+  fi
+fi
+
 MAX_LENGTH=30;
 TYPE_LABEL_MIN_LENGTH=3; # ${#TYPE_LABEL}
 
@@ -113,7 +121,7 @@ AGENCY_LABEL=$AGENCY_NAME_SHORT;
 
 AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH=$((${#AGENCY_LABEL} + ${#AGENCY_LOCATION_SHORT} + $TYPE_LABEL_MIN_LENGTH));
 
-if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH" -lt "$MAX_LENGTH" ]]; then
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* && "$AGENCY_LABEL_AND_LOCATION_SHORT_LENGTH" -lt "$MAX_LENGTH" ]]; then
   AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
 fi
 

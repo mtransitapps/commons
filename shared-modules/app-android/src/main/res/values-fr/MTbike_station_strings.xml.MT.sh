@@ -9,8 +9,6 @@ setGitProjectName;
 
 setIsCI;
 
-echo ">> Generating values-fr/bike_station_strings.xml...";
-
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
@@ -28,6 +26,8 @@ if [ ! -f "${BIKE_STATION_VALUES_FILE}" ]; then
     echo ">> Generating values-fr/bike_station_strings.xml... SKIP (not an Bike station agency)";
     exit 0; # ok
 fi
+
+echo ">> Generating values-fr/bike_station_strings.xml...";
 
 BIKE_STATION_STRINGS_FILE="${VALUES_FR_DIR}/bike_station_strings.xml";
 mkdir -p "${VALUES_FR_DIR}";
@@ -48,7 +48,10 @@ if [ ! -d "$CONFIG_DIR" ]; then
     exit 1;
 fi
 
-AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+AGENCY_NAME_FILE="${CONFIG_DIR}/fr/agency_name";
+if [ ! -f "$AGENCY_NAME_FILE" ]; then
+  AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
+fi
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
     exit 1;
@@ -56,13 +59,13 @@ fi
 
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+    echo "AGENCY_NAME_LONG is empty!";
     exit 1;
 fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 

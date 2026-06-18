@@ -49,13 +49,13 @@ fi
 
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+    echo "AGENCY_NAME_LONG is empty!";
     exit 1;
 fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
@@ -95,6 +95,18 @@ else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error
 fi
+
+AGENCY_TYPE_FILE="${CONFIG_DIR}/agency_type";
+if [ -f "$AGENCY_TYPE_FILE" ]; then
+  AGENCY_TYPE_SHORT=$(head -n 1 "$AGENCY_TYPE_FILE");
+  if [ -n "$AGENCY_TYPE_SHORT" ]; then
+    TYPE_LABEL="$AGENCY_TYPE_SHORT";
+  fi
+fi
+
+# escape "&" -> "&amp;" for XML
+AGENCY_NAME_LONG="${AGENCY_NAME_LONG//&/&amp;}";
+AGENCY_NAME_SHORT="${AGENCY_NAME_SHORT//&/&amp;}";
 
 cat >>"${GTFS_RTS_STRINGS_FILE}" <<EOL
 <?xml version="1.0" encoding="utf-8"?>

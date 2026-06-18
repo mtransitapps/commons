@@ -153,6 +153,7 @@ android {
         buildConfigField "int", "MIN_SDK_VERSION", "$minSdkVersion.apiLevel"
         targetSdk = libs.versions.sdk.target.get().toInteger()
         buildConfigField "int", "TARGET_SDK_VERSION", "$targetSdkVersion.apiLevel"
+        buildConfigField "boolean", "GMA_NEXT_GEN", "${rootProject.gmaNextGen}"
 
         manifestPlaceholders.target_sdk_version = libs.versions.sdk.target.get()
         manifestPlaceholders.pkg_namespace = namespace
@@ -255,17 +256,14 @@ android {
                 }
             }
 
+            shrinkResources = true
+            minifyEnabled = true
+            // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
             if (isMainApp) {
-                shrinkResources = true
-                minifyEnabled = true
-                // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
-                proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), // "proguard-android.txt"),
+                proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
                         "proguard-rules.pro"
             } else {
-                shrinkResources = true
-                minifyEnabled = true
-                // https://android.googlesource.com/platform/sdk/+/master/files/proguard-android-optimize.txt
-                proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), // no code in module "app-android" -> no "proguard-rules.pro"
+                proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
                         "module-proguard-rules.pro"
             }
         }
@@ -330,9 +328,10 @@ android {
         }
     }
 
-    packagingOptions {
+    packaging {
         resources {
-            excludes += ['META-INF/INDEX.LIST']
+            excludes += "META-INF/INDEX.LIST"
+            excludes += "**/*.md"
         }
     }
 }
@@ -381,6 +380,11 @@ dependencies {
         ksp(libs.glide.ksp)
         implementation(platform(libs.firebase.bom))
         implementation(libs.bundles.gps)
+        if (rootProject.gmaNextGen) {
+            implementation(libs.gps.ads.nextgen)
+        } else {
+            implementation(libs.gps.ads)
+        }
         implementation(libs.bundles.billingClient)
         implementation(libs.play.review)
         implementation(libs.bundles.fb)
@@ -406,7 +410,12 @@ dependencies {
         implementation(libs.androidx.core)
     }
 }
-
+if (isMainApp && rootProject.gmaNextGen) {
+    configurations.configureEach {
+        exclude group: "com.google.android.gms", module: "play-services-ads"
+        exclude group: "com.google.android.gms", module: "play-services-ads-lite"
+    }
+}
 
 play {
     serviceAccountCredentials.set(file("google-play-auto-publisher.json"))
@@ -461,6 +470,7 @@ def setupResValues(buildType, appId) {
             buildType.resValue("string", "poi_agency_authority", "@string/${poiAgencyTypePrefix}_authority")
             buildType.resValue("string", "poi_agency_color", "@string/${poiAgencyTypePrefix}_color")
             buildType.resValue("string", "poi_agency_short_name", "@string/${poiAgencyTypePrefix}_short_name")
+            buildType.resValue("string", "poi_agency_timezone", "@string/${poiAgencyTypePrefix}_timezone")
         } else {
             println "> Unexpected POI agency type!"
         }
@@ -470,18 +480,9 @@ def setupResValues(buildType, appId) {
         buildType.resValue("string", "clever_devices_authority", "${appId}.clever_devices")
         buildType.resValue("string", "next_bus_authority", "${appId}.nextbus")
         buildType.resValue("string", "one_bus_away_authority", "${appId}.oba")
-        buildType.resValue("string", "strategic_mapping_authority", "${appId}.strategic_mapping")
 
-        buildType.resValue("string", "ca_edmonton_authority", "${appId}.etslive")
-        buildType.resValue("string", "ca_ltconline_authority", "${appId}.ltconline")
-        buildType.resValue("string", "ca_sto_authority", "${appId}.ca_sto")
-        buildType.resValue("string", "ca_translink_authority", "${appId}.ca_translink")
-        buildType.resValue("string", "grand_river_transit_authority", "${appId}.ca_grt")
-        buildType.resValue("string", "greater_sudbury_authority", "${appId}.mybus")
-        buildType.resValue("string", "oc_transpo_authority", "${appId}.octranspo")
         buildType.resValue("string", "regina_transit_authority", "${appId}.transitlive_com")
         buildType.resValue("string", "rtc_quebec_authority", "${appId}.rtcquebec")
-        buildType.resValue("string", "stm_info_authority", "${appId}.stminfo")
         buildType.resValue("string", "stm_info_api_authority", "${appId}.stminfoapi")
         buildType.resValue("string", "winnipeg_transit_authority", "${appId}.winnipeg_transit")
     }

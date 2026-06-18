@@ -101,6 +101,32 @@ function setPushToStoreEnabled() {
 	fi
 }
 
+function setPushToStoreInternalEnabled() {
+	MT_PUSH_STORE_INTERNAL_ENABLED="false";
+
+	setIsCI;
+	if [[ ${IS_CI} = true ]]; then
+		echo "MT_ORG_STORE_INTERNAL_ON: '$MT_ORG_STORE_INTERNAL_ON'." # allowed
+		echo "MT_ORG_STORE_INTERNAL_OFF: '$MT_ORG_STORE_INTERNAL_OFF'." # forbidden
+		echo "MT_STORE_INTERNAL_ON: '$MT_STORE_INTERNAL_ON'." # allowed
+		echo "MT_STORE_INTERNAL_OFF: '$MT_STORE_INTERNAL_OFF'." # forbidden
+	fi
+
+	if [[ ${MT_ORG_STORE_INTERNAL_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Internal disabled (org).. SKIP";
+		MT_PUSH_STORE_INTERNAL_ENABLED="false";
+	elif [[ ${MT_STORE_INTERNAL_OFF} == "mt_true" ]]; then
+		echo "> Push to Store Internal disabled (project).. SKIP";
+		MT_PUSH_STORE_INTERNAL_ENABLED="false";
+	elif [[ ${MT_ORG_STORE_INTERNAL_ON} != "mt_true" && $MT_STORE_INTERNAL_ON != "mt_true" ]]; then
+		echo "> Push to Store Internal NOT enabled (org:'$MT_ORG_STORE_INTERNAL_ON'|project:'$MT_STORE_INTERNAL_ON').. SKIP";
+		MT_PUSH_STORE_INTERNAL_ENABLED="false";
+	else
+		echo "> Push to Store Internal enabled (org:'$MT_ORG_STORE_INTERNAL_ON'|project:'$MT_STORE_INTERNAL_ON')";
+		MT_PUSH_STORE_INTERNAL_ENABLED="true";
+	fi
+}
+
 function setPushToStoreAlphaEnabled() {
 	MT_PUSH_STORE_ALPHA_ENABLED="false";
 
@@ -209,6 +235,7 @@ function setGitProjectName() {
 }
 
 function setGitBranch() {
+	DEFAULT_GIT_BRANCH="${MT_DEFAULT_BRANCH_NAME:-master}";
 	GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD);
 	if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 		GIT_BRANCH="";
@@ -220,13 +247,13 @@ function setGitBranch() {
 		fi
 	fi
 	if [[ -z "${GIT_BRANCH}" ]]; then
-		GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}; #TravicCI
+		GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}; #TravisCI
 		if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 			GIT_BRANCH="";
 		fi
 	fi
 	if [[ -z "${GIT_BRANCH}" ]]; then
-		GIT_BRANCH=${TRAVIS_BRANCH}; #TravicCI
+		GIT_BRANCH=${TRAVIS_BRANCH}; #TravisCI
 		if [[ "$GIT_BRANCH" = "HEAD" ]]; then
 			GIT_BRANCH="";
 		fi
@@ -241,7 +268,7 @@ function setGitBranch() {
 		echo "GIT_BRANCH not found!";
 		exit 1;
 	fi
-	echo "GIT_BRANCH: $GIT_BRANCH.";
+	echo "GIT_BRANCH: $GIT_BRANCH. | DEFAULT_GIT_BRANCH: $DEFAULT_GIT_BRANCH.";
 }
 
 function printGitStatus() {
@@ -255,6 +282,7 @@ function printGitStatus() {
 	echo "> [GIT STATUS & LOG]...";
 	echo "'$(basename $PWD)'"
 	git config --get remote.origin.url;
+	echo "> status:";
 	git status -sb;
 	STAGED_DIFF=$(git diff --cached | head -n $DIFF_LIMIT);
 	if [ -n "$STAGED_DIFF" ]; then
@@ -276,6 +304,7 @@ function printGitStatus() {
 	echo "$LOG";
 	echo "--------------------------------------------------";
 	git submodule foreach "
+	    echo \"> status:\";
 		git status -sb;
 		git config --get remote.origin.url;
 		STAGED_DIFF=\$(git diff --cached | head -n $DIFF_LIMIT);
@@ -395,16 +424,18 @@ function download() {
 	local NEW_FILE;
 	NEW_FILE=$(basename "$URL");
 	local LAST_FILE=$2;
-	local CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION="openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation";
+	local CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION="openssl_conf = openssl_init\n[openssl_init]\nssl_conf = ssl_sect\n[ssl_sect]\nsystem_default = system_default_sect\n[system_default_sect]\nOptions = UnsafeLegacyRenegotiation\nCipherString = DEFAULT@SECLEVEL=1";
 	if [[ "$NEW_FILE" == "$LAST_FILE" ]]; then
 		NEW_FILE="NEW_${NEW_FILE}"
 	fi
-	# curl --version;
-	# wget --version;
 	local CURL_="curl";
-	# local CURL_="curl --verbose"; #DEBUG
 	local WGET_="wget";
-	# local WGET_="wget --verbose"; #DEBUG
+	if [[ ${IS_CI} = true ]]; then
+		curl --version;
+		local CURL_="curl --verbose"; #DEBUG
+		wget --version;
+		local WGET_="wget --verbose"; #DEBUG
+	fi
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
 		echo "> download() > (using last file '${LAST_FILE}')";
@@ -414,19 +445,23 @@ function download() {
 		$CURL_ --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 60 --retry 3 "$URL";
 		local RESULT=$?;
 		if [[ ${RESULT} != 0 ]]; then
-			echo "> download() > Downloading from '$URL'... FAILED";
+			echo "> download() > Downloading from '$URL'... FAILED ($RESULT)";
 			echo "> download() > Downloading from '$URL' (insecure)...";
 			$CURL_  --insecure --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 60 --retry 3 "$URL";
 			local RESULT=$?;
 			if [[ ${RESULT} != 0 ]]; then
-				echo "> download() > Downloading from '$URL' (insecure)...FAILED";
+				echo "> download() > Downloading from '$URL' (insecure)...FAILED ($RESULT)";
 				echo "> download() > Downloading from '$URL' with WGET...";
 				$WGET_ -O "${NEW_FILE}" --header="User-Agent: MonTransit" --timeout=60 --tries=3 --timestamping "$URL";
 				local RESULT=$?;
 				if [[ ${RESULT} != 0 ]]; then
-					echo "> download() > Downloading from '$URL' with WGET... FAILED";
+					echo "> download() > Downloading from '$URL' with WGET... FAILED ($RESULT)";
 					echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF w/ UnsafeLegacyRenegotiation...";
-					echo -e "$CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION" | OPENSSL_CONF=/dev/stdin curl --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 60 --retry 3 "$URL";
+					echo -e "$CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION" | OPENSSL_CONF=/dev/stdin $CURL_ --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 60 --retry 3 "$URL";
+					local RESULT=$?;
+					if [[ ${RESULT} != 0 ]]; then
+					  echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF w/ UnsafeLegacyRenegotiation... FAILED ($RESULT)";
+					fi
 				fi
 			fi
 		fi
@@ -436,22 +471,30 @@ function download() {
 		$CURL_  --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 60 --retry 3 "$URL";
 		local RESULT=$?;
 		if [[ ${RESULT} != 0 ]]; then
-			echo "> download() > Downloading from '$URL'... FAILED";
+			echo "> download() > Downloading from '$URL'... FAILED ($RESULT)";
 			echo "> download() > Downloading from '$URL' (insecure)...";
 			$CURL_  --insecure --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 60 --retry 3 "$URL";
 			local RESULT=$?;
 			if [[ ${RESULT} != 0 ]]; then
-				echo "> download() > Downloading from '$URL' (insecure)...FAILED";
+				echo "> download() > Downloading from '$URL' (insecure)...FAILED ($RESULT)";
 				echo "> download() > Downloading from '$URL' with WGET...";
 				$WGET_ -O "${NEW_FILE}" --header="User-Agent: MonTransit" --timeout=60 --tries=3 "$URL";
 				local RESULT=$?;
 				if [[ ${RESULT} != 0 ]]; then
-					echo "> download() > Downloading from '$URL' with WGET... FAILED";
+					echo "> download() > Downloading from '$URL' with WGET... FAILED ($RESULT)";
 					echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF w/ UnsafeLegacyRenegotiation...";
-					echo -e "$CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION" | OPENSSL_CONF=/dev/stdin curl --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 60 --retry 3 "$URL";
+					echo -e "$CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION" | OPENSSL_CONF=/dev/stdin $CURL_ --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 60 --retry 3 "$URL";
+					local RESULT=$?;
+					if [[ ${RESULT} != 0 ]]; then
+						echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF w/ UnsafeLegacyRenegotiation... FAILED ($RESULT)";
+					fi
 				fi
 			fi
 		fi
+	fi;
+	if [[ ${RESULT} != 0 ]]; then
+		echo "> download() > Failed to download file from '$URL' ($RESULT)!";
+		return 1; # DID NOT DOWNLOAD
 	fi;
 	if [[ -e "${NEW_FILE}" ]]; then
 		if [[ -e ${LAST_FILE} ]]; then

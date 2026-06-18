@@ -49,7 +49,7 @@ if [[ $CIRCLECI != "true" ]]; then
 				echo "> GIT repo up-to-date in '$DIRECTORY' (local:$GIT_REV_PARSE_HEAD|origin/$GIT_BRANCH:$GIT_REV_PARSE_REMOTE_BRANCH).";
 			fi
 
-			git checkout ${GIT_BRANCH};
+			git switch ${GIT_BRANCH};
 			checkResult $? ${CONFIRM};
 			echo "> GIT cleaning in '$DIRECTORY'... DONE";
 			cd ..;

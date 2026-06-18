@@ -9,6 +9,7 @@ updates:
   - package-ecosystem: "github-actions"
     directories:
       - "/"
+      - "/shared-overwrite/.github/actions/"
       - "/shared-overwrite/.github/workflows/"
     schedule:
       interval: "weekly"
@@ -24,7 +25,9 @@ updates:
     open-pull-requests-limit: 7
   # Gradle in /gradle/libs.versions.toml
   - package-ecosystem: "gradle"
-    directory: "/"
+    directories:
+      - "/" # gradle/libs.versions.toml
+      - "/shared" # settings.gradle
     registries:
       - maven-google
     schedule:

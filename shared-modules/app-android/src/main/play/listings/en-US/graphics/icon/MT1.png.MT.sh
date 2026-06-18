@@ -31,9 +31,6 @@ if [ -f "${FILE_1_PNG}" ]; then
   fi
 fi
 
-rm -f "${FILE_1_PNG}";
-checkResult $?;
-
 $ROOT_DIR/commons-android/pub/module-hi-res-app-icon.sh; # uses inkscape
 checkResult $?;
 

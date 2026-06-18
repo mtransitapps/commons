@@ -45,13 +45,13 @@ fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
 AGENCY_NAME_LONG=$(tail -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_LONG" ]; then
-    echo "$AGENCY_NAME_LONG is empty!";
+    echo "AGENCY_NAME_LONG is empty!";
     exit 1;
 fi
 
@@ -60,7 +60,7 @@ AGENCY_LOCATION_FILE="${CONFIG_DIR}/agency_location";
 if [ -f "$AGENCY_LOCATION_FILE" ]; then
     AGENCY_LOCATION_SHORT=$(head -n 1 $AGENCY_LOCATION_FILE);
     if [ -z "$AGENCY_LOCATION_SHORT" ]; then
-        echo "$AGENCY_LOCATION_SHORT is empty!";
+        echo "AGENCY_LOCATION_SHORT is empty!";
         exit 1;
     fi
 fi
@@ -76,22 +76,21 @@ if [ -f "$PARENT_AGENCY_NAME_FILE" ]; then
     fi
 fi
 
-if [ -n "$AGENCY_LOCATION_SHORT" ]; then
-  AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL"
+if [[ -n "$AGENCY_LOCATION_SHORT" && "$AGENCY_LABEL" != *"$AGENCY_LOCATION_SHORT"* ]]; then
+  AGENCY_LABEL="$AGENCY_LOCATION_SHORT $AGENCY_LABEL";
 fi
 
 GIT_OWNER="mtransitapps"; #TODO extract from GIT_REMOTE_URL=$(git config --get remote.origin.url); # 'git@github.com:owner/repo.git' or 'https://github.com/owner/repo'.
 CONTACT_WEBSITE_URL="https://github.com/$GIT_OWNER/$PROJECT_NAME";
 
+SOURCE_URL="";
 SOURCE_URL_FILE="${CONFIG_DIR}/source_url";
-if [ ! -f "$SOURCE_URL_FILE" ]; then
-    echo "$SOURCE_URL_FILE doesn't exist!";
+if [ -f "$SOURCE_URL_FILE" ]; then
+  SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
+  if [ -z "$SOURCE_URL" ]; then
+    echo "SOURCE_URL is empty!";
     exit 1;
-fi
-SOURCE_URL=$(head -n 1 $SOURCE_URL_FILE);
-if [ -z "$SOURCE_URL" ]; then
-    echo "$SOURCE_URL is empty!";
-    exit 1;
+  fi
 fi
 
 SOURCE_NAME_FILE="${CONFIG_DIR}/source_name"; #optional
@@ -111,7 +110,7 @@ if [ ! -f "$CITIES_FILE" ]; then
 fi
 CITIES_LABEL=$(head -n 1 $CITIES_FILE);
 if [ -z "$CITIES_LABEL" ]; then
-    echo "$CITIES_LABEL is empty!";
+    echo "CITIES_LABEL is empty in '$CITIES_FILE'!";
     exit 1;
 fi
 
@@ -143,7 +142,7 @@ SOURCE_PROVIDER="$SOURCE_NAME";
 if [ -z "$SOURCE_PROVIDER" ]; then
   SOURCE_PROVIDER="$AGENCY_NAME_SHORT";
   if [ -n "$PARENT_AGENCY_NAME_LONG" ]; then
-      SOURCE_PROVIDER=$PARENT_AGENCY_NAME_LONG;
+    SOURCE_PROVIDER=$PARENT_AGENCY_NAME_LONG;
   fi
 fi
 
@@ -226,6 +225,14 @@ else
   exit 1 # error
 fi
 
+AGENCY_TYPE_FILE="${CONFIG_DIR}/agency_type";
+if [ -f "$AGENCY_TYPE_FILE" ]; then
+  AGENCY_TYPE_SHORT=$(head -n 1 "$AGENCY_TYPE_FILE");
+  if [ -n "$AGENCY_TYPE_SHORT" ]; then
+    TYPE_LABEL="$AGENCY_TYPE_SHORT";
+  fi
+fi
+
 PROVIDES_LINE="This app provides the $TYPE_LABEL";
 
 INFORMATION_LIST="";
@@ -255,7 +262,7 @@ YOUTUBE_FILE="${VALUES_DIR}/youtube_values.xml";
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PROVIDES_LINE_END" ]; then
     PROVIDES_LINE_END="${PROVIDES_LINE_END} and";
-  else 
+  else
     PROVIDES_LINE_END="${PROVIDES_LINE_END},";
   fi
   PROVIDES_LINE_END="${PROVIDES_LINE_END} news";
@@ -320,9 +327,14 @@ fi
 
 setFeatureFlags;
 
+RT_PARTS=()
 GTFS_RT_FILE="${VALUES_DIR}/gtfs_real_time_values.xml";
 if [ -f "${GTFS_RT_FILE}" ]; then
-  RT_PARTS=()
+  if grep -q "gtfs_real_time_agency_trip_updates_url" "${GTFS_RT_FILE}"; then
+    if [[ "${F_EXPORT_GTFS_RT_TRIP_UPDATES_PROVIDER}" == "true" ]]; then
+      RT_PARTS+=(" next departures")
+    fi
+  fi
   if grep -q "gtfs_real_time_agency_service_alerts_url" "${GTFS_RT_FILE}"; then
     RT_PARTS+=(" service alerts")
   fi
@@ -331,16 +343,26 @@ if [ -f "${GTFS_RT_FILE}" ]; then
       RT_PARTS+=(" vehicle locations")
     fi
   fi
-  OLD_IFS=$IFS; IFS=","
-  RT_LINE="${RT_PARTS[*]}"
-  IFS=$OLD_IFS
-  if [ -n "$RT_LINE" ]; then
-    RT_LINE=" real-time${RT_LINE}";
-    if [ -z "$PROVIDES_LINE_END" ]; then
-      PROVIDES_LINE_END=" and${RT_LINE}${PROVIDES_LINE_END}";
-    else 
-      PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
-    fi
+fi
+CA_MONTREAL_STM_INFO_PROVIDER_FILE="${VALUES_DIR}/stm_info_api_values.xml";
+if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
+  if grep -q "<bool name=\"stm_info_api_status_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
+    RT_PARTS+=(" next departures")
+  fi
+  if grep -q "<bool name=\"stm_info_api_service_update_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
+    RT_PARTS+=(" service alerts")
+  fi
+fi
+# TODO: support other real-time providers
+OLD_IFS=$IFS; IFS=","
+RT_LINE="${RT_PARTS[*]}"
+IFS=$OLD_IFS
+if [ -n "$RT_LINE" ]; then
+  RT_LINE=" real-time${RT_LINE}";
+  if [ -z "$PROVIDES_LINE_END" ]; then
+    PROVIDES_LINE_END=" and${RT_LINE}${PROVIDES_LINE_END}";
+  else
+    PROVIDES_LINE_END=",${RT_LINE}${PROVIDES_LINE_END}";
   fi
 fi
 
@@ -356,6 +378,13 @@ else
   exit 1 # error
 fi
 
+SOURCES_LINES="The information comes from the data published by $SOURCE_PROVIDER";
+if [ -n "$SOURCE_URL" ]; then
+  SOURCES_LINES="${SOURCES_LINES}:"$'\n'"${SOURCE_URL}";
+else
+  SOURCES_LINES="${SOURCES_LINES}.";
+fi
+
 cat >>"${FULL_DESCRIPTION_FILE}" <<EOL
 This app adds $AGENCY_LABEL $TYPE_LABEL information to MonTransit.
 
@@ -367,10 +396,9 @@ Once this application is installed, the MonTransit app will display $TYPE_LABEL 
 
 This application only has a temporary icon: download the MonTransit app (free) in the "More ..." section below or by following this Google Play link https://bit.ly/MonTransitPlay
 
-You can install this application on the SD card but it is not recommended.
+You can install this application on the SD card, but it is not recommended.
 
-The information comes from the data published by $SOURCE_PROVIDER:
-$SOURCE_URL
+$SOURCES_LINES
 
 This application is free and open-source:
 $CONTACT_WEBSITE_URL
@@ -381,7 +409,7 @@ EOL
 PERMISSIONS_LINE="";
 
 if [ -f "${BIKE_STATION_FILE}" ]; then
-  if [ -z "$PERMISSIONS_LINES" ]; then
+  if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
     echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
@@ -393,15 +421,15 @@ if [ -f "${BIKE_STATION_FILE}" ]; then
 fi
 
 if [ -f "${GTFS_RT_FILE}" ]; then
-  if [ -z "$PERMISSIONS_LINES" ]; then
+  if [ -z "$PERMISSIONS_LINE" ]; then
     echo "" >> "${FULL_DESCRIPTION_FILE}";
     echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
     PERMISSIONS_LINE="- Other: required to download";
-  else 
+  else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} and";
   fi
-  PERMISSIONS_LINE="${PERMISSIONS_LINE} real-time service alerts";
+  PERMISSIONS_LINE="${PERMISSIONS_LINE} real-time information";
 fi
 if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
   if [ -z "$PERMISSIONS_LINE" ]; then
@@ -409,7 +437,7 @@ if [[ -f "${RSS_FILE}" || -f "${TWITTER_FILE}" || -f "${YOUTUBE_FILE}" ]]; then
     echo "Permissions:" >> "${FULL_DESCRIPTION_FILE}";
     checkResult $?;
     PERMISSIONS_LINE="- Other: required to download";
-  else 
+  else
     PERMISSIONS_LINE="${PERMISSIONS_LINE} and";
   fi
   PERMISSIONS_LINE="${PERMISSIONS_LINE} news";

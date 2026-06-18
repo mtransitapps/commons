@@ -31,19 +31,16 @@ if [ -f "${FILE_1_PNG}" ]; then
   fi
 fi
 
-rm -f "${FILE_1_PNG}";
-checkResult $?;
-
 CONFIG_DIR="${ROOT_DIR}/config";
 if [ ! -d "$CONFIG_DIR" ]; then
     echo "$CONFIG_DIR doesn't exist!";
-    exit 1;
+    [ -f "${FILE_1_PNG}" ] && exit 0 || exit 1;
 fi
 
 AGENCY_NAME_FILE="${CONFIG_DIR}/agency_name";
 if [ ! -f "$AGENCY_NAME_FILE" ]; then
     echo "$AGENCY_NAME_FILE doesn't exist!";
-    exit 1;
+    [ -f "${FILE_1_PNG}" ] && exit 0 || exit 1;
 fi
 
 AGENCY_NAME_COUNT=$(grep -c ^ $AGENCY_NAME_FILE);
@@ -54,11 +51,11 @@ fi
 
 AGENCY_NAME_SHORT=$(head -n 1 $AGENCY_NAME_FILE);
 if [ -z "$AGENCY_NAME_SHORT" ]; then
-    echo "$AGENCY_NAME_SHORT is empty!";
+    echo "AGENCY_NAME_SHORT is empty!";
     exit 1;
 fi
 
-MAX_AGENCY_LENGTH=16 # from module-featured-graphic.sh
+MAX_AGENCY_LENGTH=14 # from module-featured-graphic.sh
 
 AGENCY_NAME_1="";
 AGENCY_NAME_2="";
@@ -66,22 +63,21 @@ AGENCY_NAME_2="";
 if [ "${#AGENCY_NAME_SHORT}" -le "$MAX_AGENCY_LENGTH" ]; then
     AGENCY_NAME_1=$AGENCY_NAME_SHORT;
 else
-  read -ra AGENCY_NAME_SHORT_WORDS <<< "$AGENCY_NAME_SHORT";
-  for WORD in "${AGENCY_NAME_SHORT_WORDS[@]}"; do
-    WORD_LENGTH=${#WORD};
-    MAX_LENGTH=$((MAX_AGENCY_LENGTH - WORD_LENGTH));
-    if [ "${#AGENCY_NAME_1}" -lt "$MAX_LENGTH" ]; then
-      if [ -n "$AGENCY_NAME_1" ]; then
-        AGENCY_NAME_1+=" ";
-      fi
-      AGENCY_NAME_1+="$WORD";
-    else
-      if [ -n "$AGENCY_NAME_2" ]; then
-        AGENCY_NAME_2+=" ";
-      fi
-      AGENCY_NAME_2+="$WORD";
+  SPLIT_INDEX=0;
+  for ((I=1; I<=MAX_AGENCY_LENGTH; I++)); do
+    CHAR="${AGENCY_NAME_SHORT:I-1:1}";
+    if [ "$CHAR" = " " ] || [ "$CHAR" = "-" ]; then
+      SPLIT_INDEX=$I;
     fi
   done
+  if [ "$SPLIT_INDEX" -gt 0 ]; then
+    AGENCY_NAME_1="${AGENCY_NAME_SHORT:0:SPLIT_INDEX}";
+    AGENCY_NAME_2="${AGENCY_NAME_SHORT:SPLIT_INDEX}";
+    AGENCY_NAME_1="${AGENCY_NAME_1%"${AGENCY_NAME_1##*[![:space:]]}"}";
+    AGENCY_NAME_2="${AGENCY_NAME_2#"${AGENCY_NAME_2%%[![:space:]]*}"}";
+  else
+    AGENCY_NAME_2="$AGENCY_NAME_SHORT";
+  fi
   if [ "${#AGENCY_NAME_1}" -gt "$MAX_AGENCY_LENGTH" ]; then
     echo "Agency name 1st part '$AGENCY_NAME_1' is too long (${#AGENCY_NAME_1} > $MAX_AGENCY_LENGTH)!";
     exit 1; # error
@@ -96,11 +92,11 @@ fi
 CITIES_FILE="${CONFIG_DIR}/cities";
 if [ ! -f "$CITIES_FILE" ]; then
     echo "$CITIES_FILE doesn't exist!";
-    exit 1;
+    [ -f "${FILE_1_PNG}" ] && exit 0 || exit 1;
 fi
 CITIES_LABEL=$(head -n 1 $CITIES_FILE);
 if [ -z "$CITIES_LABEL" ]; then
-    echo "$CITIES_LABEL is empty!";
+    echo "CITIES_LABEL is empty in '$CITIES_FILE'!";
     exit 1;
 fi
 
@@ -127,14 +123,14 @@ if [ -n "$STATE_LABEL_SHORT" ]; then
     STATE_AND_COUNTRY_LABEL="$STATE_LABEL_SHORT, $COUNTRY_LABEL";
 fi
 
-MAX_CITY_LENGTH=77 # from module-featured-graphic.sh
+MAX_CITY_LENGTH=$((77 - 1)) # -1 for "…" # 77 from module-featured-graphic.sh
 CITIES_LABEL=$(echo $CITIES_LABEL | awk -v len=$MAX_CITY_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }');
 
 # uses inkscape
 if [[ -z "${AGENCY_NAME_2}" ]]; then
   $ROOT_DIR/commons-android/pub/module-featured-graphic.sh "$AGENCY_NAME_1" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
   checkResult $?;
-else 
+else
   $ROOT_DIR/commons-android/pub/module-featured-graphic.sh "$AGENCY_NAME_1" "$AGENCY_NAME_2" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
   checkResult $?;
 fi
