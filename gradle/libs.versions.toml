@@ -4,13 +4,13 @@
 [versions]
 # Android 7.0 Nougat
 sdk-min = "24"
-# Android 16 Baklava (update 1st)
-sdk-compile = "36"
+# Android 17 Cinnamon Bun (update 1st)
+sdk-compile = "37"
 # Android 15 Vanilla Ice Cream (update 2nd)
 sdk-target = "35"
 # https://developer.android.com/tools/releases/build-tools
-# Android 16 Baklava
-buildTools = "36.0.0"
+# Android 17 Cinnamon Bun
+buildTools = "37.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
 kotlin = "2.3.21"
 # https://github.com/google/ksp/releases/latest
@@ -22,7 +22,7 @@ kotlinx-datetime = "0.8.0"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization = "1.11.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "7.3.0.8198"
+sonar = "7.3.1.8318"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "9.2.1"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
@@ -77,12 +77,12 @@ maps-ktx = "6.0.1"
 # https://developers.google.com/maps/documentation/places/android-sdk/release-notes
 places-sdk = "5.2.0"
 # https://developers.google.com/android/guides/google-services-plugin
-gps-plugin = "4.4.4"
+gps-plugin = "4.5.0"
 # LATEST: https://developers.google.com/android/guides/releases
 # https://developers.google.com/admob/android/rel-notes
-gps-ads = "25.3.0"
+gps-ads = "25.4.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
-gps-ads-nextgen = "1.1.1"
+gps-ads-nextgen = "1.2.1"
 gps-ump = "4.0.0"
 gps-basement = "18.10.0"
 gps-time = "16.0.1"
@@ -90,7 +90,7 @@ gps-location = "21.3.0"
 gps-maps = "20.0.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "34.13.0"
+firebase-bom = "34.15.0"
 firebase-crashlytics-plugin = "3.0.7"
 firebase-perf-plugin = "2.0.2"
 # https://developer.android.com/google/play/billing/release-notes
