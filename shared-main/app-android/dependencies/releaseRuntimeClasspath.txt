@@ -112,8 +112,8 @@ androidx.viewpager:viewpager:1.0.0
 androidx.webkit:webkit:1.16.0
 androidx.window:window:1.0.0
 androidx.work:work-runtime:2.11.2
-com.android.billingclient:billing-ktx:9.0.0
-com.android.billingclient:billing:9.0.0
+com.android.billingclient:billing-ktx:9.1.0
+com.android.billingclient:billing:9.1.0
 com.android.volley:volley:1.2.1
 com.applovin:applovin-sdk:13.6.2
 com.caverock:androidsvg-aar:1.4
