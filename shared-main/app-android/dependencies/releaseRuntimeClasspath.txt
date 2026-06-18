@@ -130,9 +130,9 @@ com.google.ads.mediation:vungle:7.7.4.0
 com.google.android.datatransport:transport-api:3.2.0
 com.google.android.datatransport:transport-backend-cct:3.3.0
 com.google.android.datatransport:transport-runtime:3.3.0
-com.google.android.gms:play-services-ads-api:25.3.0
+com.google.android.gms:play-services-ads-api:25.4.0
 com.google.android.gms:play-services-ads-identifier:18.0.0
-com.google.android.gms:play-services-ads:25.3.0
+com.google.android.gms:play-services-ads:25.4.0
 com.google.android.gms:play-services-appset:16.0.1
 com.google.android.gms:play-services-base:18.5.0
 com.google.android.gms:play-services-basement:18.10.0
@@ -152,6 +152,7 @@ com.google.android.material:material:1.14.0
 com.google.android.play:app-update-ktx:2.1.0
 com.google.android.play:app-update:2.1.0
 com.google.android.play:core-common:2.0.4
+com.google.android.play:hsdp:2.0.1
 com.google.android.play:review-ktx:2.0.2
 com.google.android.play:review:2.0.2
 com.google.android.ump:user-messaging-platform:4.0.0
@@ -166,8 +167,8 @@ com.google.errorprone:error_prone_annotations:2.48.0
 com.google.firebase:firebase-abt:21.1.1
 com.google.firebase:firebase-analytics:23.2.0
 com.google.firebase:firebase-annotations:17.0.0
-com.google.firebase:firebase-bom:34.14.1
-com.google.firebase:firebase-common:22.0.1
+com.google.firebase:firebase-bom:34.15.0
+com.google.firebase:firebase-common:22.1.0
 com.google.firebase:firebase-components:19.0.0
 com.google.firebase:firebase-config-interop:16.0.1
 com.google.firebase:firebase-config:23.1.0
@@ -177,7 +178,7 @@ com.google.firebase:firebase-encoders-json:18.0.1
 com.google.firebase:firebase-encoders-proto:16.0.0
 com.google.firebase:firebase-encoders:17.0.0
 com.google.firebase:firebase-installations-interop:17.3.0
-com.google.firebase:firebase-installations:19.1.0
+com.google.firebase:firebase-installations:19.1.1
 com.google.firebase:firebase-measurement-connector:20.0.1
 com.google.firebase:firebase-perf:22.0.5
 com.google.firebase:firebase-sessions:3.0.6
