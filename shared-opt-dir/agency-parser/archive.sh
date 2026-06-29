@@ -35,7 +35,7 @@ FILE_CALENDAR="${FILES_DIR}/calendar.txt";
 FILE_CALENDAR_DATES="${FILES_DIR}/calendar_dates.txt";
 FILE_CALENDAR_LINE=0
 if [[ -f "$FILE_CALENDAR" ]]; then
-  FILE_CALENDAR_LINE=$(sed '/^\s*$/d' "$FILE_CALENDAR" | wc -l)
+  FILE_CALENDAR_LINE=$(grep -c '[^[:space:]]' "$FILE_CALENDAR")
 fi
 if [[ $FILE_CALENDAR_LINE -gt 1 ]]; then
   echo "- Using '$FILE_CALENDAR'...";
