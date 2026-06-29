@@ -35,12 +35,12 @@ FILE_CALENDAR="${FILES_DIR}/calendar.txt";
 FILE_CALENDAR_DATES="${FILES_DIR}/calendar_dates.txt";
 FILE_CALENDAR_LINE=0
 if [[ -f "$FILE_CALENDAR" ]]; then
-  FILE_CALENDAR_LINE=$(cat $FILE_CALENDAR | sed '/^\s*$/d' | wc -l)
+  FILE_CALENDAR_LINE=$(cat "$FILE_CALENDAR" | sed '/^\s*$/d' | wc -l)
 fi
 if [[ $FILE_CALENDAR_LINE -gt 1 ]]; then
-  echo "- Using $FILE_CALENDAR...";
+  echo "- Using '$FILE_CALENDAR'...";
   HEADERS=$(head -n 1 "$FILE_CALENDAR" | tr -d '\r')
-  IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
+  IFS=", " read -r -a HEADERS_ARRAY <<< "$HEADERS"
   cleanArray HEADERS_ARRAY
   START_DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "start_date")
   checkResult $?;
@@ -59,9 +59,9 @@ if [[ $FILE_CALENDAR_LINE -gt 1 ]]; then
   echo "- start date: '${START_DATE}'"
   echo "- end date: '${END_DATE}'"
 elif [[ -f "$FILE_CALENDAR_DATES" ]]; then
-  echo "- Using $FILE_CALENDAR_DATES...";
+  echo "- Using '$FILE_CALENDAR_DATES'...";
   HEADERS=$(head -n 1 "$FILE_CALENDAR_DATES" | tr -d '\r')
-  IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
+  IFS=", " read -r -a HEADERS_ARRAY <<< "$HEADERS"
   cleanArray HEADERS_ARRAY
   DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "date")
   checkResult $?;
