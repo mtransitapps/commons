@@ -35,11 +35,12 @@ FILE_CALENDAR="${FILES_DIR}/calendar.txt";
 FILE_CALENDAR_DATES="${FILES_DIR}/calendar_dates.txt";
 FILE_CALENDAR_LINE=0
 if [[ -f "$FILE_CALENDAR" ]]; then
-  FILE_CALENDAR_LINE=$(cat $FILE_CALENDAR | sed '/^\s*$/d' | wc -l)
+  FILE_CALENDAR_LINE=$(grep -c '[^[:space:]]' "$FILE_CALENDAR") || FILE_CALENDAR_LINE=0
 fi
 if [[ $FILE_CALENDAR_LINE -gt 1 ]]; then
-  echo "- Using $FILE_CALENDAR...";
-  HEADERS=$(head -n 1 "$FILE_CALENDAR" | tr -d '\r')
+  echo "- Using '$FILE_CALENDAR'...";
+  read -r FIRST_LINE < "$FILE_CALENDAR" || true
+  HEADERS=${FIRST_LINE//[$'\r ']/}
   IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
   cleanArray HEADERS_ARRAY
   START_DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "start_date")
@@ -48,9 +49,9 @@ if [[ $FILE_CALENDAR_LINE -gt 1 ]]; then
   checkResult $?;
   CUT_START_DATE_INDEX=$((START_DATE_INDEX+1))
   CUT_END_DATE_INDEX=$((END_DATE_INDEX+1))
-  mapfile -t START_DATES < <(tail -n +2 "${FILE_CALENDAR}" | tr -d '\r' | cut -d ',' -f $CUT_START_DATE_INDEX)
+  mapfile -t START_DATES < <(tail -n +2 "${FILE_CALENDAR}" | cut -d ',' -f $CUT_START_DATE_INDEX | tr -d '\r ')
   cleanArray START_DATES
-  mapfile -t END_DATES < <(tail -n +2 "${FILE_CALENDAR}" | tr -d '\r' | cut -d ',' -f $CUT_END_DATE_INDEX)
+  mapfile -t END_DATES < <(tail -n +2 "${FILE_CALENDAR}" | cut -d ',' -f $CUT_END_DATE_INDEX | tr -d '\r ')
   cleanArray END_DATES
   readarray -t START_DATES_SORTED < <(printf '%s\n' "${START_DATES[@]}" | sort)
   readarray -t END_DATES_SORTED < <(printf '%s\n' "${END_DATES[@]}" | sort)
@@ -59,14 +60,15 @@ if [[ $FILE_CALENDAR_LINE -gt 1 ]]; then
   echo "- start date: '${START_DATE}'"
   echo "- end date: '${END_DATE}'"
 elif [[ -f "$FILE_CALENDAR_DATES" ]]; then
-  echo "- Using $FILE_CALENDAR_DATES...";
-  HEADERS=$(head -n 1 "$FILE_CALENDAR_DATES" | tr -d '\r')
+  echo "- Using '$FILE_CALENDAR_DATES'...";
+  read -r FIRST_LINE < "$FILE_CALENDAR_DATES" || true
+  HEADERS=${FIRST_LINE//[$'\r ']/}
   IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
   cleanArray HEADERS_ARRAY
   DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "date")
   checkResult $?;
   CUT_INDEX=$((DATE_INDEX+1))
-  mapfile -t DATES < <(tail -n +2 "${FILE_CALENDAR_DATES}" | tr -d '\r' | cut -d ',' -f $CUT_INDEX)
+  mapfile -t DATES < <(tail -n +2 "${FILE_CALENDAR_DATES}" | cut -d ',' -f $CUT_INDEX | tr -d '\r ')
   cleanArray DATES
   readarray -t DATES_SORTED < <(printf '%s\n' "${DATES[@]}" | sort)
   START_DATE=${DATES_SORTED[0]}
