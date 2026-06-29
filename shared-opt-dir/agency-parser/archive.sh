@@ -39,7 +39,8 @@ if [[ -f "$FILE_CALENDAR" ]]; then
 fi
 if [[ $FILE_CALENDAR_LINE -gt 1 ]]; then
   echo "- Using '$FILE_CALENDAR'...";
-  HEADERS=$(head -n 1 "$FILE_CALENDAR" | tr -d '\r ')
+  read -r FIRST_LINE < "$FILE_CALENDAR" || true
+  HEADERS=${FIRST_LINE//[$'\r ']/}
   IFS="," read -r -a HEADERS_ARRAY <<< "$HEADERS"
   cleanArray HEADERS_ARRAY
   START_DATE_INDEX=$(getArrayIndex HEADERS_ARRAY "start_date")
