@@ -30,8 +30,8 @@ fi
 if [[ -f ${GTFS_ZIP} ]]; then
     unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
     if [[ $? -ne 0 ]]; then
-        echo "> download() > Invalid ZIP '${GTFS_ZIP}'!"
-        return 1
+        echo "ERROR: Invalid ZIP '${GTFS_ZIP}'!"
+        exit 1
     fi
     echo ">> Unzip $GTFS_ZIP in '$TARGET_DIR'...";
     unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
