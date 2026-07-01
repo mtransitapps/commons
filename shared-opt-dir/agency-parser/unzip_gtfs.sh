@@ -7,8 +7,13 @@ GTFS_ZIP="${SCRIPT_DIR}/input/gtfs.zip";
 TARGET_DIR="${SCRIPT_DIR}/input/gtfs";
 if [[ -d ${TARGET_DIR} ]]; then
     echo ">> Removing existing GTFS files in '$TARGET_DIR'...";
-	rm -r ${TARGET_DIR};
-	checkResult $?;
+    rm -r ${TARGET_DIR};
+    checkResult $?;
+fi
+unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+    echo "> download() > Invalid ZIP '${GTFS_ZIP}'!"
+    return 1
 fi
 echo ">> Unzip '$GTFS_ZIP' in '$TARGET_DIR'...";
 unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
@@ -23,6 +28,11 @@ if [[ -d ${TARGET_DIR} ]]; then
     checkResult $?;
 fi
 if [[ -f ${GTFS_ZIP} ]]; then
+    unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
+    if [[ $? -ne 0 ]]; then
+        echo "> download() > Invalid ZIP '${GTFS_ZIP}'!"
+        return 1
+    fi
     echo ">> Unzip $GTFS_ZIP in '$TARGET_DIR'...";
     unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
     checkResult $?;
