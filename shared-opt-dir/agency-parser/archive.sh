@@ -19,8 +19,8 @@ fi
 
 unzip -tqq "${GTFS_FILE}" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
-  echo "> download() > Invalid ZIP '${GTFS_FILE}'!"
-  return 1
+  echo "ERROR: Invalid ZIP '${GTFS_FILE}'!"
+  exit 1
 fi
 
 echo ">> Unzip '$GTFS_FILE' in '$FILES_DIR'...";
