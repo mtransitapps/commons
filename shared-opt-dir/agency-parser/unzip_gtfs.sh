@@ -15,7 +15,7 @@ if [[ ! -f "${GTFS_ZIP}" ]]; then
   exit 1
 fi
 unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
-if [[ $? -ne 0 ]]; then
+if [[ $? -ne 1 ]]; then
   echo "ERROR: Invalid ZIP '${GTFS_ZIP}'!"
   exit 1
 fi
@@ -31,16 +31,16 @@ if [[ -d ${TARGET_DIR} ]]; then
   rm -r ${TARGET_DIR};
   checkResult $?;
 fi
-if [[ -f ${GTFS_ZIP} ]]; then
+if [[ -f "${GTFS_ZIP}" ]]; then
   unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
-  if [[ $? -ne 0 ]]; then
+  if [[ $? -gt 1 ]]; then
     echo "ERROR: Invalid ZIP '${GTFS_ZIP}'!"
     exit 1
   fi
-  echo ">> Unzip $GTFS_ZIP in '$TARGET_DIR'...";
-  unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
+  echo ">> Unzip '${GTFS_ZIP}' in '${TARGET_DIR}'...";
+  unzip -j "${GTFS_ZIP}" -d "${TARGET_DIR}";
   checkResult $?;
-  echo ">> Unzip $GTFS_ZIP in '$TARGET_DIR'... DONE";
+  echo ">> Unzip '${GTFS_ZIP}' in '${TARGET_DIR}'... DONE";
 fi
 
 echo ">> Unzipping GTFS files...... DONE";

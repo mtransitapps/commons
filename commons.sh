@@ -432,9 +432,9 @@ function download() {
 	local WGET_="wget";
 	if [[ ${IS_CI} = true ]]; then
 		curl --version;
-		local CURL_="$CURL_ --verbose"; #DEBUG
+		CURL_="$CURL_ --verbose"; #DEBUG
 		wget --version;
-		local WGET_="$WGET_ --verbose"; #DEBUG
+		WGET_="$WGET_ --verbose"; #DEBUG
 	fi
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
