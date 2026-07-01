@@ -16,6 +16,13 @@ if [[ -d ${FILES_DIR} ]]; then
 	rm -r ${FILES_DIR};
 	checkResult $?;
 fi
+
+unzip -tqq "${GTFS_FILE}" >/dev/null 2>&1
+if [[ $? -gt 1 ]]; then
+  echo "ERROR: Invalid ZIP '${GTFS_FILE}'!"
+  exit 1
+fi
+
 echo ">> Unzip '$GTFS_FILE' in '$FILES_DIR'...";
 unzip -j ${GTFS_FILE} -d ${FILES_DIR};
 checkResult $?;
