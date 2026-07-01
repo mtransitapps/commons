@@ -94,11 +94,11 @@ androidx.savedstate:savedstate-android:1.4.0
 androidx.savedstate:savedstate-ktx:1.4.0
 androidx.savedstate:savedstate:1.4.0
 androidx.slidingpanelayout:slidingpanelayout:1.2.0
-androidx.sqlite:sqlite-android:2.6.2
-androidx.sqlite:sqlite-framework-android:2.6.2
-androidx.sqlite:sqlite-framework:2.6.2
-androidx.sqlite:sqlite-ktx:2.6.2
-androidx.sqlite:sqlite:2.6.2
+androidx.sqlite:sqlite-android:2.7.0
+androidx.sqlite:sqlite-framework-android:2.7.0
+androidx.sqlite:sqlite-framework:2.7.0
+androidx.sqlite:sqlite-ktx:2.7.0
+androidx.sqlite:sqlite:2.7.0
 androidx.startup:startup-runtime:1.2.0
 androidx.swiperefreshlayout:swiperefreshlayout:1.2.0
 androidx.tracing:tracing-ktx:1.2.0
