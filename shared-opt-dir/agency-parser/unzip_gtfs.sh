@@ -15,7 +15,7 @@ if [[ ! -f "${GTFS_ZIP}" ]]; then
   exit 1
 fi
 unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
-if [[ $? -ne 1 ]]; then
+if [[ $? -gt 1 ]]; then
   echo "ERROR: Invalid ZIP '${GTFS_ZIP}'!"
   exit 1
 fi
