@@ -18,7 +18,7 @@ if [[ -d ${FILES_DIR} ]]; then
 fi
 
 unzip -tqq "${GTFS_FILE}" >/dev/null 2>&1
-if [[ $? -ne 1 ]]; then
+if [[ $? -gt 1 ]]; then
   echo "ERROR: Invalid ZIP '${GTFS_FILE}'!"
   exit 1
 fi
