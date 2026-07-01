@@ -113,9 +113,9 @@ com.google.android.gms:play-services-ads-api:25.4.0
 com.google.android.gms:play-services-ads-identifier:18.0.0
 com.google.android.gms:play-services-ads:25.4.0
 com.google.android.gms:play-services-appset:16.0.1
-com.google.android.gms:play-services-base:18.5.0
+com.google.android.gms:play-services-base:18.9.0
 com.google.android.gms:play-services-basement:18.10.0
-com.google.android.gms:play-services-location:21.3.0
+com.google.android.gms:play-services-location:21.4.0
 com.google.android.gms:play-services-maps:20.0.0
 com.google.android.gms:play-services-measurement-api:23.2.0
 com.google.android.gms:play-services-measurement-base:23.2.0
