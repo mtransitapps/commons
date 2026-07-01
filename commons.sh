@@ -428,13 +428,13 @@ function download() {
 	if [[ "$NEW_FILE" == "$LAST_FILE" ]]; then
 		NEW_FILE="NEW_${NEW_FILE}"
 	fi
-	local CURL_="curl";
+	local CURL_="curl --fail";
 	local WGET_="wget";
 	if [[ ${IS_CI} = true ]]; then
 		curl --version;
-		local CURL_="curl --verbose --fail"; #DEBUG
+		local CURL_="$CURL_ --verbose"; #DEBUG
 		wget --version;
-		local WGET_="wget --verbose"; #DEBUG
+		local WGET_="$WGET_ --verbose"; #DEBUG
 	fi
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then

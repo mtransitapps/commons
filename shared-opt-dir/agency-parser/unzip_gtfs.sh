@@ -6,14 +6,18 @@ echo ">> Unzipping GTFS files...";
 GTFS_ZIP="${SCRIPT_DIR}/input/gtfs.zip";
 TARGET_DIR="${SCRIPT_DIR}/input/gtfs";
 if [[ -d ${TARGET_DIR} ]]; then
-    echo ">> Removing existing GTFS files in '$TARGET_DIR'...";
-    rm -r ${TARGET_DIR};
-    checkResult $?;
+  echo ">> Removing existing GTFS files in '$TARGET_DIR'...";
+  rm -r ${TARGET_DIR};
+  checkResult $?;
+fi
+if [[ ! -f "${GTFS_ZIP}" ]]; then
+  echo "ERROR: GTFS file '${GTFS_ZIP}' not found!"
+  exit 1
 fi
 unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
-    echo "ERROR: Invalid ZIP '${GTFS_ZIP}'!"
-    exit 1
+  echo "ERROR: Invalid ZIP '${GTFS_ZIP}'!"
+  exit 1
 fi
 echo ">> Unzip '$GTFS_ZIP' in '$TARGET_DIR'...";
 unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
@@ -23,20 +27,20 @@ echo ">> Unzip '$GTFS_ZIP' in '$TARGET_DIR'... DONE";
 GTFS_ZIP="${SCRIPT_DIR}/input/gtfs_next.zip";
 TARGET_DIR="${SCRIPT_DIR}/input/gtfs_next";
 if [[ -d ${TARGET_DIR} ]]; then
-    echo ">> Removing existing GTFS files in '$TARGET_DIR'...";
-    rm -r ${TARGET_DIR};
-    checkResult $?;
+  echo ">> Removing existing GTFS files in '$TARGET_DIR'...";
+  rm -r ${TARGET_DIR};
+  checkResult $?;
 fi
 if [[ -f ${GTFS_ZIP} ]]; then
-    unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
-    if [[ $? -ne 0 ]]; then
-        echo "ERROR: Invalid ZIP '${GTFS_ZIP}'!"
-        exit 1
-    fi
-    echo ">> Unzip $GTFS_ZIP in '$TARGET_DIR'...";
-    unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
-    checkResult $?;
-    echo ">> Unzip $GTFS_ZIP in '$TARGET_DIR'... DONE";
+  unzip -tqq "${GTFS_ZIP}" >/dev/null 2>&1
+  if [[ $? -ne 0 ]]; then
+    echo "ERROR: Invalid ZIP '${GTFS_ZIP}'!"
+    exit 1
+  fi
+  echo ">> Unzip $GTFS_ZIP in '$TARGET_DIR'...";
+  unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
+  checkResult $?;
+  echo ">> Unzip $GTFS_ZIP in '$TARGET_DIR'... DONE";
 fi
 
 echo ">> Unzipping GTFS files...... DONE";
