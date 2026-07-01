@@ -116,7 +116,7 @@ leakcanary = "2.14"
 # https://googlesamples.github.io/android-custom-lint-rules/checks/index.md.html
 # https://github.com/slackhq/slack-lints/releases
 slackLint = "0.11.1"
-playInsightLint = "0.1.4"
+playInsightLint = "0.1.5"
 # https://github.com/protocolbuffers/protobuf/releases/latest
 # https://github.com/protocolbuffers/protobuf/tree/main/java#gradle
 # https://github.com/protocolbuffers/protobuf/blob/main/java/lite.md
