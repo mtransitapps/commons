@@ -432,7 +432,7 @@ function download() {
 	local WGET_="wget";
 	if [[ ${IS_CI} = true ]]; then
 		curl --version;
-		local CURL_="curl --verbose"; #DEBUG
+		local CURL_="curl --verbose --fail"; #DEBUG
 		wget --version;
 		local WGET_="wget --verbose"; #DEBUG
 	fi
