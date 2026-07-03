@@ -146,7 +146,7 @@ jobs:
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         run: ./prepare_only.sh
 
-      - name: MT log GTFS TXT headers
+      - name: MT log GTFS CSV previews
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         continue-on-error: true
         run: |
@@ -156,12 +156,20 @@ jobs:
               continue;
             fi
 
-            echo "Listing TXT file headers in $DIR";
+            echo "Listing CSV previews from TXT files in $DIR";
             TXT_FILES_FOUND=false;
             while IFS= read -r -d '' FILE; do
               TXT_FILES_FOUND=true;
-              echo "::group::$FILE (first 100 lines)";
-              head -n 100 "$FILE";
+              TOTAL_LINES=$(wc -l < "$FILE");
+              COLUMN_COUNT=$(awk -F',' 'NR==1{print NF; exit}' "$FILE");
+              HEADER=$(head -n 1 "$FILE");
+              echo "::group::$FILE (lines=$TOTAL_LINES, columns=$COLUMN_COUNT)";
+              echo "Header: $HEADER";
+              echo "Preview (first 100 lines, numbered):";
+              nl -ba "$FILE" | head -n 100;
+              if [ "$TOTAL_LINES" -gt 100 ]; then
+                echo "Preview truncated ($TOTAL_LINES total lines).";
+              fi
               echo "::endgroup::";
             done < <(find "$DIR" -maxdepth 1 -type f -name "*.txt" -print0)
 
