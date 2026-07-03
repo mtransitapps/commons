@@ -146,6 +146,30 @@ jobs:
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
         run: ./prepare_only.sh
 
+      - name: MT log GTFS TXT headers
+        if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' }}
+        continue-on-error: true
+        run: |
+          for DIR in "agency-parser/input/gtfs/" "agency-parser/input/gtfs_next/"; do
+            if [ ! -d "$DIR" ]; then
+              echo "Directory not found: $DIR";
+              continue;
+            fi
+
+            echo "Listing TXT file headers in $DIR";
+            TXT_FILES_FOUND=false;
+            while IFS= read -r -d '' FILE; do
+              TXT_FILES_FOUND=true;
+              echo "::group::$FILE (first 100 lines)";
+              head -n 100 "$FILE";
+              echo "::endgroup::";
+            done < <(find "$DIR" -maxdepth 1 -type f -name "*.txt" -print0)
+
+            if [ "$TXT_FILES_FOUND" = false ]; then
+              echo "No TXT files found in $DIR";
+            fi
+          done
+
       - name: MT reset current schedule
         if: ${{ env.MT_IS_AGENCY_BIKE != 'true' && env.MT_IS_MAIN_REPO != 'true' && github.event.inputs.reset-current-schedule == 'true' }}
         run: |
