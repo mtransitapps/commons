@@ -430,7 +430,10 @@ function download() {
 	fi
 	local CURL_="curl --fail";
 	local WGET_="wget";
-    local TIMEOUT_SEC=${MT_DOWNLOAD_TIMEOUT_SEC:-120}; [[ ! "$TIMEOUT_SEC" =~ ^[0-9]+$ ]] && TIMEOUT_SEC=120;
+	local TIMEOUT_SEC=${MT_DOWNLOAD_TIMEOUT_SEC:-120}
+	if [[ ! "$TIMEOUT_SEC" =~ ^[0-9]+$ ]]; then
+		TIMEOUT_SEC=120
+	fi
 	if [[ ${IS_CI} = true ]]; then
 		curl --version;
 		CURL_="$CURL_ --verbose"; #DEBUG
