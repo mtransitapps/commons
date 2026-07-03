@@ -448,7 +448,7 @@ function download() {
 		if [[ ${RESULT} != 0 ]]; then
 			echo "> download() > Downloading from '$URL'... FAILED ($RESULT)";
 			echo "> download() > Downloading from '$URL' (insecure)...";
-			$CURL_  --insecure --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time "$TIMEOUT_SEC"	 --retry 3 "$URL";
+			$CURL_  --insecure --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 			local RESULT=$?;
 			if [[ ${RESULT} != 0 ]]; then
 				echo "> download() > Downloading from '$URL' (insecure)...FAILED ($RESULT)";
