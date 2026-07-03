@@ -166,7 +166,7 @@ jobs:
               echo "::group::$FILE (lines=$TOTAL_LINES, columns=$COLUMN_COUNT)";
               echo "Header: $HEADER";
               echo "Preview (first 100 lines, numbered):";
-              nl -ba "$FILE" | head -n 100;
+              head -n 100 "$FILE" | nl -ba;
               if [ "$TOTAL_LINES" -gt 100 ]; then
                 echo "Preview truncated ($TOTAL_LINES total lines).";
               fi
