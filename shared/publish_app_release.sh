@@ -83,7 +83,11 @@ function shouldCreateGitHubRelease() {
     return 0;
   fi
   local LATEST_RELEASE_TAG_NAME="";
-  LATEST_RELEASE_TAG_NAME=$(gh api repos/{owner}/{repo}/releases/latest --jq '.tag_name' 2>/dev/null);
+  LATEST_RELEASE_TAG_NAME=$(gh release view --json tagName --jq .tagName 2>/dev/null);
+  if [[ -z "$LATEST_RELEASE_TAG_NAME" ]]; then
+    echo "Error: Failed to retrieve the latest release tag name from GitHub." >&2;
+    exit 1;
+  fi
   if [[ "$LATEST_RELEASE_TAG_NAME" == "$APP_VERSION_NAME_LOCAL" ]]; then
     return 1;
   fi
