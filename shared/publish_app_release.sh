@@ -76,6 +76,27 @@ if [[ -z "${APP_VERSION_NAME}" ]]; then
   echo "APP_VERSION_NAME empty!";
   exit 1;
 fi
+
+function shouldCreateGitHubRelease() {
+  local APP_VERSION_NAME_LOCAL=$1;
+  local RELEASE_EXISTS=false;
+  if gh release view "$APP_VERSION_NAME_LOCAL" >/dev/null 2>&1; then
+    RELEASE_EXISTS=true;
+  fi
+  if [[ "$RELEASE_EXISTS" != true ]]; then
+    echo "true";
+    return 0;
+  fi
+  local LATEST_RELEASE_TAG_NAME="";
+  LATEST_RELEASE_TAG_NAME=$(gh api repos/{owner}/{repo}/releases/latest --jq '.tag_name' 2>/dev/null);
+  if [[ "$LATEST_RELEASE_TAG_NAME" == "$APP_VERSION_NAME_LOCAL" ]]; then
+    echo "false";
+    return 0;
+  fi
+  echo "Existing release '$APP_VERSION_NAME_LOCAL' is not latest release ('$LATEST_RELEASE_TAG_NAME').";
+  exit 1;
+}
+
 if [[ ${IS_GH_ENABLED} == true ]]; then
   echo "> GitHub > publishing release '$APP_VERSION_NAME'...";
   GH_FILES="";
@@ -90,14 +111,24 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
       echo "No APK/AAB";
   fi
   echo "GH_FILES: $GH_FILES.";
-  gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES;
-  checkResult $?;
+  SHOULD_CREATE_GITHUB_RELEASE=$(shouldCreateGitHubRelease "$APP_VERSION_NAME");
+  if [[ "$SHOULD_CREATE_GITHUB_RELEASE" == "true" ]]; then
+    gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES;
+    checkResult $?;
+  else
+    echo "> GitHub > release '$APP_VERSION_NAME' already exists and is latest... SKIP";
+  fi
   # OLD REPO
   if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
     if [[ -d "app-android" ]]; then
       cd app-android || exit 1; # >>
-      gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES_APP_ANDROID;
-      checkResult $?;
+      SHOULD_CREATE_GITHUB_RELEASE=$(shouldCreateGitHubRelease "$APP_VERSION_NAME");
+      if [[ "$SHOULD_CREATE_GITHUB_RELEASE" == "true" ]]; then
+        gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES_APP_ANDROID;
+        checkResult $?;
+      else
+        echo "> GitHub > release '$APP_VERSION_NAME' already exists and is latest... SKIP";
+      fi
       cd ../; # <<
     fi
   fi
@@ -127,4 +158,3 @@ DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
 echo "> PUBLISH APP RELEASE (?)... DONE";
 echo "================================================================================";
-
