@@ -62,18 +62,18 @@ AAB_PATH_APP_ANDROID="./build/outputs/bundle/release/*.aab";
 AAB_FILES=($AAB_PATH);
 if [ -e "${APK_FILES[0]}" ]; then
   APK_FILE_NAME=$(basename "$APK_FILES");
-  echo "APK file name: '$APK_FILE_NAME'.";
+  echo "> APK file name: '$APK_FILE_NAME'.";
   APP_VERSION_NAME=$(echo "$APK_FILE_NAME" | sed 's/.*_v\([0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}_r[0-9]\+\).*/\1/');
 elif [ -e "${AAB_FILES[0]}" ]; then
   AAB_FILE_NAME=$(basename "${AAB_FILES[0]}");
-  echo "AAB file name: '$AAB_FILE_NAME'.";
+  echo "> AAB file name: '$AAB_FILE_NAME'.";
   APP_VERSION_NAME=$(echo "$AAB_FILE_NAME" | sed 's/.*_v\([0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}_r[0-9]\+\).*/\1/');
 else
-  echo "Cannot find app version name w/o APK or AAB!";
+  echo "> Cannot find app version name w/o APK or AAB!";
   exit 1;
 fi
 if [[ -z "${APP_VERSION_NAME}" ]]; then
-  echo "APP_VERSION_NAME empty!";
+  echo "> APP_VERSION_NAME empty!";
   exit 1;
 fi
 
@@ -106,9 +106,9 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
       GH_FILES+=" $AAB_PATH";
       GH_FILES_APP_ANDROID+=" $AAB_PATH_APP_ANDROID";
   else
-      echo "No APK/AAB";
+      echo "> No APK/AAB";
   fi
-  echo "GH_FILES: $GH_FILES.";
+  echo "> GH_FILES: $GH_FILES.";
   if shouldCreateGitHubRelease "$APP_VERSION_NAME"; then
     gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES;
     checkResult $?;
