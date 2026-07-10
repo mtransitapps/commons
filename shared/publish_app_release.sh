@@ -79,21 +79,15 @@ fi
 
 function shouldCreateGitHubRelease() {
   local APP_VERSION_NAME_LOCAL=$1;
-  local RELEASE_EXISTS=false;
-  if gh release view "$APP_VERSION_NAME_LOCAL" >/dev/null 2>&1; then
-    RELEASE_EXISTS=true;
-  fi
-  if [[ "$RELEASE_EXISTS" != true ]]; then
-    echo "true";
+  if ! gh release view "$APP_VERSION_NAME_LOCAL" >/dev/null 2>&1; then
     return 0;
   fi
   local LATEST_RELEASE_TAG_NAME="";
   LATEST_RELEASE_TAG_NAME=$(gh api repos/{owner}/{repo}/releases/latest --jq '.tag_name' 2>/dev/null);
   if [[ "$LATEST_RELEASE_TAG_NAME" == "$APP_VERSION_NAME_LOCAL" ]]; then
-    echo "false";
-    return 0;
+    return 1;
   fi
-  echo "Existing release '$APP_VERSION_NAME_LOCAL' is not latest release ('$LATEST_RELEASE_TAG_NAME').";
+  echo "Existing release '$APP_VERSION_NAME_LOCAL' is not latest release ('$LATEST_RELEASE_TAG_NAME')." >&2;
   exit 1;
 }
 
@@ -111,8 +105,7 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
       echo "No APK/AAB";
   fi
   echo "GH_FILES: $GH_FILES.";
-  SHOULD_CREATE_GITHUB_RELEASE=$(shouldCreateGitHubRelease "$APP_VERSION_NAME");
-  if [[ "$SHOULD_CREATE_GITHUB_RELEASE" == "true" ]]; then
+  if shouldCreateGitHubRelease "$APP_VERSION_NAME"; then
     gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES;
     checkResult $?;
   else
@@ -122,8 +115,7 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
   if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
     if [[ -d "app-android" ]]; then
       cd app-android || exit 1; # >>
-      SHOULD_CREATE_GITHUB_RELEASE=$(shouldCreateGitHubRelease "$APP_VERSION_NAME");
-      if [[ "$SHOULD_CREATE_GITHUB_RELEASE" == "true" ]]; then
+      if shouldCreateGitHubRelease "$APP_VERSION_NAME"; then
         gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES_APP_ANDROID;
         checkResult $?;
       else
