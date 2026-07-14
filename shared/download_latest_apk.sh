@@ -12,26 +12,30 @@ fi
 REPO_NAME=$(basename "$REPO")
 
 RELEASE_URL="https://api.github.com/repos/${REPO}/releases/latest"
-echo "Fetching latest '$REPO_NAME' repository release info from: '$RELEASE_URL'"
+echo "Fetching latest '$REPO_NAME' repository release APK from: '$RELEASE_URL'"
 
-RESPONSE=$(curl -f -s "$RELEASE_URL" 2>/dev/null)
+TMP_DIR=$(mktemp -d)
+trap 'rm -rf "$TMP_DIR"' EXIT
 
-if [ $? -ne 0 ]; then
-  echo "ERROR: Could not fetch release info!"
+if ! gh release download -R "$REPO" --pattern "*.apk" --dir "$TMP_DIR" >/dev/null; then
+  echo "ERROR: Could not download APK from latest release!"
   exit 1 #error
 fi
 
-APK_URL=$(echo "$RESPONSE" | grep "browser_download_url.*\.apk" | head -1 | cut -d '"' -f 4)
+shopt -s nullglob
+APK_FILES=("$TMP_DIR"/*.apk)
+shopt -u nullglob
 
-if [ -z "$APK_URL" ]; then
+if [ ${#APK_FILES[@]} -eq 0 ]; then
   echo "ERROR: Could not find APK in latest release!"
   exit 1 #error
 fi
 
+APK_URL="${APK_FILES[0]}"
 APK_FILE=$(basename "$APK_URL")
 
 echo "Downloading '$APK_URL' to '$APK_FILE'..."
-curl -f -L -o "$APK_FILE" "$APK_URL"
+mv "$APK_URL" "$APK_FILE"
 if [ ! -f "$APK_FILE" ] || [ ! -s "$APK_FILE" ]; then
   echo "ERROR: Failed to download module APK or file is empty!"
   exit 1 #error
