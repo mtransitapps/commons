@@ -11,8 +11,7 @@ fi
 
 REPO_NAME=$(basename "$REPO")
 
-RELEASE_URL="https://api.github.com/repos/${REPO}/releases/latest"
-echo "Fetching latest '$REPO_NAME' repository release APK from: '$RELEASE_URL'"
+echo "Fetching latest '$REPO_NAME' repository release APK from: '$REPO'"
 
 TMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TMP_DIR"' EXIT
