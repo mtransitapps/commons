@@ -21,16 +21,13 @@ if ! gh release download -R "$REPO" --pattern "*.apk" --dir "$TMP_DIR" >/dev/nul
   exit 1 #error
 fi
 
-shopt -s nullglob
-APK_FILES=("$TMP_DIR"/*.apk)
-shopt -u nullglob
+APK_URL=$(find "$TMP_DIR" -maxdepth 1 -type f -name "*.apk" | head -n 1)
 
-if [ ${#APK_FILES[@]} -eq 0 ]; then
+if [[ -z "$APK_URL" ]]; then
   echo "ERROR: Could not find APK in latest release!"
   exit 1 #error
 fi
 
-APK_URL="${APK_FILES[0]}"
 APK_FILE=$(basename "$APK_URL")
 
 echo "Downloading '$APK_URL' to '$APK_FILE'..."
