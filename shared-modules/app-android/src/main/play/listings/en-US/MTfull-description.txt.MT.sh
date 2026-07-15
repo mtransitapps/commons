@@ -344,6 +344,12 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     fi
   fi
 fi
+NEXT_BUS_FILE="${VALUES_DIR}/next_bus_values.xml";
+if [ ! -f "${GTFS_RT_FILE}" ] && [ -f "${NEXT_BUS_FILE}" ]; then # GTFS-RT XOR NextBus
+  RT_PARTS+=(" next departures")
+  RT_PARTS+=(" service alerts")
+  RT_PARTS+=(" vehicle locations")
+fi
 CA_MONTREAL_STM_INFO_PROVIDER_FILE="${VALUES_DIR}/stm_info_api_values.xml";
 if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
   if grep -q "<bool name=\"stm_info_api_status_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
