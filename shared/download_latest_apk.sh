@@ -13,25 +13,18 @@ REPO_NAME=$(basename "$REPO")
 
 echo "Fetching latest '$REPO_NAME' repository release APK from: '$REPO'"
 
-TMP_DIR=$(mktemp -d)
-trap 'rm -rf "$TMP_DIR"' EXIT
+APK_FILE=$(gh release view -R "$REPO" --json assets --jq '.assets[] | select(.name | endswith(".apk")) | .name' | head -n 1)
 
-if ! gh release download -R "$REPO" --pattern "*.apk" --dir "$TMP_DIR" >/dev/null; then
-  echo "ERROR: Could not download APK from latest release!"
-  exit 1 #error
-fi
-
-APK_URL=$(find "$TMP_DIR" -maxdepth 1 -type f -name "*.apk" | head -n 1)
-
-if [[ -z "$APK_URL" ]]; then
+if [[ -z "$APK_FILE" ]]; then
   echo "ERROR: Could not find APK in latest release!"
   exit 1 #error
 fi
 
-APK_FILE=$(basename "$APK_URL")
-
-echo "Downloading '$APK_URL' to '$APK_FILE'..."
-mv "$APK_URL" "$APK_FILE"
+echo "Downloading '$APK_FILE'..."
+if ! gh release download -R "$REPO" --pattern "$APK_FILE" >/dev/null; then
+  echo "ERROR: Could not download APK from latest release!"
+  exit 1 #error
+fi
 if [ ! -f "$APK_FILE" ] || [ ! -s "$APK_FILE" ]; then
   echo "ERROR: Failed to download module APK or file is empty!"
   exit 1 #error
