@@ -13,7 +13,17 @@ REPO_NAME=$(basename "$REPO")
 
 echo "Fetching latest '$REPO_NAME' repository release APK from: '$REPO'"
 
-APK_FILE=$(gh release view -R "$REPO" --json assets --jq '.assets[] | select(.name | endswith(".apk")) | .name' | head -n 1)
+if ! APK_FILE_LIST=$(gh release view -R "$REPO" --json assets --jq '.assets[] | select(.name | endswith(".apk")) | .name'); then
+  echo "ERROR: Failed to fetch release info from GitHub!"
+  exit 1 #error
+fi
+
+if [[ -z "$APK_FILE_LIST" ]]; then
+  echo "ERROR: Could not find APK in latest release!"
+  exit 1 #error
+fi
+
+read -r APK_FILE <<< "$APK_FILE_LIST"
 
 if [[ -z "$APK_FILE" ]]; then
   echo "ERROR: Could not find APK in latest release!"
