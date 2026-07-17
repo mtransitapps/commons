@@ -24,7 +24,7 @@ if [[ ! -f "$FILE_PATH/input_url" ]]; then
 fi
 
 if [[ -f "$FILE_PATH/input_url_user_agent" ]]; then
-  USER_AGENT=`cat $FILE_PATH/input_url_user_agent`;
+  USER_AGENT="$(tr -d '\r\n' < "$FILE_PATH/input_url_user_agent")";
   echo ">> Using user agent: '$USER_AGENT'";
   export MT_DOWNLOAD_USER_AGENT="$USER_AGENT";
 fi
