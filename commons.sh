@@ -358,7 +358,7 @@ function setGradleArgs() {
 
 	if [[ ${IS_CI} = true ]]; then
 		GRADLE_ARGS+=" --warning-mode all"; # print warnings in CI
-		GRADLE_ARGS+=" --stacktrace"; # print stacktrace in CI
+		# GRADLE_ARGS+=" --stacktrace"; # print stacktrace in CI
 	fi
 }
 
