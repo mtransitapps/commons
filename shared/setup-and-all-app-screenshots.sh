@@ -26,13 +26,18 @@ if [ ! -f "$MAIN_APK_FILE" ]; then
   exit 1
 fi
 
-if [ -z "$MODULE_APK_FILE" ]; then
-  echo " > ERROR: MODULE_APK_FILE environment variable not set"
+if [ -z "$MODULE_APK_FILE" ] && [ -z "$MODULE_APK_FILES_MANIFEST" ]; then
+  echo " > ERROR: MODULE_APK_FILE or MODULE_APK_FILES_MANIFEST environment variable not set"
   exit 1
 fi
 
-if [ ! -f "$MODULE_APK_FILE" ]; then
+if [ -n "$MODULE_APK_FILE" ] && [ ! -f "$MODULE_APK_FILE" ]; then
   echo " > ERROR: module APK file not found: $MODULE_APK_FILE"
+  exit 1
+fi
+
+if [ -n "$MODULE_APK_FILES_MANIFEST" ] && [ ! -f "$MODULE_APK_FILES_MANIFEST" ]; then
+  echo " > ERROR: module APK files manifest not found: $MODULE_APK_FILES_MANIFEST"
   exit 1
 fi
 
@@ -45,7 +50,7 @@ fi
 
 MODULE_PACKAGE=$(cat "$CONFIG_PKG_FILE")
 if [ -z "$MODULE_PACKAGE" ]; then
-  echo " > ERROR: $MODULE_PACKAGE not found in $CONFIG_PKG_FILE"
+  echo " > ERROR: package name not found in $CONFIG_PKG_FILE"
   exit 1
 fi
 
@@ -119,19 +124,39 @@ else
   echo " - No GPS coordinates file found, skipping GPS setup"
 fi
 
-echo ">> Step 3: Install current repository module app..."
+echo ">> Step 3: Install module app(s)..."
 
-echo " - Module package: $MODULE_PACKAGE"
-echo " - Installing module app from: $MODULE_APK_FILE"
+if [ -n "$MODULE_APK_FILE" ]; then
+  echo " - Module package: $MODULE_PACKAGE"
+  echo " - Installing module app from: $MODULE_APK_FILE"
 
-adb install -r -d "$MODULE_APK_FILE"
+  adb install -r -d "$MODULE_APK_FILE"
 
-# Verify installation
-if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
-  echo " - Module app installed successfully"
-else
-  echo " > ERROR: Module app installation may have failed!"
-  exit 1
+  # Verify installation
+  if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
+    echo " - Module app installed successfully"
+  else
+    echo " > ERROR: Module app installation may have failed!"
+    exit 1
+  fi
+fi
+
+if [ -n "$MODULE_APK_FILES_MANIFEST" ] && [ -f "$MODULE_APK_FILES_MANIFEST" ]; then
+  echo " - Installing modules from manifest: $MODULE_APK_FILES_MANIFEST"
+  while IFS=: read -r MOD_PKG MOD_APK; do
+    echo " - Installing module '$MOD_PKG' from: $MOD_APK"
+    if [ ! -f "$MOD_APK" ]; then
+      echo " > ERROR: Module APK not found: $MOD_APK"
+      exit 1
+    fi
+    adb install -r -d "$MOD_APK"
+    if adb shell pm list packages | grep -q "^package:${MOD_PKG}$"; then
+      echo " - Module '$MOD_PKG' installed successfully"
+    else
+      echo " > ERROR: Module '$MOD_PKG' installation may have failed!"
+      exit 1
+    fi
+  done < "$MODULE_APK_FILES_MANIFEST"
 fi
 
 echo ">> Step 4: Disable Pixel Launcher to prevent crashes..."
