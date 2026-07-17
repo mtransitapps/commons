@@ -431,7 +431,7 @@ function download() {
 	fi
 	local CURL_="curl --fail";
 	local WGET_="wget";
-	local USER_AGENT=${MT_DOWNLOAD_USER_AGENT:-MonTransit}
+	local USER_AGENT="$(printf '%s' "${MT_DOWNLOAD_USER_AGENT:-MonTransit}" | tr -d $'\r\n')"
 	local TIMEOUT_SEC=${MT_DOWNLOAD_TIMEOUT_SEC:-120}
 	if [[ ! "$TIMEOUT_SEC" =~ ^[0-9]+$ ]]; then
 		TIMEOUT_SEC=120
