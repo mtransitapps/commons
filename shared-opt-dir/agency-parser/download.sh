@@ -23,6 +23,12 @@ if [[ ! -f "$FILE_PATH/input_url" ]]; then
 	exit 0;
 fi
 
+if [[ -f "$FILE_PATH/input_url_user_agent" ]]; then
+  USER_AGENT=`cat $FILE_PATH/input_url_user_agent`;
+  echo ">> Using user agent: '$USER_AGENT'";
+  export MT_DOWNLOAD_USER_AGENT="$USER_AGENT";
+fi
+
 URL=`cat $FILE_PATH/input_url`;
 INPUT_DIR="${SCRIPT_DIR}/input";
 mkdir -p "${INPUT_DIR}";
