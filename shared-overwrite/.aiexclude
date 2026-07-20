@@ -4,8 +4,8 @@
 /app-android/app-signing-release-keys.properties
 /app-android/app-signing-release-keystore-encrypted.keystore
 /app-android/app-signing-release-keystore.keystore
-/app-android/clr
-/app-android/enc
+/app-android/clr/
+/app-android/enc/
 /app-android/google-play-auto-publisher.json
 /app-android/google-play-upload-certificate.pem
 /app-android/google-play-upload-keys.properties
@@ -14,5 +14,5 @@
 /app-android/src/debug/res/values/keys.xml
 
 # Data
-/app-android/src/main/res-current/raw
-/app-android/src/main/res-next/raw
+/app-android/src/main/res-current/raw/
+/app-android/src/main/res-next/raw/
