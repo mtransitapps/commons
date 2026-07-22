@@ -58,7 +58,12 @@ for FILE_NAME in $(ls -a) ; do
 	cd ${FILE_NAME} || exit;
 	
 	eval $@;
-	checkResult $?;
+	RESULT=$?;
+	if [[ $RESULT -ne 0 ]]; then
+		echo "> Current directory: '$CURRENT_DIRECTORY'.";
+		echo "> '$FILE_NAME' > running '$@'... FAILED (exit code: $RESULT)";
+		exit $RESULT;
+	fi
 	
 	cd ..;
 	echo "> '$FILE_NAME' > running '$@'... DONE";

@@ -18,17 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: MT check out main repo
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: mtransitapps/mtransit-for-android
     - name: MT init submodules
       run: ./submodules_init.sh
     - name: MT code setup
       run: ./commons/code_setup.sh
-    - name: MT set up JDK 17
+    - name: MT set up JDK 21
       uses: actions/setup-java@v5
       with:
         distribution: 'temurin'
-        java-version: '17'
+        java-version: '21'
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@v6

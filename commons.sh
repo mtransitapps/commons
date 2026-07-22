@@ -358,6 +358,7 @@ function setGradleArgs() {
 
 	if [[ ${IS_CI} = true ]]; then
 		GRADLE_ARGS+=" --warning-mode all"; # print warnings in CI
+		# GRADLE_ARGS+=" --stacktrace"; # print stacktrace in CI
 	fi
 }
 
@@ -428,36 +429,41 @@ function download() {
 	if [[ "$NEW_FILE" == "$LAST_FILE" ]]; then
 		NEW_FILE="NEW_${NEW_FILE}"
 	fi
-	local CURL_="curl";
+	local CURL_="curl --fail";
 	local WGET_="wget";
+	local USER_AGENT="$(printf '%s' "${MT_DOWNLOAD_USER_AGENT:-MonTransit}" | tr -d $'\r\n')"
+	local TIMEOUT_SEC=${MT_DOWNLOAD_TIMEOUT_SEC:-120}
+	if [[ ! "$TIMEOUT_SEC" =~ ^[0-9]+$ ]]; then
+		TIMEOUT_SEC=120
+	fi
 	if [[ ${IS_CI} = true ]]; then
 		curl --version;
-		local CURL_="curl --verbose"; #DEBUG
+		CURL_="$CURL_ --verbose"; #DEBUG
 		wget --version;
-		local WGET_="wget --verbose"; #DEBUG
+		WGET_="$WGET_ --verbose"; #DEBUG
 	fi
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
 		echo "> download() > (using last file '${LAST_FILE}')";
 		cp "${LAST_FILE}" "${NEW_FILE}";
 		# TODO --no-if-modified-since ??
-		# $WGET_ --header="User-Agent: MonTransit" --timeout=60 --tries=6 --timestamping "$URL";
-		$CURL_ --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 60 --retry 3 "$URL";
+		# $WGET_ --header="User-Agent: ${USER_AGENT}" --timeout="$TIMEOUT_SEC" --tries=3 --timestamping "$URL";
+		$CURL_ --user-agent "$USER_AGENT" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 		local RESULT=$?;
 		if [[ ${RESULT} != 0 ]]; then
 			echo "> download() > Downloading from '$URL'... FAILED ($RESULT)";
 			echo "> download() > Downloading from '$URL' (insecure)...";
-			$CURL_  --insecure --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 60 --retry 3 "$URL";
+			$CURL_  --insecure --user-agent "$USER_AGENT" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 			local RESULT=$?;
 			if [[ ${RESULT} != 0 ]]; then
 				echo "> download() > Downloading from '$URL' (insecure)...FAILED ($RESULT)";
 				echo "> download() > Downloading from '$URL' with WGET...";
-				$WGET_ -O "${NEW_FILE}" --header="User-Agent: MonTransit" --timeout=60 --tries=3 --timestamping "$URL";
+				$WGET_ -O "${NEW_FILE}" --header="User-Agent: ${USER_AGENT}" --timeout="$TIMEOUT_SEC" --tries=3 --timestamping "$URL";
 				local RESULT=$?;
 				if [[ ${RESULT} != 0 ]]; then
 					echo "> download() > Downloading from '$URL' with WGET... FAILED ($RESULT)";
 					echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF w/ UnsafeLegacyRenegotiation...";
-					echo -e "$CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION" | OPENSSL_CONF=/dev/stdin $CURL_ --user-agent "MonTransit" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time 60 --retry 3 "$URL";
+					echo -e "$CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION" | OPENSSL_CONF=/dev/stdin $CURL_ --user-agent "$USER_AGENT" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 					local RESULT=$?;
 					if [[ ${RESULT} != 0 ]]; then
 					  echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF w/ UnsafeLegacyRenegotiation... FAILED ($RESULT)";
@@ -467,23 +473,23 @@ function download() {
 		fi
 	else
 		echo "> download() > (not using last file)";
-		# $WGET_ --header="User-Agent: MonTransit" --timeout=60 --tries=6 -S "$URL";
-		$CURL_  --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 60 --retry 3 "$URL";
+		# $WGET_ --header="User-Agent: ${USER_AGENT}" --timeout="$TIMEOUT_SEC" --tries=3 -S "$URL";
+		$CURL_  --user-agent "$USER_AGENT" --location --output "${NEW_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 		local RESULT=$?;
 		if [[ ${RESULT} != 0 ]]; then
 			echo "> download() > Downloading from '$URL'... FAILED ($RESULT)";
 			echo "> download() > Downloading from '$URL' (insecure)...";
-			$CURL_  --insecure --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 60 --retry 3 "$URL";
+			$CURL_  --insecure --user-agent "$USER_AGENT" --location --output "${NEW_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 			local RESULT=$?;
 			if [[ ${RESULT} != 0 ]]; then
 				echo "> download() > Downloading from '$URL' (insecure)...FAILED ($RESULT)";
 				echo "> download() > Downloading from '$URL' with WGET...";
-				$WGET_ -O "${NEW_FILE}" --header="User-Agent: MonTransit" --timeout=60 --tries=3 "$URL";
+				$WGET_ -O "${NEW_FILE}" --header="User-Agent: ${USER_AGENT}" --timeout="$TIMEOUT_SEC" --tries=3 "$URL";
 				local RESULT=$?;
 				if [[ ${RESULT} != 0 ]]; then
 					echo "> download() > Downloading from '$URL' with WGET... FAILED ($RESULT)";
 					echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF w/ UnsafeLegacyRenegotiation...";
-					echo -e "$CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION" | OPENSSL_CONF=/dev/stdin $CURL_ --user-agent "MonTransit" --location --output "${NEW_FILE}" --max-time 60 --retry 3 "$URL";
+					echo -e "$CURL_OPENSSL_UNSAFE_LEGACY_RENEGOTIATION" | OPENSSL_CONF=/dev/stdin $CURL_ --user-agent "$USER_AGENT" --location --output "${NEW_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 					local RESULT=$?;
 					if [[ ${RESULT} != 0 ]]; then
 						echo "> download() > Downloading from '$URL' with CURL & custom OPENSSL_CONF w/ UnsafeLegacyRenegotiation... FAILED ($RESULT)";
