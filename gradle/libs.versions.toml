@@ -123,13 +123,13 @@ playInsightLint = "0.1.4"
 protobuf = "4.35.1"
 # https://github.com/google/protobuf-gradle-plugin/releases/latest
 protobuf-plugin = "0.10.0"
-# https://github.com/square/retrofit/tags
-# https://github.com/square/retrofit/releases/latest
+# https://github.com/lysine-dev/retrofit/tags
+# https://github.com/lysine-dev/retrofit/releases/latest
 retrofit = "3.0.0"
-# https://github.com/square/okhttp/tags
-# https://github.com/square/okhttp/releases/latest
-# https://square.github.io/okhttp/changelog/
-okhttp = "5.3.2"
+# https://github.com/lysine-dev/okhttp/tags
+# https://github.com/lysine-dev/okhttp/releases/latest
+# https://github.com/lysine-dev/okhttp/blob/HEAD/CHANGELOG.md
+okhttp = "5.4.0"
 # https://github.com/ChuckerTeam/chucker/releases/latest
 # https://github.com/ChuckerTeam/chucker/blob/main/CHANGELOG.md
 chucker = "4.3.1"
@@ -137,7 +137,7 @@ chucker = "4.3.1"
 # https://github.com/google/gson/blob/main/CHANGELOG.md
 gson = "2.14.0"
 # https://github.com/bumptech/glide/releases/latest
-glide = "5.0.7"
+glide = "5.0.9"
 # https://bigbadaboom.github.io/androidsvg/release_notes.html
 # https://github.com/BigBadaboom/androidsvg/releases/latest
 android-svg = "1.4"
@@ -152,7 +152,7 @@ commons-io = "2.22.0"
 commons-lang3 = "3.20.0"
 commons-text = "1.15.0"
 # https://github.com/xerial/sqlite-jdbc/releases/latest
-xerial-SQLiteJDBC = "3.53.0.0"
+xerial-SQLiteJDBC = "3.53.2.0"
 
 [libraries]
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
