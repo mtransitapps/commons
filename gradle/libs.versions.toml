@@ -12,7 +12,7 @@ sdk-target = "36"
 # Android 17 Cinnamon Bun
 buildTools = "37.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "2.3.21"
+kotlin = "2.4.10"
 # https://github.com/google/ksp/releases/latest
 ksp = "2.3.10"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
