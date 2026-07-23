@@ -216,10 +216,10 @@ io.github.pdvrieze.xmlutil:serialization:0.91.3
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.9.22
-org.jetbrains.kotlin:kotlin-bom:2.3.21
+org.jetbrains.kotlin:kotlin-bom:2.4.0
 org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.22
 org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.4.0
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.21
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.0
 org.jetbrains.kotlin:kotlin-stdlib:2.4.0
 org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.11.0
