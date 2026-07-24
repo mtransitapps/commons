@@ -1,0 +1,7 @@
+# ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
+reviews:
+  path_filters:
+    - "!app-android/clr/**"
+    - "!app-android/end/**"
+    - "!app-android/src/main/res-current/raw/**"
+    - "!app-android/src/main/res-next/raw/**"
