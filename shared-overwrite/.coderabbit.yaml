@@ -8,9 +8,9 @@ reviews:
     ignore_usernames:
       - "dependabot[bot]"
       - "github-actions[bot]"
-    path_filters:
-      - "!app-android/clr/**"
-      - "!app-android/end/**"
-      - "!app-android/src/main/res-current/raw/**"
-      - "!app-android/src/main/res-next/raw/**"
   high_level_summary_in_walkthrough: true
+  path_filters:
+    - "!app-android/clr/**"
+    - "!app-android/end/**"
+    - "!app-android/src/main/res-current/raw/**"
+    - "!app-android/src/main/res-next/raw/**"
