@@ -106,7 +106,7 @@ com.github.chuckerteam.chucker:library-no-op:4.3.1
 com.google.ads.mediation:applovin:13.6.3.0
 com.google.ads.mediation:common:1.1.0
 com.google.ads.mediation:facebook:6.21.0.4
-com.google.ads.mediation:vungle:7.7.4.2
+com.google.ads.mediation:vungle:7.7.6.0
 com.google.android.datatransport:transport-api:3.1.0
 com.google.android.datatransport:transport-backend-cct:3.2.0
 com.google.android.datatransport:transport-runtime:3.2.0
@@ -181,7 +181,7 @@ com.squareup.okio:okio-jvm:3.17.0
 com.squareup.okio:okio:3.17.0
 com.squareup.retrofit2:converter-gson:3.0.0
 com.squareup.retrofit2:retrofit:3.0.0
-com.vungle:vungle-ads:7.7.4
+com.vungle:vungle-ads:7.7.6
 jakarta.inject:jakarta.inject-api:2.0.1
 javax.inject:javax.inject:1
 org.checkerframework:checker-qual:3.43.0
