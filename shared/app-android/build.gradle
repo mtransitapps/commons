@@ -53,7 +53,7 @@ android {
     buildToolsVersion = libs.versions.buildTools.get()
 
     compileOptions {
-        coreLibraryDesugaringEnabled = true // required for Google Play Services https://developers.google.com/android/guides/releases#april_14_2025
+        coreLibraryDesugaringEnabled = true // required for Play Services https://developers.google.com/android/guides/releases#april_14_2025
         sourceCompatibility = rootProject.javaVersion
         targetCompatibility = rootProject.javaVersion
     }
@@ -357,7 +357,7 @@ if (isMainApp) {
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.android.desugarJdkLibs) // required for Google Play Services https://developers.google.com/android/guides/releases#april_14_2025
+    coreLibraryDesugaring(libs.android.desugarJdkLibs) // required for Play Services https://developers.google.com/android/guides/releases#april_14_2025
 
     implementation(platform(libs.kotlin.bom))
     implementation(platform(libs.kotlinx.coroutines.bom))
