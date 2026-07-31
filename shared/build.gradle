@@ -55,9 +55,12 @@ subprojects {
     // region DeteKt
     apply plugin: libs.plugins.detekt2.get().pluginId
     detekt {
+        toolVersion = libs.versions.detekt2.get()
+        ignoredBuildTypes = ["release"]
+        buildUponDefaultConfig = true
         // Shared configuration
         config.setFrom(files("${rootProject.projectDir}/commons/config/detekt/detekt-config.yml"))
-        // Individual baselines
+        // Individual baselines (update with: './gradlew detektBaseline')
         baseline = file("${projectDir}/detekt-baseline.xml")
         // Build the abstract syntax tree in parallel for faster execution
         parallel = true
