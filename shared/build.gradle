@@ -57,6 +57,8 @@ subprojects {
     detekt {
         toolVersion = libs.versions.detekt2.get()
         ignoredBuildTypes = ["release"]
+        // https://github.com/detekt/detekt/blob/main/detekt-core/src/main/resources/default-detekt-config.yml
+        // https://github.com/detekt/detekt/blob/<libs.versions.detekt2.get()>/detekt-core/src/main/resources/default-detekt-config.yml
         buildUponDefaultConfig = true
         // Shared configuration
         config.setFrom(files("${rootProject.projectDir}/commons/config/detekt/detekt-config.yml"))
