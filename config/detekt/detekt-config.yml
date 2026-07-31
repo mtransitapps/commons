@@ -1,0 +1,18 @@
+config:
+  validation: true
+  warningsAsErrors: false
+  excludes: [ ]
+
+empty-blocks:
+  EmptyFunctionBlock:
+    active: true
+    ignoreOverridden: true
+
+style:
+  DestructuringDeclarationWithTooManyEntries:
+    active: true
+    maxDestructuringEntries: 4 # instead of default 3: MediatorLiveData with 4 sources
+  MaxLineLength:
+    active: true
+    maxLineLength: 160
+

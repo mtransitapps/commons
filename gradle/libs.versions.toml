@@ -23,6 +23,8 @@ kotlinx-datetime = "0.8.0"
 kotlinx-serialization = "1.11.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "7.3.1.8318"
+# https://detekt.dev/changelog-2.0.0
+detekt2 = "2.0.0-alpha.5"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "9.3.1"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
@@ -361,6 +363,7 @@ commons = [
 android-application = { id = "com.android.application", version.ref = "android-gradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradlePlugin" }
 android-lint = { id = "com.android.lint", version.ref = "android-gradlePlugin" }
+detekt2 = { id = "dev.detekt", version.ref = "detekt2" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebase-perf-plugin" }
 gms = { id = "com.google.gms.google-services", version.ref = "gps-plugin" }
