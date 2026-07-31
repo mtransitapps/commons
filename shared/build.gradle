@@ -65,7 +65,6 @@ subprojects {
         // Build the abstract syntax tree in parallel for faster execution
         parallel = true
     }
-    // Configure reporting formats for each submodule
     tasks.withType(Detekt).configureEach {
         reports {
             checkstyle.required.set(true)
