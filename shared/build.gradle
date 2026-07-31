@@ -1,3 +1,5 @@
+import dev.detekt.gradle.Detekt
+
 buildscript {
     ext {
         javaVersion = JavaVersion.VERSION_11
@@ -38,12 +40,42 @@ plugins {
     // alias(libs.plugins.benmanes.versions)
     // alias(libs.plugins.littlerobots.versioncatalog)
 
+    alias(libs.plugins.detekt2) apply false
+
     alias(libs.plugins.gradle.doctor)
     alias(libs.plugins.gradle.androidCacheFix) apply false
 
     alias(libs.plugins.gms) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.firebase.perf) apply false
+}
+
+subprojects {
+
+    // region DeteKt
+    apply plugin: libs.plugins.detekt2.get().pluginId
+    detekt {
+        toolVersion = libs.versions.detekt2.get()
+        ignoredBuildTypes = ["release"]
+        // https://github.com/detekt/detekt/blob/main/detekt-core/src/main/resources/default-detekt-config.yml
+        // https://github.com/detekt/detekt/blob/<libs.versions.detekt2.get()>/detekt-core/src/main/resources/default-detekt-config.yml
+        buildUponDefaultConfig = true
+        // Shared configuration
+        config.setFrom(files("${rootProject.projectDir}/commons/config/detekt/detekt-config.yml"))
+        // Individual baselines (update with: './gradlew detektBaseline')
+        baseline = file("${projectDir}/detekt-baseline.xml")
+        // Build the abstract syntax tree in parallel for faster execution
+        parallel = true
+    }
+    tasks.withType(Detekt).configureEach {
+        reports {
+            checkstyle.required.set(true)
+            html.required.set(true)
+            sarif.required.set(true)
+            markdown.required.set(true)
+        }
+    }
+    // endregion
 }
 
 tasks.register('clean', Delete) {
