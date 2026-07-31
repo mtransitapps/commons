@@ -444,10 +444,10 @@ function download() {
 	fi
 	local CURL_HEADERS=();
 	local WGET_HEADERS=(--header="User-Agent: ${USER_AGENT}");
-	if [[ "${LAST_FILE,,}" == *.zip || "${NEW_FILE,,}" == *.zip ]]; then
-		CURL_HEADERS=(--header "Accept: application/zip");
-		WGET_HEADERS=(--header="Accept: application/zip")
-	fi
+	# if [[ "${LAST_FILE,,}" == *.zip || "${NEW_FILE,,}" == *.zip ]]; then
+	# 	CURL_HEADERS=(--header "Accept: application/zip"); # not working for some servers (not fixing any server issue)
+	# 	WGET_HEADERS=(--header="Accept: application/zip"); # not working for some servers (not fixing any server issue)
+	# fi
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
 		echo "> download() > (using last file '${LAST_FILE}')";
