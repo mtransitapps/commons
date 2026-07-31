@@ -443,15 +443,17 @@ function download() {
 		WGET_="$WGET_ --verbose"; #DEBUG
 	fi
 	local CURL_HEADERS=();
-	if [[ "$NEW_FILE" == *.zip ]]; then
-		CURL_HEADERS=(-H "Accept: application/zip");
+	local WGET_HEADERS=(--header="User-Agent: ${USER_AGENT}");
+	if [[ "${LAST_FILE,,}" == *.zip || "${NEW_FILE,,}" == *.zip ]]; then
+		CURL_HEADERS=(--header "Accept: application/zip");
+		WGET_HEADERS=(--header="Accept: application/zip")
 	fi
 	echo "> download() > Downloading from '$URL'...";
 	if [[ -e ${LAST_FILE} ]]; then
 		echo "> download() > (using last file '${LAST_FILE}')";
 		cp "${LAST_FILE}" "${NEW_FILE}";
 		# TODO --no-if-modified-since ??
-		# $WGET_ --header="User-Agent: ${USER_AGENT}" --timeout="$TIMEOUT_SEC" --tries=3 --timestamping "$URL";
+		# $WGET_ "${WGET_HEADERS[@]}" --timeout="$TIMEOUT_SEC" --tries=3 --timestamping "$URL";
 		$CURL_ "${CURL_HEADERS[@]}" --user-agent "$USER_AGENT" --location --output "${NEW_FILE}" --time-cond "${LAST_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 		local RESULT=$?;
 		if [[ ${RESULT} != 0 ]]; then
@@ -462,7 +464,7 @@ function download() {
 			if [[ ${RESULT} != 0 ]]; then
 				echo "> download() > Downloading from '$URL' (insecure)...FAILED ($RESULT)";
 				echo "> download() > Downloading from '$URL' with WGET...";
-				$WGET_ -O "${NEW_FILE}" --header="User-Agent: ${USER_AGENT}" --timeout="$TIMEOUT_SEC" --tries=3 --timestamping "$URL";
+				$WGET_ -O "${NEW_FILE}" "${WGET_HEADERS[@]}" --timeout="$TIMEOUT_SEC" --tries=3 --timestamping "$URL";
 				local RESULT=$?;
 				if [[ ${RESULT} != 0 ]]; then
 					echo "> download() > Downloading from '$URL' with WGET... FAILED ($RESULT)";
@@ -477,7 +479,7 @@ function download() {
 		fi
 	else
 		echo "> download() > (not using last file)";
-		# $WGET_ --header="User-Agent: ${USER_AGENT}" --timeout="$TIMEOUT_SEC" --tries=3 -S "$URL";
+		# $WGET_ "${WGET_HEADERS[@]}" --timeout="$TIMEOUT_SEC" --tries=3 -S "$URL";
 		$CURL_ "${CURL_HEADERS[@]}" --user-agent "$USER_AGENT" --location --output "${NEW_FILE}" --max-time "$TIMEOUT_SEC" --retry 3 "$URL";
 		local RESULT=$?;
 		if [[ ${RESULT} != 0 ]]; then
@@ -488,7 +490,7 @@ function download() {
 			if [[ ${RESULT} != 0 ]]; then
 				echo "> download() > Downloading from '$URL' (insecure)...FAILED ($RESULT)";
 				echo "> download() > Downloading from '$URL' with WGET...";
-				$WGET_ -O "${NEW_FILE}" --header="User-Agent: ${USER_AGENT}" --timeout="$TIMEOUT_SEC" --tries=3 "$URL";
+				$WGET_ -O "${NEW_FILE}" "${WGET_HEADERS[@]}" --timeout="$TIMEOUT_SEC" --tries=3 "$URL";
 				local RESULT=$?;
 				if [[ ${RESULT} != 0 ]]; then
 					echo "> download() > Downloading from '$URL' with WGET... FAILED ($RESULT)";
