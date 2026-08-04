@@ -1,0 +1,93 @@
+# ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite
+name: MT check release needed
+on:
+  workflow_dispatch: # manual
+  push:
+    branches:
+      - 'master' # default
+# gh workflow run mt-check-release-needed.yml --ref $(git rev-parse --abbrev-ref HEAD)
+# gh run list --workflow=mt-check-release-needed.yml
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  MT-CHECK-RELEASE-NEEDED-JOB:
+    name: "MT Check Release Needed"
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: MT check out main repository code
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.MT_PAT }}
+          fetch-depth: 0 # required for release tags & history
+
+      - name: MT check if release is needed
+        id: mt-check-release-needed
+        run: |
+          echo ">> Checking if release is needed..."
+
+          APP_ANDROID_MAIN_DIR="app-android/src/main"
+          if [[ ! -d "${APP_ANDROID_MAIN_DIR}" ]]; then
+            echo ">> No app-android directory found. Release check not applicable."
+            echo "release_needed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          LAST_GIT_TAG_NAME=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [[ -z "${LAST_GIT_TAG_NAME}" ]]; then
+            echo ">> No release tag found."
+            echo "release_needed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          LAST_GIT_TAG_TIMESTAMP_SEC=$(git log -1 --pretty=format:"%at" "${LAST_GIT_TAG_NAME}")
+          LAST_GIT_TAG_DATE_TIME=$(date --date='@'"${LAST_GIT_TAG_TIMESTAMP_SEC}"'')
+          echo "> Last release '${LAST_GIT_TAG_NAME}' on '${LAST_GIT_TAG_DATE_TIME}'."
+
+          NOW_TIMESTAMP_SEC=$(date +%s)
+          MIN_DIFF_FOR_RELEASE_SEC=4233600 # 7 weeks (7 * 7 * 24 * 60 * 60)
+          RELEASE_TOO_OLD=false
+          if (( NOW_TIMESTAMP_SEC - LAST_GIT_TAG_TIMESTAMP_SEC > MIN_DIFF_FOR_RELEASE_SEC )); then
+            RELEASE_TOO_OLD=true
+            echo ">> Last release is older than 7 weeks."
+          else
+            echo ">> Last release is recent enough."
+          fi
+
+          DATA_CHANGED=false
+          # files are checked directly; raw directories are checked recursively for any file change
+          DATA_PATHS=(
+            "app-android/src/main/res/values/gtfs_rts_values_gen.xml"
+            "app-android/src/main/res/raw/" # git diff checks directory recursively
+            "app-android/src/main/res-current/values/current_gtfs_rts_values_gen.xml"
+            "app-android/src/main/res-current/raw/" # git diff checks directory recursively
+            "app-android/src/main/res-next/values/next_gtfs_rts_values_gen.xml"
+            "app-android/src/main/res-next/raw/" # git diff checks directory recursively
+          )
+
+          if ! git diff --quiet "${LAST_GIT_TAG_NAME}"..HEAD -- "${DATA_PATHS[@]}"; then
+            echo ">> Data changed since '${LAST_GIT_TAG_NAME}':"
+            git diff --name-only "${LAST_GIT_TAG_NAME}"..HEAD -- "${DATA_PATHS[@]}"
+            DATA_CHANGED=true
+          fi
+
+          if [[ "${RELEASE_TOO_OLD}" == "true" || "${DATA_CHANGED}" == "true" ]]; then
+            echo ">> Release needed."
+            echo "release_needed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo ">> Release not needed."
+            echo "release_needed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: MT trigger release workflow
+        if: steps.mt-check-release-needed.outputs.release_needed == 'true'
+        run: |
+          echo ">> Triggering mt-release.yml workflow..."
+          if ! gh workflow run mt-release.yml; then
+            echo ">> Failed to trigger mt-release.yml workflow. Verify GH_TOKEN (from MT_PAT) has workflow scope and '.github/workflows/mt-release.yml' exists on default branch."
+            exit 1
+          fi
+          echo ">> mt-release.yml workflow triggered."
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }}
