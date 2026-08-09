@@ -15,4 +15,7 @@ style:
   MaxLineLength:
     active: true
     maxLineLength: 160
+  UnusedImport:
+    active: true
+    additionalOperatorSet: []
 
