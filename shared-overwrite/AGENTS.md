@@ -30,5 +30,5 @@ Shared code and files are deployed/generated from:
 - https://github.com/mtransitapps/commons/tree/master/shared-modules: code/files only used by the "agency modules" repositories
 - https://github.com/mtransitapps/commons/tree/master/shared-opt-dir: code/files only shared by some root repositories (not submodules) (depending on existing directory existence)
 
-Dependencies versions are all in:
+Dependencies versions are all in (some dependencies use BOMs):
 - https://github.com/mtransitapps/commons/blob/master/gradle/libs.versions.toml
