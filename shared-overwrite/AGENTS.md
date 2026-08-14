@@ -20,3 +20,13 @@ The main build file is:
 - https://github.com/mtransitapps/mtransit-for-android/blob/master/.github/workflows/mt-build.yml
 It's using:
 - https://github.com/mtransitapps/gh-actions/blob/master/.github/actions/setup/action.yml
+
+Shared code and files are deployed/generated from:
+- https://github.com/mtransitapps/commons/tree/master/shared: code/files shared between all root repositories (not subnodules)
+- https://github.com/mtransitapps/commons/tree/master/shared-overwrite: code/files shared and persisted between all root repositories (not subnodules)
+- https://github.com/mtransitapps/commons/tree/master/shared-main: code/files only used by the main root `mtransit-for-android` repository (but related to content inside `commons` repository)
+- https://github.com/mtransitapps/commons/tree/master/shared-modules: code/files only used by the "agency modules" repositories
+- https://github.com/mtransitapps/commons/tree/master/shared-opt-dir: code/files only shared by some root repositories (not subnodules) (depending on existing directory existence)
+
+Dependencies versions are all in:
+- https://github.com/mtransitapps/commons/blob/master/gradle/libs.versions.toml
