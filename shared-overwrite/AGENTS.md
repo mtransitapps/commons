@@ -2,9 +2,9 @@
 
 This repository is part of an Android project with multiple Android apps and JVM data parsers.
 
-The main Android app has multiple Gradle modules organized around git submodules.
+The main Android app has multiple Gradle modules organized around Git submodules.
 
-The pull requests and branches builds are run on all git submodules repositories code with the same branch name or the default branch names.
+Pull request and branch builds run across all Git submodule repositories using the same branch name when available, otherwise the default branch.
 
 The main git repositories with business logic are:
 - https://github.com/mtransitapps/mtransit-for-android/: the main Android app
