@@ -4,14 +4,14 @@ This repository is part of an Android project with multiple Android apps and JVM
 
 The main Android app has multiple Gradle modules organized around Git submodules.
 
-Main repository `mtransit-for-android` builds run the checkout branch for all submodules or fallback to their default branch.
-Submodule repository builds run the main repository `mtransit-for-android` same branch name or fallback to their default branch.
-Other submodules repositories will use main repository `mtransit-for-android` checkout branch or fallback to their default branch.
+Main repository `mtransit-for-android` builds run the checkout branch for all submodules or fall back to their default branch.
+Submodule repository builds run the main repository `mtransit-for-android` same branch name or fall back to their default branch.
+Other submodules repositories will use main repository `mtransit-for-android` checkout branch or fall back to their default branch.
 
 The main git repositories with business logic are:
 - https://github.com/mtransitapps/mtransit-for-android/: the main Android app
 - https://github.com/mtransitapps/commons-android/: the shared Android library code between the main Android app and the other "agency modules" apps
-- https://github.com/mtransitapps/parser/: the JVM data parsing code for GTFS-based based "agency modules" (not GBFS-based)
+- https://github.com/mtransitapps/parser/: the JVM data parsing code for GTFS-based "agency modules" (not GBFS-based)
 - https://github.com/mtransitapps/commons-java/: the shared JVM code
 - https://github.com/mtransitapps/commons/: the shared shells and automatic code
 
