@@ -66,7 +66,7 @@ androidx-sqlite = "2.7.0"
 androidx-swiperefreshlayout = "1.2.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
-androidx-webkit = "1.16.0"
+androidx-webkit = "1.17.0"
 androidx-workManager = "2.11.2"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.14.0"
