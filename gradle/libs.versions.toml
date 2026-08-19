@@ -101,7 +101,7 @@ play-billing = "9.1.0"
 # https://developer.android.com/guide/playcore#java-kotlin-in-app-review
 play-appUpdate = "2.1.0"
 play-review = "2.0.2"
-# https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android/changelog
+# https://developers.facebook.com/documentation/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/meta/CHANGELOG.md
 fbAudienceNetwork-mediation = "6.22.0.0"
