@@ -4,7 +4,7 @@ buildscript {
     ext {
         javaVersion = JavaVersion.VERSION_11
         javaToolchainVersion = JavaVersion.VERSION_21
-        gmaNextGen = false
+        gmaNextGen = true
     }
 
     repositories {
