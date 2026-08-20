@@ -9,7 +9,7 @@ echo ">> Generating LICENSE...";
 
 if [[ "$#" -ne 1 ]]; then
    echo "Illegal number of parameters!";
-   echo "Usage: $0 <DEST_FILE_PATH>";
+   echo "Usage: $0 <DEST_DIR>";
    exit 1;
 fi
 
