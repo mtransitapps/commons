@@ -143,10 +143,12 @@ fi
 # escape "&" -> "&amp;" for XML
 AGENCY_NAME_LONG="${AGENCY_NAME_LONG//&/&amp;}";
 AGENCY_NAME_SHORT="${AGENCY_NAME_SHORT//&/&amp;}";
+TYPE_LABEL="${TYPE_LABEL//&/&amp;}";
 LOCATION_LABEL="${LOCATION_LABEL//&/&amp;}";
 # escape "'" -> "\'" for XML
 AGENCY_NAME_LONG="${AGENCY_NAME_LONG//\'/\\\'}";
 AGENCY_NAME_SHORT="${AGENCY_NAME_SHORT//\'/\\\'}";
+TYPE_LABEL="${TYPE_LABEL//\'/\\\'}";
 LOCATION_LABEL="${LOCATION_LABEL//\'/\\\'}";
 
 cat >>"${STRINGS_FILE}" <<EOL
