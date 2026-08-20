@@ -205,14 +205,15 @@ function deployFile() {
 	fi
 	# echo "--------------------------------------------------------------------------------";
 	if [[ $SRC_FILE_PATH == *.MT.sh ]]; then
-		echoFile "> Deploying '$SRC_FILE_PATH'...";
-		./"$SRC_FILE_PATH";
+		local DEST_DIR=$(dirname ${DEST_FILE_PATH});
+		echoFile "> Deploying '$SRC_FILE_PATH' in '$DEST_DIR'...";
+		./"$SRC_FILE_PATH" "$DEST_DIR";
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo "> Error while deploying file '$SRC_FILE_PATH'!";
+			echo "> Error while deploying file '$SRC_FILE_PATH' in '$DEST_DIR'!";
 			exit ${RESULT};
 		fi
-		echoFile "> Deploying '$SRC_FILE_PATH'... DONE ✓";
+		echoFile "> Deploying '$SRC_FILE_PATH' in '$DEST_DIR'... DONE ✓";
 		return;
 	fi
 	if [[ "$OVER_WRITE" == true ]]; then
