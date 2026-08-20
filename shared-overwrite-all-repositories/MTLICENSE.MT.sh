@@ -1,3 +1,28 @@
+#!/bin/bash
+SCRIPT_DIR="$(dirname "$0")";
+
+ROOT_DIR="$SCRIPT_DIR/../..";
+COMMONS_DIR="${ROOT_DIR}/commons";
+source ${COMMONS_DIR}/commons.sh;
+
+setIsCI;
+
+echo ">> Generating LICENSE...";
+
+LICENSE_FILE="${ROOT_DIR}/LICENSE";
+
+rm -f "${LICENSE_FILE}";
+checkResult $?;
+touch "${LICENSE_FILE}";
+checkResult $?;
+
+COPYRIGHT_YEAR=$(date +%Y);
+if [ -z "$COPYRIGHT_YEAR" ]; then
+    echo "COPYRIGHT_YEAR is empty!";
+    exit 1;
+fi
+
+cat >>"${LICENSE_FILE}" <<EOL
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -186,7 +211,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2026 MTransit Apps Inc.
+   Copyright ${COPYRIGHT_YEAR} MTransit Apps Inc.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -199,3 +224,12 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+EOL
+
+if [[ ${IS_CI} = true ]]; then
+    echo "---------------------------------------------------------------------------------------------------------------";
+    cat "${LICENSE_FILE}"; #DEBUG
+    echo "---------------------------------------------------------------------------------------------------------------";
+fi
+
+echo ">> Generating LICENSE... DONE";
