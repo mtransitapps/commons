@@ -13,11 +13,9 @@ if [[ "$#" -ne 1 ]]; then
    exit 1;
 fi
 
-DEST_FILE_PATH="$1";
+DEST_DIR="$1";
 
-DEST_FILE_DIRECTORY=$(dirname "$DEST_FILE_PATH");
-
-CALLING_GIT_REPOSITORY_DIR=$(git -C "$DEST_FILE_DIRECTORY" rev-parse --show-toplevel 2>/dev/null);
+CALLING_GIT_REPOSITORY_DIR=$(git -C "$DEST_DIR" rev-parse --show-toplevel 2>/dev/null);
 if [ -z "$CALLING_GIT_REPOSITORY_DIR" ]; then
     echo "CALLING_GIT_REPOSITORY_DIR is empty!";
     exit 1;
