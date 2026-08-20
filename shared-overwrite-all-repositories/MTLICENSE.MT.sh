@@ -1,15 +1,19 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-
-ROOT_DIR="$SCRIPT_DIR/../..";
-COMMONS_DIR="${ROOT_DIR}/commons";
+COMMONS_DIR="${SCRIPT_DIR}/..";
 source ${COMMONS_DIR}/commons.sh;
 
 setIsCI;
 
 echo ">> Generating LICENSE...";
 
-LICENSE_FILE="${ROOT_DIR}/LICENSE";
+CALLING_GIT_REPOSITORY_DIR=$(git rev-parse --show-toplevel 2>/dev/null);
+if [ -z "$CALLING_GIT_REPOSITORY_DIR" ]; then
+    echo "CALLING_GIT_REPOSITORY_DIR is empty!";
+    exit 1;
+fi
+
+LICENSE_FILE="${CALLING_GIT_REPOSITORY_DIR}/LICENSE";
 
 rm -f "${LICENSE_FILE}";
 checkResult $?;
