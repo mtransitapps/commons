@@ -42,7 +42,7 @@ git submodule foreach --recursive '
 
   # Determine current branch (empty if detached HEAD)
   BRANCH="$(git symbolic-ref --short -q HEAD)"
-  if [[ -z "$BRANCH" ]]; then
+  if [ -z "$BRANCH" ]; then
     echo "> Detached HEAD... SKIP"
     exit 0
   fi
