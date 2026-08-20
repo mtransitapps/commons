@@ -461,8 +461,6 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
-mapfile -t SUBMODULES < <(git submodule foreach --quiet 'basename "$(pwd)"');
-echo "${#SUBMODULES[@]} submodule(s): ";
 for SUBMODULE in "${SUBMODULES[@]}"; do
   echo "> Deploying overwritten all repositories shared files to '$SUBMODULE'...";
   for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
