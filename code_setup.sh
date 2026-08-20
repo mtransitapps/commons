@@ -330,7 +330,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-		ls -l $FILENAME;
+		ls -l "$SRC_FILE_PATH";
 		exit 1;
 	fi
 done
@@ -355,7 +355,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-		ls -l $FILENAME;
+		ls -l "$SRC_FILE_PATH";
 		exit 1;
 	fi
 done
@@ -381,7 +381,7 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
       checkResult $?;
     else #WTF
       echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-      ls -l $FILENAME;
+      ls -l "$SRC_FILE_PATH";
       exit 1;
     fi
   done
@@ -404,7 +404,7 @@ else
       checkResult $?;
     else #WTF
       echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-      ls -l $FILENAME;
+      ls -l "$SRC_FILE_PATH";
       exit 1;
     fi
   done
@@ -433,11 +433,64 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-		ls -l $FILENAME;
+		ls -l "$SRC_FILE_PATH";
 		exit 1;
 	fi
 done
 echo -e "\n> Deploying overwritten shared files... DONE ✓";
+echo "--------------------------------------------------------------------------------";
+
+echo "--------------------------------------------------------------------------------";
+echo "> Deploying overwritten all repositories shared files...";
+SRC_DIR_PATH="commons/shared-overwrite-all-repositories";
+for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
+	SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
+	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
+		continue;
+	fi
+	FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+	DEST_FILE_PATH="$DEST_PATH/$FILENAME_DEST"
+	if [[ $FILENAME == MT.DELETE.* ]]; then
+		deleteFile "$DEST_PATH/${FILENAME#"MT.DELETE."}";
+		checkResult $?;
+	elif [[ -f $SRC_FILE_PATH ]]; then
+		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH} true; #over-write
+		checkResult $?;
+	elif [[ -d "$SRC_FILE_PATH" ]]; then
+		deployDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH} true; #DO over-write
+		checkResult $?;
+	else #WTF
+		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
+		ls -l "$SRC_FILE_PATH";
+		exit 1;
+	fi
+done
+for SUBMODULE in "${SUBMODULES[@]}"; do
+  echo "> Deploying overwritten all repositories shared files to '$SUBMODULE'...";
+  for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
+	SRC_FILE_PATH=$SRC_DIR_PATH/$FILENAME;
+	if [[ $FILENAME == "." ]] || [[ $FILENAME == ".." ]]; then
+		continue;
+	fi
+	FILENAME_DEST=${FILENAME#"MT"}; # MT+filename used to ignore ".gitignore"
+	DEST_FILE_PATH="$SUBMODULE/$FILENAME_DEST"
+	if [[ $FILENAME == MT.DELETE.* ]]; then
+		deleteFile "$SUBMODULE/${FILENAME#"MT.DELETE."}";
+		checkResult $?;
+	elif [[ -f $SRC_FILE_PATH ]]; then
+		deployFile ${SRC_FILE_PATH} ${DEST_FILE_PATH} true; #over-write
+		checkResult $?;
+	elif [[ -d "$SRC_FILE_PATH" ]]; then
+		deployDirectory ${SRC_FILE_PATH} ${DEST_FILE_PATH} true; #DO over-write
+		checkResult $?;
+	else #WTF
+		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
+		ls -l "$SRC_FILE_PATH";
+		exit 1;
+	fi
+  done
+done
+echo -e "\n> Deploying overwritten all repositories shared files... DONE ✓";
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
