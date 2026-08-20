@@ -205,8 +205,8 @@ function deployFile() {
 	fi
 	# echo "--------------------------------------------------------------------------------";
 	if [[ $SRC_FILE_PATH == *.MT.sh ]]; then
-		echoFile "> Deploying '$SRC_FILE_PATH'...";
-		./"$SRC_FILE_PATH";
+		echoFile "> Deploying '$SRC_FILE_PATH' with destination '$DEST_FILE_PATH'...";
+		./"$SRC_FILE_PATH" "$DEST_FILE_PATH";
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while deploying file '$SRC_FILE_PATH'!";
