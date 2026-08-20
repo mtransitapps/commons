@@ -326,7 +326,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-		ls -l $FILENAME;
+		ls -l "$SRC_FILE_PATH";
 		exit 1;
 	fi
 done
@@ -351,7 +351,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-		ls -l $FILENAME;
+		ls -l "$SRC_FILE_PATH";
 		exit 1;
 	fi
 done
@@ -377,7 +377,7 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
       checkResult $?;
     else #WTF
       echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-      ls -l $FILENAME;
+      ls -l "$SRC_FILE_PATH";
       exit 1;
     fi
   done
@@ -400,7 +400,7 @@ else
       checkResult $?;
     else #WTF
       echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-      ls -l $FILENAME;
+      ls -l "$SRC_FILE_PATH";
       exit 1;
     fi
   done
@@ -429,7 +429,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-		ls -l $FILENAME;
+		ls -l "$SRC_FILE_PATH";
 		exit 1;
 	fi
 done
@@ -457,7 +457,7 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-		ls -l $FILENAME;
+		ls -l "$SRC_FILE_PATH";
 		exit 1;
 	fi
 done
@@ -481,7 +481,7 @@ for SUBMODULE in "${SUBMODULES[@]}"; do
 		checkResult $?;
 	else #WTF
 		echo "> File to deploy '$FILENAME' ($SRC_FILE_PATH) is neither a directory or a file!";
-		ls -l $FILENAME;
+		ls -l "$SRC_FILE_PATH";
 		exit 1;
 	fi
   done
