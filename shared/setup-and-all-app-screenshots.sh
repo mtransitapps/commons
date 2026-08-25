@@ -147,7 +147,7 @@ echo ">> Step 5: Launch main app and wait for initialization..."
 # Launch the main app once to let it initialize (download data, etc.)
 adb shell monkey -p org.mtransit.android -c android.intent.category.LAUNCHER 1
 
-INIT_DURATION_IN_SEC=20
+INIT_DURATION_IN_SEC=30
 echo " - Main app launched, waiting $INIT_DURATION_IN_SEC seconds for initialization..."
 sleep $INIT_DURATION_IN_SEC
 
