@@ -4,7 +4,7 @@
 # 1. Installs the main mtransit-for-android app (APK path from env var)
 # 2. Grants location permission to the main app
 # 3. Sets GPS location based on GTFS area bounds
-# 4. Installs the current repository's module app (APK path from env var)
+# 4. Installs module app(s) from MODULE_APK_FILES (newline list, item = pkg:apkPath)
 # 5. Calls the screenshot recording script
 
 set -e
@@ -26,33 +26,32 @@ if [ ! -f "$MAIN_APK_FILE" ]; then
   exit 1
 fi
 
-if [ -z "$MODULE_APK_FILE" ] && [ -z "$MODULE_APK_FILES_MANIFEST" ]; then
-  echo " > ERROR: MODULE_APK_FILE or MODULE_APK_FILES_MANIFEST environment variable not set"
+if [ -z "$MODULE_APK_FILES" ]; then
+  echo " > ERROR: MODULE_APK_FILES environment variable not set"
   exit 1
 fi
 
-if [ -n "$MODULE_APK_FILE" ] && [ ! -f "$MODULE_APK_FILE" ]; then
-  echo " > ERROR: module APK file not found: $MODULE_APK_FILE"
-  exit 1
-fi
+# Validate every MODULE_APK_FILES entry before installation.
+while IFS= read -r MODULE_ENTRY; do
+  [ -z "$MODULE_ENTRY" ] && continue
 
-if [ -n "$MODULE_APK_FILES_MANIFEST" ] && [ ! -f "$MODULE_APK_FILES_MANIFEST" ]; then
-  echo " > ERROR: module APK files manifest not found: $MODULE_APK_FILES_MANIFEST"
-  exit 1
-fi
+  if [[ "$MODULE_ENTRY" != *:* ]]; then
+    echo " > ERROR: invalid MODULE_APK_FILES entry (expected pkg:apkPath): $MODULE_ENTRY"
+    exit 1
+  fi
 
-# Get the package name from config/pkg if it exists
-CONFIG_PKG_FILE="config/pkg"
-if [ ! -f "$CONFIG_PKG_FILE" ]; then
-  echo " > ERROR: $CONFIG_PKG_FILE not found"
-  exit 1
-fi
+  MODULE_PKG="${MODULE_ENTRY%%:*}"
+  MODULE_APK="${MODULE_ENTRY#*:}"
+  if [ -z "$MODULE_PKG" ] || [ -z "$MODULE_APK" ]; then
+    echo " > ERROR: invalid MODULE_APK_FILES entry (empty pkg/apk): $MODULE_ENTRY"
+    exit 1
+  fi
 
-MODULE_PACKAGE=$(cat "$CONFIG_PKG_FILE")
-if [ -z "$MODULE_PACKAGE" ]; then
-  echo " > ERROR: package name not found in $CONFIG_PKG_FILE"
-  exit 1
-fi
+  if [ ! -f "$MODULE_APK" ]; then
+    echo " > ERROR: module APK file not found: $MODULE_APK"
+    exit 1
+  fi
+done <<< "$MODULE_APK_FILES"
 
 echo " - Installing main app from: $MAIN_APK_FILE"
 adb install -r -d "$MAIN_APK_FILE"
@@ -126,38 +125,22 @@ fi
 
 echo ">> Step 3: Install module app(s)..."
 
-if [ -n "$MODULE_APK_FILE" ]; then
-  echo " - Module package: $MODULE_PACKAGE"
-  echo " - Installing module app from: $MODULE_APK_FILE"
+while IFS= read -r MODULE_ENTRY; do
+  [ -z "$MODULE_ENTRY" ] && continue
 
-  adb install -r -d "$MODULE_APK_FILE"
+  MOD_PKG="${MODULE_ENTRY%%:*}"
+  MOD_APK="${MODULE_ENTRY#*:}"
 
-  # Verify installation
-  if adb shell pm list packages | grep -q "^package:${MODULE_PACKAGE}$"; then
-    echo " - Module app installed successfully"
+  echo " - Installing module '$MOD_PKG' from: $MOD_APK"
+  adb install -r -d "$MOD_APK"
+
+  if adb shell pm list packages | grep -q "^package:${MOD_PKG}$"; then
+    echo " - Module '$MOD_PKG' installed successfully"
   else
-    echo " > ERROR: Module app installation may have failed!"
+    echo " > ERROR: Module '$MOD_PKG' installation may have failed!"
     exit 1
   fi
-fi
-
-if [ -n "$MODULE_APK_FILES_MANIFEST" ] && [ -f "$MODULE_APK_FILES_MANIFEST" ]; then
-  echo " - Installing modules from manifest: $MODULE_APK_FILES_MANIFEST"
-  while IFS=: read -r MOD_PKG MOD_APK; do
-    echo " - Installing module '$MOD_PKG' from: $MOD_APK"
-    if [ ! -f "$MOD_APK" ]; then
-      echo " > ERROR: Module APK not found: $MOD_APK"
-      exit 1
-    fi
-    adb install -r -d "$MOD_APK"
-    if adb shell pm list packages | grep -q "^package:${MOD_PKG}$"; then
-      echo " - Module '$MOD_PKG' installed successfully"
-    else
-      echo " > ERROR: Module '$MOD_PKG' installation may have failed!"
-      exit 1
-    fi
-  done < "$MODULE_APK_FILES_MANIFEST"
-fi
+done <<< "$MODULE_APK_FILES"
 
 echo ">> Step 4: Disable Pixel Launcher to prevent crashes..."
 

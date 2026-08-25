@@ -94,7 +94,7 @@ jobs:
           GH_TOKEN: ${{ secrets.MT_PAT }}
 
       - name: MT download this app release APK
-        id: download-module-apk
+        id: download-this-repo-apk
         if: github.event.inputs.buildFromSource != 'true'
         continue-on-error: true
         run: |
@@ -109,15 +109,20 @@ jobs:
             echo "MAIN_APK_FILE=$APK_FILE" >> $GITHUB_OUTPUT
             echo "Main app APK downloaded successfully."
           else
-            echo "MODULE_APK_FILE=$APK_FILE" >> $GITHUB_OUTPUT
+            MODULE_PACKAGE=$(cat "config/pkg")
+            if [[ -z "$MODULE_PACKAGE" ]]; then
+              echo "ERROR: package name not found in config/pkg"
+              exit 1
+            fi
+            echo "MODULE_APK_FILES=${MODULE_PACKAGE}:${APK_FILE}" >> $GITHUB_OUTPUT
             echo "Module app APK downloaded successfully."
           fi
         env:
           GH_TOKEN: ${{ secrets.MT_PAT }}
 
       - name: MT build this app release APK (fallback)
-        if: steps.download-module-apk.outcome == 'failure' || github.event.inputs.buildFromSource == 'true'
-        id: build-module-apk
+        if: steps.download-this-repo-apk.outcome == 'failure' || github.event.inputs.buildFromSource == 'true'
+        id: build-this-repo-apk
         env:
           MT_ENCRYPT_KEY: ${{ secrets.MT_ENCRYPT_KEY }}
         run: |
@@ -146,7 +151,12 @@ jobs:
             echo "MAIN_APK_FILE=$APK_FILE" >> $GITHUB_OUTPUT
             echo "Main app APK assembled successfully at: $APK_FILE"
           else
-            echo "MODULE_APK_FILE=$APK_FILE" >> $GITHUB_OUTPUT
+            MODULE_PACKAGE=$(cat "config/pkg")
+            if [[ -z "$MODULE_PACKAGE" ]]; then
+              echo "ERROR: package name not found in config/pkg"
+              exit 1
+            fi
+            echo "MODULE_APK_FILES=${MODULE_PACKAGE}:${APK_FILE}" >> $GITHUB_OUTPUT
             echo "Module app APK assembled successfully at: $APK_FILE"
           fi
 
@@ -177,12 +187,22 @@ jobs:
             echo "  Module '$PKG' downloaded: $APK_FILE"
           done < /tmp/modules_list.txt
           rm -f /tmp/modules_list.txt
-          echo "MODULE_APK_FILES_MANIFEST=$MANIFEST_FILE" >> $GITHUB_OUTPUT
+          {
+            echo "MODULE_APK_FILES<<EOF"
+            cat "$MANIFEST_FILE"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
           echo "All module APKs downloaded."
 
       - name: MT read timezone from XML resource value
         id: timezone
         run: |
+          if [[ "$MT_IS_MAIN_REPO" == "true" ]]; then
+            echo "Main repo detected: using America/Montreal timezone."
+            echo "TIMEZONE=America/Montreal" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
           command -v "xmllint" >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y "libxml2-utils")
           GTFS_TIMEZONE_XML_FILE="app-android/src/main/res/values/gtfs_rts_values_gen.xml"
           BIKE_TIMEZONE_XML_FILE="app-android/src/main/res/values/bike_station_values.xml"
@@ -205,11 +225,7 @@ jobs:
             fi
           else
             echo "No '$GTFS_TIMEZONE_XML_FILE' or '$BIKE_TIMEZONE_XML_FILE' file found."
-            if [[ "$MT_IS_MAIN_REPO" == "true" ]]; then
-              echo "Main repo: falling back to UTC."
-            else
-              exit 1 # error
-            fi
+            exit 1 # error
           fi
 
       - name: MT record screenshots with Android Emulator
@@ -217,9 +233,8 @@ jobs:
         timeout-minutes: 10
         env:
           TZ: ${{ steps.timezone.outputs.TIMEZONE || 'UTC' }}
-          MAIN_APK_FILE: ${{ steps.download-main-apk.outputs.MAIN_APK_FILE || steps.download-module-apk.outputs.MAIN_APK_FILE || steps.build-module-apk.outputs.MAIN_APK_FILE }}
-          MODULE_APK_FILE: ${{ steps.download-module-apk.outputs.MODULE_APK_FILE || steps.build-module-apk.outputs.MODULE_APK_FILE }}
-          MODULE_APK_FILES_MANIFEST: ${{ steps.download-modules-apks.outputs.MODULE_APK_FILES_MANIFEST }}
+          MAIN_APK_FILE: ${{ steps.download-main-apk.outputs.MAIN_APK_FILE || steps.download-this-repo-apk.outputs.MAIN_APK_FILE || steps.build-this-repo-apk.outputs.MAIN_APK_FILE }}
+          MODULE_APK_FILES: ${{ steps.download-modules-apks.outputs.MODULE_APK_FILES || steps.download-this-repo-apk.outputs.MODULE_APK_FILES || steps.build-this-repo-apk.outputs.MODULE_APK_FILES }}
         with:
           api-level: ${{ steps.sdk-target.outputs.API_LEVEL }}
           target: google_apis
