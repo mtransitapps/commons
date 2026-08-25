@@ -113,6 +113,12 @@ for FILE in "${FILES[@]}" ; do
 			ls -al ${FILE_ENC}; #DEBUG
 			exit 1;
 		fi
+		git update-index --skip-worktree -- "${FILE_PATH}";
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo " ERROR! while setting 'skip-worktree' for '${FILE_PATH}'!";
+			exit ${RESULT};
+		fi
 	fi
 
 	echoFile " DONE ✓";

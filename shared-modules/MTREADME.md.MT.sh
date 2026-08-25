@@ -127,7 +127,7 @@ if [[ -f "$STORE_PRODUCTION_FILE" ]]; then
   STORE_SECTION=$(cat <<EOL
 ## Download on the Play Store
 
-<a href="https://play.google.com/store/apps/details?id=$PKG"><img width="25%" height="25%" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"/></a>
+<a href="https://play.google.com/store/apps/details?id=$PKG"><img width="25%" height="25%" alt="Get it on the Play Store" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"/></a>
 EOL
 )
 elif [[ -f "$STORE_BETA_FILE" ]]; then
@@ -173,11 +173,16 @@ $STORE_SECTION
 
 ## Social
 
-[Facebook](https://www.facebook.com/MonTransit) | [Twitter/X](https://twitter.com/montransit) | [Instagram](https://www.instagram.com/mtransit.apps) | [Threads](https://www.threads.com/@mtransit.apps)
+[Facebook](https://www.facebook.com/MonTransit) | [Twitter/X](https://x.com/montransit) | [Instagram](https://www.instagram.com/mtransit.apps) | [Threads](https://www.threads.com/@mtransit.apps)
 
 ## License
 
 * [Apache Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
+
+## Privacy Policy
+
+* [Privacy Policy](https://mtransitapps.github.io/privacy)
+
 EOL
 
 if [[ ${IS_CI} = true ]]; then

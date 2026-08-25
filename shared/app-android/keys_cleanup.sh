@@ -47,6 +47,12 @@ for FILE in "${FILES[@]}" ; do
 			exit ${RESULT};
 		fi
 	else # file is tracked by git
+		git update-index --no-skip-worktree -- "${FILE_PATH}";
+		RESULT=$?;
+		if [[ ${RESULT} -ne 0 ]]; then
+			echo " ERROR! while setting '--no-skip-worktree' for '${FILE_PATH}'!";
+			exit ${RESULT};
+		fi
 		git checkout -- ${FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then

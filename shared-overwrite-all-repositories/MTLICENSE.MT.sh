@@ -1,6 +1,43 @@
+#!/bin/bash
+SCRIPT_DIR="$(dirname "$0")";
+COMMONS_DIR="${SCRIPT_DIR}/..";
+source ${COMMONS_DIR}/commons.sh;
+
+setIsCI;
+
+echo ">> Generating LICENSE...";
+
+if [[ "$#" -ne 1 ]]; then
+   echo "Illegal number of parameters!";
+   echo "Usage: $0 <DEST_DIR>";
+   exit 1;
+fi
+
+DEST_DIR="$1";
+
+CALLING_GIT_REPOSITORY_DIR=$(git -C "$DEST_DIR" rev-parse --show-toplevel 2>/dev/null);
+if [ -z "$CALLING_GIT_REPOSITORY_DIR" ]; then
+    echo "CALLING_GIT_REPOSITORY_DIR is empty!";
+    exit 1;
+fi
+
+LICENSE_FILE="${CALLING_GIT_REPOSITORY_DIR}/LICENSE";
+
+rm -f "${LICENSE_FILE}";
+checkResult $?;
+touch "${LICENSE_FILE}";
+checkResult $?;
+
+COPYRIGHT_YEAR=$(date +%Y);
+if [ -z "$COPYRIGHT_YEAR" ]; then
+    echo "COPYRIGHT_YEAR is empty!";
+    exit 1;
+fi
+
+cat >>"${LICENSE_FILE}" <<EOL
                                  Apache License
                            Version 2.0, January 2004
-                        https://www.apache.org/licenses/
+                        http://www.apache.org/licenses/
 
    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
@@ -186,16 +223,25 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [yyyy] [name of copyright owner]
+   Copyright ${COPYRIGHT_YEAR} MTransit Apps Inc.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       https://www.apache.org/licenses/LICENSE-2.0
+       http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+EOL
+
+if [[ ${IS_CI} = true ]]; then
+    echo "---------------------------------------------------------------------------------------------------------------";
+    cat "${LICENSE_FILE}"; #DEBUG
+    echo "---------------------------------------------------------------------------------------------------------------";
+fi
+
+echo ">> Generating LICENSE... DONE";

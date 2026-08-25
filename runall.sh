@@ -8,7 +8,7 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"> SKIP\"; "
 # - ./mtransit-for-android/commons/runall.sh "[ -f gradlew ] && rm gradlew || echo \"> SKIP\"; ";
 # - ./mtransit-for-android/commons/runall.sh "./commons/cleanup.sh; ";
-# - ./mtransit-for-android/commons/runall.sh "./commons/sync.sh; ";
+# - ./mtransit-for-android/commons/runall.sh "./commons/code_sync.sh; ";
 # - ./mtransit-for-android/commons/runall.sh "git status -sb; ";
 # - ./mtransit-for-android/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"> SKIP\"; ";
 # - ./mtransit-for-android/commons/runall.sh "git commit --allow-empty -m \"Update git submodules\"; ";
@@ -58,7 +58,12 @@ for FILE_NAME in $(ls -a) ; do
 	cd ${FILE_NAME} || exit;
 	
 	eval $@;
-	checkResult $?;
+	RESULT=$?;
+	if [[ $RESULT -ne 0 ]]; then
+		echo "> Current directory: '$CURRENT_DIRECTORY'.";
+		echo "> '$FILE_NAME' > running '$@'... FAILED (exit code: $RESULT)";
+		exit $RESULT;
+	fi
 	
 	cd ..;
 	echo "> '$FILE_NAME' > running '$@'... DONE";

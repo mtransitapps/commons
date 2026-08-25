@@ -354,6 +354,12 @@ if [ -f "${GTFS_RT_FILE}" ]; then
     fi
   fi
 fi
+NEXT_BUS_FILE="${VALUES_DIR}/next_bus_values.xml";
+if [ ! -f "${GTFS_RT_FILE}" ] && [ -f "${NEXT_BUS_FILE}" ]; then # GTFS-RT XOR NextBus
+  RT_PARTS+=(" prochains départs")
+  RT_PARTS+=(" alertes de service")
+  RT_PARTS+=(" positions des véhicules")
+fi
 CA_MONTREAL_STM_INFO_PROVIDER_FILE="${VALUES_DIR}/stm_info_api_values.xml";
 if [ -f "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}" ]; then
   if grep -q "<bool name=\"stm_info_api_status_provider\">true</bool>" "${CA_MONTREAL_STM_INFO_PROVIDER_FILE}"; then
@@ -390,7 +396,7 @@ fi
 
 SOURCES_LINES="Les informations viennent des données publiées par $SOURCE_PROVIDER"
 if [ -n "$SOURCE_URL" ]; then
-  SOURCES_LINES="${SOURCES_LINES} : "$'\n'"${SOURCE_URL}";
+  SOURCES_LINES="${SOURCES_LINES} :"$'\n'"${SOURCE_URL}";
 else
   SOURCES_LINES="${SOURCES_LINES}.";
 fi
@@ -404,7 +410,7 @@ Les $TYPE_LABEL $AGENCY_NAME_SHORT $OPERATE_IN $LOCATION_LABEL.
 
 Une fois cette application installée, l'application MonTransit affichera les informations des $TYPE_LABEL ($INFORMATION_LIST...).
 
-Cette application a seulement une icône temporaire : télécharger l'app MonTransit (gratuit) dans la section "Autres ..." ci-dessous ou en cliquant sur ce lien Google Play https://bit.ly/MonTransitPlay
+Cette application a seulement une icône temporaire : télécharger l'app MonTransit (gratuit) dans la section "Autres ..." ci-dessous ou en cliquant sur ce lien Play Store https://bit.ly/MonTransitPlay
 
 Vous pouvez installer cette application sur la carte SD mais ce n'est pas recommandé.
 

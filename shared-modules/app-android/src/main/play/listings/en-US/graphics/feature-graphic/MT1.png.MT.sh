@@ -55,7 +55,7 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
-MAX_AGENCY_LENGTH=15 # from module-featured-graphic.sh
+MAX_AGENCY_LENGTH=14 # from module-featured-graphic.sh
 
 AGENCY_NAME_1="";
 AGENCY_NAME_2="";
@@ -63,22 +63,21 @@ AGENCY_NAME_2="";
 if [ "${#AGENCY_NAME_SHORT}" -le "$MAX_AGENCY_LENGTH" ]; then
     AGENCY_NAME_1=$AGENCY_NAME_SHORT;
 else
-  read -ra AGENCY_NAME_SHORT_WORDS <<< "$AGENCY_NAME_SHORT";
-  for WORD in "${AGENCY_NAME_SHORT_WORDS[@]}"; do
-    WORD_LENGTH=${#WORD};
-    MAX_LENGTH=$((MAX_AGENCY_LENGTH - WORD_LENGTH));
-    if [ "${#AGENCY_NAME_1}" -lt "$MAX_LENGTH" ]; then
-      if [ -n "$AGENCY_NAME_1" ]; then
-        AGENCY_NAME_1+=" ";
-      fi
-      AGENCY_NAME_1+="$WORD";
-    else
-      if [ -n "$AGENCY_NAME_2" ]; then
-        AGENCY_NAME_2+=" ";
-      fi
-      AGENCY_NAME_2+="$WORD";
+  SPLIT_INDEX=0;
+  for ((I=1; I<=MAX_AGENCY_LENGTH; I++)); do
+    CHAR="${AGENCY_NAME_SHORT:I-1:1}";
+    if [ "$CHAR" = " " ] || [ "$CHAR" = "-" ]; then
+      SPLIT_INDEX=$I;
     fi
   done
+  if [ "$SPLIT_INDEX" -gt 0 ]; then
+    AGENCY_NAME_1="${AGENCY_NAME_SHORT:0:SPLIT_INDEX}";
+    AGENCY_NAME_2="${AGENCY_NAME_SHORT:SPLIT_INDEX}";
+    AGENCY_NAME_1="${AGENCY_NAME_1%"${AGENCY_NAME_1##*[![:space:]]}"}";
+    AGENCY_NAME_2="${AGENCY_NAME_2#"${AGENCY_NAME_2%%[![:space:]]*}"}";
+  else
+    AGENCY_NAME_2="$AGENCY_NAME_SHORT";
+  fi
   if [ "${#AGENCY_NAME_1}" -gt "$MAX_AGENCY_LENGTH" ]; then
     echo "Agency name 1st part '$AGENCY_NAME_1' is too long (${#AGENCY_NAME_1} > $MAX_AGENCY_LENGTH)!";
     exit 1; # error
@@ -124,7 +123,7 @@ if [ -n "$STATE_LABEL_SHORT" ]; then
     STATE_AND_COUNTRY_LABEL="$STATE_LABEL_SHORT, $COUNTRY_LABEL";
 fi
 
-MAX_CITY_LENGTH=77 # from module-featured-graphic.sh
+MAX_CITY_LENGTH=$((77 - 1)) # -1 for "…" # 77 from module-featured-graphic.sh
 CITIES_LABEL=$(echo $CITIES_LABEL | awk -v len=$MAX_CITY_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }');
 
 # uses inkscape
