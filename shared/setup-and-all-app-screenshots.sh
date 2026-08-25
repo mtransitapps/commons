@@ -74,53 +74,63 @@ echo " - Location permissions granted"
 
 echo ">> Step 2.5: Set emulator GPS location..."
 
-# Parse GPS coordinates from XML if available
-GPS_XML_FILE="app-android/src/main/res-current/values/current_gtfs_rts_values_gen.xml"
-if [ -f "$GPS_XML_FILE" ]; then
-  echo " - Found GPS coordinates file: $GPS_XML_FILE"
-  
-  # Extract min/max lat/lng values using xmllint
-  MIN_LAT=$(xmllint --xpath "string(//resources/string[@name='current_gtfs_rts_area_min_lat']/text())" "$GPS_XML_FILE" 2>/dev/null || echo "")
-  MAX_LAT=$(xmllint --xpath "string(//resources/string[@name='current_gtfs_rts_area_max_lat']/text())" "$GPS_XML_FILE" 2>/dev/null || echo "")
-  MIN_LNG=$(xmllint --xpath "string(//resources/string[@name='current_gtfs_rts_area_min_lng']/text())" "$GPS_XML_FILE" 2>/dev/null || echo "")
-  MAX_LNG=$(xmllint --xpath "string(//resources/string[@name='current_gtfs_rts_area_max_lng']/text())" "$GPS_XML_FILE" 2>/dev/null || echo "")
-  
-  if [ -n "$MIN_LAT" ] && [ -n "$MAX_LAT" ] && [ -n "$MIN_LNG" ] && [ -n "$MAX_LNG" ]; then
-    # Calculate center point (average of min and max)
-    CENTER_LAT=$(echo "scale=6; ($MIN_LAT + $MAX_LAT) / 2" | bc)
-    CENTER_LNG=$(echo "scale=6; ($MIN_LNG + $MAX_LNG) / 2" | bc)
-    
-    echo " - Setting GPS location to center: $CENTER_LAT, $CENTER_LNG"
-    adb emu geo fix "$CENTER_LNG" "$CENTER_LAT"
-    
-    echo " - GPS location set successfully"
-  else
-    echo " > WARNING: Could not parse GPS coordinates from XML"
-  fi
-elif [ -f "app-android/src/main/res/values/bike_station_values.xml" ]; then
-  BIKE_GPS_XML_FILE="app-android/src/main/res/values/bike_station_values.xml"
-  echo " - Found bike station coordinates file: $BIKE_GPS_XML_FILE"
-  
-  # Extract min/max lat/lng values using xmllint
-  MIN_LAT=$(xmllint --xpath "string(//resources/string[@name='bike_station_area_min_lat']/text())" "$BIKE_GPS_XML_FILE" 2>/dev/null || echo "")
-  MAX_LAT=$(xmllint --xpath "string(//resources/string[@name='bike_station_area_max_lat']/text())" "$BIKE_GPS_XML_FILE" 2>/dev/null || echo "")
-  MIN_LNG=$(xmllint --xpath "string(//resources/string[@name='bike_station_area_min_lng']/text())" "$BIKE_GPS_XML_FILE" 2>/dev/null || echo "")
-  MAX_LNG=$(xmllint --xpath "string(//resources/string[@name='bike_station_area_max_lng']/text())" "$BIKE_GPS_XML_FILE" 2>/dev/null || echo "")
-  
-  if [ -n "$MIN_LAT" ] && [ -n "$MAX_LAT" ] && [ -n "$MIN_LNG" ] && [ -n "$MAX_LNG" ]; then
-    # Calculate center point (average of min and max)
-    CENTER_LAT=$(echo "scale=6; ($MIN_LAT + $MAX_LAT) / 2" | bc)
-    CENTER_LNG=$(echo "scale=6; ($MIN_LNG + $MAX_LNG) / 2" | bc)
-    
-    echo " - Setting GPS location to center: $CENTER_LAT, $CENTER_LNG"
-    adb emu geo fix "$CENTER_LNG" "$CENTER_LAT"
-    
-    echo " - GPS location set successfully"
-  else
-    echo " > WARNING: Could not parse bike station coordinates from XML"
-  fi
+REPO_NAME=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
+
+if [[ "$REPO_NAME" == "mtransit-for-android" ]]; then
+  MAIN_APP_SCREENSHOT_LAT="45.5230433"
+  MAIN_APP_SCREENSHOT_LNG="-73.5814131"
+  echo " - Main app repo detected ('$REPO_NAME'): setting GPS to $MAIN_APP_SCREENSHOT_LAT, $MAIN_APP_SCREENSHOT_LNG"
+  adb emu geo fix "$MAIN_APP_SCREENSHOT_LNG" "$MAIN_APP_SCREENSHOT_LAT"
+  echo " - GPS location set successfully"
 else
-  echo " - No GPS coordinates file found, skipping GPS setup"
+  # Parse GPS coordinates from XML if available
+  GPS_XML_FILE="app-android/src/main/res-current/values/current_gtfs_rts_values_gen.xml"
+  if [ -f "$GPS_XML_FILE" ]; then
+    echo " - Found GPS coordinates file: $GPS_XML_FILE"
+    
+    # Extract min/max lat/lng values using xmllint
+    MIN_LAT=$(xmllint --xpath "string(//resources/string[@name='current_gtfs_rts_area_min_lat']/text())" "$GPS_XML_FILE" 2>/dev/null || echo "")
+    MAX_LAT=$(xmllint --xpath "string(//resources/string[@name='current_gtfs_rts_area_max_lat']/text())" "$GPS_XML_FILE" 2>/dev/null || echo "")
+    MIN_LNG=$(xmllint --xpath "string(//resources/string[@name='current_gtfs_rts_area_min_lng']/text())" "$GPS_XML_FILE" 2>/dev/null || echo "")
+    MAX_LNG=$(xmllint --xpath "string(//resources/string[@name='current_gtfs_rts_area_max_lng']/text())" "$GPS_XML_FILE" 2>/dev/null || echo "")
+    
+    if [ -n "$MIN_LAT" ] && [ -n "$MAX_LAT" ] && [ -n "$MIN_LNG" ] && [ -n "$MAX_LNG" ]; then
+      # Calculate center point (average of min and max)
+      CENTER_LAT=$(echo "scale=6; ($MIN_LAT + $MAX_LAT) / 2" | bc)
+      CENTER_LNG=$(echo "scale=6; ($MIN_LNG + $MAX_LNG) / 2" | bc)
+      
+      echo " - Setting GPS location to center: $CENTER_LAT, $CENTER_LNG"
+      adb emu geo fix "$CENTER_LNG" "$CENTER_LAT"
+      
+      echo " - GPS location set successfully"
+    else
+      echo " > WARNING: Could not parse GPS coordinates from XML"
+    fi
+  elif [ -f "app-android/src/main/res/values/bike_station_values.xml" ]; then
+    BIKE_GPS_XML_FILE="app-android/src/main/res/values/bike_station_values.xml"
+    echo " - Found bike station coordinates file: $BIKE_GPS_XML_FILE"
+    
+    # Extract min/max lat/lng values using xmllint
+    MIN_LAT=$(xmllint --xpath "string(//resources/string[@name='bike_station_area_min_lat']/text())" "$BIKE_GPS_XML_FILE" 2>/dev/null || echo "")
+    MAX_LAT=$(xmllint --xpath "string(//resources/string[@name='bike_station_area_max_lat']/text())" "$BIKE_GPS_XML_FILE" 2>/dev/null || echo "")
+    MIN_LNG=$(xmllint --xpath "string(//resources/string[@name='bike_station_area_min_lng']/text())" "$BIKE_GPS_XML_FILE" 2>/dev/null || echo "")
+    MAX_LNG=$(xmllint --xpath "string(//resources/string[@name='bike_station_area_max_lng']/text())" "$BIKE_GPS_XML_FILE" 2>/dev/null || echo "")
+    
+    if [ -n "$MIN_LAT" ] && [ -n "$MAX_LAT" ] && [ -n "$MIN_LNG" ] && [ -n "$MAX_LNG" ]; then
+      # Calculate center point (average of min and max)
+      CENTER_LAT=$(echo "scale=6; ($MIN_LAT + $MAX_LAT) / 2" | bc)
+      CENTER_LNG=$(echo "scale=6; ($MIN_LNG + $MAX_LNG) / 2" | bc)
+      
+      echo " - Setting GPS location to center: $CENTER_LAT, $CENTER_LNG"
+      adb emu geo fix "$CENTER_LNG" "$CENTER_LAT"
+      
+      echo " - GPS location set successfully"
+    else
+      echo " > WARNING: Could not parse bike station coordinates from XML"
+    fi
+  else
+    echo " - No GPS coordinates file found, skipping GPS setup"
+  fi
 fi
 
 echo ">> Step 3: Install module app(s)..."
