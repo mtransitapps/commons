@@ -15,6 +15,9 @@ style:
   MaxLineLength:
     active: true
     maxLineLength: 160
+  ReturnCount:
+    active: true
+    max: 3 # instead of default 2
   UnusedImport:
     active: true
     additionalOperatorSet: []
