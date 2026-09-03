@@ -31,7 +31,7 @@ if [[ -z "$APK_FILE" ]]; then
 fi
 
 echo "Downloading '$APK_FILE'..."
-if ! gh release download -R "$REPO" --pattern "$APK_FILE" >/dev/null; then
+if ! gh release download -R "$REPO" --pattern "$APK_FILE" --skip-existing >/dev/null; then
   echo "ERROR: Could not download APK from latest release!"
   exit 1 #error
 fi
