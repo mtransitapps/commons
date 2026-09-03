@@ -75,10 +75,9 @@ echo " - Location permissions granted"
 echo ">> Step 2.5: Set emulator GPS location..."
 
 REPO_NAME=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
-
 if [[ "$REPO_NAME" == "mtransit-for-android" ]]; then
-  MAIN_APP_SCREENSHOT_LAT="45.5230433"
-  MAIN_APP_SCREENSHOT_LNG="-73.5814131"
+  MAIN_APP_SCREENSHOT_LAT="45.5230433" # Montréal office
+  MAIN_APP_SCREENSHOT_LNG="-73.5814131" # Montréal office
   echo " - Main app repo detected ('$REPO_NAME'): setting GPS to $MAIN_APP_SCREENSHOT_LAT, $MAIN_APP_SCREENSHOT_LNG"
   adb emu geo fix "$MAIN_APP_SCREENSHOT_LNG" "$MAIN_APP_SCREENSHOT_LAT"
   echo " - GPS location set successfully"
@@ -153,26 +152,20 @@ while IFS= read -r MODULE_ENTRY; do
 done <<< "$MODULE_APK_FILES"
 
 echo ">> Step 4: Disable Pixel Launcher to prevent crashes..."
-
 # Stop Pixel Launcher to prevent "not responding" dialogs during screenshot capture
 adb shell am force-stop com.google.android.apps.nexuslauncher || true
 adb shell pm disable-user --user 0 com.google.android.apps.nexuslauncher || true
-
 echo " - Pixel Launcher disabled"
 
 echo ">> Step 5: Launch main app and wait for initialization..."
-
 # Launch the main app once to let it initialize (download data, etc.)
 adb shell monkey -p org.mtransit.android -c android.intent.category.LAUNCHER 1
-
 INIT_DURATION_IN_SEC=30
 echo " - Main app launched, waiting $INIT_DURATION_IN_SEC seconds for initialization..."
 sleep $INIT_DURATION_IN_SEC
-
 echo " - Main app initialized"
 
 echo ">> Step 6: Record screenshots..."
-
 # Call the screenshot recording script
 if [ -f "./commons-android/pub/all-app-screenshots.sh" ]; then
   ./commons-android/pub/all-app-screenshots.sh
