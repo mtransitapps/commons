@@ -6,5 +6,12 @@
 -keepattributes EnclosingMethod
 -keepattributes InnerClasses
 
-# Do not obfuscate the class files since open source & no Crashlytics
--dontobfuscate
+# '-dontobfuscate' blocks all obfuscation (0%) > Play Store NOT happy:
+# "Improve your app's memory and performance with R8 optimization
+# Your R8 configuration could be causing higher memory usage and lower performance.
+# Address the following to improve your app's optimization:
+# - Obfuscation isn't enabled.
+# [Memory usage]"
+# # Do not obfuscate the class files since open source & no Crashlytics
+# -dontobfuscate
+-keepnames class org.mtransit.android.** { *; }
