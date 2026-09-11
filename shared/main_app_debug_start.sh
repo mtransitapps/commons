@@ -6,4 +6,4 @@ checkResult $?;
 source "${SCRIPT_DIR}"/main_app_setup.sh "debug";
 checkResult $?;
 
-$ADB shell am start "$APP_PKG"/"$APP_ACTIVITY" "$@";
+$ADB shell am start -n "$APP_PKG"/"$APP_ACTIVITY" "$@";
