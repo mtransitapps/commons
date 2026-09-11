@@ -25,3 +25,6 @@ if [[ -z "${APP_PKG}" ]]; then
     echo "APP_PKG not set!";
     exit 1;
 fi
+
+APP_ACTIVITY="org.mtransit.android.commons.ui.ModuleRedirectActivity"
+echo "ACTIVITY: '$APP_ACTIVITY'."
