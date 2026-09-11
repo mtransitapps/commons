@@ -28,8 +28,8 @@ fi
 
 echo ">> Generating fr-FR/full-description.txt...";
 
-FULL_DESCRIPTION_FILE="${FR_FR_DIR}/full-description.txt";
-mkdir -p "${FR_FR_DIR}";
+FULL_DESCRIPTION_FILE="${PLAY_LISTINGS_FR_FR_DIR}/full-description.txt";
+mkdir -p "${PLAY_LISTINGS_FR_FR_DIR}";
 checkResult $?;
 if [ -f "${FULL_DESCRIPTION_FILE}" ]; then
   echo ">> File '$FULL_DESCRIPTION_FILE' already exist."; # compat with existing fr-FR/full-description.txt
