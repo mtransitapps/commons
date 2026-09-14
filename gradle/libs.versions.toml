@@ -104,11 +104,11 @@ play-review = "2.0.2"
 # https://developers.facebook.com/documentation/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/meta/CHANGELOG.md
-fbAudienceNetwork-mediation = "6.22.0.0"
+fbAudienceNetwork-mediation = "6.22.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/applovin/CHANGELOG.md
-appLovin-mediation = "13.6.4.0"
+appLovin-mediation = "13.6.4.1"
 # Liftoff = Vungle
 # https://github.com/Vungle/VungleAds-SDK/blob/master/CHANGELOG-Android.md
 #vungle = "_._._" # included with nediation adapter
