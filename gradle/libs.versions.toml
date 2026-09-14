@@ -24,7 +24,7 @@ kotlinx-serialization = "1.11.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "7.3.1.8318"
 # https://detekt.dev/changelog-2.0.0
-detekt2 = "2.0.0-alpha.5"
+detekt2 = "2.0.0-alpha.6"
 # https://developer.android.com/build/releases/gradle-plugin
 android-gradlePlugin = "9.3.1"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
