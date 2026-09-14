@@ -8,7 +8,7 @@ source ${SCRIPT_DIR}/commons.sh;
 # - ./mtransit-for-android/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"> SKIP\"; "
 # - ./mtransit-for-android/commons/runall.sh "[ -f gradlew ] && rm gradlew || echo \"> SKIP\"; ";
 # - ./mtransit-for-android/commons/runall.sh "./commons/cleanup.sh; ";
-# - ./mtransit-for-android/commons/runall.sh "./commons/sync.sh; ";
+# - ./mtransit-for-android/commons/runall.sh "./commons/code_sync.sh; ";
 # - ./mtransit-for-android/commons/runall.sh "git status -sb; ";
 # - ./mtransit-for-android/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"> SKIP\"; ";
 # - ./mtransit-for-android/commons/runall.sh "git commit --allow-empty -m \"Update git submodules\"; ";

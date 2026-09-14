@@ -13,20 +13,23 @@ setIsCI;
 APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
-PLAY_DIR="${MAIN_DIR}/play";
-LISTINGS_DIR="${PLAY_DIR}/listings";
-FR_FR_DIR="${LISTINGS_DIR}/fr-FR";
+RES_DIR="${MAIN_DIR}/res";
+
+VALUES_FR_DIR="${RES_DIR}/values-fr";
+
+PLAY_LISTINGS_FR_FR_DIR="${MAIN_DIR}/play/listings/fr-FR/";
 
 LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
-if [[ ! -f "$LANG_FR_FILE" && ! -d "$FR_FR_DIR" ]]; then
+
+if [[ ! -f "$LANG_FR_FILE" && ! -d "$VALUES_FR_DIR" && ! -d "$PLAY_LISTINGS_FR_FR_DIR" ]]; then
     echo ">> Generating fr-FR/full-description.txt... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
 
 echo ">> Generating fr-FR/full-description.txt...";
 
-FULL_DESCRIPTION_FILE="${FR_FR_DIR}/full-description.txt";
-mkdir -p "${FR_FR_DIR}";
+FULL_DESCRIPTION_FILE="${PLAY_LISTINGS_FR_FR_DIR}/full-description.txt";
+mkdir -p "${PLAY_LISTINGS_FR_FR_DIR}";
 checkResult $?;
 if [ -f "${FULL_DESCRIPTION_FILE}" ]; then
   echo ">> File '$FULL_DESCRIPTION_FILE' already exist."; # compat with existing fr-FR/full-description.txt
@@ -410,7 +413,7 @@ Les $TYPE_LABEL $AGENCY_NAME_SHORT $OPERATE_IN $LOCATION_LABEL.
 
 Une fois cette application installée, l'application MonTransit affichera les informations des $TYPE_LABEL ($INFORMATION_LIST...).
 
-Cette application a seulement une icône temporaire : télécharger l'app MonTransit (gratuit) dans la section "Autres ..." ci-dessous ou en cliquant sur ce lien Google Play https://bit.ly/MonTransitPlay
+Cette application a seulement une icône temporaire : télécharger l'app MonTransit (gratuit) dans la section "Autres ..." ci-dessous ou en cliquant sur ce lien Play Store https://bit.ly/MonTransitPlay
 
 Vous pouvez installer cette application sur la carte SD mais ce n'est pas recommandé.
 

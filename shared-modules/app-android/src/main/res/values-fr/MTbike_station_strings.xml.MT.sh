@@ -13,10 +13,14 @@ APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 SRC_DIR="${APP_ANDROID_DIR}/src";
 MAIN_DIR="${SRC_DIR}/main";
 RES_DIR="${MAIN_DIR}/res";
+
 VALUES_FR_DIR="${RES_DIR}/values-fr";
 
+PLAY_LISTINGS_FR_FR_DIR="${MAIN_DIR}/play/listings/fr-FR/";
+
 LANG_FR_FILE="${ROOT_DIR}/config/lang/fr";
-if [[ ! -f "$LANG_FR_FILE" && ! -d "$VALUES_FR_DIR" ]]; then
+
+if [[ ! -f "$LANG_FR_FILE" && ! -d "$VALUES_FR_DIR" && ! -d "$PLAY_LISTINGS_FR_FR_DIR" ]]; then
     echo ">> Generating values-fr/bike_station_strings.xml... SKIP (FR lang not supported)";
     exit 0; # ok
 fi
@@ -85,6 +89,15 @@ else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error
 fi
+
+# escape "&" -> "&amp;" for XML
+AGENCY_NAME_LONG="${AGENCY_NAME_LONG//&/&amp;}";
+AGENCY_NAME_SHORT="${AGENCY_NAME_SHORT//&/&amp;}";
+TYPE_LABEL="${TYPE_LABEL//&/&amp;}";
+# escape "'" -> "\'" for XML
+AGENCY_NAME_LONG="${AGENCY_NAME_LONG//\'/\\\'}";
+AGENCY_NAME_SHORT="${AGENCY_NAME_SHORT//\'/\\\'}";
+TYPE_LABEL="${TYPE_LABEL//\'/\\\'}";
 
 cat >>"${BIKE_STATION_STRINGS_FILE}" <<EOL
 <?xml version="1.0" encoding="utf-8"?>
