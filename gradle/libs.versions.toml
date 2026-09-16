@@ -113,7 +113,7 @@ appLovin-mediation = "13.6.4.1"
 # https://github.com/Vungle/VungleAds-SDK/blob/master/CHANGELOG-Android.md
 #vungle = "_._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/liftoffmonetize/CHANGELOG.md
-vungle-mediation = "7.7.7.0"
+vungle-mediation = "7.7.8.1"
 # https://github.com/google/guava/releases/latest
 guava = "33.6.0-android"
 # https://github.com/square/leakcanary/releases
