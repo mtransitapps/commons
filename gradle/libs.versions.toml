@@ -171,6 +171,7 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 kotlinx-serialization-bom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version.ref = "kotlinx-serialization" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 android-desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "android-desugarJdkLibs" }
+detekt2-ktlint = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt2" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }

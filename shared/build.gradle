@@ -55,6 +55,9 @@ subprojects {
 
     // region DeteKt
     apply plugin: libs.plugins.detekt2.get().pluginId
+    dependencies {
+        detektPlugins(libs.detekt2.ktlint)
+    }
     detekt {
         toolVersion = libs.versions.detekt2.get()
         ignoredBuildTypes = ["release"]
@@ -67,6 +70,8 @@ subprojects {
         baseline = file("${projectDir}/detekt-baseline.xml")
         // Build the abstract syntax tree in parallel for faster execution
         parallel = true
+        // Auto-correct when not on CI (mostly only works with Klint rules)
+        autoCorrect = !gradle.ext.isCI
     }
     tasks.withType(Detekt).configureEach {
         reports {

@@ -1,20 +1,44 @@
+# Default values:
+# https://github.com/detekt/detekt/blob/main/detekt-core/src/main/resources/default-detekt-config.yml
 config:
   validation: true
   warningsAsErrors: false
   excludes: [ ]
+
+complexity:
+  LongParameterList:
+    active: true
+    ignoreDefaultParameters: true
 
 empty-blocks:
   EmptyFunctionBlock:
     active: true
     ignoreOverridden: true
 
+ktlint:
+  active: true
+  maxLineLength: 160 # same as style.MaxLineLength
+  ArgumentListWrapping:
+    active: true
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  MaximumLineLength:
+    active: true
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  PropertyWrapping:
+    active: true
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  TrailingCommaOnCallSite:
+    active: false # not mandatory
+
 style:
   DestructuringDeclarationWithTooManyEntries:
     active: true
     maxDestructuringEntries: 4 # instead of default 3: MediatorLiveData with 4 sources
-  MaxLineLength:
+  MaxLineLength: # same as ktlint.maxLineLength
     active: true
     maxLineLength: 160
+  NewLineAtEndOfFile:
+    active: false # same as ktlint.FinalNewline
   ReturnCount:
     active: true
     max: 3 # instead of default 2
