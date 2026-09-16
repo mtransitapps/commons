@@ -18,6 +18,12 @@ complexity:
     allowedFunctionParameters: 6 # instead of default 5
     allowedConstructorParameters: 7 # instead of default 6
     ignoreDefaultParameters: true
+  TooManyFunctions:
+    allowedFunctionsPerFile: 12 # instead of default 11
+    allowedFunctionsPerClass: 12 # instead of default 11
+    allowedFunctionsPerInterface: 12 # instead of default 11
+    allowedFunctionsPerObject: 12 # instead of default 11
+    allowedFunctionsPerEnum: 12 # instead of default 11
 
 empty-blocks:
   EmptyFunctionBlock:
@@ -63,7 +69,9 @@ ktlint:
   TrailingCommaOnCallSite:
     active: false # not mandatory
   TrailingCommaOnDeclarationSite:
-    active: false # not mandatory
+    active: false # not mandatory\
+  Wrapping:
+    maxLineLength: 160 # same as ktlint.maxLineLength
 
 style:
   DestructuringDeclarationWithTooManyEntries:
@@ -75,6 +83,8 @@ style:
   NewLineAtEndOfFile:
     active: false # same as ktlint.FinalNewline
   ReturnCount:
+    max: 3 # instead of default 2
+  ThrowsCount:
     max: 3 # instead of default 2
   UnusedImport:
     active: true
