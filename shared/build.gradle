@@ -66,7 +66,7 @@ subprojects {
         buildUponDefaultConfig = true
         // Shared configuration
         config.setFrom(files("${rootProject.projectDir}/commons/config/detekt/detekt-config.yml"))
-        // Individual baselines (update with: './gradlew detektBaselineMain detektBaselineTest')
+        // Individual baselines (update with: './gradlew detektBaselineAll')
         baseline = file("${projectDir}/detekt-baseline.xml")
         // Build the abstract syntax tree in parallel for faster execution
         parallel = true
