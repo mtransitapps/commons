@@ -58,6 +58,8 @@ ktlint:
   FunctionSignature:
     active: false # disabled for now because too strict (either all parameters on one line or each on a separate line)
     maxLineLength: 160 # same as ktlint.maxLineLength
+  Indentation:
+    indentWhenArrowOnNewLine: true # Starting from IDEA version 2024.2 or above this value needs to be set to true to maintain compatibility with IDEA formatting.
   MaximumLineLength:
     maxLineLength: 160 # same as ktlint.maxLineLength
   ParameterListWrapping:

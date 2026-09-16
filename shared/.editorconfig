@@ -9,8 +9,8 @@ indent_size = tab
 tab_width = 4
 
 [*.{kt,kts}]
-ij_kotlin_allow_trailing_comma=true
-ij_kotlin_allow_trailing_comma_on_call_site=true
+# ij_kotlin_allow_trailing_comma=true
+# ij_kotlin_allow_trailing_comma_on_call_site=true
 indent_size = 4
 continuation_indent_size = 4
 ktlint_function_naming_ignore_when_annotated_with=Composable, Test
