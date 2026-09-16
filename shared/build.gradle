@@ -70,10 +70,14 @@ subprojects {
         baseline = file("${projectDir}/detekt-baseline.xml")
         // Build the abstract syntax tree in parallel for faster execution
         parallel = true
-        // Auto-correct when not on CI (mostly only works with Klint rules)
-        autoCorrect = !gradle.ext.isCI
     }
-    tasks.withType(Detekt).configureEach {
+    tasks.withType(Detekt).configureEach { task ->
+        if (task.name.contains("Baseline")) {
+            task.autoCorrect = false
+        } else {
+            // Auto-correct when not on CI (mostly only works with Klint rules)
+            task.autoCorrect = !gradle.ext.isCI
+        }
         reports {
             checkstyle.required.set(true)
             html.required.set(true)

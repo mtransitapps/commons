@@ -21,6 +21,9 @@ ktlint:
   ArgumentListWrapping:
     active: true
     maxLineLength: 160 # same as ktlint.maxLineLength
+  FunctionLiteral:
+    active: true
+    maxLineLength: 160 # same as ktlint.maxLineLength
   MaximumLineLength:
     active: true
     maxLineLength: 160 # same as ktlint.maxLineLength
