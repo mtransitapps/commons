@@ -81,6 +81,20 @@ subprojects {
             markdown.required.set(true)
         }
     }
+    tasks.register('detektAll') {
+        group = 'verification'
+        description = 'Runs Detekt for this module Main and Test source sets.'
+        dependsOn tasks.matching { task ->
+            task.name in ['detektMain', 'detektTest']
+        }
+    }
+    tasks.register('detektBaselineAll') {
+        group = 'verification'
+        description = 'Generates Detekt baselines for this module Main and Test source sets.'
+        dependsOn tasks.matching { task ->
+            task.name in ['detektBaselineMain', 'detektBaselineTest']
+        }
+    }
     // endregion
 }
 
