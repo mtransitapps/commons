@@ -6,46 +6,76 @@ config:
   excludes: [ ]
 
 complexity:
+  CyclomaticComplexMethod:
+    allowedComplexity: 16 # instead of default 14
+  ComplexCondition:
+    allowedConditions: 4 # instead of default 3
+  LargeClass:
+    allowedLines: 800 # instead of default 600
+  LongMethod:
+    allowedLines: 80 # instead of default 60
   LongParameterList:
-    active: true
+    allowedFunctionParameters: 6 # instead of default 5
+    allowedConstructorParameters: 7 # instead of default 6
     ignoreDefaultParameters: true
 
 empty-blocks:
   EmptyFunctionBlock:
-    active: true
     ignoreOverridden: true
 
 ktlint:
-  active: true
+  # active: true
   maxLineLength: 160 # same as style.MaxLineLength
   ArgumentListWrapping:
-    active: true
+    active: false # too strict, disabled (for now)
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  BinaryExpressionWrapping:
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  BlankLineBetweenWhenConditions:
+    active: false # disabled because doesn't allow // comment on the same line
+    lineBreakAfterWhenEntries: true
+  ChainWrapping:
+    active: false # disabled because line should be able to begin with || or &&
+  ClassSignature:
+    active: false # disabled because too strict:
+    # - No whitespace expected between opening parenthesis and first parameter name
+    # - Single whitespace expected before parameter
+    # - No whitespace expected between last parameter and closing parenthesis
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  FunctionExpressionBody:
+    active: false # disabled for now because too much code change
     maxLineLength: 160 # same as ktlint.maxLineLength
   FunctionLiteral:
-    active: true
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  FunctionReturnTypeSpacing:
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  FunctionSignature:
+    active: false # disabled for now because too strict (either all parameters on one line or each on a separate line)
     maxLineLength: 160 # same as ktlint.maxLineLength
   MaximumLineLength:
-    active: true
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  ParameterListWrapping:
+    maxLineLength: 160 # same as ktlint.maxLineLength
+  ParameterWrapping:
     maxLineLength: 160 # same as ktlint.maxLineLength
   PropertyWrapping:
-    active: true
     maxLineLength: 160 # same as ktlint.maxLineLength
   TrailingCommaOnCallSite:
+    active: false # not mandatory
+  TrailingCommaOnDeclarationSite:
     active: false # not mandatory
 
 style:
   DestructuringDeclarationWithTooManyEntries:
-    active: true
     maxDestructuringEntries: 4 # instead of default 3: MediatorLiveData with 4 sources
+  MagicNumber:
+    ignoreEnums: true
   MaxLineLength: # same as ktlint.maxLineLength
-    active: true
     maxLineLength: 160
   NewLineAtEndOfFile:
     active: false # same as ktlint.FinalNewline
   ReturnCount:
-    active: true
     max: 3 # instead of default 2
   UnusedImport:
     active: true
-    additionalOperatorSet: []
 
