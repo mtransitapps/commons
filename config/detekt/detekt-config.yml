@@ -54,6 +54,7 @@ ktlint:
     active: false # disabled for now because too much code change
     maxLineLength: 160 # same as ktlint.maxLineLength
   FunctionLiteral:
+    active: false # disabled because doesn't allow // comment on the same line
     maxLineLength: 160 # same as ktlint.maxLineLength
   FunctionReturnTypeSpacing:
     maxLineLength: 160 # same as ktlint.maxLineLength
@@ -63,7 +64,7 @@ ktlint:
   Indentation:
     indentWhenArrowOnNewLine: true # Starting from IDEA version 2024.2 or above this value needs to be set to true to maintain compatibility with IDEA formatting.
   Kdoc:
-    active: false # /** */ useful everywhere (can contains clickable [links] to other classes...)
+    active: false # /** */ useful everywhere (can contain clickable [links] to other classes...)
   LoopWithTooManyJumpStatements:
     maxJumpCount: 2 # instead of default 1
   MaximumLineLength:
