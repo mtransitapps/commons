@@ -365,6 +365,7 @@ android-application = { id = "com.android.application", version.ref = "android-g
 android-library = { id = "com.android.library", version.ref = "android-gradlePlugin" }
 android-lint = { id = "com.android.lint", version.ref = "android-gradlePlugin" }
 detekt2 = { id = "dev.detekt", version.ref = "detekt2" }
+detekt2-compiler = { id = "dev.detekt.gradle.compiler-plugin", version.ref = "detekt2" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebase-perf-plugin" }
 gms = { id = "com.google.gms.google-services", version.ref = "gps-plugin" }

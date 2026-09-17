@@ -62,6 +62,10 @@ ktlint:
     maxLineLength: 160 # same as ktlint.maxLineLength
   Indentation:
     indentWhenArrowOnNewLine: true # Starting from IDEA version 2024.2 or above this value needs to be set to true to maintain compatibility with IDEA formatting.
+  Kdoc:
+    active: false # /** */ useful everywhere (can contains clickable [links] to other classes...)
+  LoopWithTooManyJumpStatements:
+    maxJumpCount: 2 # instead of default 1
   MaximumLineLength:
     maxLineLength: 160 # same as ktlint.maxLineLength
   ParameterListWrapping:
@@ -70,6 +74,8 @@ ktlint:
     maxLineLength: 160 # same as ktlint.maxLineLength
   PropertyWrapping:
     maxLineLength: 160 # same as ktlint.maxLineLength
+  StatementWrapping:
+    active: false # disabled for now because too strict (disallow one-liner like 'setTouchInterceptor { _, _ -> this.dismiss(); true }')
   TrailingCommaOnCallSite:
     active: false # not mandatory
   TrailingCommaOnDeclarationSite:
@@ -80,6 +86,10 @@ ktlint:
     # val url: String?,
   Wrapping:
     maxLineLength: 160 # same as ktlint.maxLineLength
+
+potential-bugs:
+  UnnecessarySafeCall:
+    active: false # too many false positives (w/o detekt kotlin compiler plugin, IDE shows warning)
 
 style:
   DestructuringDeclarationWithTooManyEntries:
@@ -95,5 +105,5 @@ style:
   ThrowsCount:
     max: 3 # instead of default 2
   UnusedImport:
-    active: true
+    active: true # instead of default false
 
