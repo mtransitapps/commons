@@ -42,6 +42,7 @@ plugins {
     // alias(libs.plugins.littlerobots.versioncatalog)
 
     alias(libs.plugins.detekt2) apply false
+    // alias(libs.plugins.detekt2.compiler) apply false // plugin helps fix some issues but version 2.0.0-alpha.6 doesn't work
 
     alias(libs.plugins.gradle.doctor)
     alias(libs.plugins.gradle.androidCacheFix) apply false
@@ -54,7 +55,11 @@ plugins {
 subprojects {
 
     // region DeteKt
-    apply plugin: libs.plugins.detekt2.get().pluginId
+    apply plugin: libs.plugins.detekt2.asProvider().get().pluginId
+    // apply plugin: libs.plugins.detekt2.compiler.get().pluginId // plugin helps fix some issues but version 2.0.0-alpha.6 doesn't work
+    dependencies {
+        detektPlugins(libs.detekt2.ktlint)
+    }
     detekt {
         toolVersion = libs.versions.detekt2.get()
         ignoredBuildTypes = ["release"]
@@ -63,17 +68,39 @@ subprojects {
         buildUponDefaultConfig = true
         // Shared configuration
         config.setFrom(files("${rootProject.projectDir}/commons/config/detekt/detekt-config.yml"))
-        // Individual baselines (update with: './gradlew detektBaselineMain detektBaselineTest')
+        // Individual baselines (update with: './gradlew detektBaselineAll')
         baseline = file("${projectDir}/detekt-baseline.xml")
         // Build the abstract syntax tree in parallel for faster execution
         parallel = true
+        // enableCompilerPlugin = false // plugin helps fix some issues but version 2.0.0-alpha.6 doesn't work
     }
-    tasks.withType(Detekt).configureEach {
+    tasks.withType(Detekt).configureEach { task ->
+        if (task.name.contains("Baseline")) {
+            task.autoCorrect = false
+        } else {
+            // Auto-correct when not on CI (mostly only works with ktlint rules)
+            task.autoCorrect = !gradle.ext.isCI
+            // task.autoCorrect = false // DEBUG
+        }
         reports {
             checkstyle.required.set(true)
             html.required.set(true)
             sarif.required.set(true)
             markdown.required.set(true)
+        }
+    }
+    tasks.register('detektAll') {
+        group = 'verification'
+        description = 'Runs Detekt for this module Main and Test source sets.'
+        dependsOn tasks.matching { task ->
+            task.name in ['detektMain', 'detektTest']
+        }
+    }
+    tasks.register('detektBaselineAll') {
+        group = 'verification'
+        description = 'Generates Detekt baselines for this module Main and Test source sets.'
+        dependsOn tasks.matching { task ->
+            task.name in ['detektBaselineMain', 'detektBaselineTest']
         }
     }
     // endregion
