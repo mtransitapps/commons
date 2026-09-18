@@ -78,7 +78,7 @@ subprojects {
         if (task.name.contains("Baseline")) {
             task.autoCorrect = false
         } else {
-            // Auto-correct when not on CI (mostly only works with Klint rules)
+            // Auto-correct when not on CI (mostly only works with ktlint rules)
             task.autoCorrect = !gradle.ext.isCI
             // task.autoCorrect = false // DEBUG
         }
