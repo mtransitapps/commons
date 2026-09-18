@@ -82,7 +82,7 @@ ktlint:
   TrailingCommaOnDeclarationSite:
     active: false # not mandatory
   ValueParameterComment:
-    active: false # comments next to annoation are fine like:
+    active: false # comments next to annotation are fine like:
     # @SerializedName("url") // added in v7.3
     # val url: String?,
   Wrapping:
