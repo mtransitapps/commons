@@ -18,6 +18,10 @@ buildscript {
         classpath("io.netty:netty-handler:4.2.17.Final")
         // fix JDOM vulnerability in Android Gradle Plugin
         classpath("org.jdom:jdom2:2.0.6.1")
+        // fix Bouncy Castle vulnerability in Android Gradle Plugin
+        classpath("org.bouncycastle:bcprov-jdk18on:1.85")
+        // fix jose.4.j vulnerability in Android Gradle Plugin
+        classpath("org.bitbucket.b_c:jose4j:0.9.6")
     }
 }
 
