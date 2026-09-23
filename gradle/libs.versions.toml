@@ -26,7 +26,7 @@ sonar = "7.5.0.8588"
 # https://detekt.dev/changelog-2.0.0
 detekt2 = "2.0.0-alpha.6"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "9.4.0"
+android-gradlePlugin = "9.4.1"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
