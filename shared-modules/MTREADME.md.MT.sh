@@ -114,9 +114,9 @@ fi
 
 AGENCY_TYPE_FILE="${CONFIG_DIR}/agency_type";
 if [ -f "$AGENCY_TYPE_FILE" ]; then
-  AGENCY_TYPE_SHORT=$(head -n 1 "$AGENCY_TYPE_FILE");
-  if [ -n "$AGENCY_TYPE_SHORT" ]; then
-    TYPE_LABEL="$AGENCY_TYPE_SHORT";
+  AGENCY_TYPE_LONG=$(tail -n 1 "$AGENCY_TYPE_FILE");
+  if [ -n "$AGENCY_TYPE_LONG" ]; then
+    TYPE_LABEL="$AGENCY_TYPE_LONG";
   fi
 fi
 
