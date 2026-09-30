@@ -95,6 +95,10 @@ potential-bugs:
 style:
   DestructuringDeclarationWithTooManyEntries:
     maxDestructuringEntries: 4 # instead of default 3: MediatorLiveData with 4 sources
+  ForbiddenImport:
+    forbiddenImports:
+      - value: 'android.text.TextUtils'
+        reason: 'Useless Android SDK dependencies, use native Kotlin StdLib functions'
   MagicNumber:
     ignoreEnums: true
   MaxLineLength: # same as ktlint.maxLineLength
