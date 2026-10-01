@@ -22,15 +22,15 @@ kotlinx-datetime = "0.8.0"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
 kotlinx-serialization = "1.11.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
-sonar = "7.3.1.8318"
+sonar = "7.5.0.8588"
 # https://detekt.dev/changelog-2.0.0
 detekt2 = "2.0.0-alpha.6"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "9.4.0"
+android-gradlePlugin = "9.4.1"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
-triplet-playPublisher = "4.0.0"
+triplet-playPublisher = "4.1.1"
 # https://github.com/dropbox/dependency-guard/releases/latest
 dependency-guard = "0.5.0"
 # # https://github.com/ben-manes/gradle-versions-plugin/releases/latest
@@ -46,18 +46,18 @@ hilt = "2.60.1"
 # ALL: https://developer.android.com/jetpack/androidx/versions
 # LATEST: https://developer.android.com/jetpack/androidx/versions/stable-channel
 androidx-activity = "1.13.0"
-androidx-annotation = "1.10.0"
+androidx-annotation = "1.11.0"
 androidx-appCompat = "1.8.0"
 androidx-browser = "1.10.0"
 androidx-cardview = "1.0.0"
 androidx-collection = "1.6.0"
 androidx-coordinator = "1.3.0"
 androidx-constraint = "2.2.2"
-androidx-core = "1.19.0"
+androidx-core = "1.19.1"
 androidx-core-splashscreen = "1.2.0"
-androidx-fragment = "1.9.0"
+androidx-fragment = "1.9.1"
 androidx-lifecycle = "2.11.0"
-androidx-nav = "2.10.1"
+androidx-nav = "2.10.2"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
 androidx-room = "2.8.5"
@@ -67,7 +67,7 @@ androidx-swiperefreshlayout = "1.2.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
 androidx-webkit = "1.17.0"
-androidx-workManager = "2.11.2"
+androidx-workManager = "2.12.0"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.14.0"
 # https://github.com/googlemaps/android-maps-utils/releases/latest
@@ -82,18 +82,18 @@ places-sdk = "5.3.0"
 gps-plugin = "4.5.0"
 # LATEST: https://developers.google.com/android/guides/releases
 # https://developers.google.com/admob/android/rel-notes
-gps-ads = "25.4.0"
+gps-ads = "25.5.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
-gps-ads-nextgen = "1.3.1"
+gps-ads-nextgen = "1.5.0"
 gps-ump = "4.0.0"
-gps-basement = "18.11.0"
+gps-basement = "18.12.0"
 gps-time = "16.0.1"
 gps-location = "21.4.0"
 gps-maps = "20.0.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
 firebase-bom = "34.19.0"
-firebase-crashlytics-plugin = "3.0.7"
+firebase-crashlytics-plugin = "3.0.8"
 firebase-perf-plugin = "2.0.2"
 # https://developer.android.com/google/play/billing/release-notes
 play-billing = "9.1.0"
@@ -108,12 +108,12 @@ fbAudienceNetwork-mediation = "6.22.0.1"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/applovin/CHANGELOG.md
-appLovin-mediation = "13.6.4.1"
+appLovin-mediation = "13.6.4.2"
 # Liftoff = Vungle
 # https://github.com/Vungle/VungleAds-SDK/blob/master/CHANGELOG-Android.md
 #vungle = "_._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/liftoffmonetize/CHANGELOG.md
-vungle-mediation = "7.7.7.0"
+vungle-mediation = "7.7.8.1"
 # https://github.com/google/guava/releases/latest
 guava = "33.6.0-android"
 # https://github.com/square/leakcanary/releases
@@ -171,6 +171,7 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 kotlinx-serialization-bom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version.ref = "kotlinx-serialization" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 android-desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "android-desugarJdkLibs" }
+detekt2-ktlint = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt2" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
@@ -364,6 +365,7 @@ android-application = { id = "com.android.application", version.ref = "android-g
 android-library = { id = "com.android.library", version.ref = "android-gradlePlugin" }
 android-lint = { id = "com.android.lint", version.ref = "android-gradlePlugin" }
 detekt2 = { id = "dev.detekt", version.ref = "detekt2" }
+detekt2-compiler = { id = "dev.detekt.gradle.compiler-plugin", version.ref = "detekt2" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebase-perf-plugin" }
 gms = { id = "com.google.gms.google-services", version.ref = "gps-plugin" }

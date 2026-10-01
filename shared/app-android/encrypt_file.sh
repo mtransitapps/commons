@@ -8,7 +8,7 @@ if [[ -z "${MT_ENCRYPT_KEY}" ]]; then
 	exit 1;
 fi
 
-if [[ $# -ne 1 ]]; then
+if [[ $# -lt 1 || $# -gt 2 ]]; then
 	echo "Expecting 1 or 2 arguments for the file (arg:'$@')!";
 	exit 1;
 fi
