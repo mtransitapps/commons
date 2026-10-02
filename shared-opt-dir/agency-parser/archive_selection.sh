@@ -32,7 +32,7 @@ if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
     ARCHIVE_END_DATE=${ARCHIVE_BASENAME_NO_EXT_PARTS[1]};
     echo "- archive start date: '$ARCHIVE_START_DATE'";
     echo "- archive end date: '$ARCHIVE_END_DATE'";
-    if [[ "$ARCHIVE_END_DATE" -lt "$YESTERDAY" && "$ARCHIVE_END_DATE" -gt "$CURRENT_ARCHIVE_END_DATE" ]]; then
+    if [[ "$ARCHIVE_END_DATE" -le "$YESTERDAY" && "$ARCHIVE_END_DATE" -gt "$CURRENT_ARCHIVE_END_DATE" ]]; then
       echo "- archive is entirely in the past & older than previous one > KEEP as CURRENT";
       CURRENT_ARCHIVE="$ARCHIVE";
       CURRENT_ARCHIVE_START_DATE=$ARCHIVE_START_DATE;
