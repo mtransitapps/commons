@@ -29,6 +29,13 @@ setGradleArgs;
 ${SCRIPT_DIR}/../gradlew promoteReleaseArtifact --no-scan ${@}; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
+if [[ $COMMAND_RESULT -ne 0 ]]; then
+  echo "> Gradle failed ($COMMAND_RESULT). Retrying in 10 seconds...";
+  sleep 10;
+  ${SCRIPT_DIR}/../gradlew promoteReleaseArtifact --no-scan ${@}; # no ${GRADLE_ARGS} for release
+  COMMAND_RESULT=$?;
+fi
+
 ${SCRIPT_DIR}/keys_cleanup.sh;
 checkResult $?;
 
