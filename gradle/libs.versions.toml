@@ -77,7 +77,7 @@ maps-utils = "5.0.0"
 # https://github.com/googlemaps/android-maps-ktx/releases/latest
 maps-ktx = "6.2.0"
 # https://developers.google.com/maps/documentation/places/android-sdk/release-notes
-places-sdk = "5.3.0"
+places-sdk = "6.0.2"
 # https://developers.google.com/android/guides/google-services-plugin
 gps-plugin = "4.5.0"
 # LATEST: https://developers.google.com/android/guides/releases
