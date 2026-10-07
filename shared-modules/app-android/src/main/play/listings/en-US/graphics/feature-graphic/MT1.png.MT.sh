@@ -64,11 +64,18 @@ if [ "${#AGENCY_NAME_SHORT}" -le "$MAX_AGENCY_LENGTH" ]; then
     AGENCY_NAME_1=$AGENCY_NAME_SHORT;
 else
   SPLIT_INDEX=0;
-  for ((I=1; I<=MAX_AGENCY_LENGTH; I++)); do
-    CHAR="${AGENCY_NAME_SHORT:I-1:1}";
-    if [ "$CHAR" = " " ] || [ "$CHAR" = "-" ]; then
-      SPLIT_INDEX=$I;
-    fi
+  AGENCY_NAME_LENGTH=${#AGENCY_NAME_SHORT};
+  for ((OFFSET=0; OFFSET<AGENCY_NAME_LENGTH; OFFSET++)); do
+    for CHAR_INDEX in $(((AGENCY_NAME_LENGTH - 1) / 2 - OFFSET)) $((AGENCY_NAME_LENGTH / 2 + OFFSET)); do
+      if ((CHAR_INDEX < 0 || CHAR_INDEX >= AGENCY_NAME_LENGTH)); then
+        continue;
+      fi
+      CHAR="${AGENCY_NAME_SHORT:CHAR_INDEX:1}";
+      if [[ "$CHAR" = " " || "$CHAR" = "-" ]]; then
+        SPLIT_INDEX=$((CHAR_INDEX + 1));
+        break 2;
+      fi
+    done
   done
   if [ "$SPLIT_INDEX" -gt 0 ]; then
     AGENCY_NAME_1="${AGENCY_NAME_SHORT:0:SPLIT_INDEX}";
