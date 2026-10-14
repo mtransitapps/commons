@@ -9,8 +9,8 @@ androidx.arch.core:core-common:2.2.0
 androidx.arch.core:core-runtime:2.2.0
 androidx.browser:browser:1.10.0
 androidx.cardview:cardview:1.0.0
-androidx.collection:collection-jvm:1.6.0
-androidx.collection:collection:1.6.0
+androidx.collection:collection-jvm:1.7.0
+androidx.collection:collection:1.7.0
 androidx.compose.runtime:runtime-annotation-android:1.9.0
 androidx.compose.runtime:runtime-annotation:1.9.0
 androidx.concurrent:concurrent-futures-ktx:1.1.0
