@@ -114,6 +114,24 @@ if [ -f "$SOURCE_URL_FILE" ]; then
   fi
 fi
 
+LICENSE_NAME="";
+LICENSE_NAME_FILE="${CONFIG_DIR}/fr/license_name";
+if [ ! -f "$LICENSE_NAME_FILE" ]; then
+  LICENSE_NAME_FILE="${CONFIG_DIR}/license_name";
+fi
+if [ -f "$LICENSE_NAME_FILE" ]; then
+  LICENSE_NAME=$(head -n 1 $LICENSE_NAME_FILE);
+fi
+
+LICENSE_URL="";
+LICENSE_URL_FILE="${CONFIG_DIR}/fr/license_url";
+if [ ! -f "$LICENSE_URL_FILE" ]; then
+  LICENSE_URL_FILE="${CONFIG_DIR}/license_url";
+fi
+if [ -f "$LICENSE_URL_FILE" ]; then
+  LICENSE_URL=$(head -n 1 $LICENSE_URL_FILE);
+fi
+
 SOURCE_NAME_FILE="${CONFIG_DIR}/source_name"; #optional
 if [ -f "$SOURCE_NAME_FILE" ]; then
   SOURCE_NAME=$(head -n 1 $SOURCE_NAME_FILE);
@@ -400,6 +418,9 @@ else
 fi
 
 SOURCES_LINES="Les informations viennent des données publiées par $SOURCE_PROVIDER"
+if [ -n "$LICENSE_NAME" ]; then
+  SOURCES_LINES="${SOURCES_LINES} (sous ${LICENSE_NAME})";
+fi
 if [ -n "$SOURCE_URL" ]; then
   SOURCES_LINES="${SOURCES_LINES} :"$'\n'"${SOURCE_URL}";
 else
@@ -466,6 +487,13 @@ fi
 
 echo "$PERMISSIONS_LINE" >> "${FULL_DESCRIPTION_FILE}";
 checkResult $?;
+
+if [[ -n "$LICENSE_URL" && -n "$LICENSE_NAME" ]]; then
+  echo "" >> "${FULL_DESCRIPTION_FILE}";
+  echo "$LICENSE_NAME:" >> "${FULL_DESCRIPTION_FILE}";
+  echo "$LICENSE_URL" >> "${FULL_DESCRIPTION_FILE}";
+  checkResult $?;
+fi
 
 if [[ ${IS_CI} = true ]]; then
   echo "---------------------------------------------------------------------------------------------------------------";
