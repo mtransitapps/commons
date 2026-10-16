@@ -1,5 +1,8 @@
 #!/bin/bash
-source commons/commons.sh;
+SCRIPT_DIR=$(dirname "$0");
+ROOT_DIR=$SCRIPT_DIR;
+
+source $ROOT_DIR/commons/commons.sh;
 echo "================================================================================";
 echo "> COMMIT CODE CHANGE..";
 echo "--------------------------------------------------------------------------------";
@@ -24,9 +27,10 @@ if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
 fi
 echo "> Git commit enabled ...";
 
-cd app-android || exit;
+CURRENT_DIR=$(pwd);
+cd $ROOT_DIR/app-android || exit 1;
 ./keys_cleanup.sh; # FAIL OK
-cd ..;
+cd $CURRENT_DIR;
 
 setGitUser;
 
@@ -37,29 +41,29 @@ fi
 echo "GIT_MSG: $GIT_MSG";
 
 echo "> GIT submodule > add...";
-git submodule foreach git add -v -A;
+git -C $ROOT_DIR submodule foreach git add -v -A;
 checkResult $?;
 echo "> GIT submodule > add... DONE";
 echo "> GIT submodule > commit '$GIT_MSG'...";
-# git submodule foreach git commit -q -m "$GIT_MSG";
-# git submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-git submodule foreach "git diff-index --quiet HEAD || git commit -m '$GIT_MSG'";
+# git -C $ROOT_DIR submodule foreach git commit -q -m "$GIT_MSG";
+# git -C $ROOT_DIR submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
+git -C $ROOT_DIR submodule foreach "git diff-index --quiet HEAD || git commit -m '$GIT_MSG'";
 checkResult $?;
 echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
 
 echo "> GIT > add...";
-git add -v -A; # needed for other files than git submodules
+git -C $ROOT_DIR add -v -A; # needed for other files than git submodules
 checkResult $?;
 echo "> GIT > add... DONE";
 
-echo "> GIT > git_commit_all_submodules.sh...";
-./git_commit_all_submodules.sh;
+echo "> GIT > sh/git/commit_all_submodules.sh...";
+$ROOT_DIR/sh/git/commit_all_submodules.sh;
 checkResult $?;
-echo "> GIT > git_commit_all_submodules.sh... DONE";
+echo "> GIT > sh/git/commit_all_submodules.sh... DONE";
 
 echo "> GIT > remaining repo files to commit (if no submodule change)...";
-git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
+git -C $ROOT_DIR diff-index --quiet HEAD || git -C $ROOT_DIR commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT > remaining repo files to commit (if no submodule change)... DONE";
 
