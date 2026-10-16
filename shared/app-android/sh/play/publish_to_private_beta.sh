@@ -1,0 +1,34 @@
+#!/bin/bash
+# --track Beta (Private) == DEFAULT
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR="${SCRIPT_DIR}/../../..";
+source "${ROOT_DIR}/commons/commons.sh";
+
+setPushToStoreEnabled;
+if [[ ${MT_PUSH_STORE_ENABLED} != true ]]; then
+  echo "> Push to Store NOT enabled... SKIP ($MT_PUSH_STORE_ENABLED)";
+  exit 1; # error
+fi
+echo "> Push to Store enabled...";
+
+setPushToStoreBetaPrivateEnabled;
+if [[ ${MT_PUSH_STORE_BETA_PRIVATE_ENABLED} != true ]]; then
+  echo "> Push to Store Beta Private NOT enabled... SKIP ($MT_PUSH_STORE_BETA_PRIVATE_ENABLED)";
+  exit 1; # error
+fi
+echo "> Push to Store Beta Private enabled...";
+
+setGitProjectName "${ROOT_DIR}";
+CONFIG_PATH="$ROOT_DIR/../config";
+if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
+  CONFIG_PATH="$ROOT_DIR/config";
+fi
+
+if [[ ! -f "$CONFIG_PATH/store/beta-private" ]]; then
+    echo "> Publish to beta-private NOT authorized!";
+    exit 1; # error
+fi
+
+${SCRIPT_DIR}/publish.sh \
+  --release-status completed --user-fraction 1.00 \
+; # --track "Beta (Private)" # default from build.gradle
