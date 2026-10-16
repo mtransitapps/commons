@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")"
-ROOT_DIR="${SCRIPT_DIR}/../..";
+ROOT_DIR="${SCRIPT_DIR}/../../..";
 
 if [ "$1" = "debug" ]; then
   DEBUG=true;
@@ -27,4 +27,7 @@ if [[ -z "${APP_PKG}" ]]; then
 fi
 
 APP_ACTIVITY="org.mtransit.android.commons.ui.ModuleRedirectActivity"
+if [[ "$APP_PKG" = "org.mtransit.android" || "$APP_PKG" = "org.mtransit.android.debug" ]]; then
+  APP_ACTIVITY="org.mtransit.android.MainActivity"
+fi
 echo "ACTIVITY: '$APP_ACTIVITY'."
