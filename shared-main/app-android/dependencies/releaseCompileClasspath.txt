@@ -115,7 +115,7 @@ com.google.android.gms:play-services-base:18.9.0
 com.google.android.gms:play-services-basement:18.12.0
 com.google.android.gms:play-services-cronet:18.0.1
 com.google.android.gms:play-services-location:21.4.0
-com.google.android.gms:play-services-maps:20.0.0
+com.google.android.gms:play-services-maps:20.1.0
 com.google.android.gms:play-services-measurement-api:23.2.0
 com.google.android.gms:play-services-measurement-base:23.2.0
 com.google.android.gms:play-services-measurement-impl:23.2.0
