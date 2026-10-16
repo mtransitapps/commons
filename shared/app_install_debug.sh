@@ -1,1 +1,0 @@
-./gradlew :app-android:installDebug;
