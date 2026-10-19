@@ -108,11 +108,34 @@ subprojects {
         }
     }
     // endregion
+
+    // region tests
+    tasks.register('testAll') {
+        group = 'verification'
+        description = 'Runs unit tests for this module.'
+        dependsOn tasks.matching { task ->
+            task.name in ['test', 'testDebugUnitTest']
+        }
+    }
+    // endregion
 }
 
 tasks.register('clean', Delete) {
     delete rootProject.layout.buildDirectory
 }
+
+// region dependency guard
+tasks.register('dependencyGuardAll') {
+    group = 'verification'
+    description = 'Runs dependencyGuard on all relevant modules.'
+    dependsOn ':app-android:dependencyGuard', ':parser:dependencyGuard'
+}
+tasks.register('dependencyGuardBaselineAll') {
+    group = 'verification'
+    description = 'Generates dependencyGuard baselines on all relevant modules.'
+    dependsOn ':app-android:dependencyGuardBaseline', ':parser:dependencyGuardBaseline'
+}
+// endregion
 
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
