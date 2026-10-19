@@ -25,7 +25,7 @@ echo ">> Gradle cleaning... DONE";
 
 if [[ ${IS_CI} = true ]]; then
     echo ">> Running test...";
-	../gradlew ${SETTINGS_FILE_ARGS} testAll ${GRADLE_ARGS};
+	../gradlew ${SETTINGS_FILE_ARGS} -p ../ testAll ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
     echo ">> Running test... DONE";
@@ -89,7 +89,7 @@ if [[ ${IS_CI} = true ]]; then
 # fi
 
     echo ">> Running assemble & bundle...";
-	../gradlew ${SETTINGS_FILE_ARGS} assembleDebug bundleDebug ${GRADLE_ARGS};
+	../gradlew ${SETTINGS_FILE_ARGS} :app-android:assembleDebug :app-android:bundleDebug ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running assemble & bundle... DONE";
