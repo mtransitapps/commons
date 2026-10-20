@@ -1,19 +1,22 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-source ${SCRIPT_DIR}/../commons/commons.sh
+ROOT_DIR="${SCRIPT_DIR}/../../..";
+source ${ROOT_DIR}/commons/commons.sh
 echo ">> Resetting keys...";
 
-source ${SCRIPT_DIR}/keys_files.sh;
+source ${SCRIPT_DIR}/files.sh;
 
 if [[ ${#FILES[@]} -lt 1 ]]; then
 	echo "FILES environment variable is NOT defined (need at least 1 empty \"\")!";
 	exit 1;
 fi
 
-CLEAR="${SCRIPT_DIR}/clr"
+APP_ANDROID_DIR="${ROOT_DIR}/app-android";
+
+CLEAR="${APP_ANDROID_DIR}/clr"
 
 for FILE in "${FILES[@]}" ; do
-	FILE_PATH="${SCRIPT_DIR}/${FILE}";
+	FILE_PATH="${APP_ANDROID_DIR}/${FILE}";
 	if [[ -z "${FILE_PATH}" ]]; then
 		echo "Ignoring empty '$FILE_PATH'.";
 		continue;
@@ -21,7 +24,7 @@ for FILE in "${FILES[@]}" ; do
 	echo "--------------------------------------------------------------------------------";
 	echo "> Resetting '$FILE_PATH'...";
 
-	FILE_ENC="${SCRIPT_DIR}/enc/${FILE}";
+	FILE_ENC="${APP_ANDROID_DIR}/enc/${FILE}";
 
 	if [[ -f ${FILE_ENC} ]]; then
 		rm ${FILE_ENC};
