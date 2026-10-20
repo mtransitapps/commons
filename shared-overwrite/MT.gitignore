@@ -177,11 +177,7 @@ dev.properties
 /commit_data_change.sh
 /build.gradle
 /build.sh
-/dependency_update_apply.sh
-/dependency_update_baseline.sh
-/dependency_update_check.sh
-/dependency_update_commit_code_change.sh
-/dependency_update_push_commits.sh
+/dependencies_baseline_update.sh
 /download_and_parse.sh
 /download_and_prepare.sh
 /download_latest_apk.sh
