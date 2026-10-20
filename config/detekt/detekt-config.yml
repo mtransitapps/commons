@@ -69,6 +69,8 @@ ktlint:
     maxJumpCount: 2 # instead of default 1
   MaximumLineLength:
     maxLineLength: 160 # same as ktlint.maxLineLength
+  NoUnusedImports:
+    active: false # same as UnusedImport but w/ issues++ https://ktlint.github.io/ktlint/1.8.0/rules/standard/#no-unused-imports
   ParameterListWrapping:
     maxLineLength: 160 # same as ktlint.maxLineLength
   ParameterWrapping:
