@@ -225,12 +225,16 @@ dev.properties
 /app-android/build.gradle
 /app-android/build.sh
 /app-android/dependencies/*
-/app-android/decrypt_file.sh
-/app-android/encrypt_file.sh
+/app-android/sh/keys/decrypt_file.sh
+/app-android/sh/keys/encrypt_file.sh
+# DEPRECATED: remove after update /.github/workflows/mt-record-screenshots.yml updated)
 /app-android/keys_cleanup.sh
-/app-android/keys_files.sh
+/app-android/sh/keys/cleanup.sh
+/app-android/sh/keys/files.sh
+# DEPRECATED: remove after update /.github/workflows/mt-record-screenshots.yml updated)
 /app-android/keys_setup.sh
-/app-android/keys_reset.sh
+/app-android/sh/keys/setup.sh
+/app-android/sh/keys/reset.sh
 /app-android/lint.xml
 /app-android/module-proguard-rules.pro
 /app-android/print_current_next_rts_diff.sh
