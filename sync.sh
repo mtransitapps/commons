@@ -1,9 +1,9 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/..";
-source ${SCRIPT_DIR}/commons.sh;
+source ${ROOT_DIR}/commons/sh/commons.sh;
 
-# DEPRECATED: use ./sh/git_setup.sh && ./sh/shared_setup.sh;
+# DEPRECATED: use ./commons/sh/git_setup.sh && ./commons/sh/shared_setup.sh;
 # TODO: remove after update 'mtransitapps:mtransit-for-android/.gitlab-ci.yml': https://github.com/mtransitapps/mtransit-for-android/blob/master/.gitlab-ci.yml
 
 echo "================================================================================";
@@ -12,7 +12,7 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-${SCRIPT_DIR}/sh/git_setup.sh && ${SCRIPT_DIR}/sh/shared_setup.sh;
+${ROOT_DIR}/commons/sh/git_setup.sh && ${ROOT_DIR}/commons/sh/shared_setup.sh;
 checkResult $?;
 
 echo "--------------------------------------------------------------------------------";
