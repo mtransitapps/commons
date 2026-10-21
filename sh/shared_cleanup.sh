@@ -1,10 +1,10 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/..";
-source $ROOT_DIR/commons/commons.sh;
+ROOT_DIR="${SCRIPT_DIR}/../..";
+source ${SCRIPT_DIR}/../commons.sh;
 
 echo "================================================================================";
-echo "> CLEANUP SHARED...";
+echo "> SHARED CLEANUP...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
@@ -245,5 +245,5 @@ AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> CLEANUP SHARED... DONE";
+echo "> SHARED CLEANUP... DONE";
 echo "================================================================================";

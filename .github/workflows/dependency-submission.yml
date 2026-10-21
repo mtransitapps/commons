@@ -23,8 +23,10 @@ jobs:
         repository: mtransitapps/mtransit-for-android
     - name: MT init submodules
       run: ./sh/git/submodules_init.sh
-    - name: MT code setup
-      run: ./commons/code_setup.sh
+    - name: MT git setup
+      run: ./commons/sh/git_setup.sh
+    - name: MT shared setup
+      run: ./commons/sh/shared_setup.sh
     - name: MT set up JDK 21
       uses: actions/setup-java@v6
       with:

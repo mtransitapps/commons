@@ -4,7 +4,7 @@ SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="$SCRIPT_DIR/../../../../..";
 COMMONS_DIR="${ROOT_DIR}/commons";
 source ${COMMONS_DIR}/commons.sh;
-source ${COMMONS_DIR}/feature_flags.sh;
+source ${COMMONS_DIR}/sh/feature_flags.sh;
 
 setIsCI;
 
