@@ -4,13 +4,13 @@ ROOT_DIR="${SCRIPT_DIR}/../../..";
 source ${ROOT_DIR}/commons/commons.sh
 
 declare -a FILES=(
-	"app-signing-release-keys.properties"
-	"app-signing-release-keystore.keystore"
-	"app-signing-release-keystore-encrypted.keystore"
-	"google-play-auto-publisher.json"
-	"google-play-upload-certificate.pem"
-	"google-play-upload-keys.properties"
-	"google-play-upload-keystore.keystore"
+	"signing/release/keys.properties"
+	"signing/release/keystore.keystore"
+	"signing/release/keystore-encrypted.keystore"
+	"play-android-publisher-service-account-key.json"
+	"signing/play-upload/certificate.pem"
+	"signing/play-upload/keys.properties"
+	"signing/play-upload/keystore.keystore"
 	"src/main/play/contact-email.txt"
 );
 

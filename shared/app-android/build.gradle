@@ -93,11 +93,11 @@ android {
     println "> App version hash: " + gitHash
 
     Properties debugSigningKeysProperties = new Properties()
-    def debugSigningKeysPropertiesFile = file("app-signing-debug-keys.properties")
+    def debugSigningKeysPropertiesFile = file("signing/debug/keys.properties")
     if (debugSigningKeysPropertiesFile.exists()) {
         debugSigningKeysProperties.load(new FileInputStream(debugSigningKeysPropertiesFile))
     } else {
-        debugSigningKeysPropertiesFile = file("${project.rootDir}/app-signing-debug-keys.properties")
+        debugSigningKeysPropertiesFile = file("${project.rootDir}/signing/debug/keys.properties")
         if (debugSigningKeysPropertiesFile.exists()) {
             debugSigningKeysProperties.load(new FileInputStream(debugSigningKeysPropertiesFile))
         }
@@ -110,22 +110,22 @@ android {
     println "> Using the Play Store Upload keys: " + useGooglePlayUploadKeysProperties
 
     Properties appSigningKeysProperties = new Properties()
-    def appSigningKeysPropertiesFile = file("app-signing-release-keys.properties")
+    def appSigningKeysPropertiesFile = file("signing/release/keys.properties")
     if (appSigningKeysPropertiesFile.exists()) {
         appSigningKeysProperties.load(new FileInputStream(appSigningKeysPropertiesFile))
     } else {
-        appSigningKeysPropertiesFile = file("${project.rootDir}/app-signing-release-keys.properties")
+        appSigningKeysPropertiesFile = file("${project.rootDir}/signing/release/keys.properties")
         if (appSigningKeysPropertiesFile.exists()) {
             appSigningKeysProperties.load(new FileInputStream(appSigningKeysPropertiesFile))
         }
     }
 
     Properties googlePlayUploadKeysProperties = new Properties()
-    def googlePlayUploadKeysPropertiesFile = file("google-play-upload-keys.properties")
+    def googlePlayUploadKeysPropertiesFile = file("signing/play-upload/keys.properties")
     if (googlePlayUploadKeysPropertiesFile.exists()) {
         googlePlayUploadKeysProperties.load(new FileInputStream(googlePlayUploadKeysPropertiesFile))
     } else {
-        googlePlayUploadKeysPropertiesFile = file("${project.rootDir}/google-play-upload-keys.properties")
+        googlePlayUploadKeysPropertiesFile = file("${project.rootDir}/signing/play-upload/keys.properties")
         if (googlePlayUploadKeysPropertiesFile.exists()) {
             googlePlayUploadKeysProperties.load(new FileInputStream(googlePlayUploadKeysPropertiesFile))
         }
@@ -418,7 +418,7 @@ if (isMainApp && rootProject.gmaNextGen) {
 }
 
 play {
-    serviceAccountCredentials.set(file("google-play-auto-publisher.json"))
+    serviceAccountCredentials.set(file("play-android-publisher-service-account-key.json"))
     defaultToAppBundles.set(true)
     // Available tracks: internal, alpha, Beta (Private), beta, production
     // "Beta (Private)" is default because it's hard to use with -Pparam parameter

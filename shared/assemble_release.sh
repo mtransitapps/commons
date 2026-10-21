@@ -47,7 +47,7 @@ cd app-android || exit;
 
 if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 
-	./keys_setup.sh;
+	./sh/keys/setup.sh;
 	checkResult $?;
 
 	echo ">> Running assemble release APK..."; # for GH release
@@ -55,7 +55,7 @@ if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 	RESULT=$?;
 	echo ">> Running assemble release APK... DONE";
 
-	./keys_cleanup.sh;
+	./sh/keys/cleanup.sh;
 	checkResult $?;
 
 	checkResult $RESULT;
@@ -65,7 +65,7 @@ fi
 
 # ----------------------------------------
 
-./keys_setup.sh;
+./sh/keys/setup.sh;
 checkResult $?;
 
 echo ">> Running bundle release AAB...";
@@ -73,7 +73,7 @@ echo ">> Running bundle release AAB...";
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 
-./keys_cleanup.sh;
+./sh/keys/cleanup.sh;
 checkResult $?;
 
 checkResult $RESULT;

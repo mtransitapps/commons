@@ -9,8 +9,8 @@ echo ">> Pulling listing from the Play Console...";
 # gradlew help --task bootstrapListing
 
 
-${ROOT_DIR}/app-android/keys_cleanup.sh; # FAIL OK
-${ROOT_DIR}/app-android/keys_setup.sh;
+${ROOT_DIR}/app-android/sh/keys/cleanup.sh; # FAIL OK
+${ROOT_DIR}/app-android/sh/keys/setup.sh;
 checkResult $?;
 
 setGradleArgs;
@@ -19,7 +19,7 @@ setGradleArgs;
 ${ROOT_DIR}/gradlew :app-android:bootstrapListing --app-details --listings --no-release-notes --no-products --subscriptions; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
-${ROOT_DIR}/app-android/keys_cleanup.sh;
+${ROOT_DIR}/app-android/sh/keys/cleanup.sh;
 checkResult $?;
 
 checkResult $COMMAND_RESULT; # check command result after keys cleanup

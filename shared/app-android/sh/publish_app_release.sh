@@ -135,8 +135,8 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
   if [[ -d "app-android" ]]; then
     cd app-android || exit 1; # >>
 
-    if [[ -f "${ROOT_DIR}/app-android/keys_cleanup.sh" ]]; then
-      "${ROOT_DIR}"/app-android/keys_cleanup.sh; # FAIL OK
+    if [[ -f "${ROOT_DIR}/app-android/sh/keys/cleanup.sh" ]]; then
+      "${ROOT_DIR}"/app-android/sh/keys/cleanup.sh; # FAIL OK
     fi
 
     "${ROOT_DIR}"/play/publish_to_current_users.sh;

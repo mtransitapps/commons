@@ -97,7 +97,7 @@ fi
 
 if [[ ${IS_CI} = false ]]; then
 
-	./keys_setup.sh;
+	./sh/keys/setup.sh;
 	checkResult $?;
 
 	echo ">> Running bundle release AAB...";
@@ -126,7 +126,7 @@ if [[ ${IS_CI} = false ]]; then
 		echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'... DONE";
 	fi
 
-	./keys_cleanup.sh;
+	./sh/keys/cleanup.sh;
 	checkResult $?;
 
 fi

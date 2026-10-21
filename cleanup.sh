@@ -1,17 +1,13 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-source $SCRIPT_DIR/commons.sh;
+ROOT_DIR="${SCRIPT_DIR}/..";
+source $ROOT_DIR/commons/commons.sh;
 
 echo "================================================================================";
 echo "> CLEANUP SHARED...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
-
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
-
-echo "Current directory: $CURRENT_DIRECTORY";
 
 setGradleArgs;
 
@@ -29,21 +25,21 @@ function echoFile() {
 	fi
 }
 
-if [[ -f "./gradlew" ]]; then
-	./gradlew clean ${GRADLE_ARGS};
+if [[ -f "$ROOT_DIR/gradlew" ]]; then
+	$ROOT_DIR/gradlew clean ${GRADLE_ARGS};
 	checkResult $?;
-	rm gradlew; # only once
+	rm $ROOT_DIR/gradlew; # only once
 	checkResult $?;
 fi
 
-if [[ -d "app-android" ]]; then
-	cd app-android || exit; # >>
+if [[ -d "$ROOT_DIR/app-android" ]]; then
+	cd $ROOT_DIR/app-android || exit; # >>
 
-	if [[ -f "keys_cleanup.sh" ]]; then
-		./keys_cleanup.sh; # FAIL OK
+	if [[ -f "sh/keys/cleanup.sh" ]]; then
+		./sh/keys/cleanup.sh; # FAIL OK
 	fi
 
-	cd ../; # <<
+	cd $ROOT_DIR; # <<
 fi
 
 function cleanupFile() {
