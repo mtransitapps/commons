@@ -1,14 +1,17 @@
 #!/bin/bash
-source commons/commons.sh;
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR="${SCRIPT_DIR}";
+
+source ${ROOT_DIR}/commons/sh/commons.sh;
+
 echo "================================================================================";
 echo "> PUSH COMMITS...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
-AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
+ROOT_DIR_NAME=$(basename ${ROOT_DIR});
+AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
 
 setIsCI;
 
@@ -27,9 +30,10 @@ if [[ ${MT_SKIP_PUSH_COMMIT} == true ]]; then
   exit 0 # success
 fi
 
-cd app-android || exit;
+CURRENT_DIR=$(pwd);
+cd ${ROOT_DIR}/app-android || exit;
 ./sh/keys/cleanup.sh; # FAIL OK
-cd ..;
+cd $CURRENT_DIR || exit;
 
 setGitUser;
 

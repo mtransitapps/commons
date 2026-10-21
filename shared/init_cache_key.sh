@@ -1,7 +1,10 @@
 #!/bin/bash
-source commons/commons.sh;
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR="${SCRIPT_DIR}";
 
-RESULT_FILE="gradle_cache_key_checksum.txt";
+source ${ROOT_DIR}/commons/sh/commons.sh;
+
+RESULT_FILE="${ROOT_DIR}/gradle_cache_key_checksum.txt";
 
 if [[ -f ${RESULT_FILE} ]]; then
   rm ${RESULT_FILE};
@@ -13,17 +16,17 @@ checksum_file() {
 }
 
 echo "gradle-cache-" >> ${RESULT_FILE}
-checksum_file build.gradle >> ${RESULT_FILE}
-checksum_file commons/gradle/libs.versions.toml >> ${RESULT_FILE}
-checksum_file commons-java/build.gradle >> ${RESULT_FILE}
-checksum_file commons-android/build.gradle >> ${RESULT_FILE}
-checksum_file app-android/build.gradle >> ${RESULT_FILE}
+checksum_file ${ROOT_DIR}/build.gradle >> ${RESULT_FILE}
+checksum_file ${ROOT_DIR}/commons/gradle/libs.versions.toml >> ${RESULT_FILE}
+checksum_file ${ROOT_DIR}/commons-java/build.gradle >> ${RESULT_FILE}
+checksum_file ${ROOT_DIR}/commons-android/build.gradle >> ${RESULT_FILE}
+checksum_file ${ROOT_DIR}/app-android/build.gradle >> ${RESULT_FILE}
 
-if [[ -d "parser" ]]; then
-    checksum_file parser/build.gradle >> ${RESULT_FILE}
+if [[ -d "${ROOT_DIR}/parser" ]]; then
+    checksum_file ${ROOT_DIR}/parser/build.gradle >> ${RESULT_FILE}
 fi
-if [[ -d "agency-parser" ]]; then
-    checksum_file agency-parser/build.gradle >> ${RESULT_FILE}
+if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
+    checksum_file ${ROOT_DIR}/agency-parser/build.gradle >> ${RESULT_FILE}
 fi
 
 echo "${RESULT_FILE}:";

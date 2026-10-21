@@ -1,15 +1,12 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../..";
-source "${ROOT_DIR}"/commons/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 echo "================================================================================";
 echo "> PUBLISH APP RELEASE (?)...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
-
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
 
 setIsCI;
 

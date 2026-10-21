@@ -1,5 +1,9 @@
 #!/bin/bash
-source commons/commons.sh;
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR="${SCRIPT_DIR}";
+
+source ${ROOT_DIR}/commons/sh/commons.sh
+
 echo "================================================================================";
 echo "> ASSEMBLE RELEASE..";
 echo "--------------------------------------------------------------------------------";
@@ -14,7 +18,7 @@ setPushToStoreEnabled;
 
 setGradleArgs;
 
-MT_TEMP_DIR=".mt";
+MT_TEMP_DIR="$ROOT_DIR/.mt";
 mkdir -p $MT_TEMP_DIR;
 checkResult $?;
 MT_APP_RELEASE_REQUIRED_FILE="$MT_TEMP_DIR/mt_app_release_required";
@@ -41,7 +45,10 @@ else
 	echo "> Not a shallow GIT repo.";
 fi
 
-cd app-android || exit;
+APP_ANDROID_DIR="$ROOT_DIR/app-android";
+
+CURRENT_DIR=$(pwd);
+cd $APP_ANDROID_DIR || exit;
 
 # ----------------------------------------
 
@@ -51,7 +58,7 @@ if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 	checkResult $?;
 
 	echo ">> Running assemble release APK..."; # for GH release
-	../gradlew :app-android:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
+	$ROOT_DIR/gradlew :app-android:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	echo ">> Running assemble release APK... DONE";
 
@@ -69,7 +76,7 @@ fi
 checkResult $?;
 
 echo ">> Running bundle release AAB...";
-../gradlew :app-android:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
+$ROOT_DIR/gradlew :app-android:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 
@@ -80,7 +87,7 @@ checkResult $RESULT;
 
 # ----------------------------------------
 
-cd ..;
+cd $CURRENT_DIR;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);

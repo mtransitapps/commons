@@ -1,7 +1,9 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")"
 ROOT_DIR="${SCRIPT_DIR}/../../..";
-source "${ROOT_DIR}"/commons/commons.sh;
+
+source "${ROOT_DIR}/commons/sh/commons.sh";
+
 source "${SCRIPT_DIR}"/adb_setup.sh;
 checkResult $?;
 

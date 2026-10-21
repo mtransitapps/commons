@@ -1,6 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-source ${SCRIPT_DIR}/../commons/commons.sh
+ROOT_DIR="${SCRIPT_DIR}/..";
+
+source ${ROOT_DIR}/commons/sh/commons.sh
 
 echo ">> Checking if data is outdated..."
 

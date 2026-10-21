@@ -1,5 +1,9 @@
 #!/bin/bash
-source commons/commons.sh;
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR="${SCRIPT_DIR}";
+
+source ${ROOT_DIR}/commons/sh/commons.sh;
+
 echo "================================================================================";
 echo "> SET APP RELEASE REQUIRED (OR NOT)...";
 echo "--------------------------------------------------------------------------------";
@@ -14,7 +18,7 @@ setGitCommitEnabled;
 
 MT_APP_RELEASE_REQUIRED=false;
 
-MT_TEMP_DIR=".mt";
+MT_TEMP_DIR="${ROOT_DIR}/.mt";
 mkdir -p $MT_TEMP_DIR;
 checkResult $?;
 MT_DATA_CHANGED_FILE="$MT_TEMP_DIR/mt_data_changed";

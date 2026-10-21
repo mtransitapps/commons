@@ -1,6 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-source ${SCRIPT_DIR}/../commons/commons.sh
+ROOT_DIR="${SCRIPT_DIR}/..";
+
+source ${ROOT_DIR}/commons/sh/commons.sh
 
 function resetDirectory() {
   local DIR=$1;
@@ -20,7 +22,7 @@ function resetDirectory() {
 }
 
 echo "> Reset schedule changes...";
-TARGET="${SCRIPT_DIR}/../app-android/src/main";
+TARGET="${ROOT_DIR}/app-android/src/main";
 resetDirectory "$TARGET/res/";
 checkResult $?;
 resetDirectory "$TARGET/res-current/";

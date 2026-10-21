@@ -1,5 +1,7 @@
 #!/bin/bash
-source ../commons/commons.sh
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR="${SCRIPT_DIR}/../..";
+source ${ROOT_DIR}/commons/sh/commons.sh
 
 git add -v src/main/res-current/raw/current_gtfs_schedule_stop_*;
 

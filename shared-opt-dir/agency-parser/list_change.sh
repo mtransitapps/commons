@@ -1,14 +1,17 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-source ${SCRIPT_DIR}/../commons/commons.sh
+ROOT_DIR="${SCRIPT_DIR}/..";
+
+source ${ROOT_DIR}/commons/sh/commons.sh
+
 echo "> Listing change...";
 
-MT_TEMP_DIR="${SCRIPT_DIR}/../.mt";
+MT_TEMP_DIR="${ROOT_DIR}/.mt";
 mkdir -p $MT_TEMP_DIR;
 checkResult $?;
 MT_DATA_CHANGED_FILE="$MT_TEMP_DIR/mt_data_changed";
 
-TARGET="${SCRIPT_DIR}/../app-android/src/main/";
+TARGET="${ROOT_DIR}/app-android/src/main/";
 RESULT=$(git -C ${TARGET} status);
 checkResult $? false;
 RESULT=$(echo ${RESULT} | grep "/raw/" | wc -l);

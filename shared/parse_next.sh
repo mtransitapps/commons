@@ -1,15 +1,17 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-source ${SCRIPT_DIR}/commons/commons.sh
+ROOT_DIR="${SCRIPT_DIR}";
+
+source ${ROOT_DIR}/commons/sh/commons.sh
+
 echo "================================================================================";
 echo "> PARSE NEXT...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
-AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
+ROOT_DIR_NAME=$(basename ${ROOT_DIR});
+AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
 
 setIsCI;
 
@@ -26,7 +28,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 	echo "> VALIDATING DATA FOR '$AGENCY_ID'...";
 
 	if [[ -e "$INPUT_DIR/gtfs_next.zip" ]]; then
-		$AGENCY_PARSER_DIR/../commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs_next.zip" "output/next";
+		$ROOT_DIR/commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs_next.zip" "output/next";
 		# checkResult $?; # too many errors for now
 	fi
 

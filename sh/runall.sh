@@ -1,14 +1,16 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-source ${SCRIPT_DIR}/commons.sh;
+ROOT_DIR="${SCRIPT_DIR}/../..";
+
+source ${ROOT_DIR}/commons/sh/commons.sh;
 
 # RECIPES:
 # - ./mtransit-for-android/commons/runall.sh "[ -d parser ] && git add parser || echo \"> SKIP\"; ";
 # - ./mtransit-for-android/commons/runall.sh "[ -d agency-parser ] && git add agency-parser || echo \"> SKIP\"; ";
 # - ./mtransit-for-android/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"> SKIP\"; "
 # - ./mtransit-for-android/commons/runall.sh "[ -f gradlew ] && rm gradlew || echo \"> SKIP\"; ";
-# - ./mtransit-for-android/commons/runall.sh "./commons/cleanup.sh; ";
-# - ./mtransit-for-android/commons/runall.sh "./commons/code_sync.sh; ";
+# - ./mtransit-for-android/commons/runall.sh "./commons/sh/shared_cleanup.sh; ";
+# - ./mtransit-for-android/commons/runall.sh "./commons/sh/git_sync.sh; ";
 # - ./mtransit-for-android/commons/runall.sh "git status -sb; ";
 # - ./mtransit-for-android/commons/runall.sh "git commit -m \"Update git submodules\" || echo \"> SKIP\"; ";
 # - ./mtransit-for-android/commons/runall.sh "git commit --allow-empty -m \"Update git submodules\"; ";

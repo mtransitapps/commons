@@ -1,10 +1,12 @@
 #!/bin/bash
-source ../commons/commons.sh
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR="${SCRIPT_DIR}/../../..";
+source ${ROOT_DIR}/commons/sh/commons.sh
 echo ">> Building...";
-# TODO REMOVE (DEPRECATED, USE other scripts)
+# TODO REMOVE (DEPRECATED, USE other scripts) (used by CircleCI & GitLab CI)
 
-DIRECTORY=$(basename ${PWD});
-CUSTOM_SETTINGS_GRADLE_FILE="../settings.gradle.all";
+DIRECTORY=$(basename ${ROOT_DIR});
+CUSTOM_SETTINGS_GRADLE_FILE="$ROOT_DIR/../settings.gradle.all";
 
 setGitProjectName;
 
@@ -18,20 +20,20 @@ if [[ -f ${CUSTOM_SETTINGS_GRADLE_FILE} ]]; then
 fi
 
 echo ">> Gradle cleaning...";
-../gradlew ${SETTINGS_FILE_ARGS} clean ${GRADLE_ARGS};
+${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} clean ${GRADLE_ARGS};
 RESULT=$?;
 checkResult ${RESULT};
 echo ">> Gradle cleaning... DONE";
 
 if [[ ${IS_CI} = true ]]; then
     echo ">> Running test...";
-	../gradlew ${SETTINGS_FILE_ARGS} :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
+	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
     echo ">> Running test... DONE";
 
     echo ">> Running lint...";
-	../gradlew ${SETTINGS_FILE_ARGS} :app-android:lintDebug ${GRADLE_ARGS};
+	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} :app-android:lintDebug ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
     echo ">> Running lint... DONE";
@@ -89,26 +91,28 @@ if [[ ${IS_CI} = true ]]; then
 # fi
 
     echo ">> Running assemble & bundle...";
-	../gradlew ${SETTINGS_FILE_ARGS} assembleDebug bundleDebug ${GRADLE_ARGS};
+	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} assembleDebug bundleDebug ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running assemble & bundle... DONE";
 fi
 
+APP_ANDROID_DIR="${ROOT_DIR}/app-android";
+
 if [[ ${IS_CI} = false ]]; then
 
-	./sh/keys/setup.sh;
+	$APP_ANDROID_DIR/sh/keys/setup.sh;
 	checkResult $?;
 
 	echo ">> Running bundle release AAB...";
-	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
+	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running bundle release AAB... DONE";
 
 
 	echo ">> Running assemble release APK...";
-	../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
+	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running assemble release APK... DONE";
@@ -119,14 +123,14 @@ if [[ ${IS_CI} = false ]]; then
 			echo ">> Output release '${MT_OUTPUT_DIR}' not found!";
 			exit 1;
 		fi
-		cp build/outputs/bundle/release/*.aab ${MT_OUTPUT_DIR};
+		cp ${ROOT_DIR}/build/outputs/bundle/release/*.aab ${MT_OUTPUT_DIR};
 		checkResult $?;
-		cp build/outputs/apk/release/*.apk ${MT_OUTPUT_DIR};
+		cp ${ROOT_DIR}/build/outputs/apk/release/*.apk ${MT_OUTPUT_DIR};
 		checkResult $?;
 		echo ">> Copying release artifacts to output dir '${MT_OUTPUT_DIR}'... DONE";
 	fi
 
-	./sh/keys/cleanup.sh;
+	$APP_ANDROID_DIR/sh/keys/cleanup.sh;
 	checkResult $?;
 
 fi

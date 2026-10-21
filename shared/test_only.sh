@@ -1,14 +1,17 @@
 #!/bin/bash
-source commons/commons.sh;
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR="${SCRIPT_DIR}";
+
+source ${ROOT_DIR}/commons/sh/commons.sh;
+
 echo "================================================================================";
 echo "> TEST...";
 echo "--------------------------------------------------------------------------------";
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
-AGENCY_ID=$(basename -s -gradle ${CURRENT_DIRECTORY});
+ROOT_DIR_NAME=$(basename ${ROOT_DIR});
+AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
 
 setIsCI;
 
@@ -33,7 +36,8 @@ fi
 echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 
 echo "> TESTS ANDROID APP FOR '$AGENCY_ID'...";
-cd app-android || exit;
+CURRENT_DIR=$(pwd);
+cd ${ROOT_DIR}/app-android || exit;
 
 echo ">> Running test...";
 ../gradlew :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
@@ -47,7 +51,7 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo ">> Running dependency guard... DONE";
 fi
 
-cd ..;
+cd $CURRENT_DIR || exit;
 echo "> TESTS ANDROID APP FOR '$AGENCY_ID'... DONE";
 echo "--------------------------------------------------------------------------------";
 

@@ -180,15 +180,15 @@ dev.properties
 /commit_data_change.sh
 /sh/git/commit_data_change.sh
 /build.gradle
+# DEPRECATED: remove after CircleCI & GitLab CI config updated
 /build.sh
+/sh/ci/build.sh
 /dependencies_baseline_update.sh
-/download_and_parse.sh
 /download_and_prepare.sh
 /download_latest_apk.sh
 /download_latest_apk_main.sh
 /download_latest_apk_repo.sh
 /download_only.sh
-/download_dependencies.sh
 # DEPRECATED: remove after /.github/workflows/mt-*.yml updated
 /gh_repo_update_details.sh
 /sh/gh_repo_update_details.sh
@@ -222,10 +222,10 @@ dev.properties
 
 
 # Merged from shared/app-android/MT.gitignore
-/app-android/app-signing-debug-keys.properties
-/app-android/app-signing-debug-keystore.keystore
+/app-android/signing/debug/keys.properties
+/app-android/signing/debug/keystore.keystore
 /app-android/build.gradle
-/app-android/build.sh
+/app-android/sh/ci/build.sh
 /app-android/dependencies/*
 /app-android/sh/keys/decrypt_file.sh
 /app-android/sh/keys/encrypt_file.sh

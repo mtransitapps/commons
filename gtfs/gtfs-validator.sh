@@ -1,9 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-CURRENT_PATH=$(pwd);
-CURRENT_DIRECTORY=$(basename ${CURRENT_PATH});
+ROOT_DIR="${SCRIPT_DIR}/../..";
 
-echo "> Current directory: '$CURRENT_DIRECTORY'";
+CURRENT_PATH=$(pwd);
 
 echo "> Args: '$@'.";
 
