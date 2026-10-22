@@ -339,6 +339,23 @@ for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
 		exit 1;
 	fi
 done
+
+# SHARED SUBMODULES
+declare -a SUBMODULES=(
+	"commons"
+	"commons-java"
+	"commons-android"
+);
+if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
+	echo "> Main android app: '$PROJECT_NAME' > parser required ✓";
+	SUBMODULES+=('parser');
+elif [[ $PROJECT_NAME == *"-bike"* ]]; then
+	echo "> Bike android app: '$PROJECT_NAME' > parser NOT required ✓";
+else
+	echo "> Bus/Train/... android app: '$PROJECT_NAME' > parser required ✓";
+	SUBMODULES+=('parser');
+fi
+
 for SUBMODULE in "${SUBMODULES[@]}"; do
   echo "> Deploying overwritten all repositories shared files to '$SUBMODULE'...";
   for FILENAME in $(ls -a $SRC_DIR_PATH/) ; do
