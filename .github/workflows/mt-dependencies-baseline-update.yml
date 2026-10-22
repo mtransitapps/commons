@@ -1,4 +1,4 @@
-name: MT Dependency update baseline
+name: MT Dependencies baseline update
 on:
   workflow_dispatch: # manual
   pull_request:
@@ -19,8 +19,8 @@ env:
   MT_TARGET_BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
   MT_DEFAULT_BRANCH_NAME: ${{ github.event.repository.default_branch }}
 jobs:
-  MT-DEPENDENCY-UPDATE-BASELINE-JOB:
-    name: "MT Dependency update baseline"
+  MT-DEPENDENCIES-BASELINE-UPDATE-JOB:
+    name: "MT Dependencies baseline update"
     runs-on: ubuntu-latest
     steps:
       - name: MT select main repo checkout branch
@@ -45,6 +45,7 @@ jobs:
           fi
           echo "Checkout branch: '$CHECKOUT_BRANCH'."
           echo "mt_checkout_branch=$CHECKOUT_BRANCH" >> "$GITHUB_OUTPUT"
+
       - name: MT check out main repo
         uses: actions/checkout@v7
         with:
@@ -88,8 +89,10 @@ jobs:
           java-version: '21'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
-      - name: MT dependency update baseline
-        run: ./dependencies_baseline_update.sh
+
+      - name: MT dependencies baseline update
+        run: ./sh/dependencies_baseline_update.sh
+
       - name: MT commit new baseline
         run: |
           cd commons || exit;
