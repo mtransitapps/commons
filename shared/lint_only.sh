@@ -22,7 +22,7 @@ cd ${ROOT_DIR}/app-android || exit;
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 
 	echo ">> Running lint...";
-	../gradlew :app-android:lintDebug ${GRADLE_ARGS};
+	${ROOT_DIR}/gradlew :app-android:lintDebug ${GRADLE_ARGS};
 	checkResult $?;
 	echo ">> Running lint... DONE";
 fi

@@ -19,16 +19,16 @@ setGradleArgs;
 setGitProjectName;
 
 echo "> TESTS FOR '$PROJECT_NAME' (GRADLE BUILD)... ";
-./gradlew :commons-java:test ${GRADLE_ARGS}; # build includes test
+${ROOT_DIR}/gradlew :commons-java:test ${GRADLE_ARGS}; # build includes test
 checkResult $?;
 
 if [[ -d "parser" ]]; then
-	./gradlew :parser:test ${GRADLE_ARGS}; # build includes test
+	${ROOT_DIR}/gradlew :parser:test ${GRADLE_ARGS}; # build includes test
 	checkResult $?;
 fi
 
 if [[ -d "agency-parser" ]]; then
-	./gradlew :agency-parser:test ${GRADLE_ARGS}; # build includes test
+	${ROOT_DIR}/gradlew :agency-parser:test ${GRADLE_ARGS}; # build includes test
 	checkResult $?;
 fi
 
@@ -39,13 +39,13 @@ CURRENT_DIR=$(pwd);
 cd ${ROOT_DIR}/app-android || exit;
 
 echo ">> Running test...";
-../gradlew :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
+${ROOT_DIR}/gradlew :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
 checkResult $?;
 echo ">> Running test... DONE";
 
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo ">> Running dependency guard...";
-	../gradlew :app-android:dependencyGuard :parser:dependencyGuard ${GRADLE_ARGS};
+	${ROOT_DIR}/gradlew :app-android:dependencyGuard :parser:dependencyGuard ${GRADLE_ARGS};
 	checkResult $?;
 	echo ">> Running dependency guard... DONE";
 fi

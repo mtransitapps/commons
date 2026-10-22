@@ -6,7 +6,6 @@ echo ">> Building...";
 # TODO REMOVE (DEPRECATED, USE other scripts) (used by CircleCI & GitLab CI)
 
 DIRECTORY=$(basename ${ROOT_DIR});
-CUSTOM_SETTINGS_GRADLE_FILE="$ROOT_DIR/../settings.gradle.all";
 
 setGitProjectName;
 
@@ -14,26 +13,21 @@ setIsCI;
 
 setGradleArgs;
 
-SETTINGS_FILE_ARGS="";
-if [[ -f ${CUSTOM_SETTINGS_GRADLE_FILE} ]]; then
-	SETTINGS_FILE_ARGS=" -c $CUSTOM_SETTINGS_GRADLE_FILE"; #--settings-file
-fi
-
 echo ">> Gradle cleaning...";
-${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} clean ${GRADLE_ARGS};
+${ROOT_DIR}/gradlew clean ${GRADLE_ARGS};
 RESULT=$?;
 checkResult ${RESULT};
 echo ">> Gradle cleaning... DONE";
 
 if [[ ${IS_CI} = true ]]; then
     echo ">> Running test...";
-	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
+	${ROOT_DIR}/gradlew :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
     echo ">> Running test... DONE";
 
     echo ">> Running lint...";
-	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} :app-android:lintDebug ${GRADLE_ARGS};
+	${ROOT_DIR}/gradlew :app-android:lintDebug ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
     echo ">> Running lint... DONE";
@@ -77,7 +71,7 @@ if [[ ${IS_CI} = true ]]; then
 # fi
 # echo ">> Sonar PR args: '$SONAR_PR_ARGS'.";
 # echo ">> Running sonar...";
-# ../gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:sonarqube \
+# ${ROOT_DIR}/gradlew :${DIRECTORY}:sonarqube \
 # $SONAR_ARGS \
 # -Dsonar.login=${MT_SONAR_LOGIN} \
 # $SONAR_PR_ARGS \
@@ -91,7 +85,7 @@ if [[ ${IS_CI} = true ]]; then
 # fi
 
     echo ">> Running assemble & bundle...";
-	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} assembleDebug bundleDebug ${GRADLE_ARGS};
+	${ROOT_DIR}/gradlew assembleDebug bundleDebug ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running assemble & bundle... DONE";
@@ -105,14 +99,14 @@ if [[ ${IS_CI} = false ]]; then
 	checkResult $?;
 
 	echo ">> Running bundle release AAB...";
-	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
+	${ROOT_DIR}/gradlew :${DIRECTORY}:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running bundle release AAB... DONE";
 
 
 	echo ">> Running assemble release APK...";
-	${ROOT_DIR}/gradlew ${SETTINGS_FILE_ARGS} :${DIRECTORY}:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
+	${ROOT_DIR}/gradlew :${DIRECTORY}:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running assemble release APK... DONE";
