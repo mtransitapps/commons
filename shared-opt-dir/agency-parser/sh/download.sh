@@ -14,7 +14,9 @@ setGitUser;
 
 CONFIG_DIR="${ROOT_DIR}/config";
 
-ARCHIVE_DIR="${SCRIPT_DIR}/archive";
+AGENCY_PARSER_DIR="${SCRIPT_DIR}/..";
+
+ARCHIVE_DIR="${AGENCY_PARSER_DIR}/archive";
 
 if [[ ! -f "$CONFIG_DIR/input_url" ]]; then
 	echo ">> No input_url file found. Exiting early.";
@@ -30,18 +32,18 @@ if [[ -s "$CONFIG_DIR/input_url_user_agent" ]]; then
 fi
 
 URL=`cat $CONFIG_DIR/input_url`;
-INPUT_DIR="${SCRIPT_DIR}/input";
+INPUT_DIR="${AGENCY_PARSER_DIR}/input";
 mkdir -p "${INPUT_DIR}";
 download "${URL}" "${INPUT_DIR}/gtfs.zip";
 checkResult $?;
-${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs.zip" "${INPUT_DIR}/gtfs";
+${AGENCY_PARSER_DIR}/archive.sh "${INPUT_DIR}/gtfs.zip" "${INPUT_DIR}/gtfs";
 checkResult $?;
 
 if [[ -e "$CONFIG_DIR/input_url_next" ]]; then
 	URL=`cat $CONFIG_DIR/input_url_next`;
 	download "${URL}" "${INPUT_DIR}/gtfs_next.zip";
 	checkResult $?;
-	${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs_next.zip" "${INPUT_DIR}/gtfs_next";
+	${AGENCY_PARSER_DIR}/archive.sh "${INPUT_DIR}/gtfs_next.zip" "${INPUT_DIR}/gtfs_next";
 	checkResult $?;
 fi
 
