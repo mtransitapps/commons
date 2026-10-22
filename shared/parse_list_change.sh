@@ -18,12 +18,12 @@ setGradleArgs;
 
 setGitCommitEnabled;
 
-if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
-  cd ${SCRIPT_DIR}/agency-parser || exit; # >>
-  AGENCY_PARSER_DIR=".";
-  echo "> AGENCY_PARSER_DIR: $AGENCY_PARSER_DIR";
+if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
 
-	$AGENCY_PARSER_DIR/list_change.sh;
+    CURRENT_PATH=$(pwd);
+	cd ${ROOT_DIR}/agency-parser || exit; # >>
+
+	./list_change.sh;
 	RESULT=$?;
 	if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
 		echo "RESULT: $RESULT (fail ok/expected)"; # will auto commit
@@ -32,7 +32,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 		checkResult $RESULT; # break build, need to manually commit
 	fi
 
-	cd ..; # <<
+	cd ${CURRENT_PATH} || exit; # <<
 else
 	echo "> SKIP PARSING FOR '$PROJECT_NAME'.";
 fi
@@ -40,6 +40,7 @@ fi
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
+echo "--------------------------------------------------------------------------------";
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
 echo "> LIST CHANGE... DONE";
 echo "================================================================================";

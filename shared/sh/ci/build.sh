@@ -100,43 +100,43 @@ split --version;
 echo "--------------------------------------------------------------------------------";
 
 if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
-	echo "> CLEANING FOR '$PROJECT_NAME' (GRADLE BUILD)...";
 
+	echo "> CLEANING FOR '$PROJECT_NAME' (GRADLE BUILD)...";
 	$ROOT_DIR/gradlew :commons-java:clean ${GRADLE_ARGS};
 	checkResult $?;
-
 	$ROOT_DIR/gradlew :parser:clean ${GRADLE_ARGS};
 	checkResult $?;
-
 	$ROOT_DIR/gradlew :agency-parser:clean ${GRADLE_ARGS};
 	checkResult $?;
 	echo "> CLEANING FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
 
 	echo "> DOWNLOADING DATA FOR '$PROJECT_NAME'...";
+
 	CURRENT_PATH=$(pwd);
 	cd "${ROOT_DIR}/agency-parser" || exit; # >>
+	ROOT_FROM_CURRENT_DIR="./..";
 
 	./download.sh;
 	checkResult $?;
 
-	$ROOT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
+	$ROOT_FROM_CURRENT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
   	# checkResult $?; # too many errors for now
 
 	if [[ -e "input/gtfs_next.zip" ]]; then
-		$ROOT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs_next.zip" "output/next";
+		$ROOT_FROM_CURRENT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs_next.zip" "output/next";
 		# checkResult $?; # too many errors for now
 	fi
 
-	$ROOT_DIR/unzip_gtfs.sh;
+	./unzip_gtfs.sh;
 	checkResult $?;
 
 	echo "> DOWNLOADING DATA FOR '$PROJECT_NAME'... DONE";
 
 	echo "> BUILDING FOR '$PROJECT_NAME' (GRADLE BUILD)... ";
-	$ROOT_DIR/gradlew :commons-java:build ${GRADLE_ARGS}; #includes test
+	$ROOT_FROM_CURRENT_DIR/gradlew :commons-java:build ${GRADLE_ARGS}; #includes test
 	checkResult $?;
 
-	$ROOT_DIR/gradlew :parser:build ${GRADLE_ARGS}; #includes test
+	$ROOT_FROM_CURRENT_DIR/gradlew :parser:build ${GRADLE_ARGS}; #includes test
 	checkResult $?;
 
 	echo "> BUILDING FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
@@ -144,25 +144,25 @@ if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	echo "> PARSING DATA FOR '$PROJECT_NAME'...";
 
     # CURRENT...
-	$ROOT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS};
+	$ROOT_FROM_CURRENT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS};
 	checkResult $?;
 
-	$ROOT_DIR/parse_current.sh;
+	./parse_current.sh;
 	checkResult $?;
 	# CURRENT... DONE
 
 	# NEXT...
-	$ROOT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS};
+	$ROOT_FROM_CURRENT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS};
 	checkResult $?;
 
-	$ROOT_DIR/parse_next.sh;
+	./parse_next.sh;
 	checkResult $?;
 	# NEXT... DONE
 
-	$ROOT_DIR/list_change.sh;
+	./list_change.sh;
 	checkResult $?;
 
-	cd "$CURRENT_PATH"; # <<
+	cd "$CURRENT_PATH" || exit; # <<
 	echo "> PARSING DATA FOR '$PROJECT_NAME'... DONE";
 else
 	echo "> SKIP PARSING FOR '$PROJECT_NAME' (branch:$GIT_BRANCH).";

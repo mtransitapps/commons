@@ -45,16 +45,9 @@ else
 	echo "> Not a shallow GIT repo.";
 fi
 
-APP_ANDROID_DIR="$ROOT_DIR/app-android";
-
-CURRENT_DIR=$(pwd);
-cd $APP_ANDROID_DIR || exit;
-
-# ----------------------------------------
-
 if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 
-	./sh/keys/setup.sh;
+	$ROOT_DIR/sh/keys/setup.sh;
 	checkResult $?;
 
 	echo ">> Running assemble release APK..."; # for GH release
@@ -62,7 +55,7 @@ if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 	RESULT=$?;
 	echo ">> Running assemble release APK... DONE";
 
-	./sh/keys/cleanup.sh;
+	$ROOT_DIR/sh/keys/cleanup.sh;
 	checkResult $?;
 
 	checkResult $RESULT;
@@ -70,9 +63,7 @@ else
   echo ">> Running assemble release APK... SKIP (GH:$IS_GH_ENABLED|PushToStore:$MT_PUSH_STORE_ENABLED)";
 fi
 
-# ----------------------------------------
-
-./sh/keys/setup.sh;
+$ROOT_DIR/sh/keys/setup.sh;
 checkResult $?;
 
 echo ">> Running bundle release AAB...";
@@ -80,14 +71,10 @@ $ROOT_DIR/gradlew :app-android:bundleRelease --no-scan; # no ${GRADLE_ARGS} for 
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 
-./sh/keys/cleanup.sh;
+$ROOT_DIR/sh/keys/cleanup.sh;
 checkResult $?;
 
 checkResult $RESULT;
-
-# ----------------------------------------
-
-cd $CURRENT_DIR;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);

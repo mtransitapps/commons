@@ -20,22 +20,21 @@ setGitCommitEnabled;
 
 if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 
-  cd ${SCRIPT_DIR}/agency-parser || exit; # >>
+    CURRENT_PATH=$(pwd);
+    cd ${SCRIPT_DIR}/agency-parser || exit; # >>
 
     echo "> DOWNLOADING DATA FOR '$PROJECT_NAME'...";
 
-    AGENCY_PARSER_DIR=".";
-
     # DOWNLOAD ALL AVAILABLE FEEDS URLS & ARCHIVE ZIP FILES
-    $AGENCY_PARSER_DIR/download.sh; # and archive
+    ./download.sh; # and archive
     RESULT=$?; # failure is fine: will use last successful archive(s)
     echo "> Download result: $RESULT";
 
     echo "> DOWNLOADING DATA FOR '$PROJECT_NAME'... DONE";
 
-  cd ../; # <<
+    cd ${CURRENT_PATH} || exit; # <<
 else
-  echo "> SKIP DOWNLOADING FOR '$PROJECT_NAME'.";
+    echo "> SKIP DOWNLOADING FOR '$PROJECT_NAME'.";
 fi
 
 AFTER_DATE=$(date +%D-%X);

@@ -18,32 +18,32 @@ setGradleArgs;
 
 setGitCommitEnabled;
 
-if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
+if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
 
-  cd ${SCRIPT_DIR}/agency-parser || exit; # >>
+    CURRENT_PATH=$(pwd);
+    cd ${ROOT_DIR}/agency-parser || exit; # >>
+    ROOT_FROM_CURRENT_DIR="./..";
 
     echo "> PREPARING DATA FOR '$PROJECT_NAME'...";
 
     AGENCY_PARSER_DIR=".";
 
     # PICK ZIP FILES FROM ARCHIVE
-    $AGENCY_PARSER_DIR/archive_selection.sh;
+    $ROOT_FROM_CURRENT_DIR/commons/gtfs/archive_selection.sh;
     RESULT=$?;
     checkResult $RESULT;
     echo "> Select archive result: $RESULT";
 
-    $AGENCY_PARSER_DIR/unzip_gtfs.sh;
+    $ROOT_FROM_CURRENT_DIR/commons/gtfs/unzip_gtfs.sh;
     RESULT=$?;
     checkResult $RESULT;
     echo " > Unzip result: $RESULT";
 
-    INPUT_DIR="$AGENCY_PARSER_DIR/input";
-
     echo "> PREPARING DATA FOR '$PROJECT_NAME'... DONE";
 
-  cd ../; # <<
+    cd ${CURRENT_PATH} || exit; # <<
 else
-  echo "> SKIP PREPARING FOR '$PROJECT_NAME'.";
+    echo "> SKIP PREPARING FOR '$PROJECT_NAME'.";
 fi
 
 AFTER_DATE=$(date +%D-%X);

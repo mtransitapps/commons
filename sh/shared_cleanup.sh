@@ -41,7 +41,7 @@ if [[ -d "$ROOT_DIR/app-android" ]]; then
 		./sh/keys/cleanup.sh; # FAIL OK
 	fi
 
-	cd $PREVIOUS_DIR; # <<
+	cd $PREVIOUS_DIR || exit; # <<
 fi
 
 function cleanupFile() {

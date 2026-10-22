@@ -119,6 +119,7 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
 
   # PUSH TO PLAY STORE
   if [[ -d "app-android" ]]; then
+    CURRENT_PATH=$(pwd);
     cd app-android || exit 1; # >>
 
     if [[ -f "${ROOT_DIR}/app-android/sh/keys/cleanup.sh" ]]; then
@@ -128,7 +129,7 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
     "${ROOT_DIR}"/play/publish_to_current_users.sh;
     checkResult $?;
 
-    cd ../; # <<
+    cd ${CURRENT_PATH} || exit; # <<
   fi
 else
   echo "> Use case not supported yet!"; #TODO GH release?

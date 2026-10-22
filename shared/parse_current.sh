@@ -18,29 +18,31 @@ setGradleArgs;
 
 setGitCommitEnabled;
 
-if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
-  cd ${SCRIPT_DIR}/agency-parser || exit; # >>
-  AGENCY_PARSER_DIR=".";
-  echo "> AGENCY_PARSER_DIR: $AGENCY_PARSER_DIR";
-  INPUT_DIR="$AGENCY_PARSER_DIR/input";
+if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
+
+    CURRENT_PATH=$(pwd);
+	cd ${ROOT_DIR}/agency-parser || exit; # >>
+	ROOT_FROM_CURRENT_DIR="./..";
 
 	echo "> VALIDATING DATA FOR '$PROJECT_NAME'...";
 
-	$ROOT_DIR/commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs.zip" "output/current";
-	# checkResult $?; # too many errors for now
+	if [[ -e "input/gtfs.zip" ]]; then
+		$ROOT_FROM_CURRENT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
+		# checkResult $?; # too many errors for now
+	fi
 
 	echo "> VALIDATING DATA FOR '$PROJECT_NAME'... DONE";
 
 	echo "> PARSING DATA FOR '$PROJECT_NAME'...";
 
 	# CURRENT...
-	$AGENCY_PARSER_DIR/parse_current.sh;
+	./parse_current.sh;
 	checkResult $?;
 	# CURRENT... DONE
 
 	echo "> PARSING DATA FOR '$PROJECT_NAME'... DONE";
 
-	cd ..; # <<
+	cd ${CURRENT_PATH} || exit; # <<
 else
 	echo "> SKIP PARSING FOR '$PROJECT_NAME'.";
 fi
@@ -48,6 +50,7 @@ fi
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
 DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
+echo "--------------------------------------------------------------------------------";
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
 echo "> PARSE CURRENT... DONE";
 echo "================================================================================";
