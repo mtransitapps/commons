@@ -16,9 +16,6 @@ setGradleArgs;
 
 setGitProjectName;
 
-CURRENT_DIR=$(pwd);
-cd ${ROOT_DIR}/app-android || exit;
-
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 
 	echo ">> Running lint...";
@@ -26,8 +23,6 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	checkResult $?;
 	echo ">> Running lint... DONE";
 fi
-
-cd $CURRENT_DIR || exit;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);
