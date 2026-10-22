@@ -22,19 +22,16 @@ if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
 
     CURRENT_PATH=$(pwd);
     cd ${ROOT_DIR}/agency-parser || exit; # >>
-    ROOT_FROM_CURRENT_DIR="./..";
 
     echo "> PREPARING DATA FOR '$PROJECT_NAME'...";
 
-    AGENCY_PARSER_DIR=".";
-
     # PICK ZIP FILES FROM ARCHIVE
-    $ROOT_FROM_CURRENT_DIR/commons/gtfs/archive_selection.sh;
+    ./sh/archive_selection.sh; # in agency-parser
     RESULT=$?;
     checkResult $RESULT;
     echo "> Select archive result: $RESULT";
 
-    $ROOT_FROM_CURRENT_DIR/commons/gtfs/unzip_gtfs.sh;
+    ./sh/unzip_gtfs.sh; # in agency-parser
     RESULT=$?;
     checkResult $RESULT;
     echo " > Unzip result: $RESULT";

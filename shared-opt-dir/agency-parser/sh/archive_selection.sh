@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/..";
+ROOT_DIR="${SCRIPT_DIR}/../..";
 
 source ${ROOT_DIR}/commons/sh/commons.sh
 
@@ -9,7 +9,9 @@ echo ">> Selecting archive GTFS..."
 YESTERDAY=$(date -d "yesterday" +%Y%m%d); # service can start yesterday and finish today
 echo "> Yesterday: '$YESTERDAY'";
 
-ARCHIVE_DIR="${SCRIPT_DIR}/archive";
+AGENCY_PARSER_DIR="${SCRIPT_DIR}";
+
+ARCHIVE_DIR="${AGENCY_PARSER_DIR}/archive";
 echo "- archive dir: '$ARCHIVE_DIR'";
 
 mkdir -p "$ARCHIVE_DIR";
@@ -74,11 +76,11 @@ if [[ "$ARCHIVES_COUNT" -gt 0 ]]; then
   done
 fi
 
-GTFS_FILE="${SCRIPT_DIR}/input/gtfs.zip";
-GTFS_NEXT_FILE="${SCRIPT_DIR}/input/gtfs_next.zip";
+GTFS_FILE="${AGENCY_PARSER_DIR}/input/gtfs.zip";
+GTFS_NEXT_FILE="${AGENCY_PARSER_DIR}/input/gtfs_next.zip";
 
-mkdir -p ${SCRIPT_DIR}/input;
-ls -l ${SCRIPT_DIR}/input/;
+mkdir -p ${AGENCY_PARSER_DIR}/input;
+ls -l ${AGENCY_PARSER_DIR}/input/;
 
 if [[ -n "$CURRENT_ARCHIVE" ]]; then
   echo ">> Using current archive...";
@@ -124,6 +126,6 @@ else
   echo ">> Removing next archive... DONE";
 fi
 
-ls -l ${SCRIPT_DIR}/input/;
+ls -l ${AGENCY_PARSER_DIR}/input/;
 
 echo ">> Selecting archive GTFS... DONE"

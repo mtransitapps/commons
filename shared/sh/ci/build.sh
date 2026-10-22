@@ -116,27 +116,27 @@ if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	cd "${ROOT_DIR}/agency-parser" || exit; # >>
 	ROOT_FROM_CURRENT_DIR="./..";
 
-	./download.sh;
+	./sh/download.sh; # in agency-parser
 	checkResult $?;
 
-	$ROOT_FROM_CURRENT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
+	$ROOT_FROM_CURRENT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current"; # in agency-parser
   	# checkResult $?; # too many errors for now
 
 	if [[ -e "input/gtfs_next.zip" ]]; then
-		$ROOT_FROM_CURRENT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs_next.zip" "output/next";
+		$ROOT_FROM_CURRENT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs_next.zip" "output/next"; # in agency-parser
 		# checkResult $?; # too many errors for now
 	fi
 
-	./unzip_gtfs.sh;
+	./sh/unzip_gtfs.sh; # in agency-parser
 	checkResult $?;
 
 	echo "> DOWNLOADING DATA FOR '$PROJECT_NAME'... DONE";
 
 	echo "> BUILDING FOR '$PROJECT_NAME' (GRADLE BUILD)... ";
-	$ROOT_FROM_CURRENT_DIR/gradlew :commons-java:build ${GRADLE_ARGS}; #includes test
+	$ROOT_FROM_CURRENT_DIR/gradlew :commons-java:build ${GRADLE_ARGS}; #includes test # in agency-parser
 	checkResult $?;
 
-	$ROOT_FROM_CURRENT_DIR/gradlew :parser:build ${GRADLE_ARGS}; #includes test
+	$ROOT_FROM_CURRENT_DIR/gradlew :parser:build ${GRADLE_ARGS}; #includes test # in agency-parser
 	checkResult $?;
 
 	echo "> BUILDING FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
@@ -144,22 +144,22 @@ if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	echo "> PARSING DATA FOR '$PROJECT_NAME'...";
 
     # CURRENT...
-	$ROOT_FROM_CURRENT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS};
+	$ROOT_FROM_CURRENT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS}; # in agency-parser
 	checkResult $?;
 
-	./parse_current.sh;
+	./sh/parse_current.sh; # in agency-parser
 	checkResult $?;
 	# CURRENT... DONE
 
 	# NEXT...
-	$ROOT_FROM_CURRENT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS};
+	$ROOT_FROM_CURRENT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS}; # in agency-parser
 	checkResult $?;
 
-	./parse_next.sh;
+	./sh/parse_next.sh; # in agency-parser
 	checkResult $?;
 	# NEXT... DONE
 
-	./list_change.sh;
+	./sh/list_change.sh; # in agency-parser
 	checkResult $?;
 
 	cd "$CURRENT_PATH" || exit; # <<

@@ -36,7 +36,7 @@ if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
 	echo "> PARSING DATA FOR '$PROJECT_NAME'...";
 
 	# NEXT...
-	./parse_next.sh;
+	./sh/parse_next.sh;
 	checkResult $?;
 	# NEXT... DONE
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/..";
+ROOT_DIR="${SCRIPT_DIR}/../..";
 
 source ${ROOT_DIR}/commons/sh/commons.sh
 
@@ -10,6 +10,8 @@ setGradleArgs;
 
 CONFIG_DIR="${ROOT_DIR}/config";
 
+AGENCY_PARSER_DIR="${ROOT_DIR}/agency-parser";
+
 URL="";
 if [[ -f "$CONFIG_DIR/input_url" ]]; then
 	URL=$(cat "$CONFIG_DIR/input_url");
@@ -18,8 +20,8 @@ elif [[ -f "$CONFIG_DIR/source_url" ]]; then
 fi
 
 GENERATE_STOP_TIMES_FROM_FREQUENCIES="false";
-if [[ -f "${SCRIPT_DIR}/generate_stop_times_from_frequencies" ]]; then
-	GENERATE_STOP_TIMES_FROM_FREQUENCIES=$(cat "${SCRIPT_DIR}/generate_stop_times_from_frequencies");
+if [[ -f "${AGENCY_PARSER_DIR}/generate_stop_times_from_frequencies" ]]; then
+	GENERATE_STOP_TIMES_FROM_FREQUENCIES=$(cat "${AGENCY_PARSER_DIR}/generate_stop_times_from_frequencies");
 fi
 
 GTFS_DIR="input/gtfs";

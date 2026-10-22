@@ -36,14 +36,14 @@ INPUT_DIR="${AGENCY_PARSER_DIR}/input";
 mkdir -p "${INPUT_DIR}";
 download "${URL}" "${INPUT_DIR}/gtfs.zip";
 checkResult $?;
-${AGENCY_PARSER_DIR}/archive.sh "${INPUT_DIR}/gtfs.zip" "${INPUT_DIR}/gtfs";
+${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs.zip" "${INPUT_DIR}/gtfs";
 checkResult $?;
 
 if [[ -e "$CONFIG_DIR/input_url_next" ]]; then
 	URL=`cat $CONFIG_DIR/input_url_next`;
 	download "${URL}" "${INPUT_DIR}/gtfs_next.zip";
 	checkResult $?;
-	${AGENCY_PARSER_DIR}/archive.sh "${INPUT_DIR}/gtfs_next.zip" "${INPUT_DIR}/gtfs_next";
+	${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs_next.zip" "${INPUT_DIR}/gtfs_next";
 	checkResult $?;
 fi
 

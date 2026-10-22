@@ -23,7 +23,7 @@ if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
     CURRENT_PATH=$(pwd);
 	cd ${ROOT_DIR}/agency-parser || exit; # >>
 
-	./list_change.sh;
+	./sh/list_change.sh;
 	RESULT=$?;
 	if [[ ${MT_GIT_COMMIT_ENABLED} == true ]]; then
 		echo "RESULT: $RESULT (fail ok/expected)"; # will auto commit

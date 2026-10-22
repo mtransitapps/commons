@@ -1,13 +1,15 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/..";
+ROOT_DIR="${SCRIPT_DIR}/../..";
 
 source ${ROOT_DIR}/commons/sh/commons.sh
 
 echo ">> Unzipping GTFS files...";
 
-GTFS_ZIP="${SCRIPT_DIR}/input/gtfs.zip";
-TARGET_DIR="${SCRIPT_DIR}/input/gtfs";
+AGENCY_PARSER_DIR="${SCRIPT_DIR}";
+
+GTFS_ZIP="${AGENCY_PARSER_DIR}/input/gtfs.zip";
+TARGET_DIR="${AGENCY_PARSER_DIR}/input/gtfs";
 if [[ -d ${TARGET_DIR} ]]; then
   echo ">> Removing existing GTFS files in '$TARGET_DIR'...";
   rm -r ${TARGET_DIR};
@@ -27,8 +29,8 @@ unzip -j ${GTFS_ZIP} -d ${TARGET_DIR};
 checkResult $?;
 echo ">> Unzip '$GTFS_ZIP' in '$TARGET_DIR'... DONE";
 
-GTFS_ZIP="${SCRIPT_DIR}/input/gtfs_next.zip";
-TARGET_DIR="${SCRIPT_DIR}/input/gtfs_next";
+GTFS_ZIP="${AGENCY_PARSER_DIR}/input/gtfs_next.zip";
+TARGET_DIR="${AGENCY_PARSER_DIR}/input/gtfs_next";
 if [[ -d ${TARGET_DIR} ]]; then
   echo ">> Removing existing GTFS files in '$TARGET_DIR'...";
   rm -r ${TARGET_DIR};
