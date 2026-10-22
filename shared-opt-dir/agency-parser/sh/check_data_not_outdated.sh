@@ -7,7 +7,7 @@ source ${ROOT_DIR}/commons/sh/commons.sh
 echo ">> Checking if data is outdated..."
 
 # Check if app-android directory exists
-APP_ANDROID_MAIN_DIR="${SCRIPT_DIR}/../app-android/src/main";
+APP_ANDROID_MAIN_DIR="${ROOT_DIR}/app-android/src/main";
 if [[ ! -d "${APP_ANDROID_MAIN_DIR}" ]]; then
   echo ">> No app-android main directory found. Data check not applicable.";
   exit 0;
@@ -71,7 +71,9 @@ echo ">> Deployed data has expired! Last departure was $DIFF_DAYS days ago.";
 echo ">> Data is OUTDATED. Sync recommended. Looking for available archives...";
 
 # Check archive directory for available data
-ARCHIVE_DIR="${SCRIPT_DIR}/archive";
+AGENCY_PARSER_DIR="${ROOT_DIR}/agency-parser";
+
+ARCHIVE_DIR="${AGENCY_PARSER_DIR}/archive";
 echo "> Archive dir: '$ARCHIVE_DIR'";
 
 if [[ ! -d "$ARCHIVE_DIR" ]]; then

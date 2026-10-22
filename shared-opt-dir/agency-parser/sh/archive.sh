@@ -94,7 +94,9 @@ if [[ -z "$START_DATE" || -z "$END_DATE" ]]; then
   exit 1;
 fi
 
-ARCHIVE_DIR="${SCRIPT_DIR}/archive";
+AGENCY_PARSER_DIR="${ROOT_DIR}/agency-parser";
+
+ARCHIVE_DIR="${AGENCY_PARSER_DIR}/archive";
 echo "- archive dir: '$ARCHIVE_DIR'";
 
 mkdir -p "$ARCHIVE_DIR";
