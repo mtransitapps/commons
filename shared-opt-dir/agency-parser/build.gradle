@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
 }
 
+// TODO later: should use 'parser' java-library as an application and launch it directly (once all migrated from Java->JSON config)
+
 application {
     def parserClassFile = file("parser_class")
     if (parserClassFile.exists()) {
