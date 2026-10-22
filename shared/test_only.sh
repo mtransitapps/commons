@@ -35,8 +35,6 @@ fi
 echo "> TESTS FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
 
 echo "> TESTS ANDROID APP FOR '$PROJECT_NAME'...";
-CURRENT_DIR=$(pwd);
-cd ${ROOT_DIR}/app-android || exit;
 
 echo ">> Running test...";
 ${ROOT_DIR}/gradlew :commons-android:testDebugUnitTest :app-android:testDebugUnitTest ${GRADLE_ARGS};
@@ -50,7 +48,6 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo ">> Running dependency guard... DONE";
 fi
 
-cd $CURRENT_DIR || exit;
 echo "> TESTS ANDROID APP FOR '$PROJECT_NAME'... DONE";
 echo "--------------------------------------------------------------------------------";
 
