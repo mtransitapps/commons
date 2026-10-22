@@ -14,7 +14,7 @@ setGitUser;
 
 CONFIG_DIR="${ROOT_DIR}/config";
 
-AGENCY_PARSER_DIR="${SCRIPT_DIR}/..";
+AGENCY_PARSER_DIR="${ROOT_DIR}/agency-parser";
 
 ARCHIVE_DIR="${AGENCY_PARSER_DIR}/archive";
 

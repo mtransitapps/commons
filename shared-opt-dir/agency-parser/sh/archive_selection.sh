@@ -9,7 +9,7 @@ echo ">> Selecting archive GTFS..."
 YESTERDAY=$(date -d "yesterday" +%Y%m%d); # service can start yesterday and finish today
 echo "> Yesterday: '$YESTERDAY'";
 
-AGENCY_PARSER_DIR="${SCRIPT_DIR}";
+AGENCY_PARSER_DIR="${ROOT_DIR}/agency-parser";
 
 ARCHIVE_DIR="${AGENCY_PARSER_DIR}/archive";
 echo "- archive dir: '$ARCHIVE_DIR'";

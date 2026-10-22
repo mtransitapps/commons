@@ -6,7 +6,7 @@ source ${ROOT_DIR}/commons/sh/commons.sh
 
 echo ">> Unzipping GTFS files...";
 
-AGENCY_PARSER_DIR="${SCRIPT_DIR}";
+AGENCY_PARSER_DIR="${ROOT_DIR}/agency-parser";
 
 GTFS_ZIP="${AGENCY_PARSER_DIR}/input/gtfs.zip";
 TARGET_DIR="${AGENCY_PARSER_DIR}/input/gtfs";
