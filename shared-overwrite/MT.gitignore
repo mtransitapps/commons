@@ -172,7 +172,9 @@ dev.properties
 /.idea/vcs.xml
 /.vscode/settings.json
 /.editorconfig
+# DEPRECATED: remove after /.github/workflows/mt-*.yml updated
 /assemble_release.sh
+/app-android/sh/assemble_release.sh
 # DEPRECATED: remove after /.github/workflows/mt-*.yml updated
 /commit_code_change.sh
 /sh/git/commit_code_change.sh
