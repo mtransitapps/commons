@@ -23,14 +23,12 @@ checkResult $?;
 
 echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
 
-#cd app-android || exit;
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo ">> Running dependency guard...";
-	./gradlew :app-android:dependencyGuard :parser:dependencyGuard ${GRADLE_ARGS};
+	./gradlew dependencyGuard ${GRADLE_ARGS};
 	checkResult $?;
 	echo ">> Running dependency guard... DONE";
 fi
-#cd ..;
 
 echo "--------------------------------------------------------------------------------";
 
