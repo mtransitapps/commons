@@ -93,3 +93,14 @@ updates:
           - "junit:*"
           - "org.mockito:*"
     open-pull-requests-limit: 7
+  # Maven in /gtfs/pom.xml
+  - package-ecosystem: "maven"
+    directory: "/gtfs"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "16:00"
+      timezone: "America/Montreal"
+    assignees:
+      - "montransit"
+    open-pull-requests-limit: 7
