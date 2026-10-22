@@ -108,6 +108,16 @@ subprojects {
         }
     }
     // endregion
+
+    // region tests
+    tasks.register('testAll') {
+        group = 'verification'
+        description = 'Runs unit tests for this module.'
+        dependsOn tasks.matching { task ->
+            task.name in ['test', 'testDebugUnitTest']
+        }
+    }
+    // endregion
 }
 
 tasks.register('clean', Delete) {
