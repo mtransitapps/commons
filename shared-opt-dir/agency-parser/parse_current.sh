@@ -8,18 +8,13 @@ echo ">> Parsing Current...";
 
 setGradleArgs;
 
-FILE_PATH="${SCRIPT_DIR}";
-if [[ -d "${SCRIPT_DIR}/../config" ]]; then
-	FILE_PATH="${SCRIPT_DIR}/../config";
-elif [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then # OLD REPO
-	FILE_PATH="${SCRIPT_DIR}/../app-android/config";
-fi
+CONFIG_DIR="${ROOT_DIR}/config";
 
 URL="";
-if [[ -f "$FILE_PATH/input_url" ]]; then
-	URL=$(cat "$FILE_PATH/input_url");
-elif [[ -f "$FILE_PATH/source_url" ]]; then
-	URL=$(cat "$FILE_PATH/source_url");
+if [[ -f "$CONFIG_DIR/input_url" ]]; then
+	URL=$(cat "$CONFIG_DIR/input_url");
+elif [[ -f "$CONFIG_DIR/source_url" ]]; then
+	URL=$(cat "$CONFIG_DIR/source_url");
 fi
 
 GENERATE_STOP_TIMES_FROM_FREQUENCIES="false";

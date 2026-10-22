@@ -19,10 +19,7 @@ fi
 echo "> Push to Store Beta Private enabled...";
 
 setGitProjectName "${ROOT_DIR}";
-CONFIG_PATH="$ROOT_DIR/../config";
-if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-  CONFIG_PATH="$ROOT_DIR/config";
-fi
+CONFIG_PATH="$ROOT_DIR/config";
 
 if [[ ! -f "$CONFIG_PATH/store/beta-private" ]]; then
     echo "> Publish to Beta Private NOT authorized!";

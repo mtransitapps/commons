@@ -227,7 +227,7 @@ function setGitProjectName() {
 		echo "GIT_PROJECT_NAME not found!";
 		exit 1;
 	fi
-	PROJECT_NAME="${GIT_PROJECT_NAME%-gradle}";
+	PROJECT_NAME="${GIT_PROJECT_NAME}";
 	if [[ -z "${PROJECT_NAME}" ]]; then
 		echo "PROJECT_NAME not found!";
 		exit 1;

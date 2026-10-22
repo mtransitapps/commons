@@ -10,8 +10,7 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-ROOT_DIR_NAME=$(basename ${ROOT_DIR});
-AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
+setGitProjectName;
 
 setIsCI;
 
@@ -19,7 +18,7 @@ setGradleArgs;
 
 setGitProjectName;
 
-echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... ";
+echo "> TESTS FOR '$PROJECT_NAME' (GRADLE BUILD)... ";
 ./gradlew :commons-java:test ${GRADLE_ARGS}; # build includes test
 checkResult $?;
 
@@ -33,9 +32,9 @@ if [[ -d "agency-parser" ]]; then
 	checkResult $?;
 fi
 
-echo "> TESTS FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
+echo "> TESTS FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
 
-echo "> TESTS ANDROID APP FOR '$AGENCY_ID'...";
+echo "> TESTS ANDROID APP FOR '$PROJECT_NAME'...";
 CURRENT_DIR=$(pwd);
 cd ${ROOT_DIR}/app-android || exit;
 
@@ -52,7 +51,7 @@ if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 fi
 
 cd $CURRENT_DIR || exit;
-echo "> TESTS ANDROID APP FOR '$AGENCY_ID'... DONE";
+echo "> TESTS ANDROID APP FOR '$PROJECT_NAME'... DONE";
 echo "--------------------------------------------------------------------------------";
 
 AFTER_DATE=$(date +%D-%X);

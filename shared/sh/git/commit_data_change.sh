@@ -10,9 +10,6 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-ROOT_DIR_NAME=$(basename ${ROOT_DIR});
-AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
-
 setIsCI;
 
 setGradleArgs;
@@ -37,14 +34,8 @@ GIT_MSG="CI: $(date +'%-B %-d update')";
 echo "GIT_MSG: $GIT_MSG";
 
 APP_ANDROID_PATH="."; # "-C ."
-if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-  APP_ANDROID_PATH="app-android";
-fi
 
 SRC_PATH="app-android/src";
-if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-  SRC_PATH="src";
-fi
 
 echo "> GIT $APP_ANDROID_PATH > add...";
 git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/play; # release notes...
@@ -67,19 +58,6 @@ git -C $APP_ANDROID_PATH diff --staged --quiet || git -C $APP_ANDROID_PATH commi
 checkResult $?;
 echo "> GIT $APP_ANDROID_PATH > commit '$GIT_MSG'... DONE";
 # TODO ? git -C $APP_ANDROID_PATH git push;
-
-if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-  echo "> GIT > add...";
-  git add -v -A;
-  checkResult $?;
-  echo "> GIT > add... DONE";
-  echo "> GIT > commit '$GIT_MSG'...";
-  # git commit -q -m "$GIT_MSG";
-  git diff --staged --quiet || git commit -m "$GIT_MSG";
-  checkResult $?;
-  echo "> GIT > commit '$GIT_MSG'... DONE";
-  # TODO ? git push;
-fi
 
 printGitStatus;
 

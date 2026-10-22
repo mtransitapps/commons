@@ -10,8 +10,7 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-ROOT_DIR_NAME=$(basename ${ROOT_DIR});
-AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
+setGitProjectName;
 
 setIsCI;
 
@@ -25,25 +24,25 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
   echo "> AGENCY_PARSER_DIR: $AGENCY_PARSER_DIR";
   INPUT_DIR="$AGENCY_PARSER_DIR/input";
 
-	echo "> VALIDATING DATA FOR '$AGENCY_ID'...";
+	echo "> VALIDATING DATA FOR '$PROJECT_NAME'...";
 
 	$ROOT_DIR/commons/gtfs/gtfs-validator.sh "$INPUT_DIR/gtfs.zip" "output/current";
 	# checkResult $?; # too many errors for now
 
-	echo "> VALIDATING DATA FOR '$AGENCY_ID'... DONE";
+	echo "> VALIDATING DATA FOR '$PROJECT_NAME'... DONE";
 
-	echo "> PARSING DATA FOR '$AGENCY_ID'...";
+	echo "> PARSING DATA FOR '$PROJECT_NAME'...";
 
 	# CURRENT...
 	$AGENCY_PARSER_DIR/parse_current.sh;
 	checkResult $?;
 	# CURRENT... DONE
 
-	echo "> PARSING DATA FOR '$AGENCY_ID'... DONE";
+	echo "> PARSING DATA FOR '$PROJECT_NAME'... DONE";
 
 	cd ..; # <<
 else
-	echo "> SKIP PARSING FOR '$AGENCY_ID'.";
+	echo "> SKIP PARSING FOR '$PROJECT_NAME'.";
 fi
 
 AFTER_DATE=$(date +%D-%X);

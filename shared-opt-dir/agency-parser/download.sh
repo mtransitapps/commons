@@ -12,29 +12,24 @@ setGitCommitEnabled;
 
 setGitUser;
 
-FILE_PATH="${SCRIPT_DIR}";
-if [[ -d "${SCRIPT_DIR}/../config" ]]; then
-	FILE_PATH="${SCRIPT_DIR}/../config";
-elif [[ -d "${SCRIPT_DIR}/../app-android/config" ]]; then # OLD REPO
-	FILE_PATH="${SCRIPT_DIR}/../app-android/config";
-fi
+CONFIG_DIR="${ROOT_DIR}/config";
 
 ARCHIVE_DIR="${SCRIPT_DIR}/archive";
 
-if [[ ! -f "$FILE_PATH/input_url" ]]; then
+if [[ ! -f "$CONFIG_DIR/input_url" ]]; then
 	echo ">> No input_url file found. Exiting early.";
 	exit 0;
 fi
 
-if [[ -s "$FILE_PATH/input_url_user_agent" ]]; then
-	USER_AGENT="$(tr -d $'\r\n' < "$FILE_PATH/input_url_user_agent")";
+if [[ -s "$CONFIG_DIR/input_url_user_agent" ]]; then
+	USER_AGENT="$(tr -d $'\r\n' < "$CONFIG_DIR/input_url_user_agent")";
 	if [[ -n "$USER_AGENT" ]]; then
 		echo ">> Using user agent: '$USER_AGENT'";
 		export MT_DOWNLOAD_USER_AGENT="$USER_AGENT";
 	fi
 fi
 
-URL=`cat $FILE_PATH/input_url`;
+URL=`cat $CONFIG_DIR/input_url`;
 INPUT_DIR="${SCRIPT_DIR}/input";
 mkdir -p "${INPUT_DIR}";
 download "${URL}" "${INPUT_DIR}/gtfs.zip";
@@ -42,8 +37,8 @@ checkResult $?;
 ${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs.zip" "${INPUT_DIR}/gtfs";
 checkResult $?;
 
-if [[ -e "$FILE_PATH/input_url_next" ]]; then
-	URL=`cat $FILE_PATH/input_url_next`;
+if [[ -e "$CONFIG_DIR/input_url_next" ]]; then
+	URL=`cat $CONFIG_DIR/input_url_next`;
 	download "${URL}" "${INPUT_DIR}/gtfs_next.zip";
 	checkResult $?;
 	${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs_next.zip" "${INPUT_DIR}/gtfs_next";

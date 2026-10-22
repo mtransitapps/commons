@@ -113,19 +113,6 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
   else
     echo "> GitHub > release '$APP_VERSION_NAME' already exists and is latest... SKIP";
   fi
-  # OLD REPO
-  if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-    if [[ -d "app-android" ]]; then
-      cd app-android || exit 1; # >>
-      if shouldCreateGitHubRelease "$APP_VERSION_NAME"; then
-        gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES_APP_ANDROID;
-        checkResult $?;
-      else
-        echo "> GitHub > release '$APP_VERSION_NAME' already exists and is latest... SKIP";
-      fi
-      cd ../; # <<
-    fi
-  fi
   echo "> GitHub > publishing release '$APP_VERSION_NAME'... DONE";
 
   # PUSH TO PLAY STORE

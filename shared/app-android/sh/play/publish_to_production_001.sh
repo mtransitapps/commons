@@ -18,10 +18,7 @@ fi
 echo "> Push to Store Production enabled...";
 
 setGitProjectName "${ROOT_DIR}";
-CONFIG_PATH="$ROOT_DIR/../config";
-if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-  CONFIG_PATH="$ROOT_DIR/config";
-fi
+CONFIG_PATH="$ROOT_DIR/config";
 
 if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
     echo "> Publish to production NOT authorized!";

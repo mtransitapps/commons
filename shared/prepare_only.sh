@@ -10,8 +10,7 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-ROOT_DIR_NAME=$(basename ${ROOT_DIR});
-AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
+setGitProjectName;
 
 setIsCI;
 
@@ -23,7 +22,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 
   cd ${SCRIPT_DIR}/agency-parser || exit; # >>
 
-    echo "> PREPARING DATA FOR '$AGENCY_ID'...";
+    echo "> PREPARING DATA FOR '$PROJECT_NAME'...";
 
     AGENCY_PARSER_DIR=".";
 
@@ -40,11 +39,11 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 
     INPUT_DIR="$AGENCY_PARSER_DIR/input";
 
-    echo "> PREPARING DATA FOR '$AGENCY_ID'... DONE";
+    echo "> PREPARING DATA FOR '$PROJECT_NAME'... DONE";
 
   cd ../; # <<
 else
-  echo "> SKIP PREPARING FOR '$AGENCY_ID'.";
+  echo "> SKIP PREPARING FOR '$PROJECT_NAME'.";
 fi
 
 AFTER_DATE=$(date +%D-%X);

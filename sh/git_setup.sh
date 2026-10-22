@@ -47,16 +47,6 @@ declare -a SUBMODULES_REPO=(
 	"commons-android"
 );
 
-# APP-ANDROID (OLD REPO)
-if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-	SUBMODULES+=('app-android');
-	if [[ $PROJECT_NAME == *android ]]; then
-		SUBMODULES_REPO+=($PROJECT_NAME);
-	else
-		SUBMODULES_REPO+=("$PROJECT_NAME-android");
-	fi
-fi
-
 # PARSER
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo "> Main android app: '$PROJECT_NAME' > parser required ✓";
@@ -68,14 +58,9 @@ else
 	echo "> Bus/Train/... android app: '$PROJECT_NAME' > parser required ✓";
 	SUBMODULES+=('parser');
 	SUBMODULES_REPO+=('parser');
-	if [[ "$GIT_PROJECT_NAME" == *"-gradle"* ]]; then # OLD REPO
-		SUBMODULES+=('agency-parser');
-		SUBMODULES_REPO+=("${PROJECT_NAME}-parser");
-	else
-		mkdir -p agency-parser/archive; # needed for shared-opt-dir #InitRepo
-		if [[ "$INIT_SUBMODULE" == true ]]; then
-			git lfs track agency-parser/archive/*;
-		fi
+	mkdir -p agency-parser/archive; # needed for shared-opt-dir #InitRepo
+	if [[ "$INIT_SUBMODULE" == true ]]; then
+		git lfs track agency-parser/archive/*;
 	fi
 fi
 

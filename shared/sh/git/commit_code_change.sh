@@ -10,11 +10,6 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-ROOT_DIR_NAME=$(basename ${ROOT_DIR});
-AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
-
-CONFIRM=false;
-
 setIsCI;
 
 setGradleArgs;

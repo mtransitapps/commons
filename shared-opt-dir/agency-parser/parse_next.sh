@@ -8,20 +8,15 @@ echo ">> Parsing Next...";
 
 setGradleArgs;
 
-FILE_PATH="${ROOT_DIR}/config";
-if [[ -d "${ROOT_DIR}/config" ]]; then
-	FILE_PATH="${ROOT_DIR}/config";
-elif [[ -d "${ROOT_DIR}/app-android/config" ]]; then # OLD REPO
-	FILE_PATH="${ROOT_DIR}/app-android/config";
-fi
+CONFIG_DIR="${ROOT_DIR}/config";
 
 URL="";
-if [[ -e "$FILE_PATH/input_url_next" ]]; then
- URL=$(cat "$FILE_PATH/input_url_next");
-elif [[ -f "$FILE_PATH/input_url" ]]; then
-	URL=$(cat "$FILE_PATH/input_url");
-elif [[ -f "$FILE_PATH/source_url" ]]; then
-	URL=$(cat "$FILE_PATH/source_url");
+if [[ -e "$CONFIG_DIR/input_url_next" ]]; then
+ URL=$(cat "$CONFIG_DIR/input_url_next");
+elif [[ -f "$CONFIG_DIR/input_url" ]]; then
+	URL=$(cat "$CONFIG_DIR/input_url");
+elif [[ -f "$CONFIG_DIR/source_url" ]]; then
+	URL=$(cat "$CONFIG_DIR/source_url");
 fi
 
 GENERATE_STOP_TIMES_FROM_FREQUENCIES="false";
@@ -29,16 +24,11 @@ if [[ -f "${SCRIPT_DIR}/generate_stop_times_from_frequencies" ]]; then
 	GENERATE_STOP_TIMES_FROM_FREQUENCIES=$(cat "${SCRIPT_DIR}/generate_stop_times_from_frequencies");
 fi
 
-FILE_PATH="${ROOT_DIR}/app-android/config";
-if [[ -d "${ROOT_DIR}/app-android/config" ]]; then
-	FILE_PATH="${ROOT_DIR}/app-android/config";
-fi
-
 GTFS_DIR="input/gtfs_next";
-if ! [[ -e "$FILE_PATH/input/gtfs_next" ]]; then
+if ! [[ -e "$SCRIPT_DIR/input/gtfs_next" ]]; then
 	GTFS_DIR="input/gtfs";
 fi
-if ! [[ -e "$FILE_PATH/input/gtfs_next/agency.txt" ]]; then
+if ! [[ -e "$SCRIPT_DIR/input/gtfs_next/agency.txt" ]]; then
 	GTFS_DIR="input/gtfs";
 fi
 

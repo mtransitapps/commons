@@ -10,8 +10,7 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-ROOT_DIR_NAME=$(basename ${ROOT_DIR});
-AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
+setGitProjectName;
 
 setIsCI;
 
@@ -35,7 +34,7 @@ if [[ -d "${SCRIPT_DIR}/agency-parser" ]]; then
 
 	cd ..; # <<
 else
-	echo "> SKIP PARSING FOR '$AGENCY_ID'.";
+	echo "> SKIP PARSING FOR '$PROJECT_NAME'.";
 fi
 
 AFTER_DATE=$(date +%D-%X);

@@ -11,12 +11,9 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-ROOT_DIR_NAME=$(basename ${ROOT_DIR});
-AGENCY_ID=$(basename -s -gradle ${ROOT_DIR_NAME});
+setGitProjectName;
 
-setGitBranch
-
-CONFIRM=false;
+setGitBranch;
 
 setIsCI;
 
@@ -24,7 +21,7 @@ setGradleArgs;
 
 declare -a EXCLUDE=(".git" "test" "build" "gen" "gradle");
 
-echo "> CLEANING FOR '$AGENCY_ID'...";
+echo "> CLEANING FOR '$PROJECT_NAME'...";
 
 if [[ $CIRCLECI != "true" ]]; then
 	for d in ${ROOT_DIR}/* ; do
@@ -54,7 +51,7 @@ if [[ $CIRCLECI != "true" ]]; then
 			fi
 
 			git switch ${GIT_BRANCH};
-			checkResult $? ${CONFIRM};
+			checkResult $?;
 			echo "> GIT cleaning in '$DIRECTORY'... DONE";
 			cd "$CURRENT_PATH";
 			echo "--------------------------------------------------------------------------------";
@@ -103,24 +100,24 @@ split --version;
 echo "--------------------------------------------------------------------------------";
 
 if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
-	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)...";
+	echo "> CLEANING FOR '$PROJECT_NAME' (GRADLE BUILD)...";
 
 	$ROOT_DIR/gradlew :commons-java:clean ${GRADLE_ARGS};
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	$ROOT_DIR/gradlew :parser:clean ${GRADLE_ARGS};
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	$ROOT_DIR/gradlew :agency-parser:clean ${GRADLE_ARGS};
-	checkResult $? ${CONFIRM};
-	echo "> CLEANING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
+	checkResult $?;
+	echo "> CLEANING FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
 
-	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'...";
+	echo "> DOWNLOADING DATA FOR '$PROJECT_NAME'...";
 	CURRENT_PATH=$(pwd);
 	cd "${ROOT_DIR}/agency-parser" || exit; # >>
 
 	./download.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	$ROOT_DIR/commons/gtfs/gtfs-validator.sh "input/gtfs.zip" "output/current";
   	# checkResult $?; # too many errors for now
@@ -131,56 +128,56 @@ if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	fi
 
 	$ROOT_DIR/unzip_gtfs.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
-	echo "> DOWNLOADING DATA FOR '$AGENCY_ID'... DONE";
+	echo "> DOWNLOADING DATA FOR '$PROJECT_NAME'... DONE";
 
-	echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... ";
+	echo "> BUILDING FOR '$PROJECT_NAME' (GRADLE BUILD)... ";
 	$ROOT_DIR/gradlew :commons-java:build ${GRADLE_ARGS}; #includes test
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	$ROOT_DIR/gradlew :parser:build ${GRADLE_ARGS}; #includes test
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
-	echo "> BUILDING FOR '$AGENCY_ID' (GRADLE BUILD)... DONE";
+	echo "> BUILDING FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
 
-	echo "> PARSING DATA FOR '$AGENCY_ID'...";
+	echo "> PARSING DATA FOR '$PROJECT_NAME'...";
 
     # CURRENT...
 	$ROOT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS};
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	$ROOT_DIR/parse_current.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 	# CURRENT... DONE
 
 	# NEXT...
 	$ROOT_DIR/gradlew :agency-parser:build ${GRADLE_ARGS};
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	$ROOT_DIR/parse_next.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 	# NEXT... DONE
 
 	$ROOT_DIR/list_change.sh;
-	checkResult $? ${CONFIRM};
+	checkResult $?;
 
 	cd "$CURRENT_PATH"; # <<
-	echo "> PARSING DATA FOR '$AGENCY_ID'... DONE";
+	echo "> PARSING DATA FOR '$PROJECT_NAME'... DONE";
 else
-	echo "> SKIP PARSING FOR '$AGENCY_ID' (branch:$GIT_BRANCH).";
+	echo "> SKIP PARSING FOR '$PROJECT_NAME' (branch:$GIT_BRANCH).";
 fi
 
-echo "> BUILDING ANDROID APP FOR '$AGENCY_ID'...";
+echo "> BUILDING ANDROID APP FOR '$PROJECT_NAME'...";
 CURRENT_PATH=$(pwd);
 cd $ROOT_DIR/app-android || exit; # >>
 	
 ./sh/ci/build.sh # $ROOT_DIR/app-android/sh/ci/build.sh
-checkResult $? ${CONFIRM};
+checkResult $?;
 
 cd "$CURRENT_PATH"; # <<
 
-echo "> BUILDING ANDROID APP FOR '$AGENCY_ID'... DONE";
+echo "> BUILDING ANDROID APP FOR '$PROJECT_NAME'... DONE";
 echo "--------------------------------------------------------------------------------";
 
 AFTER_DATE=$(date +%D-%X);
