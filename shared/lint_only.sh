@@ -1,32 +1,7 @@
 #!/bin/bash
+
+# DEPRECATED: use app-android/sh/lint_only.sh instead
+# TODO: remove after update /.github/workflows/mt-build.yml updated)
+
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}";
-
-source ${ROOT_DIR}/commons/sh/commons.sh;
-
-echo "================================================================================";
-echo "> LINT...";
-echo "--------------------------------------------------------------------------------";
-BEFORE_DATE=$(date +%D-%X);
-BEFORE_DATE_SEC=$(date +%s);
-
-setIsCI;
-
-setGradleArgs;
-
-setGitProjectName;
-
-if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
-
-	echo ">> Running lint...";
-	${ROOT_DIR}/gradlew :app-android:lintDebug ${GRADLE_ARGS};
-	checkResult $?;
-	echo ">> Running lint... DONE";
-fi
-
-AFTER_DATE=$(date +%D-%X);
-AFTER_DATE_SEC=$(date +%s);
-DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
-echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
-echo "> LINT... DONE";
-echo "================================================================================";
+exec "${SCRIPT_DIR}/app-android/sh/lint_only.sh" "$@";

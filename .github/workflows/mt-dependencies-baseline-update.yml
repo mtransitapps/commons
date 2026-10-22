@@ -91,7 +91,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: MT dependencies baseline update
-        run: ./sh/dependencies_baseline_update.sh
+        run: ./sh/ci/dependencies_baseline_update.sh
 
       - name: MT commit new baseline
         run: |

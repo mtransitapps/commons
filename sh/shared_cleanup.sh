@@ -33,15 +33,8 @@ if [[ -f "$ROOT_DIR/gradlew" ]]; then
 	checkResult $?;
 fi
 
-PREVIOUS_DIR=$(pwd);
-if [[ -d "$ROOT_DIR/app-android" ]]; then
-	cd $ROOT_DIR/app-android || exit; # >>
-
-	if [[ -f "sh/keys/cleanup.sh" ]]; then
-		./sh/keys/cleanup.sh; # FAIL OK
-	fi
-
-	cd $PREVIOUS_DIR || exit; # <<
+if [[ -f "$ROOT_DIR/app-android/sh/keys/cleanup.sh" ]]; then
+	$ROOT_DIR/app-android/sh/keys/cleanup.sh; # FAIL OK
 fi
 
 function cleanupFile() {

@@ -24,9 +24,7 @@ if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
 fi
 echo "> Git commit enabled ...";
 
-cd app-android || exit;
-./sh/keys/cleanup.sh; # FAIL OK
-cd ..;
+${ROOT_DIR}/app-android/sh/keys/cleanup.sh; # FAIL OK
 
 setGitUser;
 
