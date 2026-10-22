@@ -1,6 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../..";
+
 source ${ROOT_DIR}/commons/sh/commons.sh
 
 git add -v src/main/res-next/raw/next_gtfs_schedule_stop_*;

@@ -1,6 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../..";
+
 source ${ROOT_DIR}/commons/sh/commons.sh
 
 ./stage_res_current_schedule_stops.sh;
