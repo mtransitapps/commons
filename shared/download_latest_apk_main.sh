@@ -4,7 +4,7 @@ SCRIPT_DIR="$(dirname "$0")";
 set -e
 
 REPO_NAME="mtransit-for-android"
-REPO="mtransitapps/$REPO_NAME"
+REPO="mtransitapps/${REPO_NAME}"
 
 source ./$SCRIPT_DIR/download_latest_apk.sh "$REPO"
 

@@ -20,7 +20,7 @@ fi
 
 if [[ -z "$APK_FILE_LIST" ]]; then
   echo "ERROR: Could not find APK in latest release!"
-  exit 1 #error
+  exit 1 # error
 fi
 
 read -r APK_FILE <<< "$APK_FILE_LIST"
