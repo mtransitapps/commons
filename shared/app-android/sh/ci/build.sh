@@ -1,11 +1,11 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../../..";
+
 source ${ROOT_DIR}/commons/sh/commons.sh
+
 echo ">> Building...";
 # TODO REMOVE (DEPRECATED, USE other scripts) (used by CircleCI & GitLab CI)
-
-DIRECTORY=$(basename ${ROOT_DIR});
 
 setGitProjectName;
 
@@ -71,7 +71,7 @@ if [[ ${IS_CI} = true ]]; then
 # fi
 # echo ">> Sonar PR args: '$SONAR_PR_ARGS'.";
 # echo ">> Running sonar...";
-# ${ROOT_DIR}/gradlew :${DIRECTORY}:sonarqube \
+# ${ROOT_DIR}/gradlew :app-android:sonarqube \
 # $SONAR_ARGS \
 # -Dsonar.login=${MT_SONAR_LOGIN} \
 # $SONAR_PR_ARGS \
@@ -99,14 +99,14 @@ if [[ ${IS_CI} = false ]]; then
 	checkResult $?;
 
 	echo ">> Running bundle release AAB...";
-	${ROOT_DIR}/gradlew :${DIRECTORY}:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
+	${ROOT_DIR}/gradlew :app-android:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running bundle release AAB... DONE";
 
 
 	echo ">> Running assemble release APK...";
-	${ROOT_DIR}/gradlew :${DIRECTORY}:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
+	${ROOT_DIR}/gradlew :app-android:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	checkResult ${RESULT};
 	echo ">> Running assemble release APK... DONE";
