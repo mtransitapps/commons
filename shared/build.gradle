@@ -42,8 +42,6 @@ plugins {
     alias(libs.plugins.triplet.playPublisher) apply false
 
     alias(libs.plugins.dependency.guard) apply false
-    // alias(libs.plugins.benmanes.versions)
-    // alias(libs.plugins.littlerobots.versioncatalog)
 
     alias(libs.plugins.detekt2) apply false
     // alias(libs.plugins.detekt2.compiler) apply false // plugin helps fix some issues but version 2.0.0-alpha.6 doesn't work
@@ -127,5 +125,3 @@ tasks.register('clean', Delete) {
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
-
-// apply from: "${project.rootDir}/commons/dependency_updates_version_config.gradle"
