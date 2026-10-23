@@ -368,15 +368,15 @@ function requireCommand() {
 	command -v "$cmd" >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y "$pkg")
 }
 
-# set current working directory to the directory of the script
-function setCurrentDirectory() {
-	if [[ "$#" -lt 1 ]]; then
-		echo "> setCurrentDirectory() > Illegal number of parameters!";
-		exit 1;
+# set script directory
+function setScriptDir() {
+	SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}");
+	ABS_SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd);
+	if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+		echo "Script directory set to '$SCRIPT_DIR' (executed directly, like './script.sh')."
+	else
+		echo "Script directory set to '$SCRIPT_DIR' (sourced into another env, like 'source ./script.sh')."
 	fi
-	local CURRENT_DIRECTORY=$0;
-	cd "$(dirname "$CURRENT_DIRECTORY")" || exit;
-	echo "> Current directory set to $CURRENT_DIRECTORY.";
 }
 
 function checkResult() {

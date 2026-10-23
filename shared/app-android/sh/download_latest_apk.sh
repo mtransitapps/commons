@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-SCRIPT_DIR="$(dirname "$0")";
+# SCRIPT_DIR="$(dirname "$0")"; # do not work with source ./script.sh (required to load environment variables)
+SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
 ROOT_DIR="${SCRIPT_DIR}/../..";
 
 echo ">> Downloading '$*' latest release APK..."
