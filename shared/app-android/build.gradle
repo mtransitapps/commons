@@ -68,7 +68,7 @@ android {
         namespace = projectPkg
     }
 
-    // Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
+    // Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/sh/publish_app_release.sh
     def now = new Date()
     def year = now.format('yyyy').toInteger() - 2000
     def month = now.format('MM')
@@ -76,7 +76,7 @@ android {
     def sharedVersionName = "" + year + "." + month + "." + dayOfMonth
     println "> Shared version name: " + sharedVersionName
 
-    // App version code also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
+    // App version code also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/sh/publish_app_release.sh
     def commitCountS = providers.exec {
         commandLine("git", "-C", "${project.rootDir}/app-android", "rev-list", "HEAD", "--count")
     }.standardOutput.asText.get().trim()
@@ -139,7 +139,7 @@ android {
             applicationId = projectPkg
         }
         versionCode appVersionCode
-        // App version name also used in https://github.com/mtransitapps/commons/blob/master/shared/publish_app_release.sh
+        // App version name also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/sh/publish_app_release.sh
         def appVersionName = sharedVersionName + "r" + appVersionCode
         versionName appVersionName
         buildConfigField "boolean", "STRICT_MODE_OFF", "$isDevStrictModeOff"
