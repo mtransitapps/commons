@@ -61,7 +61,7 @@ AAB_PATH="${ROOT_DIR}/app-android/build/outputs/bundle/release/*.aab";
 AAB_PATH_APP_ANDROID="${ROOT_DIR}/build/outputs/bundle/release/*.aab";
 AAB_FILES=($AAB_PATH);
 if [ -e "${APK_FILES[0]}" ]; then
-  APK_FILE_NAME=$(basename "$APK_FILES");
+  APK_FILE_NAME=$(basename "${APK_FILES[0]}");
   echo "> APK file name: '$APK_FILE_NAME'.";
   APP_VERSION_NAME=$(echo "$APK_FILE_NAME" | sed 's/.*_v\([0-9]\{2\}\.[0-9]\{2\}\.[0-9]\{2\}_r[0-9]\+\).*/\1/');
 elif [ -e "${AAB_FILES[0]}" ]; then
@@ -118,18 +118,13 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
   echo "> GitHub > publishing release '$APP_VERSION_NAME'... DONE";
 
   # PUSH TO PLAY STORE
-  if [[ -d "app-android" ]]; then
-    CURRENT_PATH=$(pwd);
-    cd app-android || exit 1; # >>
-
+  if [[ -d "${ROOT_DIR}/app-android" ]]; then
     if [[ -f "${ROOT_DIR}/app-android/sh/keys/cleanup.sh" ]]; then
-      "${ROOT_DIR}"/app-android/sh/keys/cleanup.sh; # FAIL OK
+      "${ROOT_DIR}/app-android/sh/keys/cleanup.sh"; # FAIL OK
     fi
 
-    "${ROOT_DIR}"/play/publish_to_current_users.sh;
+    "${ROOT_DIR}/play/publish_to_current_users.sh";
     checkResult $?;
-
-    cd ${CURRENT_PATH} || exit; # <<
   fi
 else
   echo "> Use case not supported yet!"; #TODO GH release?

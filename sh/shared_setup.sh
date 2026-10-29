@@ -81,7 +81,7 @@ function deployFile() {
 	if [[ $SRC_FILE_PATH == *.MT.sh ]]; then
 		local DEST_DIR=$(dirname ${DEST_FILE_PATH});
 		echoFile "> Deploying '$SRC_FILE_PATH' in '$DEST_DIR'...";
-		./"$SRC_FILE_PATH" "$DEST_DIR";
+		"$SRC_FILE_PATH" "$DEST_DIR";
 		local RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while deploying file '$SRC_FILE_PATH' in '$DEST_DIR'!";

@@ -6,7 +6,7 @@ set -e
 REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
 REPO="mtransitapps/${REPO_NAME}"
 
-source ./$SCRIPT_DIR/download_latest_apk.sh "$REPO"
+source "$SCRIPT_DIR/download_latest_apk.sh" "$REPO"
 
 if [[ -z "$APK_FILE" ]]; then
   echo ">> ERROR: no APK file!"

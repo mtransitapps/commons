@@ -13,9 +13,6 @@ if [[ -n "${CI}" ]]; then
   COMMIT_MESSAGE_TITLE_START="CI: $COMMIT_MESSAGE_TITLE_START";
 fi
 
-CURRENT_DIR="$(pwd)";
-cd "$ROOT_DIR" || exit 1; # >>
-
 COMMIT_MESSAGE_TITLE="";
 COMMIT_MESSAGE_BODY="";
 ONE_COMMIT_MESSAGE="";
@@ -44,8 +41,6 @@ for SUBMODULE in "${SUBMODULES[@]}"; do
     git -C "$ROOT_DIR" add "$SUBMODULE";
   fi
 done
-
-cd "$CURRENT_DIR" || exit 1; # <<
 
 echo "$COMMITS change(s) to commit.";
 
