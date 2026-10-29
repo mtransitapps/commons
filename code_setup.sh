@@ -12,7 +12,7 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-${ROOT_DIR}/commons/sh/git_setup.sh && ${ROOT_DIR}/commons/sh/shared_setup.sh;
+"${ROOT_DIR}/commons/sh/git_setup.sh" && "${ROOT_DIR}/commons/sh/shared_setup.sh";
 checkResult $?;
 
 echo "--------------------------------------------------------------------------------";

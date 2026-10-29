@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$PWD" "$ROOT_DIR");
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
 
 CURRENT_PATH=$(pwd);
 

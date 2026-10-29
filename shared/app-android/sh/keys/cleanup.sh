@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/../../.."; ROOT_DIR=$(realpath --relative-to="$PWD" "$ROOT_DIR");
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd)
 
 source "${ROOT_DIR}/commons/sh/commons.sh"
 
@@ -43,30 +43,30 @@ for FILE in "${FILES[@]}" ; do
 	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
-		if [[ -f $CLEAR/${FILE} ]]; then
-			mv $CLEAR/${FILE} ${FILE_PATH};
+		if [[ -f "$CLEAR/${FILE}" ]]; then
+			mv "$CLEAR/${FILE}" "$FILE_PATH";
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
-				echo " ERROR! Resetting decrypted file '${FILE_PATH}' using 'mv $CLEAR/${FILE} ${FILE_PATH}' did NOT work!";
+				echo " ERROR! Resetting decrypted file '${FILE_PATH}' using 'mv \"$CLEAR/${FILE}\" \"$FILE_PATH\"' did NOT work!";
 				if [[ $IS_CI == true ]]; then
-					rm ${FILE_PATH}; # deleting file
+					rm "${FILE_PATH}"; # deleting file
 				fi
 				exit ${RESULT};
 			fi
-		elif [[ -f $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ]]; then
-			cp $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ${FILE_PATH};
+		elif [[ -f "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" ]]; then
+			cp "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" "$FILE_PATH";
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
-				echo " ERROR! Resetting decrypted file '${FILE_PATH}' using 'cp $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ${FILE_PATH}' did NOT work!";
+				echo " ERROR! Resetting decrypted file '${FILE_PATH}' using 'cp \"$SHARED_UNTRACKED_CLEAR_DIR/${FILE}\" \"$FILE_PATH\"' did NOT work!";
 				if [[ $IS_CI == true ]]; then
-					rm ${FILE_PATH}; # deleting file
+					rm "${FILE_PATH}"; # deleting file
 				fi
 				exit ${RESULT};
 			fi
 		else
 			echo " ERROR! No clear file found for untracked decrypted file '${FILE_PATH}'!";
 			if [[ $IS_CI == true ]]; then
-				rm ${FILE_PATH}; # deleting file
+				rm "${FILE_PATH}"; # deleting file
 			fi
 			exit 1;
 		fi
@@ -77,16 +77,16 @@ for FILE in "${FILES[@]}" ; do
 			echo " ERROR! while setting '--no-skip-worktree' for '${FILE_PATH}'!";
 			exit ${RESULT};
 		fi
-		git checkout -- ${FILE_PATH};
+		git checkout -- "${FILE_PATH}";
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo " ERROR! Resetting decrypted file '${FILE_PATH}' using 'git checkout' did NOT work!";
 			if [[ $IS_CI == true ]]; then
-				rm ${FILE_PATH}; # deleting file
+				rm "${FILE_PATH}"; # deleting file
 			fi
 			exit ${RESULT};
 		fi
-		git diff --name-status --exit-code ${FILE_PATH};
+		git diff --name-status --exit-code "${FILE_PATH}";
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo " ERROR! File '${FILE_PATH}' NOT the same as git file!";

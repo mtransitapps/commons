@@ -3,7 +3,7 @@
 exec 3>&1 1>&2
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
-ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$PWD" "$ROOT_DIR");
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
 
 echo ">> Downloading '$*' latest release APK..."
 
@@ -46,7 +46,6 @@ if [ ! -f "$ROOT_DIR/$APK_FILE" ] || [ ! -s "$ROOT_DIR/$APK_FILE" ]; then
 fi
 
 APK_PATH="$ROOT_DIR/$APK_FILE"
-APK_PATH="$(realpath "$APK_PATH")"
 
 echo "'$REPO' latest release APK downloaded successfully to '$APK_PATH'."
 

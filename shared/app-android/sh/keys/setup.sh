@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/../../.."; ROOT_DIR=$(realpath --relative-to="$PWD" "$ROOT_DIR");
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd)
 
 source "${ROOT_DIR}/commons/sh/commons.sh"
 
@@ -131,15 +131,15 @@ for FILE in "${FILES[@]}" ; do
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
 		CLEAR_DIR=$(dirname "$CLEAR/${FILE}");
-		mkdir -p $CLEAR_DIR;
+		mkdir -p "$CLEAR_DIR";
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo " ERROR! while creating clear directory '$CLEAR_DIR'!";
 			exit ${RESULT};
 		fi
 		if [[ ! -f ${FILE_PATH} ]]; then
-			if [[ -f $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ]]; then
-				cp $SHARED_UNTRACKED_CLEAR_DIR/${FILE} $CLEAR/${FILE};
+			if [[ -f "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" ]]; then
+				cp "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" "$CLEAR/${FILE}";
 				RESULT=$?;
 				if [[ ${RESULT} -ne 0 ]]; then
 					echo " ERROR! while copying shared untracked clear file '$SHARED_UNTRACKED_CLEAR_DIR/${FILE}' to '$CLEAR/${FILE}'!";
@@ -149,7 +149,7 @@ for FILE in "${FILES[@]}" ; do
 				echoFile "File path '$FILE_PATH' does NOT exist, SKIPPING clear file.";
 			fi
 		else
-			cp ${FILE_PATH} $CLEAR/${FILE};
+			cp "${FILE_PATH}" "$CLEAR/${FILE}";
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
 				echo " ERROR! while copying '${FILE_PATH}' to '$CLEAR/${FILE}'!";
@@ -163,7 +163,7 @@ for FILE in "${FILES[@]}" ; do
 	# DECRYPT the encrypted file to the original file path
 	FILE_ENC="${APP_ANDROID_DIR}/enc/${FILE}";
 
-	${SCRIPT_DIR}/decrypt_file.sh ${FILE_ENC} ${FILE_PATH} "quiet";
+	"${SCRIPT_DIR}/decrypt_file.sh" "${FILE_ENC}" "${FILE_PATH}" "quiet";
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo " ERROR! while decrypting '$FILE_ENC'!";
@@ -171,10 +171,10 @@ for FILE in "${FILES[@]}" ; do
 	fi
 
 	# VERIFY that the decrypted file is different from the clear file for untracked files, or different from the git version for tracked files
-	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
+	git ls-files --error-unmatch "${FILE_PATH}" &> /dev/null;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then #file is NOT tracked by git
-		diff -q ${FILE_PATH} $CLEAR/${FILE} &> /dev/null;
+		diff -q "${FILE_PATH}" "$CLEAR/${FILE}" &> /dev/null;
 		RESULT=$?;
 		if [[ ${RESULT} -eq 0 ]]; then
 			echo " ERROR! Decrypted file '$FILE_PATH' NOT different than clear file!";
@@ -182,12 +182,12 @@ for FILE in "${FILES[@]}" ; do
 		fi
 		# rm ${FILE}.clear;
 	else # file is tracked by git
-		git diff --name-status --exit-code ${FILE_PATH} &> /dev/null;
+		git diff --name-status --exit-code "${FILE_PATH}" &> /dev/null;
 		RESULT=$?;
 		if [[ ${RESULT} -eq 0 ]]; then
 			echo " ERROR! Decrypted file '$FILE_PATH' NOT different than git version!";
-			ls -al ${FILE_PATH}; #DEBUG
-			ls -al ${FILE_ENC}; #DEBUG
+			ls -al "${FILE_PATH}"; #DEBUG
+			ls -al "${FILE_ENC}"; #DEBUG
 			exit 1;
 		fi
 		git update-index --skip-worktree -- "${FILE_PATH}";

@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$PWD" "$ROOT_DIR");
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
 
 source "${ROOT_DIR}/commons/sh/commons.sh"
 
@@ -31,31 +31,27 @@ setGitUser;
 GIT_MSG="CI: $(date +'%-B %-d update')";
 echo "GIT_MSG: $GIT_MSG";
 
-APP_ANDROID_PATH="."; # "-C ."
-
-SRC_PATH="app-android/src";
-
-echo "> GIT $APP_ANDROID_PATH > add...";
-git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/play; # release notes...
+echo "> GIT $ROOT_DIR > add...";
+git -C "$ROOT_DIR" add -v -A "app-android/src/main/play"; # release notes...
 checkResult $?;
-git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/res/value*; # values, values-fr...
+git -C "$ROOT_DIR" add -v -A "app-android/src/main/res/value*"; # values, values-fr...
 checkResult $?;
-if [[ -d "app-android/src/main/res-current" ]]; then # not in main app
-  git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/res-current; # main static schedule # required for non-bike agency modules
+if [[ -d "$ROOT_DIR/app-android/src/main/res-current" ]]; then # not in main app
+  git -C "$ROOT_DIR" add -v -A "app-android/src/main/res-current"; # main static schedule # required for non-bike agency modules
   checkResult $?;
-  if [[ -d "app-android/src/main/res-next" ]]; then
-      git -C $APP_ANDROID_PATH add -v -A $SRC_PATH/main/res-next; # next static schedule # optional
+  if [[ -d "$ROOT_DIR/app-android/src/main/res-next" ]]; then
+      git -C "$ROOT_DIR" add -v -A "app-android/src/main/res-next"; # next static schedule # optional
       checkResult $?;
   fi
 fi
-echo "> GIT $APP_ANDROID_PATH > add... DONE";
-echo "> GIT $APP_ANDROID_PATH > commit '$GIT_MSG'...";
-# git -C $APP_ANDROID_PATH git commit -q -m "$GIT_MSG";
-# git -C $APP_ANDROID_PATH git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-git -C $APP_ANDROID_PATH diff --staged --quiet || git -C $APP_ANDROID_PATH commit -m "$GIT_MSG";
+echo "> GIT $ROOT_DIR > add... DONE";
+echo "> GIT $ROOT_DIR > commit '$GIT_MSG'...";
+# git -C "$ROOT_DIR" commit -q -m "$GIT_MSG";
+# git -C "$ROOT_DIR" diff-index --quiet HEAD || git -C "$ROOT_DIR" commit -m "$GIT_MSG";
+git -C "$ROOT_DIR" diff --staged --quiet || git -C "$ROOT_DIR" commit -m "$GIT_MSG";
 checkResult $?;
-echo "> GIT $APP_ANDROID_PATH > commit '$GIT_MSG'... DONE";
-# TODO ? git -C $APP_ANDROID_PATH git push;
+echo "> GIT $ROOT_DIR > commit '$GIT_MSG'... DONE";
+# TODO ? git -C $ROOT_DIR push;
 
 printGitStatus;
 
