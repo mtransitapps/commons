@@ -21,7 +21,7 @@ echo ">> Gradle cleaning... DONE";
 
 if [[ ${IS_CI} = true ]]; then
     echo ">> Running test...";
-	"${ROOT_DIR}/gradlew" -p ../ testAll ${GRADLE_ARGS};
+	"${ROOT_DIR}/gradlew" -p "${ROOT_DIR}" testAll ${GRADLE_ARGS};
 	RESULT=$?;
 	checkResult ${RESULT};
     echo ">> Running test... DONE";

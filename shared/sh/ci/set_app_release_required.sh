@@ -51,7 +51,7 @@ else
 
     echo "> Last release '$LAST_GIT_TAG_NAME' on '$LAST_GIT_TAG_DATE_TIME'.";
 
-    LOCAL_LAST_HASH=$(git log --max-count 1 --pretty=format:"%h");
+    LOCAL_LAST_HASH=$(git rev-parse HEAD);
 
     NOW_TIMESTAMP_SEC=$(date +%s);
     DIFF_SEC=$(($NOW_TIMESTAMP_SEC-$LAST_GIT_TAG_TIMESTAMP_SEC));
@@ -91,4 +91,3 @@ DURATION_SEC=$(($AFTER_DATE_SEC-$BEFORE_DATE_SEC));
 echo "> $DURATION_SEC secs FROM $BEFORE_DATE TO $AFTER_DATE";
 echo "> SET APP RELEASE REQUIRED (OR NOT)... DONE";
 echo "================================================================================";
-
