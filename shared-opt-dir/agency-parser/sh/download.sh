@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh"
 
@@ -31,19 +31,19 @@ if [[ -s "$CONFIG_DIR/input_url_user_agent" ]]; then
 	fi
 fi
 
-URL=`cat $CONFIG_DIR/input_url`;
+URL=$(cat "$CONFIG_DIR/input_url");
 INPUT_DIR="${AGENCY_PARSER_DIR}/input";
 mkdir -p "${INPUT_DIR}";
 download "${URL}" "${INPUT_DIR}/gtfs.zip";
 checkResult $?;
-${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs.zip" "${INPUT_DIR}/gtfs";
+"${SCRIPT_DIR}/archive.sh" "${INPUT_DIR}/gtfs.zip" "${INPUT_DIR}/gtfs";
 checkResult $?;
 
 if [[ -e "$CONFIG_DIR/input_url_next" ]]; then
-	URL=`cat $CONFIG_DIR/input_url_next`;
+	URL=$(cat "$CONFIG_DIR/input_url_next");
 	download "${URL}" "${INPUT_DIR}/gtfs_next.zip";
 	checkResult $?;
-	${SCRIPT_DIR}/archive.sh "${INPUT_DIR}/gtfs_next.zip" "${INPUT_DIR}/gtfs_next";
+	"${SCRIPT_DIR}/archive.sh" "${INPUT_DIR}/gtfs_next.zip" "${INPUT_DIR}/gtfs_next";
 	checkResult $?;
 fi
 

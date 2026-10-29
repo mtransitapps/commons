@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh";
 
@@ -27,7 +27,7 @@ if [[ ${MT_SKIP_PUSH_COMMIT} == true ]]; then
   exit 0 # success
 fi
 
-${ROOT_DIR}/app-android/sh/keys/cleanup.sh; # FAIL OK
+"${ROOT_DIR}/app-android/sh/keys/cleanup.sh"; # FAIL OK
 
 setGitUser;
 

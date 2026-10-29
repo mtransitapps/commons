@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh";
 
@@ -24,8 +24,8 @@ declare -a EXCLUDE=(".git" "test" "build" "gen" "gradle");
 echo "> CLEANING FOR '$PROJECT_NAME'...";
 
 if [[ $CIRCLECI != "true" ]]; then
-	for d in ${ROOT_DIR}/* ; do
-		DIRECTORY=$(basename ${d});
+	for d in "${ROOT_DIR}"/* ; do
+		DIRECTORY=$(basename "${d}");
 		if ! [[ -d "$d" ]]; then
 			echo "> Skip GIT cleaning (not a directory) '$DIRECTORY'.";
 			echo "--------------------------------------------------------------------------------";
@@ -167,9 +167,9 @@ fi
 
 echo "> BUILDING ANDROID APP FOR '$PROJECT_NAME'...";
 CURRENT_PATH=$(pwd);
-cd $ROOT_DIR/app-android || exit; # >>
+cd "$ROOT_DIR/app-android" || exit; # >>
 	
-./sh/ci/build.sh # $ROOT_DIR/app-android/sh/ci/build.sh
+./sh/ci/build.sh; # $ROOT_DIR/app-android/sh/ci/build.sh
 checkResult $?;
 
 cd "$CURRENT_PATH"; # <<

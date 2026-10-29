@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh"
 
@@ -21,7 +21,7 @@ setGitCommitEnabled;
 if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
 
     CURRENT_PATH=$(pwd);
-	cd ${ROOT_DIR}/agency-parser || exit; # >>
+	cd "${ROOT_DIR}/agency-parser" || exit; # >>
 	ROOT_FROM_CURRENT_DIR="./..";
 
 	echo "> VALIDATING DATA FOR '$PROJECT_NAME'...";

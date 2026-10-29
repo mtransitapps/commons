@@ -1,6 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR="${SCRIPT_DIR}/..";
+ROOT_DIR=$(cd "${SCRIPT_DIR}/.." && pwd);
+
 source "${ROOT_DIR}/commons/sh/commons.sh";
 
 # DEPRECATED: use ./commons/sh/git_setup.sh && ./commons/sh/shared_setup.sh;

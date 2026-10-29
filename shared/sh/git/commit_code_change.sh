@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh";
 
@@ -22,7 +22,7 @@ if [[ ${MT_GIT_COMMIT_ENABLED} != true ]]; then
 fi
 echo "> Git commit enabled ...";
 
-${ROOT_DIR}/app-android/sh/keys/cleanup.sh; # FAIL OK
+"${ROOT_DIR}/app-android/sh/keys/cleanup.sh"; # FAIL OK
 
 setGitUser;
 
@@ -50,7 +50,7 @@ checkResult $?;
 echo "> GIT > add... DONE";
 
 echo "> GIT > sh/git/commit_all_submodules.sh...";
-$ROOT_DIR/sh/git/commit_all_submodules.sh;
+"${ROOT_DIR}/sh/git/commit_all_submodules.sh";
 checkResult $?;
 echo "> GIT > sh/git/commit_all_submodules.sh... DONE";
 

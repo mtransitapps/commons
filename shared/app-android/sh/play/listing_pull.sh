@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh";
 
@@ -10,9 +10,8 @@ echo ">> Pulling listing from the Play Console...";
 # https://github.com/Triple-T/gradle-play-publisher#quickstart
 # gradlew help --task bootstrapListing
 
-
-${ROOT_DIR}/app-android/sh/keys/cleanup.sh; # FAIL OK
-${ROOT_DIR}/app-android/sh/keys/setup.sh;
+"${ROOT_DIR}/app-android/sh/keys/cleanup.sh"; # FAIL OK
+"${ROOT_DIR}/app-android/sh/keys/setup.sh";
 checkResult $?;
 
 setGradleArgs;
@@ -21,13 +20,13 @@ setGradleArgs;
 "${ROOT_DIR}/gradlew" :app-android:bootstrapListing --app-details --listings --no-release-notes --no-products --subscriptions; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
-${ROOT_DIR}/app-android/sh/keys/cleanup.sh;
+"${ROOT_DIR}/app-android/sh/keys/cleanup.sh";
 checkResult $?;
 
 checkResult $COMMAND_RESULT; # check command result after keys cleanup
 
 RELEASE_NOTES_DIR="${ROOT_DIR}/app-android/src/main/play/release-notes";
-git checkout -- ${RELEASE_NOTES_DIR};
+git -C "${ROOT_DIR}" checkout -- ${RELEASE_NOTES_DIR};
 checkResult $?;
 
 # OLD_IFS="$IFS"; # work w/ file name with spaces

@@ -1,8 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
-COMMONS_DIR="${ROOT_DIR}/commons";
-source ${COMMONS_DIR}/sh/commons.sh;
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
+
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 setIsCI;
 

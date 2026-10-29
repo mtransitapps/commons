@@ -1,7 +1,7 @@
 #!/bin/bash
 # --track Beta (Private) == DEFAULT
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh";
 

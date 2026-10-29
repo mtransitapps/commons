@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")"
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd);
 
 if [ "$1" = "debug" ]; then
   DEBUG=true;

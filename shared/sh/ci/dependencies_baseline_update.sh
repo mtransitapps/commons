@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")"
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh";
 
@@ -10,25 +10,23 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-COMMONS_DIR="${ROOT_DIR}/commons";
-
 echo "> Update dependencies baselines for 'app-android': ";
 "${ROOT_DIR}"/gradlew :app-android:dependencyGuardBaseline;
 checkResult $?;
-rm -R "${COMMONS_DIR}"/shared-main/app-android/dependencies/;
+rm -R "${ROOT_DIR}/commons"/shared-main/app-android/dependencies/;
 checkResult $?;
-cp -R "${ROOT_DIR}"/app-android/dependencies/ "${COMMONS_DIR}"/shared-main/app-android/;
+cp -R "${ROOT_DIR}"/app-android/dependencies/ "${ROOT_DIR}/commons"/shared-main/app-android/;
 checkResult $?;
-git -C "${COMMONS_DIR}" diff -U0 shared-main/app-android/dependencies/*.txt;
+git -C "${ROOT_DIR}/commons" diff -U0 shared-main/app-android/dependencies/*.txt;
 
 echo "> Update dependencies baselines for 'parser': ";
 "${ROOT_DIR}"/gradlew :parser:dependencyGuardBaseline;
 checkResult $?;
-rm -R "${COMMONS_DIR}"/shared-opt-dir/parser/dependencies/;
+rm -R "${ROOT_DIR}/commons"/shared-opt-dir/parser/dependencies/;
 checkResult $?;
-cp -R "${ROOT_DIR}"/parser/dependencies/ "${COMMONS_DIR}"/shared-opt-dir/parser/;
+cp -R "${ROOT_DIR}"/parser/dependencies/ "${ROOT_DIR}/commons"/shared-opt-dir/parser/;
 checkResult $?;
-git -C "${COMMONS_DIR}" diff -U0 shared-opt-dir/parser/dependencies/*.txt;
+git -C "${ROOT_DIR}/commons" diff -U0 shared-opt-dir/parser/dependencies/*.txt;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);

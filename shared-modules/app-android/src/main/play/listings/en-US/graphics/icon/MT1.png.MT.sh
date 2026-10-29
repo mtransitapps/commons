@@ -1,9 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../../../../../../../../.." && pwd);
 
-ROOT_DIR="$SCRIPT_DIR/../../../../../../../../../..";
-COMMONS_DIR="${ROOT_DIR}/commons";
-source ${COMMONS_DIR}/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 setIsCI;
 
@@ -31,7 +30,7 @@ if [ -f "${FILE_1_PNG}" ]; then
   fi
 fi
 
-$ROOT_DIR/commons-android/pub/module-hi-res-app-icon.sh; # uses inkscape
+${ROOT_DIR}/commons-android/pub/module-hi-res-app-icon.sh; # uses inkscape
 checkResult $?;
 
 echo ">> Generating icon/1.png... DONE";

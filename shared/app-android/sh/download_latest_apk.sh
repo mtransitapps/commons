@@ -3,7 +3,7 @@
 exec 3>&1 1>&2
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
 
 echo ">> Downloading '$*' latest release APK..."
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh";
 
@@ -24,7 +24,7 @@ if [[ $# -eq 0 ]]; then
 	exit 1;
 fi
 
-${ROOT_DIR}/app-android/sh/keys/setup.sh;
+"${ROOT_DIR}/app-android/sh/keys/setup.sh";
 checkResult $?;
 
 setGradleArgs;
@@ -39,7 +39,7 @@ if [[ $COMMAND_RESULT -ne 0 ]]; then
   COMMAND_RESULT=$?;
 fi
 
-${ROOT_DIR}/app-android/sh/keys/cleanup.sh;
+"${ROOT_DIR}/app-android/sh/keys/cleanup.sh";
 checkResult $?;
 
 checkResult $COMMAND_RESULT; # check command result after keys cleanup

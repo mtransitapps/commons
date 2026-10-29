@@ -220,8 +220,8 @@ function setGitProjectName() {
 	if [[ -z "${DIR}" ]]; then
 		DIR=".";
 	fi
-	GIT_URL=$(git -C $DIR config --get remote.origin.url);
-	GIT_PROJECT_NAME=$(basename -- ${GIT_URL});
+	GIT_URL=$(git -C "${DIR}" config --get remote.origin.url);
+	GIT_PROJECT_NAME=$(basename -- "${GIT_URL}");
 	GIT_PROJECT_NAME="${GIT_PROJECT_NAME%.*}" # remove ".git" extension
 	if [[ -z "${GIT_PROJECT_NAME}" ]]; then
 		echo "GIT_PROJECT_NAME not found!";

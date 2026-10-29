@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
-ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh"
 
@@ -54,6 +54,7 @@ for FILE in "${FILES[@]}" ; do
 				exit ${RESULT};
 			fi
 		elif [[ -f "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" ]]; then
+			mkdir -p "$(dirname "$FILE_PATH")";
 			cp "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" "$FILE_PATH";
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
