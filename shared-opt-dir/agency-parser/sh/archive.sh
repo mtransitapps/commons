@@ -35,7 +35,12 @@ if [[ ! -d "${FILES_DIR}" ]]; then
   exit 1;
 fi
 
-YESTERDAY=$(date -d "yesterday" +%Y%m%d); # service can start yesterday and finish today
+# service can start yesterday and finish today
+if date -d "yesterday" +%Y%m%d >/dev/null 2>&1; then
+  YESTERDAY=$(date -d "yesterday" +%Y%m%d)
+else
+  YESTERDAY=$(date -v-1d +%Y%m%d)
+fi
 echo "> Yesterday: '$YESTERDAY'";
 
 START_DATE=""

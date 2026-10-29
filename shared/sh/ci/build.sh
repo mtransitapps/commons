@@ -36,7 +36,7 @@ if [[ $CIRCLECI != "true" ]]; then
 			echo "--------------------------------------------------------------------------------";
 			continue;
 		fi
-		if [[ -d "$d" ]]; then
+		if [[ -e "$d/.git" ]]; then
 			# TODO only if not master????
 			echo "> GIT cleaning in '$DIRECTORY'...";
 			GIT_REV_PARSE_HEAD=$(git -C "$d" rev-parse HEAD);

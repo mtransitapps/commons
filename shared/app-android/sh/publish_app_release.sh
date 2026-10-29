@@ -97,20 +97,17 @@ function shouldCreateGitHubRelease() {
 
 if [[ ${IS_GH_ENABLED} == true ]]; then
   echo "> GitHub > publishing release '$APP_VERSION_NAME'...";
-  GH_FILES="";
-  GH_FILES_APP_ANDROID="";
+  GH_FILES=()
   if [ -e "${APK_FILES[0]}" ]; then
-      GH_FILES+=" $APK_PATH";
-      GH_FILES_APP_ANDROID+=" $APK_PATH_APP_ANDROID";
+      GH_FILES+=("${ROOT_DIR}/app-android/build/outputs/apk/release/"*.apk)
   elif [ -e "${AAB_FILES[0]}" ]; then
-      GH_FILES+=" $AAB_PATH";
-      GH_FILES_APP_ANDROID+=" $AAB_PATH_APP_ANDROID";
+      GH_FILES+=("${ROOT_DIR}/app-android/build/outputs/bundle/release/"*.aab)
   else
-      echo "> No APK/AAB";
+      echo "> No APK/AAB"
   fi
-  echo "> GH_FILES: $GH_FILES.";
+  echo "> GH_FILES: ${GH_FILES[*]}."
   if shouldCreateGitHubRelease "$APP_VERSION_NAME"; then
-    gh release create $APP_VERSION_NAME --target $GIT_BRANCH --latest --generate-notes $GH_FILES;
+    gh release create "$APP_VERSION_NAME" --target "$GIT_BRANCH" --latest --generate-notes "${GH_FILES[@]}"
     checkResult $?;
   else
     echo "> GitHub > release '$APP_VERSION_NAME' already exists and is latest... SKIP";

@@ -40,7 +40,7 @@ for FILE in "${FILES[@]}" ; do
 	FILE_PATH="${APP_ANDROID_DIR}/${FILE}";
 	echoFile -n "> Cleaning '${FILE_PATH}'...";
 
-	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
+	git ls-files --error-unmatch "${FILE_PATH}" &> /dev/null;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
 		if [[ -f "$CLEAR/${FILE}" ]]; then
@@ -98,13 +98,13 @@ for FILE in "${FILES[@]}" ; do
 	echoFile " DONE ✓";
 done
 
-if [[ -d $CLEAR ]]; then
+if [[ -d "$CLEAR" ]]; then
 	echoFile -n "> Deleting '$CLEAR' directory...";
-	rm -r $CLEAR;
+	rm -r "$CLEAR";
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo " ERROR! while deleting '$CLEAR' directory!";
-		ls -al $CLEAR;
+		ls -al "$CLEAR";
 		exit ${RESULT};
 	else
 		echoFile " DONE ✓";

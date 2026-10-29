@@ -158,6 +158,6 @@ echo " - Main app initialized"
 
 echo ">> Step 6: Record screenshots..."
 
-$ROOT_DIR/commons-android/pub/all-app-screenshots.sh
+"${ROOT_DIR}/commons-android/pub/all-app-screenshots.sh"
 
 echo ">> Setup and record screenshots... DONE"

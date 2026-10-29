@@ -47,7 +47,7 @@ for FILE in "${FILES[@]}" ; do
 
 	FILE_PATH="${APP_ANDROID_DIR}/${FILE}";
 	if [[ ! -f ${FILE_PATH} ]]; then
-		git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
+		git ls-files --error-unmatch "${FILE_PATH}" &> /dev/null;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
 			if [[ -f $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ]]; then
@@ -68,11 +68,11 @@ for FILE in "${FILES[@]}" ; do
 		fi
 	else
 		# make sure file is not already decrypted
-		git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
+		git ls-files --error-unmatch "${FILE_PATH}" &> /dev/null;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
 			if [[ -f $CLEAR/${FILE} ]]; then
-				diff -q ${FILE_PATH} $CLEAR/${FILE} &> /dev/null;
+				diff -q "${FILE_PATH}" "$CLEAR/${FILE}" &> /dev/null;
 				RESULT=$?;
 				if [[ ${RESULT} -ne 0 ]]; then
 					echo " ERROR! File '$FILE_PATH' has local changes compared to clear version!";
@@ -80,7 +80,7 @@ for FILE in "${FILES[@]}" ; do
 					exit 1; # local changes?
 				fi
 			elif [[ -f $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ]]; then
-				diff -q ${FILE_PATH} $SHARED_UNTRACKED_CLEAR_DIR/${FILE} &> /dev/null;
+				diff -q "${FILE_PATH}" "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" &> /dev/null;
 				RESULT=$?;
 				if [[ ${RESULT} -ne 0 ]]; then
 					echo " ERROR! File '$FILE_PATH' has local changes compared to shared clear version!";
@@ -89,7 +89,7 @@ for FILE in "${FILES[@]}" ; do
 				fi
 			fi
 		else
-			git diff --name-status --exit-code ${FILE_PATH} &> /dev/null;
+			git diff --name-status --exit-code "${FILE_PATH}" &> /dev/null;
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
 				echo " ERROR! Decrypted file '$FILE_PATH' has local changes compared to git version!";
@@ -100,10 +100,10 @@ for FILE in "${FILES[@]}" ; do
 
 	FILE_ENC_PATH="${APP_ANDROID_DIR}/enc/${FILE}";
 	if [[ ! -f ${FILE_ENC_PATH} ]]; then
-		git ls-files --error-unmatch ${FILE_ENC_PATH} &> /dev/null;
+		git ls-files --error-unmatch "${FILE_ENC_PATH}" &> /dev/null;
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 && -f $SHARED_UNTRACKED_ENC_DIR/${FILE} ]]; then
-			cp $SHARED_UNTRACKED_ENC_DIR/${FILE} ${FILE_ENC_PATH};
+			cp "$SHARED_UNTRACKED_ENC_DIR/${FILE}" "${FILE_ENC_PATH}";
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
 				echo " ERROR! while copying shared untracked encrypted file '$SHARED_UNTRACKED_ENC_DIR/${FILE}' to '${FILE_ENC_PATH}'!";
@@ -128,7 +128,7 @@ for FILE in "${FILES[@]}" ; do
 	echoFile -n "> Decrypting '$FILE_PATH'...";
 
 	# CREATE clear copy of untracked file before decrypting
-	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
+	git ls-files --error-unmatch "${FILE_PATH}" &> /dev/null;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
 		CLEAR_DIR=$(dirname "$CLEAR/${FILE}");
@@ -138,7 +138,7 @@ for FILE in "${FILES[@]}" ; do
 			echo " ERROR! while creating clear directory '$CLEAR_DIR'!";
 			exit ${RESULT};
 		fi
-		if [[ ! -f ${FILE_PATH} ]]; then
+		if [[ ! -f "${FILE_PATH}" ]]; then
 			if [[ -f "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" ]]; then
 				cp "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" "$CLEAR/${FILE}";
 				RESULT=$?;

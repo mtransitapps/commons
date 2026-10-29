@@ -6,7 +6,12 @@ source "${ROOT_DIR}/commons/sh/commons.sh"
 
 echo ">> Selecting archive GTFS..."
 
-YESTERDAY=$(date -d "yesterday" +%Y%m%d); # service can start yesterday and finish today
+# service can start yesterday and finish today
+if date -d "yesterday" +%Y%m%d >/dev/null 2>&1; then
+  YESTERDAY=$(date -d "yesterday" +%Y%m%d)
+else
+  YESTERDAY=$(date -v-1d +%Y%m%d)
+fi
 echo "> Yesterday: '$YESTERDAY'";
 
 AGENCY_PARSER_DIR="${ROOT_DIR}/agency-parser";
