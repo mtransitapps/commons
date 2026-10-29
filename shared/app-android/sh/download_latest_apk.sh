@@ -4,7 +4,7 @@
 _download_latest_apk() {
   local SCRIPT_DIR ROOT_DIR REPO REPO_NAME APK_FILE_LIST
   SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
-  ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
+  ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$PWD" "$ROOT_DIR");
 
   echo ">> Downloading '$*' latest release APK..."
 
