@@ -6,7 +6,7 @@ source "${ROOT_DIR}/commons/sh/commons.sh"
 
 echo ">> Resetting keys...";
 
-source ${SCRIPT_DIR}/files.sh;
+source "${SCRIPT_DIR}/files.sh";
 
 if [[ ${#FILES[@]} -lt 1 ]]; then
 	echo "FILES environment variable is NOT defined (need at least 1 empty \"\")!";

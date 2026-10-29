@@ -54,11 +54,7 @@ fi
 
 # TAG RELEASE ON GITHUB
 # Shared version name also used in https://github.com/mtransitapps/commons/blob/master/shared/app-android/build.gradle
-APK_PATH="${ROOT_DIR}/app-android/build/outputs/apk/release/*.apk";
-APK_PATH_APP_ANDROID="${ROOT_DIR}/build/outputs/apk/release/*.apk";
 APK_FILES=("${ROOT_DIR}/app-android/build/outputs/apk/release/"*.apk);
-AAB_PATH="${ROOT_DIR}/app-android/build/outputs/bundle/release/*.aab";
-AAB_PATH_APP_ANDROID="${ROOT_DIR}/build/outputs/bundle/release/*.aab";
 AAB_FILES=("${ROOT_DIR}/app-android/build/outputs/bundle/release/"*.aab);
 if [ -e "${APK_FILES[0]}" ]; then
   APK_FILE_NAME=$(basename "${APK_FILES[0]}");

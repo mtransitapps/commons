@@ -18,7 +18,7 @@ function echoFile() {
 	fi
 }
 
-source ${SCRIPT_DIR}/files.sh;
+source "${SCRIPT_DIR}/files.sh";
 
 if [[ ${#FILES[@]} -lt 1 ]]; then
 	echo "ERROR! FILES environment variable is NOT defined (need at least 1 empty \"\")!";

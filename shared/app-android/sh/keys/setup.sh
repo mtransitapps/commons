@@ -18,7 +18,7 @@ function echoFile() {
 	fi
 }
 
-source ${SCRIPT_DIR}/files.sh;
+source "${SCRIPT_DIR}/files.sh";
 
 if [[ ${#FILES[@]} -lt 1 ]]; then
 	echo " ERROR! FILES environment variable is NOT defined (need at least 1 empty \"\")!";
@@ -52,7 +52,7 @@ for FILE in "${FILES[@]}" ; do
 		if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
 			if [[ -f $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ]]; then
 				mkdir -p "$(dirname "$FILE_PATH")";
-				cp $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ${FILE_PATH};
+				cp "$SHARED_UNTRACKED_CLEAR_DIR/${FILE}" "${FILE_PATH}";
 				RESULT=$?;
 				if [[ ${RESULT} -ne 0 ]]; then
 					echo " ERROR! while copying shared untracked clear file '$SHARED_UNTRACKED_CLEAR_DIR/${FILE}' to '${FILE_PATH}'!";

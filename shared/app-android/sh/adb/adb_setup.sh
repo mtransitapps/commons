@@ -5,6 +5,6 @@ if [[ -z "${ANDROID_HOME}" ]]; then
 fi
 ADB="${ANDROID_HOME}/platform-tools/adb";
 if [ ! -f "$ADB" ]; then
-    echo "$ADB does NOT exists."
+    echo "$ADB does NOT exist."
     exit 1;
 fi

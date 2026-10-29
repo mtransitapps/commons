@@ -3,7 +3,7 @@ SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR=$(cd "${SCRIPT_DIR}/../../../../.." && pwd);
 
 source "${ROOT_DIR}/commons/sh/commons.sh";
-source ${ROOT_DIR}/commons/sh/feature_flags.sh;
+source "${ROOT_DIR}/commons/sh/feature_flags.sh";
 
 setIsCI;
 

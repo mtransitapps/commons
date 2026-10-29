@@ -10,7 +10,6 @@ echo "--------------------------------------------------------------------------
 BEFORE_DATE=$(date +%D-%X);
 BEFORE_DATE_SEC=$(date +%s);
 
-setGitProjectName;
 setIsCI;
 setGradleArgs;
 setGitProjectName;
