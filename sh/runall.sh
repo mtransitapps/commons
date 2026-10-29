@@ -48,11 +48,11 @@ echo "Command: '$@'.";
 
 for FILE_NAME in $(ls -a) ; do
 	if [[ $FILE_NAME == "." ]] || [[ $FILE_NAME == ".." ]]; then
-		echo "> '$FILE_NAME' > Skip.";
+		# echo "> '$FILE_NAME' > Skip.";
 		continue;
 	fi
 	if ! [[ -d "$FILE_NAME" ]]; then
-		echo "> '$FILE_NAME' > Skip (not a directory).";
+		# echo "> '$FILE_NAME' > Skip (not a directory).";
 		continue;
 	fi
 	echo "--------------------------------------------------------------------------------";

@@ -47,27 +47,15 @@ for SUBMODULE in "${SUBMODULES[@]}" ; do
 		echo "> Submodule does NOT exist '$SUBMODULE'!";
 		exit 1;
 	fi
-	cd "$SUBMODULE" || exit;
-	RESULT=$?;
-	if [[ ${RESULT} -ne 0 ]]; then
-		echo "Error while entering GIT submodule '$SUBMODULE'!";
-		exit ${RESULT};
-	fi
 	echo "> Running GIT command '$*' in '$SUBMODULE'...";
-	git "${@}";
+	git -C "$SUBMODULE" "${@}";
 	RESULT=$?;
+	if [[ ${RESULT} -ne 0 ]]; then
+		echo "Running GIT command '$*' in '$SUBMODULE'... FAILED!";
+		exit ${RESULT};
+	fi
 	echo "> Running GIT command '$*' in '$SUBMODULE'... DONE";
-	if [[ ${RESULT} -ne 0 ]]; then
-		echo "Error while running GIT command '$*'!";
-		exit ${RESULT};
-	fi
 	echo "--------------------------------------------------------------------------------";
-	cd ../;
-	RESULT=$?;
-	if [[ ${RESULT} -ne 0 ]]; then
-		echo "Error while leaving GIT submodule '$SUBMODULE'!";
-		exit ${RESULT};
-	fi
 done
 
 echo "--------------------------------------------------------------------------------";

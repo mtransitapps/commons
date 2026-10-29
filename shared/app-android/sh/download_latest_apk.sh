@@ -1,56 +1,54 @@
 #!/bin/bash
 
-# SCRIPT_DIR="$(dirname "$0")"; # do not work with source ./script.sh (required to load environment variables)
-_download_latest_apk() {
-  local SCRIPT_DIR ROOT_DIR REPO REPO_NAME APK_FILE_LIST
-  SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
-  ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$PWD" "$ROOT_DIR");
+exec 3>&1 1>&2
 
-  echo ">> Downloading '$*' latest release APK..."
+SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
+ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$PWD" "$ROOT_DIR");
 
-  REPO=$1;
+echo ">> Downloading '$*' latest release APK..."
 
-  if [[ -z $REPO ]]; then
-    echo ">> Downloading latest release APK... ERROR (no repo provided)!"
-    return 1 #error
-  fi
+REPO=$1;
 
-  REPO_NAME=$(basename "$REPO")
+if [[ -z $REPO ]]; then
+  echo ">> Downloading latest release APK... ERROR (no repo provided)!"
+  exit 1 #error
+fi
 
-  echo "Fetching latest '$REPO_NAME' repository release APK from: '$REPO'"
+REPO_NAME=$(basename "$REPO")
 
-  if ! APK_FILE_LIST=$(gh release view -R "$REPO" --json assets --jq '.assets[] | select(.name | endswith(".apk")) | .name'); then
-    echo "ERROR: Failed to fetch release info from GitHub!"
-    return 1 #error
-  fi
+echo "Fetching latest '$REPO_NAME' repository release APK from: '$REPO'"
 
-  if [[ -z "$APK_FILE_LIST" ]]; then
-    echo "ERROR: Could not find APK in latest release!"
-    return 1 #error
-  fi
+if ! APK_FILE_LIST=$(gh release view -R "$REPO" --json assets --jq '.assets[] | select(.name | endswith(".apk")) | .name'); then
+  echo "ERROR: Failed to fetch release info from GitHub!"
+  exit 1 #error
+fi
 
-  read -r APK_FILE <<< "$APK_FILE_LIST"
+if [[ -z "$APK_FILE_LIST" ]]; then
+  echo "ERROR: Could not find APK in latest release!"
+  exit 1 #error
+fi
 
-  if [[ -z "$APK_FILE" ]]; then
-    echo "ERROR: Could not find APK in latest release!"
-    return 1 #error
-  fi
+read -r APK_FILE <<< "$APK_FILE_LIST"
 
-  echo "Downloading '$APK_FILE'..."
-  if ! gh release download --repo "$REPO" --pattern "$APK_FILE" --dir "$ROOT_DIR" --skip-existing >/dev/null; then
-    echo "ERROR: Could not download APK from latest release!"
-    return 1 #error
-  fi
-  if [ ! -f "$ROOT_DIR/$APK_FILE" ] || [ ! -s "$ROOT_DIR/$APK_FILE" ]; then
-    echo "ERROR: Failed to download module APK or file is empty!"
-    return 1 #error
-  fi
+if [[ -z "$APK_FILE" ]]; then
+  echo "ERROR: Could not find APK in latest release!"
+  exit 1 #error
+fi
 
-  export APK_FILE="$ROOT_DIR/$APK_FILE"
+echo "Downloading '$APK_FILE'..."
+if ! gh release download --repo "$REPO" --pattern "$APK_FILE" --dir "$ROOT_DIR" --skip-existing >/dev/null; then
+  echo "ERROR: Could not download APK from latest release!"
+  exit 1 #error
+fi
+if [ ! -f "$ROOT_DIR/$APK_FILE" ] || [ ! -s "$ROOT_DIR/$APK_FILE" ]; then
+  echo "ERROR: Failed to download module APK or file is empty!"
+  exit 1 #error
+fi
 
-  echo "'$REPO' latest release APK downloaded successfully to '$APK_FILE'."
+APK_PATH="$ROOT_DIR/$APK_FILE"
+APK_PATH="$(realpath "$APK_PATH")"
 
-  echo ">> Downloading '$*' latest release APK... DONE"
-}
+echo "'$REPO' latest release APK downloaded successfully to '$APK_PATH'."
 
-_download_latest_apk "$@"
+echo ">> Downloading '$*' latest release APK... DONE"
+printf '%s\n' "$APK_PATH" >&3

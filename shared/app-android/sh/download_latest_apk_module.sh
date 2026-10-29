@@ -6,12 +6,10 @@ set -e
 REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
 REPO="mtransitapps/${REPO_NAME}"
 
-source "$SCRIPT_DIR/download_latest_apk.sh" "$REPO"
-
-if [[ -z "$APK_FILE" ]]; then
+if ! APK_PATH=$("$SCRIPT_DIR/download_latest_apk.sh" "$REPO"); then
   echo ">> ERROR: no APK file!"
   exit 1 # error
 fi
 
-export MODULE_APK_FILE="$APK_FILE"
+export MODULE_APK_FILE="$APK_PATH"
 echo "MODULE_APK_FILE: '$MODULE_APK_FILE'."

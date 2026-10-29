@@ -38,11 +38,9 @@ if [[ $CIRCLECI != "true" ]]; then
 		fi
 		if [[ -d "$d" ]]; then
 			# TODO only if not master????
-			CURRENT_PATH=$(pwd);
-			cd ${d} || exit;
 			echo "> GIT cleaning in '$DIRECTORY'...";
-			GIT_REV_PARSE_HEAD=$(git rev-parse HEAD);
-			GIT_REV_PARSE_REMOTE_BRANCH=$(git rev-parse origin/${GIT_BRANCH});
+			GIT_REV_PARSE_HEAD=$(git -C "$d" rev-parse HEAD);
+			GIT_REV_PARSE_REMOTE_BRANCH=$(git -C "$d" rev-parse origin/${GIT_BRANCH});
 			if [[ "$GIT_REV_PARSE_HEAD" != "$GIT_REV_PARSE_REMOTE_BRANCH" ]]; then
 				echo "> GIT repo outdated in '$DIRECTORY' (local:$GIT_REV_PARSE_HEAD|origin/$GIT_BRANCH:$GIT_REV_PARSE_REMOTE_BRANCH).";
 				exit 1;
@@ -50,10 +48,9 @@ if [[ $CIRCLECI != "true" ]]; then
 				echo "> GIT repo up-to-date in '$DIRECTORY' (local:$GIT_REV_PARSE_HEAD|origin/$GIT_BRANCH:$GIT_REV_PARSE_REMOTE_BRANCH).";
 			fi
 
-			git switch ${GIT_BRANCH};
+			git -C "$d" switch ${GIT_BRANCH};
 			checkResult $?;
 			echo "> GIT cleaning in '$DIRECTORY'... DONE";
-			cd "$CURRENT_PATH";
 			echo "--------------------------------------------------------------------------------";
 		fi
 	done

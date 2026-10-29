@@ -96,16 +96,14 @@ for S in "${!SUBMODULES[@]}"; do
 		echo "> Submodule directory '$ROOT_DIR/$SUBMODULE' does NOT exist!";
 		exit 1;
 	fi
-	CURRENT_PATH=$(pwd);
-	cd $ROOT_DIR/$SUBMODULE || exit; # >>
-	CURRENT_REMOTE_URL=$(git remote get-url origin);
+	CURRENT_REMOTE_URL=$(git -C "$ROOT_DIR/$SUBMODULE" remote get-url origin);
 	if [[ ${IS_CI} = false ]]; then
 		NEW_REMOTE_URL="git@github.com:mtransitapps/$SUBMODULE_REPO.git";
 		if [[ "$CURRENT_REMOTE_URL" == "$NEW_REMOTE_URL" ]]; then
 			echo "> Submodule '$SUBMODULE' > remote URL is already set to '$NEW_REMOTE_URL' ✓";
 		else
 			echo "> Submodule '$SUBMODULE' > setting remote URL '$NEW_REMOTE_URL' in '$SUBMODULE'...";
-			git remote -v set-url origin $NEW_REMOTE_URL;
+			git -C "$ROOT_DIR/$SUBMODULE" remote -v set-url origin $NEW_REMOTE_URL;
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
 				echo "> Submodule '$SUBMODULE' > ERROR while setting remote URL for '$NEW_REMOTE_URL'!";
@@ -120,7 +118,7 @@ for S in "${!SUBMODULES[@]}"; do
 			echo "> Submodule '$SUBMODULE' > remote URL is already set to '$NEW_REMOTE_URL' ✓";
 		else
 			echo "> Setting submodule remote URL '$NEW_REMOTE_URL' in '$SUBMODULE'...";
-			git remote -v set-url origin $NEW_REMOTE_URL;
+			git -C "$ROOT_DIR/$SUBMODULE" remote -v set-url origin $NEW_REMOTE_URL;
 			RESULT=$?;
 			if [[ ${RESULT} -ne 0 ]]; then
 				echo "> Submodule '$SUBMODULE' > ERROR while setting remote URL for '$NEW_REMOTE_URL'!";
@@ -129,7 +127,6 @@ for S in "${!SUBMODULES[@]}"; do
 			echo "> Submodule '$SUBMODULE' > setting remote URL '$NEW_REMOTE_URL' in '$SUBMODULE'... DONE ✓";
 		fi
 	fi
-	cd $CURRENT_PATH || exit; # <<
 	# echo "--------------------------------------------------------------------------------";
 done
 
