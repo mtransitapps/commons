@@ -426,7 +426,7 @@ $SOURCES_LINES
 This application is free and open-source:
 $CONTACT_WEBSITE_URL
 
-This app is not related with $NOT_RELATED_WITH.
+This app is not affiliated with, endorsed by, or officially representing: $NOT_RELATED_WITH.
 EOL
 
 PERMISSIONS_LINE="";

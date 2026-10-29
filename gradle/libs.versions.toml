@@ -26,7 +26,7 @@ sonar = "7.5.0.8588"
 # https://detekt.dev/changelog-2.0.0
 detekt2 = "2.0.0-alpha.6"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "9.4.1"
+android-gradlePlugin = "9.5.0"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
@@ -62,7 +62,7 @@ androidx-sqlite = "2.7.0"
 androidx-swiperefreshlayout = "1.2.0"
 androidx-vectordrawable = "1.2.0"
 androidx-viewpager2 = "1.1.0"
-androidx-webkit = "1.17.0"
+androidx-webkit = "1.18.0"
 androidx-workManager = "2.12.0"
 # https://github.com/material-components/material-components-android/releases/latest
 material = "1.14.0"
@@ -81,7 +81,7 @@ gps-plugin = "4.5.0"
 # https://developers.google.com/admob/android/rel-notes
 gps-ads = "25.5.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
-gps-ads-nextgen = "1.5.0"
+gps-ads-nextgen = "1.6.0"
 gps-ump = "4.0.0"
 gps-basement = "18.12.0"
 gps-time = "16.0.1"
@@ -90,7 +90,7 @@ gps-location = "21.4.0"
 gps-maps = "20.1.0"
 # LATEST: https://firebase.google.com/support/release-notes/android#latest_sdk_versions
 # ALL: https://firebase.google.com/support/releases
-firebase-bom = "34.19.0"
+firebase-bom = "35.1.0"
 firebase-crashlytics-plugin = "3.0.8"
 firebase-perf-plugin = "2.0.2"
 # https://developer.android.com/google/play/billing/release-notes
@@ -111,7 +111,7 @@ appLovin-mediation = "13.6.4.2"
 # https://github.com/Vungle/VungleAds-SDK/blob/master/CHANGELOG-Android.md
 #vungle = "_._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/liftoffmonetize/CHANGELOG.md
-vungle-mediation = "7.7.8.1"
+vungle-mediation = "7.7.9.0"
 # https://github.com/google/guava/releases/latest
 guava = "33.6.0-android"
 # https://github.com/square/leakcanary/releases
