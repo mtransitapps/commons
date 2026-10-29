@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 echo "================================================================================";
 echo "> SHARED CLEANUP...";
@@ -26,8 +26,8 @@ function echoFile() {
 	fi
 }
 
-if [[ -f "$ROOT_DIR/gradlew" ]]; then
-	$ROOT_DIR/gradlew clean ${GRADLE_ARGS};
+if [[ -f "${ROOT_DIR}/gradlew" ]]; then
+	"${ROOT_DIR}/gradlew" clean ${GRADLE_ARGS};
 	checkResult $?;
 	rm $ROOT_DIR/gradlew; # only once
 	checkResult $?;

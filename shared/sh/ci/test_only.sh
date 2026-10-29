@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 echo "================================================================================";
 echo "> TEST...";
@@ -17,12 +17,12 @@ setGitProjectName;
 
 echo "> TESTS FOR '$PROJECT_NAME'... ";
 
-${ROOT_DIR}/gradlew testAll ${GRADLE_ARGS};
+"${ROOT_DIR}/gradlew" testAll ${GRADLE_ARGS};
 checkResult $?;
 
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 	echo ">> Running dependency guard...";
-	${ROOT_DIR}/gradlew dependencyGuard ${GRADLE_ARGS};
+	"${ROOT_DIR}/gradlew" dependencyGuard ${GRADLE_ARGS};
 	checkResult $?;
 	echo ">> Running dependency guard... DONE";
 fi

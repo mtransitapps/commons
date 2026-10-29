@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 # USED by 'mtransitapps/gh-actions/.github/actions/setup': https://github.com/mtransitapps/gh-actions/blob/master/.github/actions/setup/action.yml
 
@@ -25,15 +25,15 @@ fi
 echo "> Git commit enabled ...";
 
 echo "> Fetching latest from submodules...";
-git submodule foreach git fetch -v --all;
+git -C "$ROOT_DIR" submodule foreach git fetch -v --all;
 echo "> Fetching latest from submodules... DONE";
 
 echo "--------------------------------------------------------------------------------";
-git submodule foreach git branch -v -a;
+git -C "$ROOT_DIR" submodule foreach git branch -v -a;
 echo "--------------------------------------------------------------------------------";
 
 echo "> Switching to branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH')...";
-git submodule foreach "git switch $GIT_BRANCH || git switch $DEFAULT_GIT_BRANCH";
+git -C "$ROOT_DIR" submodule foreach "git switch $GIT_BRANCH || git switch $DEFAULT_GIT_BRANCH";
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
 	echo "> Error while switching to branch '$GIT_BRANCH' (or '$DEFAULT_GIT_BRANCH') in submodules!";
@@ -44,7 +44,7 @@ echo "--------------------------------------------------------------------------
 
 echo "--------------------------------------------------------------------------------";
 echo "> Pulling latest from submodules...";
-git submodule foreach "git pull -v --ff-only";
+git -C "$ROOT_DIR" submodule foreach "git pull -v --ff-only";
 RESULT=$?;
 if [[ ${RESULT} -ne 0 ]]; then
 	echo "> Error while pulling latest from submodules!";

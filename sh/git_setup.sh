@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 echo "================================================================================";
 echo "> GIT SETUP...";
@@ -14,10 +14,10 @@ setGitProjectName;
 
 setIsCI;
 
-IS_SHALLOW=$(git -C $ROOT_DIR rev-parse --is-shallow-repository);
+IS_SHALLOW=$(git -C "$ROOT_DIR" rev-parse --is-shallow-repository);
 if [[ "$IS_SHALLOW" == true && "${GITHUB_ACTIONS}" == false ]]; then
 	echo "> Fetching unshallow GIT repo...";
-	git -C $ROOT_DIR fetch -v --unshallow;
+	git -C "$ROOT_DIR" fetch -v --unshallow;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then
 		echo "> Error while fetching unshallow GIT repository!";
@@ -84,7 +84,7 @@ for S in "${!SUBMODULES[@]}"; do
 		fi
 		REPO_URL="https://github.com/mtransitapps/$SUBMODULE_REPO.git";
 		echo "> Adding submodule '$REPO_URL' in '$ROOT_DIR/$SUBMODULE'...";
-		git -C $ROOT_DIR submodule add $REPO_URL $ROOT_DIR/$SUBMODULE; # GitHub secret PAT
+		git -C "$ROOT_DIR" submodule add $REPO_URL $SUBMODULE; # GitHub secret PAT
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
 			echo "> Error while adding submodule '$REPO_URL' in '$ROOT_DIR/$SUBMODULE'!";

@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 echo "================================================================================";
 echo "> COMMIT CODE CHANGE..";
@@ -33,19 +33,19 @@ fi
 echo "GIT_MSG: $GIT_MSG";
 
 echo "> GIT submodule > add...";
-git -C $ROOT_DIR submodule foreach git add -v -A;
+git -C "$ROOT_DIR" submodule foreach git add -v -A;
 checkResult $?;
 echo "> GIT submodule > add... DONE";
 echo "> GIT submodule > commit '$GIT_MSG'...";
-# git -C $ROOT_DIR submodule foreach git commit -q -m "$GIT_MSG";
-# git -C $ROOT_DIR submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
-git -C $ROOT_DIR submodule foreach "git diff-index --quiet HEAD || git commit -m '$GIT_MSG'";
+# git -C "$ROOT_DIR" submodule foreach git commit -q -m "$GIT_MSG";
+# git -C "$ROOT_DIR" submodule foreach git diff-index --quiet HEAD || git commit -m "$GIT_MSG";
+git -C "$ROOT_DIR" submodule foreach "git diff-index --quiet HEAD || git commit -m '$GIT_MSG'";
 checkResult $?;
 echo "> GIT submodule > commit '$GIT_MSG'... DONE";
 # TODO ? git submodule foreach git push;
 
 echo "> GIT > add...";
-git -C $ROOT_DIR add -v -A; # needed for other files than git submodules
+git -C "$ROOT_DIR" add -v -A; # needed for other files than git submodules
 checkResult $?;
 echo "> GIT > add... DONE";
 
@@ -55,7 +55,7 @@ checkResult $?;
 echo "> GIT > sh/git/commit_all_submodules.sh... DONE";
 
 echo "> GIT > remaining repo files to commit (if no submodule change)...";
-git -C $ROOT_DIR diff-index --quiet HEAD || git -C $ROOT_DIR commit -m "$GIT_MSG";
+git -C "$ROOT_DIR" diff-index --quiet HEAD || git -C "$ROOT_DIR" commit -m "$GIT_MSG";
 checkResult $?;
 echo "> GIT > remaining repo files to commit (if no submodule change)... DONE";
 

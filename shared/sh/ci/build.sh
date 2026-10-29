@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 echo "================================================================================";
 echo "> BUILD ALL...";
@@ -61,7 +61,7 @@ fi
 
 echo "--------------------------------------------------------------------------------";
 echo "GRADLE VERSION:";
-$ROOT_DIR/gradlew --version ${GRADLE_ARGS};
+"${ROOT_DIR}/gradlew" --version ${GRADLE_ARGS};
 echo "--------------------------------------------------------------------------------";
 
 echo "--------------------------------------------------------------------------------";
@@ -102,11 +102,11 @@ echo "--------------------------------------------------------------------------
 if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 
 	echo "> CLEANING FOR '$PROJECT_NAME' (GRADLE BUILD)...";
-	$ROOT_DIR/gradlew :commons-java:clean ${GRADLE_ARGS};
+	"${ROOT_DIR}/gradlew" :commons-java:clean ${GRADLE_ARGS};
 	checkResult $?;
-	$ROOT_DIR/gradlew :parser:clean ${GRADLE_ARGS};
+	"${ROOT_DIR}/gradlew" :parser:clean ${GRADLE_ARGS};
 	checkResult $?;
-	$ROOT_DIR/gradlew :agency-parser:clean ${GRADLE_ARGS};
+	"${ROOT_DIR}/gradlew" :agency-parser:clean ${GRADLE_ARGS};
 	checkResult $?;
 	echo "> CLEANING FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
 

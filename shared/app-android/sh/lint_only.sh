@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 echo "================================================================================";
 echo "> LINT...";
@@ -17,7 +17,7 @@ setGitProjectName;
 if [[ $PROJECT_NAME == "mtransit-for-android" ]]; then
 
 	echo ">> Running lint...";
-	${ROOT_DIR}/gradlew :app-android:lintDebug ${GRADLE_ARGS};
+	"${ROOT_DIR}/gradlew" :app-android:lintDebug ${GRADLE_ARGS};
 	checkResult $?;
 	echo ">> Running lint... DONE";
 fi

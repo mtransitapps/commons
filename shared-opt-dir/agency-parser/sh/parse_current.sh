@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh
+source "${ROOT_DIR}/commons/sh/commons.sh"
 
 echo ">> Parsing Current...";
 
@@ -28,7 +28,7 @@ GTFS_DIR="input/gtfs";
 
 ARGS="$GTFS_DIR unused current_ $GENERATE_STOP_TIMES_FROM_FREQUENCIES $URL";
 
-${ROOT_DIR}/gradlew run \
+"${ROOT_DIR}/gradlew" run \
   --args="${ARGS}" \
   ${GRADLE_ARGS};
 RESULT=$?;

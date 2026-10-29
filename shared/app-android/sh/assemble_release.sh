@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh
+source "${ROOT_DIR}/commons/sh/commons.sh"
 
 echo "================================================================================";
 echo "> ASSEMBLE RELEASE..";
@@ -53,7 +53,7 @@ if [[ ${IS_GH_ENABLED} == true && ${MT_PUSH_STORE_ENABLED} == true ]]; then
 	checkResult $?;
 
 	echo ">> Running assemble release APK..."; # for GH release
-	$ROOT_DIR/gradlew :app-android:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
+	"${ROOT_DIR}/gradlew" :app-android:assembleRelease --no-scan -PuseGooglePlayUploadKeysProperties=false; # no ${GRADLE_ARGS} for release
 	RESULT=$?;
 	echo ">> Running assemble release APK... DONE";
 
@@ -69,7 +69,7 @@ $APP_ANDROID_DIR/sh/keys/setup.sh;
 checkResult $?;
 
 echo ">> Running bundle release AAB...";
-$ROOT_DIR/gradlew :app-android:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
+"${ROOT_DIR}/gradlew" :app-android:bundleRelease --no-scan; # no ${GRADLE_ARGS} for release
 RESULT=$?;
 echo ">> Running bundle release AAB... DONE";
 

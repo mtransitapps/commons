@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh
+source "${ROOT_DIR}/commons/sh/commons.sh"
 
 echo ">> Archiving GTFS... '$*'"
 GTFS_FILE=$1;

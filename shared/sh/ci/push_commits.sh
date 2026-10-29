@@ -2,7 +2,7 @@
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/../.."; ROOT_DIR=$(realpath --relative-to="$ROOT_DIR" "$ROOT_DIR");
 
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 echo "================================================================================";
 echo "> PUSH COMMITS...";
@@ -33,7 +33,7 @@ setGitUser;
 
 echo "> GIT submodule > push (only when ahead)...";
 
-git submodule foreach --recursive '
+git -C "$ROOT_DIR" submodule foreach --recursive '
   SUB_PATH="$displaypath"
   echo "--------------------------------------------------------------------------------"
   echo "> Submodule: $name ($SUB_PATH)"
@@ -75,7 +75,7 @@ checkResult $?;
 echo "> GIT submodule > push... DONE";
 
 echo "> GIT > push...";
-git push; # git push fails if there are new changes on remote
+git -C "$ROOT_DIR" push; # git push fails if there are new changes on remote
 checkResult $?;
 echo "> GIT > push... DONE";
 

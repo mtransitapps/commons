@@ -16,8 +16,8 @@ checkResult $?;
 
 setGradleArgs;
 
-${ROOT_DIR}/gradlew :app-android:publishListing; # no ${GRADLE_ARGS} for release
-# ${ROOT_DIR}/gradlew :app-android:publishListing --no-commit; # DEBUG # no ${GRADLE_ARGS} for release
+"${ROOT_DIR}/gradlew" :app-android:publishListing; # no ${GRADLE_ARGS} for release
+# "${ROOT_DIR}/gradlew" :app-android:publishListing --no-commit; # DEBUG # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
 ${ROOT_DIR}/app-android/sh/keys/cleanup.sh;

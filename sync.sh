@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
 ROOT_DIR="${SCRIPT_DIR}/..";
-source ${ROOT_DIR}/commons/sh/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 # DEPRECATED: use ./commons/sh/git_setup.sh && ./commons/sh/shared_setup.sh;
 # TODO: remove after update 'mtransitapps:mtransit-for-android/.gitlab-ci.yml': https://github.com/mtransitapps/mtransit-for-android/blob/master/.gitlab-ci.yml

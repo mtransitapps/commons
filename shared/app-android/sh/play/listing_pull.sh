@@ -18,7 +18,7 @@ checkResult $?;
 setGradleArgs;
 
 # Release notes are always pushed from repo (Alpha/Beta tracks are messing with Production)
-${ROOT_DIR}/gradlew :app-android:bootstrapListing --app-details --listings --no-release-notes --no-products --subscriptions; # no ${GRADLE_ARGS} for release
+"${ROOT_DIR}/gradlew" :app-android:bootstrapListing --app-details --listings --no-release-notes --no-products --subscriptions; # no ${GRADLE_ARGS} for release
 COMMAND_RESULT=$?; # save command result but cleanup keys 1st
 
 ${ROOT_DIR}/app-android/sh/keys/cleanup.sh;
