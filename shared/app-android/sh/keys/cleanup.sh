@@ -29,27 +29,46 @@ APP_ANDROID_DIR="${ROOT_DIR}/app-android";
 
 CLEAR="${APP_ANDROID_DIR}/clr"
 
+SHARED_UNTRACKED_CLEAR_DIR="${ROOT_DIR}/commons/shared/app-android"
+
 for FILE in "${FILES[@]}" ; do
-	FILE_PATH="${APP_ANDROID_DIR}/${FILE}";
-	if [[ -z "${FILE_PATH}" ]]; then
-		echoFile "> Ignoring empty '$FILE_PATH'.";
+	if [[ -z "${FILE}" ]]; then
+		echoFile "> Ignoring empty '${FILE}'.";
 		continue;
 	fi
-	echoFile -n "> Cleaning '$FILE_PATH'...";
+
+	FILE_PATH="${APP_ANDROID_DIR}/${FILE}";
+	echoFile -n "> Cleaning '${FILE_PATH}'...";
 
 	git ls-files --error-unmatch ${FILE_PATH} &> /dev/null;
 	RESULT=$?;
 	if [[ ${RESULT} -ne 0 ]]; then # file is NOT tracked by git
-		if ! [[ -d $CLEAR ]]; then
-			echo " ERROR! Missing '$CLEAR' directory!";
+		if [[ -f $CLEAR/${FILE} ]]; then
+			mv $CLEAR/${FILE} ${FILE_PATH};
+			RESULT=$?;
+			if [[ ${RESULT} -ne 0 ]]; then
+				echo " ERROR! Resetting decrypted file '${FILE_PATH}' using 'mv $CLEAR/${FILE} ${FILE_PATH}' did NOT work!";
+				if [[ $IS_CI == true ]]; then
+					rm ${FILE_PATH}; # deleting file
+				fi
+				exit ${RESULT};
+			fi
+		elif [[ -f $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ]]; then
+			cp $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ${FILE_PATH};
+			RESULT=$?;
+			if [[ ${RESULT} -ne 0 ]]; then
+				echo " ERROR! Resetting decrypted file '${FILE_PATH}' using 'cp $SHARED_UNTRACKED_CLEAR_DIR/${FILE} ${FILE_PATH}' did NOT work!";
+				if [[ $IS_CI == true ]]; then
+					rm ${FILE_PATH}; # deleting file
+				fi
+				exit ${RESULT};
+			fi
+		else
+			echo " ERROR! No clear file found for untracked decrypted file '${FILE_PATH}'!";
+			if [[ $IS_CI == true ]]; then
+				rm ${FILE_PATH}; # deleting file
+			fi
 			exit 1;
-		fi
-		mv $CLEAR/${FILE} ${FILE_PATH};
-		RESULT=$?;
-		if [[ ${RESULT} -ne 0 ]]; then
-			echo " ERROR! Resetting decrypted file '$FILE_PATH' using 'mv $CLEAR/${FILE} ${FILE_PATH}' did NOT work!";
-			rm ${FILE_PATH}; # deleting file
-			exit ${RESULT};
 		fi
 	else # file is tracked by git
 		git update-index --no-skip-worktree -- "${FILE_PATH}";
@@ -61,14 +80,16 @@ for FILE in "${FILES[@]}" ; do
 		git checkout -- ${FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo " ERROR! Resetting decrypted file '$FILE_PATH' using 'git checkout' did NOT work!";
-			rm ${FILE_PATH}; # deleting file
+			echo " ERROR! Resetting decrypted file '${FILE_PATH}' using 'git checkout' did NOT work!";
+			if [[ $IS_CI == true ]]; then
+				rm ${FILE_PATH}; # deleting file
+			fi
 			exit ${RESULT};
 		fi
 		git diff --name-status --exit-code ${FILE_PATH};
 		RESULT=$?;
 		if [[ ${RESULT} -ne 0 ]]; then
-			echo " ERROR! File '$FILE_PATH' NOT the same as clear file!";
+			echo " ERROR! File '${FILE_PATH}' NOT the same as git file!";
 			exit ${RESULT};
 		fi
 	fi
