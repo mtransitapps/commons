@@ -116,7 +116,7 @@ if [[ ${IS_GH_ENABLED} == true ]]; then
       "${ROOT_DIR}/app-android/sh/keys/cleanup.sh"; # FAIL OK
     fi
 
-    "${ROOT_DIR}/play/publish_to_current_users.sh";
+    "${ROOT_DIR}/app-android/sh/play/publish_to_current_users.sh";
     checkResult $?;
   fi
 else
