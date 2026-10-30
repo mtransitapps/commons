@@ -1,0 +1,79 @@
+#!/bin/bash
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../.." && pwd);
+
+source "${ROOT_DIR}/commons/sh/commons.sh"
+
+echo "> Listing change...";
+
+MT_TEMP_DIR="${ROOT_DIR}/.mt";
+mkdir -p $MT_TEMP_DIR;
+checkResult $?;
+MT_DATA_CHANGED_FILE="$MT_TEMP_DIR/mt_data_changed";
+
+TARGET="${ROOT_DIR}/app-android/src/main/";
+RESULT=$(git -C ${TARGET} status);
+checkResult $? false;
+RESULT=$(echo ${RESULT} | grep "/raw/" | wc -l);
+STATUS=$?;
+if [[ "$RESULT" -gt 0 ]]; then
+	echo "> SCHEDULE CHANGED > MANUAL FIX!";
+	git -C ${TARGET} status | grep "/raw/" | head -n 7;
+	echo "true" > $MT_DATA_CHANGED_FILE;
+	checkResult $?;
+	exit 1;
+fi
+if [[ ${STATUS} == 1 ]]; then STATUS=0; fi; # grep returns 1 when no result
+checkResult ${STATUS} false;
+git -C ${TARGET} diff res/values/gtfs_rts_values_gen.xml; # do not change to avoid breaking compat w/ old modules
+checkResult $?;
+RESULT=$(git -C ${TARGET} diff-index --name-only HEAD -- "res/raw" | wc -l);
+if [[ "$RESULT" -gt 0 ]]; then
+	echo "> SCHEDULE CHANGED > MANUAL FIX!";
+	git -C ${TARGET} status | grep "res/raw" | head -n 7;
+	echo "true" > $MT_DATA_CHANGED_FILE;
+	checkResult $?;
+	exit 1;
+fi
+git -C ${TARGET} diff res-current/values/current_gtfs_rts_values_gen.xml; # do not change to avoid breaking compat w/ old modules
+checkResult $?;
+RESULT=$(git -C ${TARGET} diff-index --name-only HEAD -- "res-current/raw" | wc -l);
+if [[ "$RESULT" -gt 0 ]]; then
+	echo "> SCHEDULE CHANGED > MANUAL FIX!";
+	git -C ${TARGET} status | grep "res-current/raw" | head -n 7;
+	echo "true" > $MT_DATA_CHANGED_FILE;
+	checkResult $?;
+	exit 1;
+fi
+if [[ -d ${TARGET}/res-next ]]; then
+	git -C ${TARGET} status | grep "res-next" | head -n 1;
+	NEXT_GEN_VALUES_FILE="res-next/values/next_gtfs_rts_values_gen.xml"; # do not change to avoid breaking compat w/ old modules
+	if [[ -f ${TARGET}/$NEXT_GEN_VALUES_FILE ]]; then
+		git -C ${TARGET} diff $NEXT_GEN_VALUES_FILE;
+		checkResult $?;
+		git -C ${TARGET} ls-files --error-unmatch $NEXT_GEN_VALUES_FILE &> /dev/null;
+		RESULT=$?;
+		if [[ "$RESULT" -gt 0 ]]; then
+			echo "> SCHEDULE CHANGED > MANUAL FIX!";
+			cat ${TARGET}/$NEXT_GEN_VALUES_FILE;
+			echo "true" > $MT_DATA_CHANGED_FILE;
+			checkResult $?;
+			exit 1;
+		fi
+	fi
+	if [[ -d ${TARGET}/res-next/raw ]]; then
+		RESULT=$(git -C ${TARGET} diff-index --name-only HEAD -- "res-next/raw" | wc -l);
+		if [[ "$RESULT" -gt 0 ]]; then
+			echo "> SCHEDULE CHANGED > MANUAL FIX!";
+			git -C ${TARGET} status | grep "res-next/raw" | head -n 7;
+			echo "true" > $MT_DATA_CHANGED_FILE;
+			checkResult $?;
+			exit 1;
+		fi
+	fi
+fi
+git -C ${TARGET} checkout res/values/gtfs_rts_values.xml; # do not change to avoid breaking compat w/ old modules
+checkResult $?;
+echo "false" > $MT_DATA_CHANGED_FILE;
+checkResult $?;
+echo "> Listing change... DONE";

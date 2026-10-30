@@ -1,0 +1,33 @@
+#!/bin/bash
+SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../.." && pwd);
+
+source "${ROOT_DIR}/commons/sh/commons.sh";
+
+setPushToStoreEnabled;
+if [[ ${MT_PUSH_STORE_ENABLED} != true ]]; then
+  echo "> Push to Store NOT enabled... SKIP ($MT_PUSH_STORE_ENABLED)";
+  exit 1; # error
+fi
+echo "> Push to Store enabled...";
+
+setPushToStoreProductionEnabled;
+if [[ ${MT_PUSH_STORE_PRODUCTION_ENABLED} != true ]]; then
+  echo "> Push to Store Production NOT enabled... SKIP ($MT_PUSH_STORE_PRODUCTION_ENABLED)";
+  exit 1; # error
+fi
+echo "> Push to Store Production enabled...";
+
+setGitProjectName "${ROOT_DIR}";
+CONFIG_PATH="$ROOT_DIR/config";
+
+if [[ ! -f "$CONFIG_PATH/store/production" ]]; then
+    echo "> Publish production NOT authorized!";
+    exit 1; # error
+fi
+
+${SCRIPT_DIR}/promote.sh \
+  --from-track production --promote-track production \
+  --update production \
+  --release-status completed --user-fraction 1.00 \
+;

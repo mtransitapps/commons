@@ -1,9 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")";
+ROOT_DIR=$(cd "${SCRIPT_DIR}/../../../../../../../../../.." && pwd);
 
-ROOT_DIR="$SCRIPT_DIR/../../../../../../../../../..";
-COMMONS_DIR="${ROOT_DIR}/commons";
-source ${COMMONS_DIR}/commons.sh;
+source "${ROOT_DIR}/commons/sh/commons.sh";
 
 setIsCI;
 
@@ -55,7 +54,7 @@ if [ -z "$AGENCY_NAME_SHORT" ]; then
     exit 1;
 fi
 
-MAX_AGENCY_LENGTH=14 # from module-featured-graphic.sh
+MAX_AGENCY_LENGTH=14 # from module-feature-graphic.sh
 
 AGENCY_NAME_1="";
 AGENCY_NAME_2="";
@@ -130,15 +129,15 @@ if [ -n "$STATE_LABEL_SHORT" ]; then
     STATE_AND_COUNTRY_LABEL="$STATE_LABEL_SHORT, $COUNTRY_LABEL";
 fi
 
-MAX_CITY_LENGTH=$((77 - 1)) # -1 for "…" # 77 from module-featured-graphic.sh
+MAX_CITY_LENGTH=$((77 - 1)) # -1 for "…" # 77 from module-feature-graphic.sh
 CITIES_LABEL=$(echo $CITIES_LABEL | awk -v len=$MAX_CITY_LENGTH '{ if (length($0) > len) print substr($0, 1, len-1) "…"; else print; }');
 
 # uses inkscape
 if [[ -z "${AGENCY_NAME_2}" ]]; then
-  $ROOT_DIR/commons-android/pub/module-featured-graphic.sh "$AGENCY_NAME_1" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
+  $ROOT_DIR/commons-android/pub/module-feature-graphic.sh "$AGENCY_NAME_1" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
   checkResult $?;
 else
-  $ROOT_DIR/commons-android/pub/module-featured-graphic.sh "$AGENCY_NAME_1" "$AGENCY_NAME_2" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
+  $ROOT_DIR/commons-android/pub/module-feature-graphic.sh "$AGENCY_NAME_1" "$AGENCY_NAME_2" "$CITIES_LABEL" "$STATE_AND_COUNTRY_LABEL";
   checkResult $?;
 fi
 
