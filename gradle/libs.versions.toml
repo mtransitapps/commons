@@ -55,7 +55,6 @@ androidx-fragment = "1.9.1"
 androidx-lifecycle = "2.11.0"
 androidx-nav = "2.10.2"
 androidx-perf = "1.0.0"
-androidx-perf-gms = "1.0.0"
 androidx-pref = "1.2.1"
 androidx-recyclerview = "1.4.0"
 androidx-room = "2.8.5"
@@ -191,7 +190,7 @@ androidx-lifecycle-viewmodel-state = { module = "androidx.lifecycle:lifecycle-vi
 androidx-nav-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "androidx-nav" }
 androidx-nav-ui = { module = "androidx.navigation:navigation-ui", version.ref = "androidx-nav" }
 androidx-perf = { module = "androidx.core:core-performance", version.ref = "androidx-perf" }
-androidx-perf-gms = { module = "androidx.core:core-performance-play-services", version.ref = "androidx-perf-gms" }
+androidx-perf-gms = { module = "androidx.core:core-performance-play-services", version.ref = "androidx-perf" }
 androidx-pref = { module = "androidx.preference:preference-ktx", version.ref = "androidx-pref" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
