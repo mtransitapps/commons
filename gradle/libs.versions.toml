@@ -12,7 +12,7 @@ sdk-target = "36"
 # Android 17 Cinnamon Bun
 buildTools = "37.0.0"
 # https://github.com/JetBrains/kotlin/releases/latest
-kotlin = "2.4.10"
+kotlin = "2.4.21"
 # https://github.com/google/ksp/releases/latest
 ksp = "2.3.12"
 # https://github.com/Kotlin/kotlinx.coroutines/releases/latest
@@ -20,7 +20,7 @@ kotlinx-coroutines = "1.11.0"
 # https://github.com/Kotlin/kotlinx-datetime/releases/latest
 kotlinx-datetime = "0.8.0"
 # https://github.com/Kotlin/kotlinx.serialization/releases/latest
-kotlinx-serialization = "1.11.0"
+kotlinx-serialization = "1.12.0"
 # https://plugins.gradle.org/plugin/org.sonarqube
 sonar = "7.5.0.8588"
 # https://detekt.dev/changelog-2.0.0
