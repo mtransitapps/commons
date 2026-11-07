@@ -190,7 +190,9 @@ jobs:
         env:
           COMMIT_MESSAGE: ${{ steps.mt-change-message.outputs.commit_message }}
         run: |
-          git add -v -A config/store
+          if git status --porcelain config/store | grep -q .; then
+            git add -v -A config/store
+          fi 
           if git diff --staged --quiet; then
             echo "No changes to commit."
             exit 0 # success
