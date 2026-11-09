@@ -109,7 +109,7 @@ style:
   NewLineAtEndOfFile:
     active: false # same as ktlint.FinalNewline
   ReturnCount:
-    max: 3 # instead of default 2
+    max: 4 # instead of default 2
   ThrowsCount:
     max: 3 # instead of default 2
   UnusedImport:
