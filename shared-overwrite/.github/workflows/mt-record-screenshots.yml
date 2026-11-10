@@ -169,7 +169,7 @@ jobs:
           echo "Current date and time before setting timezone:"
           date +"%Y-%m-%d %H:%M:%S %Z"
           echo "Setting timezone to $TARGET_TZ"
-          sudo timedatectl set-timezone "$TARGET_TZ" || true
+          sudo timedatectl set-timezone "$TARGET_TZ"
           export TZ="$TARGET_TZ"
           echo "TZ=$TARGET_TZ" >> "$GITHUB_ENV"
           echo "Current timezone after setting:"
