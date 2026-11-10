@@ -160,16 +160,18 @@ jobs:
 
       - name: set Linux VM timezone
         if: runner.os == 'Linux'
+        env:
+          TARGET_TZ: ${{ steps.timezone.outputs.TIMEZONE || 'UTC' }}
         run: |
-          echo "Setting Linux VM timezone to ${{ steps.timezone.outputs.TIMEZONE || 'UTC' }}"
+          echo "Setting Linux VM timezone to $TARGET_TZ"
           echo "Current timezone before setting:"
-          timedatectl status | grep "Time zone"
+          timedatectl status | grep "Time zone" || true
           echo "Current date and time before setting timezone:"
           date +"%Y-%m-%d %H:%M:%S %Z"
-          echo "Setting timezone to ${{ steps.timezone.outputs.TIMEZONE || 'UTC' }}"
-          sudo timedatectl set-timezone ${{ steps.timezone.outputs.TIMEZONE || 'UTC' }}
+          echo "Setting timezone to $TARGET_TZ"
+          sudo timedatectl set-timezone "$TARGET_TZ"
           echo "Current timezone after setting:"
-          timedatectl status | grep "Time zone"
+          timedatectl status | grep "Time zone" || true
           echo "Current date and time after setting timezone:"
           date +"%Y-%m-%d %H:%M:%S %Z"
 
