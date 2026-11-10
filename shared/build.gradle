@@ -61,7 +61,11 @@ subprojects {
         group = 'verification'
         description = 'Compile main & test code for this module.'
         dependsOn tasks.matching { task ->
-            task.name in ['compileJava', 'compileTestJava', 'compileDebugSources', 'compileDebugUnitTestSources']
+            task.name in [
+                'compileJava', 'compileKotlin',
+                'compileTestJava', 'compileTestKotlin',
+                'compileDebugSources', 'compileDebugUnitTestSources'
+            ]
         }
     }
     // endregion
