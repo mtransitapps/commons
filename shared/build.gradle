@@ -56,6 +56,16 @@ plugins {
 
 subprojects {
 
+    // region compile
+    tasks.register('compileAll') {
+        group = 'verification'
+        description = 'Compile main & test code for this module.'
+        dependsOn tasks.matching { task ->
+            task.name in ['compileJava', 'compileTestJava', 'compileDebugSources', 'compileDebugUnitTestSources']
+        }
+    }
+    // endregion
+
     // region DeteKt
     apply plugin: libs.plugins.detekt2.asProvider().get().pluginId
     // apply plugin: libs.plugins.detekt2.compiler.get().pluginId // plugin helps fix some issues but version 2.0.0-alpha.6 doesn't work
