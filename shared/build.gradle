@@ -62,9 +62,9 @@ subprojects {
         description = 'Compile main & test code for this module.'
         dependsOn tasks.matching { task ->
             task.name in [
-                'compileJava', 'compileKotlin',
-                'compileTestJava', 'compileTestKotlin',
-                'compileDebugSources', 'compileDebugUnitTestSources'
+                    'compileJava', 'compileKotlin',
+                    'compileTestJava', 'compileTestKotlin',
+                    'compileDebugSources', 'compileDebugUnitTestSources'
             ]
         }
     }
@@ -91,18 +91,13 @@ subprojects {
         // enableCompilerPlugin = false // plugin helps fix some issues but version 2.0.0-alpha.6 doesn't work
     }
     tasks.withType(Detekt).configureEach { task ->
-        if (task.name.contains("Baseline")) {
-            task.autoCorrect = false
-        } else {
-            // Auto-correct when not on CI (mostly only works with ktlint rules)
-            def autoCorrect = !gradle.ext.isCI
-            // def autoCorrect = false // DEBUG
-            if (autoCorrect) {
-                task.config.from(files("${rootProject.projectDir}/commons/config/detekt/detekt-config-auto-correct.yml"))
-            }
-            task.autoCorrect = autoCorrect
-            // task.autoCorrect = false // DEBUG
+        // Auto-correct when not on CI (mostly only works with ktlint rules)
+        def autoCorrect = !task.name.contains("Baseline") && !gradle.ext.isCI
+        // def autoCorrect = false // DEBUG
+        if (autoCorrect) {
+            task.config.from(files("${rootProject.projectDir}/commons/config/detekt/detekt-config-auto-correct.yml"))
         }
+        task.autoCorrect = autoCorrect
         reports {
             checkstyle.required.set(true)
             html.required.set(true)
