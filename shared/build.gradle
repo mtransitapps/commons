@@ -95,7 +95,12 @@ subprojects {
             task.autoCorrect = false
         } else {
             // Auto-correct when not on CI (mostly only works with ktlint rules)
-            task.autoCorrect = !gradle.ext.isCI
+            def autoCorrect = !gradle.ext.isCI
+            // def autoCorrect = false // DEBUG
+            if (autoCorrect) {
+                task.config.from(files("${rootProject.projectDir}/commons/config/detekt/detekt-config-auto-correct.yml"))
+            }
+            task.autoCorrect = autoCorrect
             // task.autoCorrect = false // DEBUG
         }
         reports {
