@@ -8,7 +8,7 @@ echo ">> Pushing subscriptions to the Play Console...";
 
 # LINKS:
 # https://github.com/Triple-T/gradle-play-publisher#publishing-in-app-subscriptions
-# gradlew help --task publishListing
+# gradlew help --task publishSubscriptions
 
 "${ROOT_DIR}/app-android/sh/keys/cleanup.sh"; # FAIL OK
 "${ROOT_DIR}/app-android/sh/keys/setup.sh";
