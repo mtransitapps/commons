@@ -1,0 +1,5 @@
+# enable settings for better autoCorrect
+
+ktlint:
+  NoUnusedImports:
+    active: true
