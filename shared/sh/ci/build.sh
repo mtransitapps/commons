@@ -99,9 +99,9 @@ echo "--------------------------------------------------------------------------
 if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 
 	echo "> CLEANING FOR '$PROJECT_NAME' (GRADLE BUILD)...";
-	"${ROOT_DIR}/gradlew" :commons-java:clean ${GRADLE_ARGS};
+	"${ROOT_DIR}/gradlew" :commons-java:commons-jvm:clean ${GRADLE_ARGS};
 	checkResult $?;
-	"${ROOT_DIR}/gradlew" :parser:clean ${GRADLE_ARGS};
+	"${ROOT_DIR}/gradlew" :parser:data-parser:clean ${GRADLE_ARGS};
 	checkResult $?;
 	"${ROOT_DIR}/gradlew" :agency-parser:clean ${GRADLE_ARGS};
 	checkResult $?;
@@ -130,10 +130,10 @@ if [[ -d "${ROOT_DIR}/agency-parser" ]] && [[ $GIT_BRANCH != "master" ]]; then
 	echo "> DOWNLOADING DATA FOR '$PROJECT_NAME'... DONE";
 
 	echo "> BUILDING FOR '$PROJECT_NAME' (GRADLE BUILD)... ";
-	$ROOT_FROM_CURRENT_DIR/gradlew :commons-java:build ${GRADLE_ARGS}; #includes test # in agency-parser
+	$ROOT_FROM_CURRENT_DIR/gradlew :commons-java:commons-jvm:build ${GRADLE_ARGS}; #includes test # in agency-parser
 	checkResult $?;
 
-	$ROOT_FROM_CURRENT_DIR/gradlew :parser:build ${GRADLE_ARGS}; #includes test # in agency-parser
+	$ROOT_FROM_CURRENT_DIR/gradlew :parser:data-parser:build ${GRADLE_ARGS}; #includes test # in agency-parser
 	checkResult $?;
 
 	echo "> BUILDING FOR '$PROJECT_NAME' (GRADLE BUILD)... DONE";
