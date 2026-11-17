@@ -18,12 +18,12 @@ checksum_file() {
 echo "gradle-cache-" >> ${RESULT_FILE}
 checksum_file ${ROOT_DIR}/build.gradle >> ${RESULT_FILE}
 checksum_file ${ROOT_DIR}/commons/gradle/libs.versions.toml >> ${RESULT_FILE}
-checksum_file ${ROOT_DIR}/commons-java/build.gradle >> ${RESULT_FILE}
-checksum_file ${ROOT_DIR}/commons-android/build.gradle >> ${RESULT_FILE}
+checksum_file ${ROOT_DIR}/commons-java/commons-jvm/build.gradle >> ${RESULT_FILE}
+checksum_file ${ROOT_DIR}/commons-android/shared-android/build.gradle >> ${RESULT_FILE}
 checksum_file ${ROOT_DIR}/app-android/build.gradle >> ${RESULT_FILE}
 
 if [[ -d "${ROOT_DIR}/parser" ]]; then
-    checksum_file ${ROOT_DIR}/parser/build.gradle >> ${RESULT_FILE}
+    checksum_file ${ROOT_DIR}/parser/data-parser/build.gradle >> ${RESULT_FILE}
 fi
 if [[ -d "${ROOT_DIR}/agency-parser" ]]; then
     checksum_file ${ROOT_DIR}/agency-parser/build.gradle >> ${RESULT_FILE}

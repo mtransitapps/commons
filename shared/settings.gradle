@@ -96,5 +96,5 @@ if (file("parser").exists()) {
     include(":parser:data-parser") // common code shared by all parsers
 }
 
-include(":commons-android") // common code shared by all Android apps
+include(":commons-android:shared-android") // common code shared by all Android apps
 include(":app-android") // Android app
