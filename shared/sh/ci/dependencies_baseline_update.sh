@@ -19,14 +19,14 @@ cp -R "${ROOT_DIR}"/app-android/dependencies/ "${ROOT_DIR}/commons"/shared-main/
 checkResult $?;
 git -C "${ROOT_DIR}/commons" diff -U0 shared-main/app-android/dependencies/*.txt;
 
-echo "> Update dependencies baselines for 'parser': ";
-"${ROOT_DIR}"/gradlew :parser:dependencyGuardBaseline;
+echo "> Update dependencies baselines for 'parser:data-parser': ";
+"${ROOT_DIR}"/gradlew :parser:data-parser:dependencyGuardBaseline;
 checkResult $?;
-rm -R "${ROOT_DIR}/commons"/shared-opt-dir/parser/dependencies/;
+rm -R "${ROOT_DIR}/commons"/shared-opt-dir/parser/data-parser/dependencies/;
 checkResult $?;
-cp -R "${ROOT_DIR}"/parser/dependencies/ "${ROOT_DIR}/commons"/shared-opt-dir/parser/;
+cp -R "${ROOT_DIR}"/parser/data-parser/dependencies/ "${ROOT_DIR}/commons"/shared-opt-dir/parser/data-parser/;
 checkResult $?;
-git -C "${ROOT_DIR}/commons" diff -U0 shared-opt-dir/parser/dependencies/*.txt;
+git -C "${ROOT_DIR}/commons" diff -U0 shared-opt-dir/parser/data-parser/dependencies/*.txt;
 
 AFTER_DATE=$(date +%D-%X);
 AFTER_DATE_SEC=$(date +%s);

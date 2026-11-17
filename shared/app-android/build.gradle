@@ -366,7 +366,7 @@ dependencies {
     implementation(libs.bundles.kotlin.android)
 
     if (isMainApp) {
-        implementation(project(":commons-android")) {
+        implementation(project(":commons-android:shared-android")) {
             exclude group: 'com.google.protobuf', module: 'protoc'
             exclude group: 'com.google.protobuf', module: 'protobuf-java'
             exclude group: 'com.google.protobuf', module: 'protobuf-javalite'
@@ -406,7 +406,7 @@ dependencies {
 
         testImplementation(libs.bundles.test.unit)
     } else {
-        implementation(project(":commons-android"))
+        implementation(project(":commons-android:shared-android"))
         implementation(libs.androidx.core)
     }
 }

@@ -86,15 +86,15 @@ dependencyResolutionManagement {
 rootProject.name = "MT" // same JetBrains IntelliJ files
 
 // include(":commons") // common code shared by all - not a Gradle module
-include(":commons-java") // common code shared by all projects
+include(":commons-java:commons-jvm") // common code shared by all projects
 
 if (file("agency-parser").exists()) {
     include(":agency-parser") // parser
 }
 
 if (file("parser").exists()) {
-    include(":parser") // common code shared by all parsers
+    include(":parser:data-parser") // common code shared by all parsers
 }
 
-include(":commons-android") // common code shared by all Android apps
+include(":commons-android:shared-android") // common code shared by all Android apps
 include(":app-android") // Android app
