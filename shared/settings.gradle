@@ -93,7 +93,7 @@ if (file("agency-parser").exists()) {
 }
 
 if (file("parser").exists()) {
-    include(":parser") // common code shared by all parsers
+    include(":parser:data-parser") // common code shared by all parsers
 }
 
 include(":commons-android") // common code shared by all Android apps
