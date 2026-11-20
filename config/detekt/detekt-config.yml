@@ -93,6 +93,8 @@ ktlint:
 potential-bugs:
   UnnecessarySafeCall:
     active: false # too many false positives (w/o detekt kotlin compiler plugin, IDE shows warning)
+  UnreachableCode:
+    active: false # too many false positives (w/o detekt kotlin compiler plugin, IDE shows warning)
 
 style:
   DestructuringDeclarationWithTooManyEntries:
@@ -102,6 +104,18 @@ style:
     forbiddenImports:
       - value: 'android.text.TextUtils'
         reason: 'Useless Android SDK dependency, use native Kotlin StdLib functions'
+      - value: 'org.json.*'
+        reason: 'Use KotlinX.Serialization instead'
+      # TODO - value: 'com.google.gson.*'
+      # reason: 'Use KotlinX.Serialization instead'
+      - value: 'org.mtransit.android.commons.MTLog'
+        reason: 'Use MTLogK instead'
+      - value: 'org.mockito.Mockito.`when`'
+        reason: 'Use org.mockito.kotlin.whenever instead'
+      - value: 'org.mockito.MockedStatic'
+        reason: 'Avoid mocking static, refactor instead'
+      - value: 'org.mockito.Mockito.mockStatic'
+        reason: 'Avoid mocking static, refactor instead'
   MagicNumber:
     ignoreEnums: true
   MaxLineLength: # same as ktlint.maxLineLength
@@ -113,5 +127,5 @@ style:
   ThrowsCount:
     max: 3 # instead of default 2
   UnusedImport:
-    active: true # instead of default false
+    active: true # instead of default false (same as NoUnusedImports)
 

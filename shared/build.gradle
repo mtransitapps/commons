@@ -72,7 +72,6 @@ subprojects {
 
     // region DeteKt
     apply plugin: libs.plugins.detekt2.asProvider().get().pluginId
-    // apply plugin: libs.plugins.detekt2.compiler.get().pluginId // plugin helps fix some issues but version 2.0.0-alpha.6 doesn't work
     dependencies {
         detektPlugins(libs.detekt2.ktlint)
     }
@@ -88,7 +87,9 @@ subprojects {
         baseline = file("${projectDir}/detekt-baseline.xml")
         // Build the abstract syntax tree in parallel for faster execution
         parallel = true
-        // enableCompilerPlugin = false // plugin helps fix some issues but version 2.0.0-alpha.6 doesn't work
+        // enableCompilerPlugin = false // plugin helps fix some issues but not all
+        // (needed for compiler plugin? gradle.properties: "detekt.use.worker.api=true")
+        // debug = true // DEBUG
     }
     tasks.withType(Detekt).configureEach { task ->
         // Auto-correct when not on CI (mostly only works with ktlint rules)
@@ -103,6 +104,11 @@ subprojects {
             html.required.set(true)
             sarif.required.set(true)
             markdown.required.set(true)
+        }
+        // task.jvmTarget = rootProject.javaVersion.toString() // <- needed for compiler plugin?
+        exclude("**/androidTest/**")
+        if (task.name.toLowerCase().contains("androidtest")) {
+            task.enabled = false
         }
     }
     tasks.register('detektAll') {
