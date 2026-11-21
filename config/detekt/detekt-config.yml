@@ -102,6 +102,8 @@ style:
     forbiddenImports:
       - value: 'android.text.TextUtils'
         reason: 'Useless Android SDK dependency, use native Kotlin StdLib functions'
+      - value: 'org.mtransit.android.commons.MTLog'
+        reason: 'Use MTLogK instead'
   MagicNumber:
     ignoreEnums: true
   MaxLineLength: # same as ktlint.maxLineLength
