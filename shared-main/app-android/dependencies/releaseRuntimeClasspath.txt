@@ -131,7 +131,7 @@ com.github.chuckerteam.chucker:library-no-op:4.3.1
 com.google.ads.mediation:applovin:13.7.0.0
 com.google.ads.mediation:common:1.1.0
 com.google.ads.mediation:facebook:6.22.0.1
-com.google.ads.mediation:vungle:7.7.9.0
+com.google.ads.mediation:vungle:7.8.0.0
 com.google.android.datatransport:transport-api:5.0.0
 com.google.android.datatransport:transport-backend-cct:5.0.0
 com.google.android.datatransport:transport-runtime:5.0.0
@@ -174,12 +174,12 @@ com.google.errorprone:error_prone_annotations:2.48.0
 com.google.firebase:firebase-abt:24.0.0
 com.google.firebase:firebase-analytics:24.0.0
 com.google.firebase:firebase-annotations:18.0.0
-com.google.firebase:firebase-bom:35.1.0
+com.google.firebase:firebase-bom:35.2.0
 com.google.firebase:firebase-common:23.0.0
 com.google.firebase:firebase-components:20.0.0
 com.google.firebase:firebase-config-interop:17.0.0
 com.google.firebase:firebase-config:24.0.1
-com.google.firebase:firebase-crashlytics:21.0.1
+com.google.firebase:firebase-crashlytics:21.1.0
 com.google.firebase:firebase-datatransport:21.0.0
 com.google.firebase:firebase-encoders-json:19.0.0
 com.google.firebase:firebase-encoders-proto:17.0.0
@@ -188,7 +188,7 @@ com.google.firebase:firebase-installations-interop:18.0.0
 com.google.firebase:firebase-installations:20.0.0
 com.google.firebase:firebase-measurement-connector:20.0.1
 com.google.firebase:firebase-perf:23.0.1
-com.google.firebase:firebase-sessions:4.0.1
+com.google.firebase:firebase-sessions:4.0.2
 com.google.guava:failureaccess:1.0.3
 com.google.guava:guava:33.6.0-android
 com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
@@ -212,7 +212,7 @@ com.squareup.okio:okio-jvm:3.17.0
 com.squareup.okio:okio:3.17.0
 com.squareup.retrofit2:converter-gson:3.0.0
 com.squareup.retrofit2:retrofit:3.0.0
-com.vungle:vungle-ads:7.7.9
+com.vungle:vungle-ads:7.8.0
 io.github.pdvrieze.xmlutil:core-jvmcommon:0.91.3
 io.github.pdvrieze.xmlutil:core:0.91.3
 io.github.pdvrieze.xmlutil:serialization-jvm:0.91.3
