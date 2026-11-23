@@ -111,6 +111,8 @@ elif [ "$TYPE" -eq 3 ]; then # BUS
     TYPE_LABEL="Bus"; # TODO Autobus?
 elif [ "$TYPE" -eq 4 ]; then # FERRY
     TYPE_LABEL="Bateaux";
+elif [ "$TYPE" -eq 6 ]; then # GONDOLA
+    TYPE_LABEL="Téléphériques";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
     TYPE_LABEL="Vélos partagés";
 else

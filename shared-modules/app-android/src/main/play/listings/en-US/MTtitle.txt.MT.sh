@@ -98,6 +98,8 @@ elif [ "$TYPE" -eq 3 ]; then # BUS
     TYPE_LABEL="Bus";
 elif [ "$TYPE" -eq 4 ]; then # FERRY
     TYPE_LABEL="Ferry";
+elif [ "$TYPE" -eq 6 ]; then # GONDOLA
+    TYPE_LABEL="Aerial Lift";
 elif [ "$TYPE" -eq 100 ]; then # BIKE
     TYPE_LABEL="Bike";
 else
