@@ -1,0 +1,15 @@
+# ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite-all-repositories
+name: MT auto-merge review
+on:
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions: {}
+
+jobs:
+  MT-AUTO-MERGE-REVIEW-JOB:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      # Its completion triggers the privileged workflow from the default branch.
+      - run: echo "Pull request review changed."

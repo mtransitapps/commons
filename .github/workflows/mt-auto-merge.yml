@@ -1,0 +1,124 @@
+# ORIGINAL FILE: https://github.com/mtransitapps/commons/tree/master/shared-overwrite-all-repositories
+name: MT auto-merge
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review, edited]
+  workflow_run:
+    workflows: ['*']
+    types: [completed]
+  check_run:
+    types: [completed]
+  status:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  statuses: read
+
+concurrency:
+  group: mt-auto-merge
+  cancel-in-progress: false
+
+jobs:
+  MT-AUTO-MERGE-JOB:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.name != 'MT auto-merge'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Never check out or execute pull request code in this privileged workflow.
+      - name: MT merge approved pull requests with passing checks
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const allowedAuthors = new Set([
+              'montransit', 'Copilot', 'copilot-swe-agent[bot]', 'dependabot[bot]',
+            ]);
+            const pulls = await github.paginate(github.rest.pulls.list, {
+              owner, repo, state: 'open', per_page: 100,
+            });
+            for (const pull of pulls) {
+              if (pull.draft || !allowedAuthors.has(pull.user.login)) {
+                continue;
+              }
+              let cursor = null;
+              let pr;
+              const checks = [];
+              do {
+                const result = await github.graphql(`
+                  query($owner: String!, $repo: String!, $number: Int!, $cursor: String) {
+                    repository(owner: $owner, name: $repo) {
+                      pullRequest(number: $number) {
+                        state isDraft headRefOid reviewDecision mergeStateStatus
+                        baseRef {
+                          name
+                          branchProtectionRule { requiresCodeOwnerReviews }
+                        }
+                        commits(last: 1) {
+                          nodes {
+                            commit {
+                              statusCheckRollup {
+                                contexts(first: 100, after: $cursor) {
+                                  nodes {
+                                    __typename
+                                    ... on CheckRun { name status conclusion }
+                                    ... on StatusContext { context state }
+                                  }
+                                  pageInfo { hasNextPage endCursor }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }`, { owner, repo, number: pull.number, cursor });
+                const current = result.repository.pullRequest;
+                if (pr && pr.headRefOid !== current.headRefOid) {
+                  throw new Error(`PR #${pull.number} changed while reading checks; retry the workflow.`);
+                }
+                pr = current;
+                const contexts = pr.commits.nodes[0]?.commit.statusCheckRollup?.contexts;
+                checks.push(...(contexts?.nodes || []));
+                cursor = contexts?.pageInfo.hasNextPage ? contexts.pageInfo.endCursor : null;
+              } while (cursor);
+
+              if (pr.state !== 'OPEN' || pr.isDraft || pr.reviewDecision !== 'APPROVED'
+                  || pr.mergeStateStatus !== 'CLEAN') {
+                core.info(`PR #${pull.number}: waiting for approval and merge readiness.`);
+                continue;
+              }
+              if (checks.length === 0 || !checks.every(check =>
+                check.__typename === 'CheckRun'
+                  ? check.status === 'COMPLETED'
+                    && ['SUCCESS', 'NEUTRAL', 'SKIPPED'].includes(check.conclusion)
+                  : check.state === 'SUCCESS')) {
+                core.info(`PR #${pull.number}: waiting for all checks to pass.`);
+                continue;
+              }
+
+              // Rulesets and classic branch protection can both enforce CODEOWNERS.
+              let requiresCodeOwners = pr.baseRef?.branchProtectionRule?.requiresCodeOwnerReviews;
+              if (!requiresCodeOwners && pr.baseRef) {
+                const rules = await github.paginate('GET /repos/{owner}/{repo}/rules/branches/{branch}', {
+                  owner, repo, branch: pr.baseRef.name, per_page: 100,
+                });
+                requiresCodeOwners = rules.some(rule =>
+                  rule.type === 'pull_request' && rule.parameters?.require_code_owner_review);
+              }
+              if (!requiresCodeOwners) {
+                core.warning(`PR #${pull.number}: base branch must require CODEOWNER approval.`);
+                continue;
+              }
+
+              const { data: merged } = await github.rest.pulls.merge({
+                owner, repo, pull_number: pull.number,
+                merge_method: 'squash', sha: pr.headRefOid,
+              });
+              if (!merged.merged) {
+                throw new Error(`PR #${pull.number}: ${merged.message}`);
+              }
+              core.info(`Merged PR #${pull.number}: ${merged.sha}`);
+            }
