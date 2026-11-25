@@ -26,7 +26,7 @@ sonar = "7.6.0.18749"
 # https://detekt.dev/changelog-2.0.0
 detekt2 = "2.0.0-alpha.6"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "9.5.1"
+android-gradlePlugin = "9.5.3"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
@@ -84,7 +84,7 @@ gps-ads = "25.5.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
 gps-ads-nextgen = "1.6.0"
 gps-ump = "4.0.0"
-gps-basement = "18.12.0"
+gps-basement = "18.12.1"
 gps-time = "16.0.1"
 gps-location = "21.4.0"
 # https://developers.google.com/maps/documentation/android-sdk/release-notes
