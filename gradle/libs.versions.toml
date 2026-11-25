@@ -84,7 +84,7 @@ gps-ads = "25.5.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
 gps-ads-nextgen = "1.6.0"
 gps-ump = "4.0.0"
-gps-basement = "18.12.0"
+gps-basement = "18.12.1"
 gps-time = "16.0.1"
 gps-location = "21.4.0"
 # https://developers.google.com/maps/documentation/android-sdk/release-notes
