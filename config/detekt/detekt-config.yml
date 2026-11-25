@@ -124,4 +124,5 @@ style:
     max: 3 # instead of default 2
   UnusedImport:
     active: true # instead of default false (same as NoUnusedImports)
-
+  UnusedPrivateFunction:
+    active: false # too many false positives (IDE shows warning)
