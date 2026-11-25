@@ -128,7 +128,7 @@ com.google.android.gms:play-services-measurement-sdk:24.0.0
 com.google.android.gms:play-services-measurement:24.0.0
 com.google.android.gms:play-services-stats:17.0.2
 com.google.android.gms:play-services-tasks:18.4.0
-com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.6.0
+com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.7.0
 com.google.android.libraries.places:places:5.3.0
 com.google.android.material:material:1.14.0
 com.google.android.play:core-common:2.0.4
@@ -139,7 +139,7 @@ com.google.android.ump:user-messaging-platform:4.0.0
 com.google.auto.value:auto-value-annotations:1.6.2
 com.google.code.findbugs:jsr305:3.0.2
 com.google.code.gson:gson:2.14.0
-com.google.crypto.tink:tink-android:1.20.0
+com.google.crypto.tink:tink-android:1.24.0
 com.google.dagger:dagger-lint-aar:2.60.1
 com.google.dagger:dagger:2.60.1
 com.google.dagger:hilt-android:2.60.1
