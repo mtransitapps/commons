@@ -1,0 +1,82 @@
+name: "MT Trigger related PR builds"
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+# Re-starts the latest `mt-build.yml` run of all related pull requests (same branch name) in the other main repository & submodules repositories.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+permissions: {} # using MT_PAT secret
+env:
+  MT_BRANCH_NAME: ${{ github.head_ref }}
+  MT_CURRENT_REPO: ${{ github.repository }}
+
+jobs:
+  MT-TRIGGER-RELATED-PR-BUILDS:
+    name: "MT Trigger related PR builds"
+    runs-on: ubuntu-latest
+    # secrets not available for pull requests from forks
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - name: "MT Trigger related PR builds"
+        env:
+          GH_TOKEN: ${{ secrets.MT_PAT }}
+        run: |
+          RELATED_REPOS=(
+            "mtransitapps/mtransit-for-android"
+            "mtransitapps/commons-android"
+            "mtransitapps/parser"
+            "mtransitapps/commons-java"
+            "mtransitapps/commons"
+          )
+          WORKFLOW="mt-build.yml"
+          FAILED_REPOS=()
+          for REPO in "${RELATED_REPOS[@]}"; do
+            if [[ "$REPO" == "$MT_CURRENT_REPO" ]]; then
+              continue # skip current repository (already triggered by this push)
+            fi
+            echo "--------------------------------------------------"
+            echo "> $REPO:"
+            if ! PR_NUMBER=$(gh pr list --repo "$REPO" --head "$MT_BRANCH_NAME" --state open --json number --jq '.[0].number // empty'); then
+              echo "::warning title=$REPO::Unable to list pull requests!"
+              FAILED_REPOS+=("$REPO")
+              continue
+            fi
+            if [[ -z "$PR_NUMBER" ]]; then
+              echo "> No open pull request for branch '$MT_BRANCH_NAME' > SKIP"
+              continue
+            fi
+            echo "> Pull request: #$PR_NUMBER."
+            RUN_ID=$(gh run list --repo "$REPO" --workflow "$WORKFLOW" --branch "$MT_BRANCH_NAME" --event pull_request --limit 1 --json databaseId --jq '.[0].databaseId // empty') || RUN_ID="";
+            BUILD_HANDLED=false
+            if [[ -n "$RUN_ID" ]]; then
+              echo "> Latest '$WORKFLOW' run: $RUN_ID."
+              STATUS=$(gh run view "$RUN_ID" --repo "$REPO" --json status --jq '.status') || STATUS="";
+              if [[ "$STATUS" == "completed" ]]; then
+                echo "> Re-running completed run $RUN_ID..."
+                if gh run rerun "$RUN_ID" --repo "$REPO"; then
+                  BUILD_HANDLED=true
+                fi
+              elif [[ "$STATUS" == "queued" ]]; then
+                echo "> Run $RUN_ID is queued and will use the latest commits when it starts; no new run needed."
+                BUILD_HANDLED=true
+              else
+                echo "> Latest run is still in progress (status: '$STATUS'); skipping re-run."
+              fi
+            fi
+            if [[ "$BUILD_HANDLED" != true ]]; then
+              echo "> Triggering new '$WORKFLOW' run on branch '$MT_BRANCH_NAME'..."
+              if ! gh workflow run "$WORKFLOW" --repo "$REPO" --ref "$MT_BRANCH_NAME"; then
+                echo "::warning title=$REPO::Unable to trigger '$WORKFLOW'!"
+                FAILED_REPOS+=("$REPO")
+              fi
+            fi
+          done
+          echo "--------------------------------------------------"
+          if [[ ${#FAILED_REPOS[@]} -gt 0 ]]; then
+            echo "::error title=Trigger related PR builds failed::${FAILED_REPOS[*]}"
+            exit 1
+          fi
