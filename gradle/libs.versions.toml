@@ -242,6 +242,7 @@ protobuf-javaLite = { module = "com.google.protobuf:protobuf-javalite", version.
 protobuf-kotlinLite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+retrofix-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp" }
 okhttp = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
@@ -336,6 +337,7 @@ vungle = [
 retrofit = [
     "retrofit",
     "retrofit-gsonConverter",
+    "retrofix-kotlinxSerializationConverter"
 ]
 okHttp = [
     "okhttp",
