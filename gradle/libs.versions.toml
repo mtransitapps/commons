@@ -26,7 +26,7 @@ sonar = "7.6.0.18749"
 # https://detekt.dev/changelog-2.0.0
 detekt2 = "2.0.0-alpha.6"
 # https://developer.android.com/build/releases/gradle-plugin
-android-gradlePlugin = "9.5.1"
+android-gradlePlugin = "9.5.3"
 # https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugarJdkLibs = "2.1.5"
 # https://github.com/Triple-T/gradle-play-publisher/releases/latest
@@ -82,9 +82,9 @@ gps-plugin = "4.6.0"
 # https://developers.google.com/admob/android/rel-notes
 gps-ads = "25.5.0"
 # https://developers.google.com/admob/android/next-gen/rel-notes
-gps-ads-nextgen = "1.6.0"
+gps-ads-nextgen = "1.7.0"
 gps-ump = "4.0.0"
-gps-basement = "18.12.0"
+gps-basement = "18.12.1"
 gps-time = "16.0.1"
 gps-location = "21.4.0"
 # https://developers.google.com/maps/documentation/android-sdk/release-notes
@@ -103,7 +103,7 @@ play-review = "2.0.2"
 # https://developers.facebook.com/documentation/audience-network/setting-up/platform-setup/android/changelog
 # fbAudienceNetwork = "_._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/meta/CHANGELOG.md
-fbAudienceNetwork-mediation = "6.22.0.1"
+fbAudienceNetwork-mediation = "6.22.1.0"
 # https://github.com/AppLovin/AppLovin-MAX-SDK-Android/releases/latest
 # appLovin = "__._._" # included with nediation adapter
 # https://github.com/googleads/googleads-mobile-android-mediation/blob/main/ThirdPartyAdapters/applovin/CHANGELOG.md
@@ -242,6 +242,7 @@ protobuf-javaLite = { module = "com.google.protobuf:protobuf-javalite", version.
 protobuf-kotlinLite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+retrofix-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp" }
 okhttp = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
@@ -336,6 +337,7 @@ vungle = [
 retrofit = [
     "retrofit",
     "retrofit-gsonConverter",
+    "retrofix-kotlinxSerializationConverter"
 ]
 okHttp = [
     "okhttp",

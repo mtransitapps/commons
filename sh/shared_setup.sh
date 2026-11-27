@@ -57,13 +57,9 @@ function deleteFile() {
 		exit 1;
 	fi
 	local DEST_FILE_PATH=$1;
-	if [[ -f "${DEST_FILE_PATH}" ]]; then
-		rm "${DEST_FILE_PATH}";
-		checkResult $?;
-		echoFile "> Deleting '${DEST_FILE_PATH}'... DONE ✓";
-	else
-		echoFile "> Deleting '${DEST_FILE_PATH}'... SKIP (not found)";
-	fi
+	git ls-files --error-unmatch "${DEST_FILE_PATH}" &> /dev/null;
+	RESULT=$?;
+	git rm "${DEST_FILE_PATH}" || rm "${DEST_FILE_PATH}" || echoFile " > deleteFile() > failed to delete '${DEST_FILE_PATH}' (already deleted?: $RESULT)";
 }
 
 function deployFile() {

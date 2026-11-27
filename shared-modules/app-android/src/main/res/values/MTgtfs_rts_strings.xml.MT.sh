@@ -90,6 +90,8 @@ elif [ "$TYPE" -eq 3 ]; then # BUS
     TYPE_LABEL="buses";
 elif [ "$TYPE" -eq 4 ]; then # FERRY
     TYPE_LABEL="ferries";
+elif [ "$TYPE" -eq 6 ]; then # GONDOLA
+    TYPE_LABEL="aerial lifts";
 else
   echo "Unexpected agency type '$TYPE'!"
   exit 1 # error
