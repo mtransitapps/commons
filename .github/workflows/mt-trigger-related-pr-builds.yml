@@ -55,21 +55,13 @@ jobs:
             if [[ -n "$RUN_ID" ]]; then
               echo "> Latest '$WORKFLOW' run: $RUN_ID."
               STATUS=$(gh run view "$RUN_ID" --repo "$REPO" --json status --jq '.status') || STATUS="";
-              if [[ "$STATUS" != "completed" ]]; then
-                echo "> Cancelling run $RUN_ID (status: '$STATUS')..."
-                gh run cancel "$RUN_ID" --repo "$REPO" || true
-                for _ in $(seq 1 30); do
-                  sleep 10
-                  STATUS=$(gh run view "$RUN_ID" --repo "$REPO" --json status --jq '.status') || STATUS="";
-                  if [[ "$STATUS" == "completed" ]]; then
-                    break
-                  fi
-                done
-                echo "> Run $RUN_ID status: '$STATUS'."
-              fi
-              echo "> Re-running run $RUN_ID..."
-              if gh run rerun "$RUN_ID" --repo "$REPO"; then
-                RERUN_SUCCESS=true
+              if [[ "$STATUS" == "completed" ]]; then
+                echo "> Re-running completed run $RUN_ID..."
+                if gh run rerun "$RUN_ID" --repo "$REPO"; then
+                  RERUN_SUCCESS=true
+                fi
+              else
+                echo "> Latest run is still in progress (status: '$STATUS'); skipping re-run."
               fi
             fi
             if [[ "$RERUN_SUCCESS" != true ]]; then
