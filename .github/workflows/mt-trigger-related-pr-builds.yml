@@ -51,20 +51,23 @@ jobs:
             fi
             echo "> Pull request: #$PR_NUMBER."
             RUN_ID=$(gh run list --repo "$REPO" --workflow "$WORKFLOW" --branch "$MT_BRANCH_NAME" --event pull_request --limit 1 --json databaseId --jq '.[0].databaseId // empty') || RUN_ID="";
-            RERUN_SUCCESS=false
+            BUILD_HANDLED=false
             if [[ -n "$RUN_ID" ]]; then
               echo "> Latest '$WORKFLOW' run: $RUN_ID."
               STATUS=$(gh run view "$RUN_ID" --repo "$REPO" --json status --jq '.status') || STATUS="";
               if [[ "$STATUS" == "completed" ]]; then
                 echo "> Re-running completed run $RUN_ID..."
                 if gh run rerun "$RUN_ID" --repo "$REPO"; then
-                  RERUN_SUCCESS=true
+                  BUILD_HANDLED=true
                 fi
+              elif [[ "$STATUS" == "queued" ]]; then
+                echo "> Run $RUN_ID is queued and will use the latest commits when it starts; no new run needed."
+                BUILD_HANDLED=true
               else
                 echo "> Latest run is still in progress (status: '$STATUS'); skipping re-run."
               fi
             fi
-            if [[ "$RERUN_SUCCESS" != true ]]; then
+            if [[ "$BUILD_HANDLED" != true ]]; then
               echo "> Triggering new '$WORKFLOW' run on branch '$MT_BRANCH_NAME'..."
               if ! gh workflow run "$WORKFLOW" --repo "$REPO" --ref "$MT_BRANCH_NAME"; then
                 echo "::warning title=$REPO::Unable to trigger '$WORKFLOW'!"
