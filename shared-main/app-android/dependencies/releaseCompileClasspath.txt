@@ -183,6 +183,7 @@ com.squareup.okhttp:okhttp:2.7.2
 com.squareup.okio:okio-jvm:3.17.0
 com.squareup.okio:okio:3.17.0
 com.squareup.retrofit2:converter-gson:3.0.0
+com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0
 com.squareup.retrofit2:retrofit:3.0.0
 com.vungle:vungle-ads:7.8.0
 jakarta.inject:jakarta.inject-api:2.0.1
