@@ -9,6 +9,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
+permissions: {} # using MT_PAT secret
 env:
   MT_BRANCH_NAME: ${{ github.head_ref }}
   MT_CURRENT_REPO: ${{ github.repository }}
