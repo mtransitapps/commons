@@ -104,6 +104,10 @@ style:
     forbiddenImports:
       - value: 'android.text.TextUtils'
         reason: 'Useless Android SDK dependency, use native Kotlin StdLib functions'
+      - value: 'org.json.*'
+        reason: 'Use KotlinX.Serialization instead'
+      # TODO - value: 'com.google.gson.*'
+      # reason: 'Use KotlinX.Serialization instead'
       - value: 'org.mtransit.android.commons.MTLog'
         reason: 'Use MTLogK instead'
       - value: 'org.mockito.Mockito.`when`'
